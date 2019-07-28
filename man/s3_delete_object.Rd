@@ -20,7 +20,7 @@ space, and the value that is displayed on your authentication device.}
 
 \item{RequestPayer}{}
 
-\item{BypassGovernanceRetention}{Indicates whether S3 Object Lock should bypass Governance-mode
+\item{BypassGovernanceRetention}{Indicates whether Amazon S3 object lock should bypass governance-mode
 restrictions to process this operation.}
 }
 \description{

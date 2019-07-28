@@ -9,8 +9,9 @@ s3_put_object(ACL, Body, Bucket, CacheControl, ContentDisposition,
   ContentType, Expires, GrantFullControl, GrantRead, GrantReadACP,
   GrantWriteACP, Key, Metadata, ServerSideEncryption, StorageClass,
   WebsiteRedirectLocation, SSECustomerAlgorithm, SSECustomerKey,
-  SSECustomerKeyMD5, SSEKMSKeyId, RequestPayer, Tagging, ObjectLockMode,
-  ObjectLockRetainUntilDate, ObjectLockLegalHoldStatus)
+  SSECustomerKeyMD5, SSEKMSKeyId, SSEKMSEncryptionContext, RequestPayer,
+  Tagging, ObjectLockMode, ObjectLockRetainUntilDate,
+  ObjectLockLegalHoldStatus)
 }
 \arguments{
 \item{ACL}{The canned ACL to apply to the object.}
@@ -33,7 +34,8 @@ referenced by the Content-Type header field.}
 body cannot be determined automatically.}
 
 \item{ContentMD5}{The base64-encoded 128-bit MD5 digest of the part data. This parameter
-is auto-populated when using the command from the CLI}
+is auto-populated when using the command from the CLI. This parameted is
+required if object lock parameters are specified.}
 
 \item{ContentType}{A standard MIME type describing the format of the object data.}
 
@@ -80,14 +82,18 @@ via SSL or using SigV4. Documentation on configuring any of the
 officially supported AWS SDKs and CLI can be found at
 http://docs.aws.amazon.com/AmazonS3/latest/dev/UsingAWSSDK.html\#specify-signature-version}
 
+\item{SSEKMSEncryptionContext}{Specifies the AWS KMS Encryption Context to use for object encryption.
+The value of this header is a base64-encoded UTF-8 string holding JSON
+with the encryption context key-value pairs.}
+
 \item{RequestPayer}{}
 
 \item{Tagging}{The tag-set for the object. The tag-set must be encoded as URL Query
 parameters. (For example, "Key1=Value1")}
 
-\item{ObjectLockMode}{The Object Lock mode that you want to apply to this object.}
+\item{ObjectLockMode}{The object lock mode that you want to apply to this object.}
 
-\item{ObjectLockRetainUntilDate}{The date and time when you want this object's Object Lock to expire.}
+\item{ObjectLockRetainUntilDate}{The date and time when you want this object's object lock to expire.}
 
 \item{ObjectLockLegalHoldStatus}{The Legal Hold status that you want to apply to the specified object.}
 }
@@ -124,6 +130,7 @@ Adds an object to a bucket.
   SSECustomerKey = raw,
   SSECustomerKeyMD5 = "string",
   SSEKMSKeyId = "string",
+  SSEKMSEncryptionContext = "string",
   RequestPayer = "requester",
   Tagging = "string",
   ObjectLockMode = "GOVERNANCE"|"COMPLIANCE",
@@ -136,16 +143,6 @@ Adds an object to a bucket.
 }
 
 \examples{
-# The following example uploads an object. The request specifies optional
-# object tags. The bucket is versioned, therefore S3 returns version ID of
-# the newly created object.
-\donttest{svc$put_object(
-  Body = "c:\\\\HappyFace.jpg",
-  Bucket = "examplebucket",
-  Key = "HappyFace.jpg",
-  Tagging = "key1=value1&key2=value2"
-)}
-
 # The following example uploads and object. The request specifies optional
 # canned ACL (access control list) to all READ access to authenticated
 # users. If the bucket is versioning enabled, S3 returns version ID in
@@ -157,32 +154,14 @@ Adds an object to a bucket.
   Key = "exampleobject"
 )}
 
-# The following example creates an object. If the bucket is versioning
-# enabled, S3 returns version ID in response.
-\donttest{svc$put_object(
-  Body = "filetoupload",
-  Bucket = "examplebucket",
-  Key = "objectkey"
-)}
-
 # The following example uploads an object. The request specifies optional
-# request headers to directs S3 to use specific storage class and use
-# server-side encryption.
+# object tags. The bucket is versioned, therefore S3 returns version ID of
+# the newly created object.
 \donttest{svc$put_object(
-  Body = "HappyFace.jpg",
+  Body = "c:\\\\HappyFace.jpg",
   Bucket = "examplebucket",
   Key = "HappyFace.jpg",
-  ServerSideEncryption = "AES256",
-  StorageClass = "STANDARD_IA"
-)}
-
-# The following example uploads an object to a versioning-enabled bucket.
-# The source file is specified using Windows file syntax. S3 returns
-# VersionId of the newly created object.
-\donttest{svc$put_object(
-  Body = "HappyFace.jpg",
-  Bucket = "examplebucket",
-  Key = "HappyFace.jpg"
+  Tagging = "key1=value1&key2=value2"
 )}
 
 # The following example creates an object. The request also specifies
@@ -208,6 +187,34 @@ Adds an object to a bucket.
   Key = "exampleobject",
   ServerSideEncryption = "AES256",
   Tagging = "key1=value1&key2=value2"
+)}
+
+# The following example creates an object. If the bucket is versioning
+# enabled, S3 returns version ID in response.
+\donttest{svc$put_object(
+  Body = "filetoupload",
+  Bucket = "examplebucket",
+  Key = "objectkey"
+)}
+
+# The following example uploads an object to a versioning-enabled bucket.
+# The source file is specified using Windows file syntax. S3 returns
+# VersionId of the newly created object.
+\donttest{svc$put_object(
+  Body = "HappyFace.jpg",
+  Bucket = "examplebucket",
+  Key = "HappyFace.jpg"
+)}
+
+# The following example uploads an object. The request specifies optional
+# request headers to directs S3 to use specific storage class and use
+# server-side encryption.
+\donttest{svc$put_object(
+  Body = "HappyFace.jpg",
+  Bucket = "examplebucket",
+  Key = "HappyFace.jpg",
+  ServerSideEncryption = "AES256",
+  StorageClass = "STANDARD_IA"
 )}
 
 }

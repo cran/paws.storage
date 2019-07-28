@@ -27,8 +27,8 @@ bucket.}
 
 \item{GrantWriteACP}{Allows grantee to write the ACL for the applicable bucket.}
 
-\item{ObjectLockEnabledForBucket}{Specifies whether you want S3 Object Lock to be enabled for the new
-bucket.}
+\item{ObjectLockEnabledForBucket}{Specifies whether you want Amazon S3 object lock to be enabled for the
+new bucket.}
 }
 \description{
 Creates a new bucket.

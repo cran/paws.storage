@@ -11,10 +11,10 @@ s3_copy_object(ACL, Bucket, CacheControl, ContentDisposition,
   GrantReadACP, GrantWriteACP, Key, Metadata, MetadataDirective,
   TaggingDirective, ServerSideEncryption, StorageClass,
   WebsiteRedirectLocation, SSECustomerAlgorithm, SSECustomerKey,
-  SSECustomerKeyMD5, SSEKMSKeyId, CopySourceSSECustomerAlgorithm,
-  CopySourceSSECustomerKey, CopySourceSSECustomerKeyMD5, RequestPayer,
-  Tagging, ObjectLockMode, ObjectLockRetainUntilDate,
-  ObjectLockLegalHoldStatus)
+  SSECustomerKeyMD5, SSEKMSKeyId, SSEKMSEncryptionContext,
+  CopySourceSSECustomerAlgorithm, CopySourceSSECustomerKey,
+  CopySourceSSECustomerKeyMD5, RequestPayer, Tagging, ObjectLockMode,
+  ObjectLockRetainUntilDate, ObjectLockLegalHoldStatus)
 }
 \arguments{
 \item{ACL}{The canned ACL to apply to the object.}
@@ -94,6 +94,10 @@ via SSL or using SigV4. Documentation on configuring any of the
 officially supported AWS SDKs and CLI can be found at
 http://docs.aws.amazon.com/AmazonS3/latest/dev/UsingAWSSDK.html\#specify-signature-version}
 
+\item{SSEKMSEncryptionContext}{Specifies the AWS KMS Encryption Context to use for object encryption.
+The value of this header is a base64-encoded UTF-8 string holding JSON
+with the encryption context key-value pairs.}
+
 \item{CopySourceSSECustomerAlgorithm}{Specifies the algorithm to use when decrypting the source object (e.g.,
 AES256).}
 
@@ -111,9 +115,9 @@ the encryption key was transmitted without error.}
 conjunction with the TaggingDirective. The tag-set must be encoded as
 URL Query parameters}
 
-\item{ObjectLockMode}{The Object Lock mode that you want to apply to the copied object.}
+\item{ObjectLockMode}{The object lock mode that you want to apply to the copied object.}
 
-\item{ObjectLockRetainUntilDate}{The date and time when you want the copied object's Object Lock to
+\item{ObjectLockRetainUntilDate}{The date and time when you want the copied object's object lock to
 expire.}
 
 \item{ObjectLockLegalHoldStatus}{Specifies whether you want to apply a Legal Hold to the copied object.}
@@ -159,6 +163,7 @@ Creates a copy of an object that is already stored in Amazon S3.
   SSECustomerKey = raw,
   SSECustomerKeyMD5 = "string",
   SSEKMSKeyId = "string",
+  SSEKMSEncryptionContext = "string",
   CopySourceSSECustomerAlgorithm = "string",
   CopySourceSSECustomerKey = raw,
   CopySourceSSECustomerKeyMD5 = "string",
