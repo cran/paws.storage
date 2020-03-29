@@ -37,7 +37,7 @@ NULL
 #' @examples
 #' # This operation creates a new file system with the default generalpurpose
 #' # performance mode.
-#' \donttest{svc <- efs()
+#' \dontrun{svc <- efs()
 #' svc$create_file_system(
 #'   CreationToken = "tokenstring",
 #'   PerformanceMode = "generalPurpose",
@@ -90,8 +90,7 @@ efs <- function(config = list()) {
   target_prefix = ""
 )
 
-.efs$handlers <- new_handlers("restjson", "v4")
-
 .efs$service <- function(config = list()) {
-  new_service(.efs$metadata, .efs$handlers, config)
+  handlers <- new_handlers("restjson", "v4")
+  new_service(.efs$metadata, handlers, config)
 }

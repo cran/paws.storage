@@ -94,7 +94,7 @@ NULL
 #'
 #' @examples
 #' # Activates the gateway you previously deployed on your host.
-#' \donttest{svc <- storagegateway()
+#' \dontrun{svc <- storagegateway()
 #' svc$activate_gateway(
 #'   ActivationKey = "29AV1-3OFV9-VVIUB-NKT0I-LRO6V",
 #'   GatewayName = "My_Gateway",
@@ -207,8 +207,7 @@ storagegateway <- function(config = list()) {
   target_prefix = "StorageGateway_20130630"
 )
 
-.storagegateway$handlers <- new_handlers("jsonrpc", "v4")
-
 .storagegateway$service <- function(config = list()) {
-  new_service(.storagegateway$metadata, .storagegateway$handlers, config)
+  handlers <- new_handlers("jsonrpc", "v4")
+  new_service(.storagegateway$metadata, handlers, config)
 }

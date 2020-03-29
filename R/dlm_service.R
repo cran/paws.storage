@@ -38,7 +38,7 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- dlm()
+#' \dontrun{svc <- dlm()
 #' svc$create_lifecycle_policy(
 #'   Foo = 123
 #' )}
@@ -78,8 +78,7 @@ dlm <- function(config = list()) {
   target_prefix = ""
 )
 
-.dlm$handlers <- new_handlers("restjson", "v4")
-
 .dlm$service <- function(config = list()) {
-  new_service(.dlm$metadata, .dlm$handlers, config)
+  handlers <- new_handlers("restjson", "v4")
+  new_service(.dlm$metadata, handlers, config)
 }

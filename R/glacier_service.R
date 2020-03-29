@@ -66,7 +66,7 @@ NULL
 #' @examples
 #' # The example deletes an in-progress multipart upload to a vault named
 #' # my-vault:
-#' \donttest{svc <- glacier()
+#' \dontrun{svc <- glacier()
 #' svc$abort_multipart_upload(
 #'   accountId = "-",
 #'   uploadId = "19gaRezEXAMPLES6Ry5YYdqthHOC_kGRCT03L9yetr220UmPtBYKk-OssZtLqyFu7sY1_lR7vgFuJV...",
@@ -133,8 +133,7 @@ glacier <- function(config = list()) {
   target_prefix = ""
 )
 
-.glacier$handlers <- new_handlers("restjson", "v4")
-
 .glacier$service <- function(config = list()) {
-  new_service(.glacier$metadata, .glacier$handlers, config)
+  handlers <- new_handlers("restjson", "v4")
+  new_service(.glacier$metadata, handlers, config)
 }

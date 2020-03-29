@@ -33,7 +33,7 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- backup()
+#' \dontrun{svc <- backup()
 #' svc$create_backup_plan(
 #'   Foo = 123
 #' )}
@@ -108,8 +108,7 @@ backup <- function(config = list()) {
   target_prefix = ""
 )
 
-.backup$handlers <- new_handlers("restjson", "v4")
-
 .backup$service <- function(config = list()) {
-  new_service(.backup$metadata, .backup$handlers, config)
+  handlers <- new_handlers("restjson", "v4")
+  new_service(.backup$metadata, handlers, config)
 }
