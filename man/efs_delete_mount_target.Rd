@@ -11,8 +11,7 @@ efs_delete_mount_target(MountTargetId)
 }
 \description{
 Deletes the specified mount target.
-}
-\details{
+
 This operation forcibly breaks any mounts of the file system by using
 the mount target that is being deleted, which might disrupt instances or
 applications using those mounts. To avoid applications getting cut off
@@ -35,7 +34,7 @@ DescribeMountTargets operation, which returns a list of mount target
 descriptions for the given file system.
 
 The operation also requires permissions for the following Amazon EC2
-action on the mount target\'s network interface:
+action on the mount target's network interface:
 \itemize{
 \item \code{ec2:DeleteNetworkInterface}
 }

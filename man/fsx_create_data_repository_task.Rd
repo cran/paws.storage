@@ -16,7 +16,7 @@ system root directory. The paths you provide need to be relative to the
 mount point of the file system. If the mount point is \verb{/mnt/fsx} and
 \verb{/mnt/fsx/path1} is a directory or file on the file system you want to
 export, then the path to provide is \code{path1}. If a path that you provide
-isn\'t valid, the task fails.}
+isn't valid, the task fails.}
 
 \item{FileSystemId}{[required]}
 
@@ -38,9 +38,9 @@ metadata, to files, directories, and symbolic links (symlinks) from your
 FSx file system to its linked data repository. A
 \code{CreateDataRepositoryTask} operation will fail if a data repository is
 not linked to the FSx file system. To learn more about data repository
-tasks, see \href{https://docs.aws.amazon.com/fsx/latest/LustreGuide/data-repository-tasks.html}{Using Data Repository Tasks}.
+tasks, see \href{https://docs.aws.amazon.com/fsx/latest/LustreGuide/data-repository-tasks.html}{Data Repository Tasks}.
 To learn more about linking a data repository to your file system, see
-\href{https://docs.aws.amazon.com/fsx/latest/LustreGuide/export-data-repository.html#export-prefix}{Setting the Export Prefix}.
+\href{https://docs.aws.amazon.com/fsx/latest/LustreGuide/create-fs-linked-data-repo.html}{Linking your file system to an S3 bucket}.
 }
 \section{Request syntax}{
 \preformatted{svc$create_data_repository_task(

@@ -6,7 +6,8 @@
 (ACL)}
 \usage{
 s3_put_bucket_acl(ACL, AccessControlPolicy, Bucket, ContentMD5,
-  GrantFullControl, GrantRead, GrantReadACP, GrantWrite, GrantWriteACP)
+  GrantFullControl, GrantRead, GrantReadACP, GrantWrite, GrantWriteACP,
+  ExpectedBucketOwner)
 }
 \arguments{
 \item{ACL}{The canned ACL to apply to the bucket.}
@@ -18,7 +19,10 @@ grantee.}
 
 \item{ContentMD5}{The base64-encoded 128-bit MD5 digest of the data. This header must be
 used as a message integrity check to verify that the request body was
-not corrupted in transit. For more information, go to \href{http://www.ietf.org/rfc/rfc1864.txt}{RFC 1864.}}
+not corrupted in transit. For more information, go to \href{https://www.ietf.org/rfc/rfc1864.txt}{RFC 1864.}
+
+For requests made using the AWS Command Line Interface (CLI) or AWS
+SDKs, this field is calculated automatically.}
 
 \item{GrantFullControl}{Allows grantee the read, write, read ACP, and write ACP permissions on
 the bucket.}
@@ -31,15 +35,17 @@ the bucket.}
 bucket.}
 
 \item{GrantWriteACP}{Allows grantee to write the ACL for the applicable bucket.}
+
+\item{ExpectedBucketOwner}{The account id of the expected bucket owner. If the bucket is owned by a
+different account, the request will fail with an HTTP
+\verb{403 (Access Denied)} error.}
 }
 \description{
 Sets the permissions on an existing bucket using access control lists
 (ACL). For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/S3_ACLs_UsingACLs.html}{Using ACLs}.
 To set the ACL of a bucket, you must have \code{WRITE_ACP} permission.
-}
-\details{
-You can use one of the following two ways to set a bucket\'s
-permissions:
+
+You can use one of the following two ways to set a bucket's permissions:
 \itemize{
 \item Specify the ACL in the request body
 \item Specify permissions using request headers
@@ -75,10 +81,10 @@ Amazon S3 supports in an ACL. For more information, see \href{https://docs.aws.a
 You specify each grantee as a type=value pair, where the type is one
 of the following:
 \itemize{
-\item \code{id} -- if the value specified is the canonical user ID of an
-AWS account
-\item \code{uri} -- if you are granting permissions to a predefined group
-\item \code{emailAddress} -- if the value specified is the email address of
+\item \code{id} – if the value specified is the canonical user ID of an AWS
+account
+\item \code{uri} – if you are granting permissions to a predefined group
+\item \code{emailAddress} – if the value specified is the email address of
 an AWS account
 
 Using email addresses to specify a grantee is only supported in
@@ -91,7 +97,7 @@ the following AWS Regions:
 \item Asia Pacific (Sydney)
 \item Asia Pacific (Tokyo)
 \item Europe (Ireland)
-\item South America (SÃ£o Paulo)
+\item South America (São Paulo)
 }
 
 For a list of all the Amazon S3 supported Regions and endpoints,
@@ -112,10 +118,10 @@ explicitly. You cannot do both.
 
 \strong{Grantee Values}
 
-You can specify the person (grantee) to whom you\'re assigning access
+You can specify the person (grantee) to whom you're assigning access
 rights (using request elements) in the following ways:
 \itemize{
-\item By the person\'s ID:
+\item By the person's ID:
 
 \verb{&lt;Grantee xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CanonicalUser"&gt;&lt;ID&gt;&lt;&gt;ID&lt;&gt;&lt;/ID&gt;&lt;DisplayName&gt;&lt;&gt;GranteesEmail&lt;&gt;&lt;/DisplayName&gt; &lt;/Grantee&gt;}
 
@@ -140,7 +146,7 @@ following AWS Regions:
 \item Asia Pacific (Sydney)
 \item Asia Pacific (Tokyo)
 \item Europe (Ireland)
-\item South America (SÃ£o Paulo)
+\item South America (São Paulo)
 }
 
 For a list of all the Amazon S3 supported Regions and endpoints, see
@@ -150,9 +156,9 @@ in the AWS General Reference.
 
 \strong{Related Resources}
 \itemize{
-\item CreateBucket
-\item DeleteBucket
-\item GetObjectAcl
+\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateBucket.html}{CreateBucket}
+\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucket.html}{DeleteBucket}
+\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectAcl.html}{GetObjectAcl}
 }
 }
 \section{Request syntax}{
@@ -182,7 +188,8 @@ in the AWS General Reference.
   GrantRead = "string",
   GrantReadACP = "string",
   GrantWrite = "string",
-  GrantWriteACP = "string"
+  GrantWriteACP = "string",
+  ExpectedBucketOwner = "string"
 )
 }
 }

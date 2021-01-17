@@ -13,8 +13,7 @@ fsx_list_tags_for_resource(ResourceARN, MaxResults, NextToken)
 \item{MaxResults}{Maximum number of tags to return in the response (integer). This
 parameter value must be greater than 0. The number of items that Amazon
 FSx returns is the minimum of the \code{MaxResults} parameter specified in
-the request and the service\'s internal maximum number of items per
-page.}
+the request and the service's internal maximum number of items per page.}
 
 \item{NextToken}{Opaque pagination token returned from a previous \code{ListTagsForResource}
 operation (String). If a token present, the action continues the list
@@ -23,8 +22,7 @@ from where the returning call left off.}
 \description{
 Lists tags for an Amazon FSx file systems and backups in the case of
 Amazon FSx for Windows File Server.
-}
-\details{
+
 When retrieving all tags, you can optionally specify the \code{MaxResults}
 parameter to limit the number of tags in a response. If more tags
 remain, Amazon FSx returns a \code{NextToken} value in the response. In this

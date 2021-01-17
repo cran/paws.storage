@@ -11,10 +11,10 @@ glacier_complete_vault_lock(accountId, vaultName, lockId)
 \arguments{
 \item{accountId}{[required] The \code{AccountId} value is the AWS account ID. This value must match the
 AWS account ID associated with the credentials used to sign the request.
-You can either specify an AWS account ID or optionally a single \'\code{-}\'
+You can either specify an AWS account ID or optionally a single '\code{-}'
 (hyphen), in which case Amazon Glacier uses the AWS account ID
 associated with the credentials used to sign the request. If you specify
-your account ID, do not include any hyphens (\'-\') in the ID.}
+your account ID, do not include any hyphens ('-') in the ID.}
 
 \item{vaultName}{[required] The name of the vault.}
 
@@ -28,8 +28,7 @@ causes the vault lock policy to become unchangeable. A vault lock is put
 into the \code{InProgress} state by calling InitiateVaultLock. You can obtain
 the state of the vault lock by calling GetVaultLock. For more
 information about the vault locking process, \href{https://docs.aws.amazon.com/amazonglacier/latest/dev/vault-lock.html}{Amazon Glacier Vault Lock}.
-}
-\details{
+
 This operation is idempotent. This request is always successful if the
 vault lock is in the \code{Locked} state and the provided lock ID matches the
 lock ID originally used to lock the vault.

@@ -5,6 +5,7 @@ NULL
 
 #' Creates a policy to manage the lifecycle of the specified AWS resources
 #'
+#' @description
 #' Creates a policy to manage the lifecycle of the specified AWS resources.
 #' You can create up to 100 lifecycle policies.
 #'
@@ -14,8 +15,8 @@ NULL
 #'
 #' @param ExecutionRoleArn &#91;required&#93; The Amazon Resource Name (ARN) of the IAM role used to run the
 #' operations specified by the lifecycle policy.
-#' @param Description &#91;required&#93; A description of the lifecycle policy. The characters \\^\[0-9A-Za-z
-#' \\_-\]+\\$ are supported.
+#' @param Description &#91;required&#93; A description of the lifecycle policy. The characters ^\[0-9A-Za-z
+#' \\_-\]+$ are supported.
 #' @param State &#91;required&#93; The desired activation state of the lifecycle policy after creation.
 #' @param PolicyDetails &#91;required&#93; The configuration details of the lifecycle policy.
 #' @param Tags The tags to apply to the lifecycle policy during creation.
@@ -27,7 +28,7 @@ NULL
 #'   Description = "string",
 #'   State = "ENABLED"|"DISABLED",
 #'   PolicyDetails = list(
-#'     PolicyType = "EBS_SNAPSHOT_MANAGEMENT",
+#'     PolicyType = "EBS_SNAPSHOT_MANAGEMENT"|"IMAGE_MANAGEMENT"|"EVENT_BASED_POLICY",
 #'     ResourceTypes = list(
 #'       "VOLUME"|"INSTANCE"
 #'     ),
@@ -85,11 +86,49 @@ NULL
 #'               IntervalUnit = "DAYS"|"WEEKS"|"MONTHS"|"YEARS"
 #'             )
 #'           )
+#'         ),
+#'         ShareRules = list(
+#'           list(
+#'             TargetAccounts = list(
+#'               "string"
+#'             ),
+#'             UnshareInterval = 123,
+#'             UnshareIntervalUnit = "DAYS"|"WEEKS"|"MONTHS"|"YEARS"
+#'           )
 #'         )
 #'       )
 #'     ),
 #'     Parameters = list(
-#'       ExcludeBootVolume = TRUE|FALSE
+#'       ExcludeBootVolume = TRUE|FALSE,
+#'       NoReboot = TRUE|FALSE
+#'     ),
+#'     EventSource = list(
+#'       Type = "MANAGED_CWE",
+#'       Parameters = list(
+#'         EventType = "shareSnapshot",
+#'         SnapshotOwner = list(
+#'           "string"
+#'         ),
+#'         DescriptionRegex = "string"
+#'       )
+#'     ),
+#'     Actions = list(
+#'       list(
+#'         Name = "string",
+#'         CrossRegionCopy = list(
+#'           list(
+#'             Target = "string",
+#'             EncryptionConfiguration = list(
+#'               Encrypted = TRUE|FALSE,
+#'               CmkArn = "string"
+#'             ),
+#'             RetainRule = list(
+#'               Interval = 123,
+#'               IntervalUnit = "DAYS"|"WEEKS"|"MONTHS"|"YEARS"
+#'             )
+#'           )
+#'         )
+#'       )
 #'     )
 #'   ),
 #'   Tags = list(
@@ -121,6 +160,7 @@ dlm_create_lifecycle_policy <- function(ExecutionRoleArn, Description, State, Po
 #' Deletes the specified lifecycle policy and halts the automated
 #' operations that the policy specified
 #'
+#' @description
 #' Deletes the specified lifecycle policy and halts the automated
 #' operations that the policy specified.
 #'
@@ -159,6 +199,7 @@ dlm_delete_lifecycle_policy <- function(PolicyId) {
 #' Gets summary information about all or the specified data lifecycle
 #' policies
 #'
+#' @description
 #' Gets summary information about all or the specified data lifecycle
 #' policies.
 #' 
@@ -222,6 +263,7 @@ dlm_get_lifecycle_policies <- function(PolicyIds = NULL, State = NULL, ResourceT
 
 #' Gets detailed information about the specified lifecycle policy
 #'
+#' @description
 #' Gets detailed information about the specified lifecycle policy.
 #'
 #' @usage
@@ -258,6 +300,7 @@ dlm_get_lifecycle_policy <- function(PolicyId) {
 
 #' Lists the tags for the specified resource
 #'
+#' @description
 #' Lists the tags for the specified resource.
 #'
 #' @usage
@@ -294,6 +337,7 @@ dlm_list_tags_for_resource <- function(ResourceArn) {
 
 #' Adds the specified tags to the specified resource
 #'
+#' @description
 #' Adds the specified tags to the specified resource.
 #'
 #' @usage
@@ -334,6 +378,7 @@ dlm_tag_resource <- function(ResourceArn, Tags) {
 
 #' Removes the specified tags from the specified resource
 #'
+#' @description
 #' Removes the specified tags from the specified resource.
 #'
 #' @usage
@@ -374,6 +419,7 @@ dlm_untag_resource <- function(ResourceArn, TagKeys) {
 
 #' Updates the specified lifecycle policy
 #'
+#' @description
 #' Updates the specified lifecycle policy.
 #'
 #' @usage
@@ -396,7 +442,7 @@ dlm_untag_resource <- function(ResourceArn, TagKeys) {
 #'   State = "ENABLED"|"DISABLED",
 #'   Description = "string",
 #'   PolicyDetails = list(
-#'     PolicyType = "EBS_SNAPSHOT_MANAGEMENT",
+#'     PolicyType = "EBS_SNAPSHOT_MANAGEMENT"|"IMAGE_MANAGEMENT"|"EVENT_BASED_POLICY",
 #'     ResourceTypes = list(
 #'       "VOLUME"|"INSTANCE"
 #'     ),
@@ -454,11 +500,49 @@ dlm_untag_resource <- function(ResourceArn, TagKeys) {
 #'               IntervalUnit = "DAYS"|"WEEKS"|"MONTHS"|"YEARS"
 #'             )
 #'           )
+#'         ),
+#'         ShareRules = list(
+#'           list(
+#'             TargetAccounts = list(
+#'               "string"
+#'             ),
+#'             UnshareInterval = 123,
+#'             UnshareIntervalUnit = "DAYS"|"WEEKS"|"MONTHS"|"YEARS"
+#'           )
 #'         )
 #'       )
 #'     ),
 #'     Parameters = list(
-#'       ExcludeBootVolume = TRUE|FALSE
+#'       ExcludeBootVolume = TRUE|FALSE,
+#'       NoReboot = TRUE|FALSE
+#'     ),
+#'     EventSource = list(
+#'       Type = "MANAGED_CWE",
+#'       Parameters = list(
+#'         EventType = "shareSnapshot",
+#'         SnapshotOwner = list(
+#'           "string"
+#'         ),
+#'         DescriptionRegex = "string"
+#'       )
+#'     ),
+#'     Actions = list(
+#'       list(
+#'         Name = "string",
+#'         CrossRegionCopy = list(
+#'           list(
+#'             Target = "string",
+#'             EncryptionConfiguration = list(
+#'               Encrypted = TRUE|FALSE,
+#'               CmkArn = "string"
+#'             ),
+#'             RetainRule = list(
+#'               Interval = 123,
+#'               IntervalUnit = "DAYS"|"WEEKS"|"MONTHS"|"YEARS"
+#'             )
+#'           )
+#'         )
+#'       )
 #'     )
 #'   )
 #' )

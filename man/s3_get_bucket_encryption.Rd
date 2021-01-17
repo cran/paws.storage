@@ -4,18 +4,21 @@
 \alias{s3_get_bucket_encryption}
 \title{Returns the default encryption configuration for an Amazon S3 bucket}
 \usage{
-s3_get_bucket_encryption(Bucket)
+s3_get_bucket_encryption(Bucket, ExpectedBucketOwner)
 }
 \arguments{
 \item{Bucket}{[required] The name of the bucket from which the server-side encryption
 configuration is retrieved.}
+
+\item{ExpectedBucketOwner}{The account id of the expected bucket owner. If the bucket is owned by a
+different account, the request will fail with an HTTP
+\verb{403 (Access Denied)} error.}
 }
 \description{
 Returns the default encryption configuration for an Amazon S3 bucket.
 For information about the Amazon S3 default encryption feature, see
 \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/bucket-encryption.html}{Amazon S3 Default Bucket Encryption}.
-}
-\details{
+
 To use this operation, you must have permission to perform the
 \code{s3:GetEncryptionConfiguration} action. The bucket owner has this
 permission by default. The bucket owner can grant this permission to
@@ -24,13 +27,14 @@ and \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/s3-access-control.html
 
 The following operations are related to \code{GetBucketEncryption}:
 \itemize{
-\item PutBucketEncryption
-\item DeleteBucketEncryption
+\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketEncryption.html}{PutBucketEncryption}
+\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketEncryption.html}{DeleteBucketEncryption}
 }
 }
 \section{Request syntax}{
 \preformatted{svc$get_bucket_encryption(
-  Bucket = "string"
+  Bucket = "string",
+  ExpectedBucketOwner = "string"
 )
 }
 }

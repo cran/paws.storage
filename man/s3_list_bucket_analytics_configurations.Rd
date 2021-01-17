@@ -4,7 +4,8 @@
 \alias{s3_list_bucket_analytics_configurations}
 \title{Lists the analytics configurations for the bucket}
 \usage{
-s3_list_bucket_analytics_configurations(Bucket, ContinuationToken)
+s3_list_bucket_analytics_configurations(Bucket, ContinuationToken,
+  ExpectedBucketOwner)
 }
 \arguments{
 \item{Bucket}{[required] The name of the bucket from which analytics configurations are
@@ -12,12 +13,15 @@ retrieved.}
 
 \item{ContinuationToken}{The ContinuationToken that represents a placeholder from where this
 request should begin.}
+
+\item{ExpectedBucketOwner}{The account id of the expected bucket owner. If the bucket is owned by a
+different account, the request will fail with an HTTP
+\verb{403 (Access Denied)} error.}
 }
 \description{
 Lists the analytics configurations for the bucket. You can have up to
 1,000 analytics configurations per bucket.
-}
-\details{
+
 This operation supports list pagination and does not return more than
 100 configurations at a time. You should always check the \code{IsTruncated}
 element in the response. If there are no more configurations to list,
@@ -33,20 +37,21 @@ permission by default. The bucket owner can grant this permission to
 others. For more information about permissions, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/using-with-s3-actions.html#using-with-s3-actions-related-to-bucket-subresources}{Permissions Related to Bucket Subresource Operations}
 and \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/s3-access-control.html}{Managing Access Permissions to Your Amazon S3 Resources}.
 
-For information about Amazon S3 analytics feature, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/analytics-storage-class.html}{Amazon S3 Analytics -- Storage Class Analysis}.
+For information about Amazon S3 analytics feature, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/analytics-storage-class.html}{Amazon S3 Analytics – Storage Class Analysis}.
 
 The following operations are related to
 \code{ListBucketAnalyticsConfigurations}:
 \itemize{
-\item GetBucketAnalyticsConfiguration
-\item DeleteBucketAnalyticsConfiguration
-\item PutBucketAnalyticsConfiguration
+\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketAnalyticsConfiguration.html}{GetBucketAnalyticsConfiguration}
+\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketAnalyticsConfiguration.html}{DeleteBucketAnalyticsConfiguration}
+\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketAnalyticsConfiguration.html}{PutBucketAnalyticsConfiguration}
 }
 }
 \section{Request syntax}{
 \preformatted{svc$list_bucket_analytics_configurations(
   Bucket = "string",
-  ContinuationToken = "string"
+  ContinuationToken = "string",
+  ExpectedBucketOwner = "string"
 )
 }
 }

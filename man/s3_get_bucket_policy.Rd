@@ -4,23 +4,26 @@
 \alias{s3_get_bucket_policy}
 \title{Returns the policy of a specified bucket}
 \usage{
-s3_get_bucket_policy(Bucket)
+s3_get_bucket_policy(Bucket, ExpectedBucketOwner)
 }
 \arguments{
 \item{Bucket}{[required] The bucket name for which to get the bucket policy.}
+
+\item{ExpectedBucketOwner}{The account id of the expected bucket owner. If the bucket is owned by a
+different account, the request will fail with an HTTP
+\verb{403 (Access Denied)} error.}
 }
 \description{
 Returns the policy of a specified bucket. If you are using an identity
 other than the root user of the AWS account that owns the bucket, the
 calling identity must have the \code{GetBucketPolicy} permissions on the
-specified bucket and belong to the bucket owner\'s account in order to
+specified bucket and belong to the bucket owner's account in order to
 use this operation.
-}
-\details{
-If you don\'t have \code{GetBucketPolicy} permissions, Amazon S3 returns a
+
+If you don't have \code{GetBucketPolicy} permissions, Amazon S3 returns a
 \verb{403 Access Denied} error. If you have the correct permissions, but
-you\'re not using an identity that belongs to the bucket owner\'s
-account, Amazon S3 returns a \verb{405 Method Not Allowed} error.
+you're not using an identity that belongs to the bucket owner's account,
+Amazon S3 returns a \verb{405 Method Not Allowed} error.
 
 As a security precaution, the root user of the AWS account that owns a
 bucket can always use this operation, even if the policy explicitly
@@ -30,12 +33,13 @@ For more information about bucket policies, see \href{https://docs.aws.amazon.co
 
 The following operation is related to \code{GetBucketPolicy}:
 \itemize{
-\item GetObject
+\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObject.html}{GetObject}
 }
 }
 \section{Request syntax}{
 \preformatted{svc$get_bucket_policy(
-  Bucket = "string"
+  Bucket = "string",
+  ExpectedBucketOwner = "string"
 )
 }
 }

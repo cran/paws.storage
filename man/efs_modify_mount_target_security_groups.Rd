@@ -13,8 +13,7 @@ efs_modify_mount_target_security_groups(MountTargetId, SecurityGroups)
 }
 \description{
 Modifies the set of security groups in effect for a mount target.
-}
-\details{
+
 When you create a mount target, Amazon EFS also creates a new network
 interface. For more information, see CreateMountTarget. This operation
 replaces the security groups in effect for the network interface
@@ -26,8 +25,8 @@ target is not \code{deleted}.
 The operation requires permissions for the following actions:
 \itemize{
 \item \code{elasticfilesystem:ModifyMountTargetSecurityGroups} action on the
-mount target\'s file system.
-\item \code{ec2:ModifyNetworkInterfaceAttribute} action on the mount target\'s
+mount target's file system.
+\item \code{ec2:ModifyNetworkInterfaceAttribute} action on the mount target's
 network interface.
 }
 }

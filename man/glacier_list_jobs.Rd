@@ -11,9 +11,9 @@ glacier_list_jobs(accountId, vaultName, limit, marker, statuscode,
 \arguments{
 \item{accountId}{[required] The \code{AccountId} value is the AWS account ID of the account that owns the
 vault. You can either specify an AWS account ID or optionally a single
-\'\code{-}\' (hyphen), in which case Amazon S3 Glacier uses the AWS account
-ID associated with the credentials used to sign the request. If you use
-an account ID, do not include any hyphens (\'-\') in the ID.}
+'\code{-}' (hyphen), in which case Amazon S3 Glacier uses the AWS account ID
+associated with the credentials used to sign the request. If you use an
+account ID, do not include any hyphens ('-') in the ID.}
 
 \item{vaultName}{[required] The name of the vault.}
 
@@ -36,8 +36,7 @@ request.}
 This operation lists jobs for a vault, including jobs that are
 in-progress and jobs that have recently finished. The List Job operation
 returns a list of these jobs sorted by job initiation time.
-}
-\details{
+
 Amazon Glacier retains recently completed jobs for a period before
 deleting them; however, it eventually removes completed jobs. The output
 of completed jobs can be retrieved. Retaining completed jobs for a

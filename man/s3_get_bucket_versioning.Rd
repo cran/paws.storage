@@ -4,15 +4,18 @@
 \alias{s3_get_bucket_versioning}
 \title{Returns the versioning state of a bucket}
 \usage{
-s3_get_bucket_versioning(Bucket)
+s3_get_bucket_versioning(Bucket, ExpectedBucketOwner)
 }
 \arguments{
 \item{Bucket}{[required] The name of the bucket for which to get the versioning information.}
+
+\item{ExpectedBucketOwner}{The account id of the expected bucket owner. If the bucket is owned by a
+different account, the request will fail with an HTTP
+\verb{403 (Access Denied)} error.}
 }
 \description{
 Returns the versioning state of a bucket.
-}
-\details{
+
 To retrieve the versioning state of a bucket, you must be the bucket
 owner.
 
@@ -22,14 +25,15 @@ an authentication device to change the versioning state of the bucket.
 
 The following operations are related to \code{GetBucketVersioning}:
 \itemize{
-\item GetObject
-\item PutObject
-\item DeleteObject
+\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObject.html}{GetObject}
+\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObject.html}{PutObject}
+\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteObject.html}{DeleteObject}
 }
 }
 \section{Request syntax}{
 \preformatted{svc$get_bucket_versioning(
-  Bucket = "string"
+  Bucket = "string",
+  ExpectedBucketOwner = "string"
 )
 }
 }

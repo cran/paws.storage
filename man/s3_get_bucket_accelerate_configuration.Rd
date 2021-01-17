@@ -6,10 +6,15 @@
 to return the Transfer Acceleration state of a bucket, which is either
 Enabled or Suspended}
 \usage{
-s3_get_bucket_accelerate_configuration(Bucket)
+s3_get_bucket_accelerate_configuration(Bucket, ExpectedBucketOwner)
 }
 \arguments{
-\item{Bucket}{[required] Name of the bucket for which the accelerate configuration is retrieved.}
+\item{Bucket}{[required] The name of the bucket for which the accelerate configuration is
+retrieved.}
+
+\item{ExpectedBucketOwner}{The account id of the expected bucket owner. If the bucket is owned by a
+different account, the request will fail with an HTTP
+\verb{403 (Access Denied)} error.}
 }
 \description{
 This implementation of the GET operation uses the \code{accelerate}
@@ -17,8 +22,7 @@ subresource to return the Transfer Acceleration state of a bucket, which
 is either \code{Enabled} or \code{Suspended}. Amazon S3 Transfer Acceleration is a
 bucket-level feature that enables you to perform faster data transfers
 to and from Amazon S3.
-}
-\details{
+
 To use this operation, you must have permission to perform the
 \code{s3:GetAccelerateConfiguration} action. The bucket owner has this
 permission by default. The bucket owner can grant this permission to
@@ -27,7 +31,8 @@ and \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/s3-access-control.html
 in the \emph{Amazon Simple Storage Service Developer Guide}.
 
 You set the Transfer Acceleration state of an existing bucket to
-\code{Enabled} or \code{Suspended} by using the PutBucketAccelerateConfiguration
+\code{Enabled} or \code{Suspended} by using the
+\href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketAccelerateConfiguration.html}{PutBucketAccelerateConfiguration}
 operation.
 
 A GET \code{accelerate} request does not return a state value for a bucket
@@ -39,12 +44,13 @@ in the Amazon Simple Storage Service Developer Guide.
 
 \strong{Related Resources}
 \itemize{
-\item PutBucketAccelerateConfiguration
+\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketAccelerateConfiguration.html}{PutBucketAccelerateConfiguration}
 }
 }
 \section{Request syntax}{
 \preformatted{svc$get_bucket_accelerate_configuration(
-  Bucket = "string"
+  Bucket = "string",
+  ExpectedBucketOwner = "string"
 )
 }
 }

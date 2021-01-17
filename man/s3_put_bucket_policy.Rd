@@ -5,30 +5,36 @@
 \title{Applies an Amazon S3 bucket policy to an Amazon S3 bucket}
 \usage{
 s3_put_bucket_policy(Bucket, ContentMD5, ConfirmRemoveSelfBucketAccess,
-  Policy)
+  Policy, ExpectedBucketOwner)
 }
 \arguments{
 \item{Bucket}{[required] The name of the bucket.}
 
-\item{ContentMD5}{The MD5 hash of the request body.}
+\item{ContentMD5}{The MD5 hash of the request body.
+
+For requests made using the AWS Command Line Interface (CLI) or AWS
+SDKs, this field is calculated automatically.}
 
 \item{ConfirmRemoveSelfBucketAccess}{Set this parameter to true to confirm that you want to remove your
 permissions to change this bucket policy in the future.}
 
 \item{Policy}{[required] The bucket policy as a JSON document.}
+
+\item{ExpectedBucketOwner}{The account id of the expected bucket owner. If the bucket is owned by a
+different account, the request will fail with an HTTP
+\verb{403 (Access Denied)} error.}
 }
 \description{
 Applies an Amazon S3 bucket policy to an Amazon S3 bucket. If you are
 using an identity other than the root user of the AWS account that owns
 the bucket, the calling identity must have the \code{PutBucketPolicy}
-permissions on the specified bucket and belong to the bucket owner\'s
+permissions on the specified bucket and belong to the bucket owner's
 account in order to use this operation.
-}
-\details{
-If you don\'t have \code{PutBucketPolicy} permissions, Amazon S3 returns a
+
+If you don't have \code{PutBucketPolicy} permissions, Amazon S3 returns a
 \verb{403 Access Denied} error. If you have the correct permissions, but
-you\'re not using an identity that belongs to the bucket owner\'s
-account, Amazon S3 returns a \verb{405 Method Not Allowed} error.
+you're not using an identity that belongs to the bucket owner's account,
+Amazon S3 returns a \verb{405 Method Not Allowed} error.
 
 As a security precaution, the root user of the AWS account that owns a
 bucket can always use this operation, even if the policy explicitly
@@ -38,8 +44,8 @@ For more information about bucket policies, see \href{https://docs.aws.amazon.co
 
 The following operations are related to \code{PutBucketPolicy}:
 \itemize{
-\item CreateBucket
-\item DeleteBucket
+\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateBucket.html}{CreateBucket}
+\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucket.html}{DeleteBucket}
 }
 }
 \section{Request syntax}{
@@ -47,7 +53,8 @@ The following operations are related to \code{PutBucketPolicy}:
   Bucket = "string",
   ContentMD5 = "string",
   ConfirmRemoveSelfBucketAccess = TRUE|FALSE,
-  Policy = "string"
+  Policy = "string",
+  ExpectedBucketOwner = "string"
 )
 }
 }

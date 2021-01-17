@@ -5,7 +5,7 @@
 \title{Places an Object Lock configuration on the specified bucket}
 \usage{
 s3_put_object_lock_configuration(Bucket, ObjectLockConfiguration,
-  RequestPayer, Token, ContentMD5)
+  RequestPayer, Token, ContentMD5, ExpectedBucketOwner)
 }
 \arguments{
 \item{Bucket}{[required] The bucket whose Object Lock configuration you want to create or
@@ -18,16 +18,22 @@ bucket.}
 
 \item{Token}{A token to allow Object Lock to be enabled for an existing bucket.}
 
-\item{ContentMD5}{The MD5 hash for the request body.}
+\item{ContentMD5}{The MD5 hash for the request body.
+
+For requests made using the AWS Command Line Interface (CLI) or AWS
+SDKs, this field is calculated automatically.}
+
+\item{ExpectedBucketOwner}{The account id of the expected bucket owner. If the bucket is owned by a
+different account, the request will fail with an HTTP
+\verb{403 (Access Denied)} error.}
 }
 \description{
 Places an Object Lock configuration on the specified bucket. The rule
 specified in the Object Lock configuration will be applied by default to
 every new object placed in the specified bucket.
-}
-\details{
-\code{DefaultRetention} requires either Days or Years. You can\'t specify
-both at the same time.
+
+\code{DefaultRetention} requires either Days or Years. You can't specify both
+at the same time.
 
 \strong{Related Resources}
 \itemize{
@@ -49,7 +55,8 @@ both at the same time.
   ),
   RequestPayer = "requester",
   Token = "string",
-  ContentMD5 = "string"
+  ContentMD5 = "string",
+  ExpectedBucketOwner = "string"
 )
 }
 }

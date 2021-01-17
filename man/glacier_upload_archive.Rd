@@ -12,9 +12,9 @@ glacier_upload_archive(vaultName, accountId, archiveDescription,
 
 \item{accountId}{[required] The \code{AccountId} value is the AWS account ID of the account that owns the
 vault. You can either specify an AWS account ID or optionally a single
-\'\code{-}\' (hyphen), in which case Amazon S3 Glacier uses the AWS account
-ID associated with the credentials used to sign the request. If you use
-an account ID, do not include any hyphens (\'-\') in the ID.}
+'\code{-}' (hyphen), in which case Amazon S3 Glacier uses the AWS account ID
+associated with the credentials used to sign the request. If you use an
+account ID, do not include any hyphens ('-') in the ID.}
 
 \item{archiveDescription}{The optional description of the archive you are uploading.}
 
@@ -27,8 +27,7 @@ This operation adds an archive to a vault. This is a synchronous
 operation, and for a successful upload, your data is durably persisted.
 Amazon S3 Glacier returns the archive ID in the \code{x-amz-archive-id}
 header of the response.
-}
-\details{
+
 You must use the archive ID to access your data in Amazon S3 Glacier.
 After you upload an archive, you should save the archive ID returned so
 that you can retrieve or delete the archive later. Besides saving the
@@ -54,9 +53,9 @@ Archives are immutable. After you upload an archive, you cannot edit the
 archive or its description.
 
 An AWS account has full permission to perform all operations (actions).
-However, AWS Identity and Access Management (IAM) users don\'t have any
+However, AWS Identity and Access Management (IAM) users don't have any
 permissions by default. You must grant them explicit permission to
-perform specific actions. For more information, see \href{https://docs.aws.amazon.com/amazonglacier/latest/dev/using-iam-with-amazon-glacier.html}{Access Control Using AWS Identity and Access Management (IAM)}.
+perform specific actions. For more information, see \href{https://docs.aws.amazon.com/amazonglacier/latest/dev/auth-and-access-control.html}{Access Control Using AWS Identity and Access Management (IAM)}.
 
 For conceptual information and underlying REST API, see \href{https://docs.aws.amazon.com/amazonglacier/latest/dev/uploading-an-archive.html}{Uploading an Archive in Amazon Glacier}
 and \href{https://docs.aws.amazon.com/amazonglacier/latest/dev/api-archive-post.html}{Upload Archive}

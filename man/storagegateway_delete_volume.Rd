@@ -18,14 +18,13 @@ operation is only supported in the cached volume and stored volume
 types. For stored volume gateways, the local disk that was configured as
 the storage volume is not deleted. You can reuse the local disk to
 create another storage volume.
-}
-\details{
+
 Before you delete a volume, make sure there are no iSCSI connections to
 the volume you are deleting. You should also make sure there is no
 snapshot in progress. You can use the Amazon Elastic Compute Cloud
 (Amazon EC2) API to query snapshots on the volume you are deleting and
 check the snapshot status. For more information, go to
-\href{https://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-DescribeSnapshots.html}{DescribeSnapshots}
+\href{https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeSnapshots.html}{DescribeSnapshots}
 in the \emph{Amazon Elastic Compute Cloud API Reference}.
 
 In the request, you must provide the Amazon Resource Name (ARN) of the

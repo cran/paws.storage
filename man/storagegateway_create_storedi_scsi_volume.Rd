@@ -13,20 +13,20 @@ storagegateway_create_storedi_scsi_volume(GatewayARN, DiskId,
 
 \item{DiskId}{[required] The unique identifier for the gateway local disk that is configured as a
 stored volume. Use
-\href{https://docs.aws.amazon.com/storagegateway/latest/userguide/API_ListLocalDisks.html}{ListLocalDisks}
+\href{https://docs.aws.amazon.com/storagegateway/latest/APIReference/API_ListLocalDisks.html}{ListLocalDisks}
 to list disk IDs for a gateway.}
 
-\item{SnapshotId}{The snapshot ID (e.g. \"snap-1122aabb\") of the snapshot to restore as
-the new stored volume. Specify this field if you want to create the
-iSCSI storage volume from a snapshot; otherwise, do not include this
-field. To list snapshots for your account use
-\href{https://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-DescribeSnapshots.html}{DescribeSnapshots}
+\item{SnapshotId}{The snapshot ID (e.g. "snap-1122aabb") of the snapshot to restore as the
+new stored volume. Specify this field if you want to create the iSCSI
+storage volume from a snapshot; otherwise, do not include this field. To
+list snapshots for your account use
+\href{https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeSnapshots.html}{DescribeSnapshots}
 in the \emph{Amazon Elastic Compute Cloud API Reference}.}
 
 \item{PreserveExistingData}{[required] Set to true \code{true} if you want to preserve the data on the local disk.
 Otherwise, set to \code{false} to create an empty volume.
 
-Valid Values: \code{true} \\| \code{false}}
+Valid Values: \code{true} | \code{false}}
 
 \item{TargetName}{[required] The name of the iSCSI target used by an initiator to connect to a volume
 and used as a suffix for the target ARN. For example, specifying
@@ -34,7 +34,7 @@ and used as a suffix for the target ARN. For example, specifying
 \verb{arn:aws:storagegateway:us-east-2:111122223333:gateway/sgw-12A3456B/target/iqn.1997-05.com.amazon:myvolume}.
 The target name must be unique across all volumes on a gateway.
 
-If you don\'t specify a value, Storage Gateway uses the value that was
+If you don't specify a value, Storage Gateway uses the value that was
 previously used for this volume as the new target name.}
 
 \item{NetworkInterfaceId}{[required] The network interface of the gateway on which to expose the iSCSI
@@ -46,7 +46,7 @@ Valid Values: A valid IP address.}
 \item{KMSEncrypted}{Set to \code{true} to use Amazon S3 server-side encryption with your own AWS
 KMS key, or \code{false} to use a key managed by Amazon S3. Optional.
 
-Valid Values: \code{true} \\| \code{false}}
+Valid Values: \code{true} | \code{false}}
 
 \item{KMSKey}{The Amazon Resource Name (ARN) of a symmetric customer master key (CMK)
 used for Amazon S3 server-side encryption. Storage Gateway does not
@@ -58,20 +58,19 @@ tag is a key-value pair.
 
 Valid characters for key and value are letters, spaces, and numbers
 representable in UTF-8 format, and the following special characters: + -
-= . \\_ : / @. The maximum length of a tag\'s key is 128 characters, and
-the maximum length for a tag\'s value is 256.}
+= . \\_ : / @. The maximum length of a tag's key is 128 characters, and
+the maximum length for a tag's value is 256.}
 }
 \description{
 Creates a volume on a specified gateway. This operation is only
 supported in the stored volume gateway type.
-}
-\details{
+
 The size of the volume to create is inferred from the disk size. You can
 choose to preserve existing data on the disk, create volume from an
 existing snapshot, or create an empty volume. If you choose to create an
 empty gateway volume, then any existing data on the disk is erased.
 
-In the request you must specify the gateway and the disk information on
+In the request, you must specify the gateway and the disk information on
 which you are creating the volume. In response, the gateway creates the
 volume and returns volume information such as the volume Amazon Resource
 Name (ARN), its size, and the iSCSI target ARN that initiators can use

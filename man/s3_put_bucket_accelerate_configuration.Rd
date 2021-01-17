@@ -4,19 +4,23 @@
 \alias{s3_put_bucket_accelerate_configuration}
 \title{Sets the accelerate configuration of an existing bucket}
 \usage{
-s3_put_bucket_accelerate_configuration(Bucket, AccelerateConfiguration)
+s3_put_bucket_accelerate_configuration(Bucket, AccelerateConfiguration,
+  ExpectedBucketOwner)
 }
 \arguments{
-\item{Bucket}{[required] Name of the bucket for which the accelerate configuration is set.}
+\item{Bucket}{[required] The name of the bucket for which the accelerate configuration is set.}
 
 \item{AccelerateConfiguration}{[required] Container for setting the transfer acceleration state.}
+
+\item{ExpectedBucketOwner}{The account id of the expected bucket owner. If the bucket is owned by a
+different account, the request will fail with an HTTP
+\verb{403 (Access Denied)} error.}
 }
 \description{
 Sets the accelerate configuration of an existing bucket. Amazon S3
 Transfer Acceleration is a bucket-level feature that enables you to
 perform faster data transfers to Amazon S3.
-}
-\details{
+
 To use this operation, you must have permission to perform the
 s3:PutAccelerateConfiguration action. The bucket owner has this
 permission by default. The bucket owner can grant this permission to
@@ -26,27 +30,28 @@ and \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/s3-access-control.html
 The Transfer Acceleration state of a bucket can be set to one of the
 following two values:
 \itemize{
-\item Enabled -- Enables accelerated data transfers to the bucket.
-\item Suspended -- Disables accelerated data transfers to the bucket.
+\item Enabled – Enables accelerated data transfers to the bucket.
+\item Suspended – Disables accelerated data transfers to the bucket.
 }
 
-The GetBucketAccelerateConfiguration operation returns the transfer
-acceleration state of a bucket.
+The
+\href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketAccelerateConfiguration.html}{GetBucketAccelerateConfiguration}
+operation returns the transfer acceleration state of a bucket.
 
 After setting the Transfer Acceleration state of a bucket to Enabled, it
 might take up to thirty minutes before the data transfer rates to the
 bucket increase.
 
 The name of the bucket used for Transfer Acceleration must be
-DNS-compliant and must not contain periods (\".\").
+DNS-compliant and must not contain periods (".").
 
 For more information about transfer acceleration, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/transfer-acceleration.html}{Transfer Acceleration}.
 
 The following operations are related to
 \code{PutBucketAccelerateConfiguration}:
 \itemize{
-\item GetBucketAccelerateConfiguration
-\item CreateBucket
+\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketAccelerateConfiguration.html}{GetBucketAccelerateConfiguration}
+\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateBucket.html}{CreateBucket}
 }
 }
 \section{Request syntax}{
@@ -54,7 +59,8 @@ The following operations are related to
   Bucket = "string",
   AccelerateConfiguration = list(
     Status = "Enabled"|"Suspended"
-  )
+  ),
+  ExpectedBucketOwner = "string"
 )
 }
 }

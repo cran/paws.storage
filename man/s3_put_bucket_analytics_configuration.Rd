@@ -6,7 +6,7 @@
 analytics configuration ID)}
 \usage{
 s3_put_bucket_analytics_configuration(Bucket, Id,
-  AnalyticsConfiguration)
+  AnalyticsConfiguration, ExpectedBucketOwner)
 }
 \arguments{
 \item{Bucket}{[required] The name of the bucket to which an analytics configuration is stored.}
@@ -14,13 +14,16 @@ s3_put_bucket_analytics_configuration(Bucket, Id,
 \item{Id}{[required] The ID that identifies the analytics configuration.}
 
 \item{AnalyticsConfiguration}{[required] The configuration and any analyses for the analytics filter.}
+
+\item{ExpectedBucketOwner}{The account id of the expected bucket owner. If the bucket is owned by a
+different account, the request will fail with an HTTP
+\verb{403 (Access Denied)} error.}
 }
 \description{
 Sets an analytics configuration for the bucket (specified by the
 analytics configuration ID). You can have up to 1,000 analytics
 configurations per bucket.
-}
-\details{
+
 You can choose to have storage class analysis export analysis reports
 sent to a comma-separated values (CSV) flat file. See the \code{DataExport}
 request element. Reports are updated daily and are based on the object
@@ -29,7 +32,7 @@ destination bucket and an optional destination prefix where the file is
 written. You can export the data to a destination bucket in a different
 account. However, the destination bucket must be in the same Region as
 the bucket that you are making the PUT analytics configuration to. For
-more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/analytics-storage-class.html}{Amazon S3 Analytics -- Storage Class Analysis}.
+more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/analytics-storage-class.html}{Amazon S3 Analytics – Storage Class Analysis}.
 
 You must create a bucket policy on the destination bucket where the
 exported file is written to grant permissions to Amazon S3 to write
@@ -67,6 +70,11 @@ set the configuration on the bucket.}
 }
 
 \strong{Related Resources}
+\itemize{
+\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketAnalyticsConfiguration.html}{GetBucketAnalyticsConfiguration}
+\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketAnalyticsConfiguration.html}{DeleteBucketAnalyticsConfiguration}
+\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListBucketAnalyticsConfigurations.html}{ListBucketAnalyticsConfigurations}
+}
 }
 \section{Request syntax}{
 \preformatted{svc$put_bucket_analytics_configuration(
@@ -103,7 +111,8 @@ set the configuration on the bucket.}
         )
       )
     )
-  )
+  ),
+  ExpectedBucketOwner = "string"
 )
 }
 }

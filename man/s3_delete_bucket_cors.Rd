@@ -4,15 +4,18 @@
 \alias{s3_delete_bucket_cors}
 \title{Deletes the cors configuration information set for the bucket}
 \usage{
-s3_delete_bucket_cors(Bucket)
+s3_delete_bucket_cors(Bucket, ExpectedBucketOwner)
 }
 \arguments{
 \item{Bucket}{[required] Specifies the bucket whose \code{cors} configuration is being deleted.}
+
+\item{ExpectedBucketOwner}{The account id of the expected bucket owner. If the bucket is owned by a
+different account, the request will fail with an HTTP
+\verb{403 (Access Denied)} error.}
 }
 \description{
 Deletes the \code{cors} configuration information set for the bucket.
-}
-\details{
+
 To use this operation, you must have permission to perform the
 \code{s3:PutBucketCORS} action. The bucket owner has this permission by
 default and can grant this permission to others.
@@ -22,15 +25,14 @@ the \emph{Amazon Simple Storage Service Developer Guide}.
 
 \strong{Related Resources:}
 \itemize{
-\item 
-\itemize{
-\item RESTOPTIONSobject
-}
+\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketCors.html}{PutBucketCors}
+\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/RESTOPTIONSobject.html}{RESTOPTIONSobject}
 }
 }
 \section{Request syntax}{
 \preformatted{svc$delete_bucket_cors(
-  Bucket = "string"
+  Bucket = "string",
+  ExpectedBucketOwner = "string"
 )
 }
 }

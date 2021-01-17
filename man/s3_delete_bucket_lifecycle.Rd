@@ -4,10 +4,14 @@
 \alias{s3_delete_bucket_lifecycle}
 \title{Deletes the lifecycle configuration from the specified bucket}
 \usage{
-s3_delete_bucket_lifecycle(Bucket)
+s3_delete_bucket_lifecycle(Bucket, ExpectedBucketOwner)
 }
 \arguments{
 \item{Bucket}{[required] The bucket name of the lifecycle to delete.}
+
+\item{ExpectedBucketOwner}{The account id of the expected bucket owner. If the bucket is owned by a
+different account, the request will fail with an HTTP
+\verb{403 (Access Denied)} error.}
 }
 \description{
 Deletes the lifecycle configuration from the specified bucket. Amazon S3
@@ -15,8 +19,7 @@ removes all the lifecycle configuration rules in the lifecycle
 subresource associated with the bucket. Your objects never expire, and
 Amazon S3 no longer automatically deletes any objects on the basis of
 rules contained in the deleted lifecycle configuration.
-}
-\details{
+
 To use this operation, you must have permission to perform the
 \code{s3:PutLifecycleConfiguration} action. By default, the bucket owner has
 this permission and the bucket owner can grant this permission to
@@ -29,13 +32,14 @@ For more information about the object expiration, see \href{https://docs.aws.ama
 
 Related actions include:
 \itemize{
-\item PutBucketLifecycleConfiguration
-\item GetBucketLifecycleConfiguration
+\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketLifecycleConfiguration.html}{PutBucketLifecycleConfiguration}
+\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLifecycleConfiguration.html}{GetBucketLifecycleConfiguration}
 }
 }
 \section{Request syntax}{
 \preformatted{svc$delete_bucket_lifecycle(
-  Bucket = "string"
+  Bucket = "string",
+  ExpectedBucketOwner = "string"
 )
 }
 }

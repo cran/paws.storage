@@ -5,16 +5,23 @@
 \title{Sets the request payment configuration for a bucket}
 \usage{
 s3_put_bucket_request_payment(Bucket, ContentMD5,
-  RequestPaymentConfiguration)
+  RequestPaymentConfiguration, ExpectedBucketOwner)
 }
 \arguments{
 \item{Bucket}{[required] The bucket name.}
 
-\item{ContentMD5}{\\>The base64-encoded 128-bit MD5 digest of the data. You must use this
+\item{ContentMD5}{>The base64-encoded 128-bit MD5 digest of the data. You must use this
 header as a message integrity check to verify that the request body was
-not corrupted in transit. For more information, see \href{http://www.ietf.org/rfc/rfc1864.txt}{RFC 1864}.}
+not corrupted in transit. For more information, see \href{https://www.ietf.org/rfc/rfc1864.txt}{RFC 1864}.
+
+For requests made using the AWS Command Line Interface (CLI) or AWS
+SDKs, this field is calculated automatically.}
 
 \item{RequestPaymentConfiguration}{[required] Container for Payer.}
+
+\item{ExpectedBucketOwner}{The account id of the expected bucket owner. If the bucket is owned by a
+different account, the request will fail with an HTTP
+\verb{403 (Access Denied)} error.}
 }
 \description{
 Sets the request payment configuration for a bucket. By default, the
@@ -22,12 +29,11 @@ bucket owner pays for downloads from the bucket. This configuration
 parameter enables the bucket owner (only) to specify that the person
 requesting the download will be charged for the download. For more
 information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/RequesterPaysBuckets.html}{Requester Pays Buckets}.
-}
-\details{
+
 The following operations are related to \code{PutBucketRequestPayment}:
 \itemize{
-\item CreateBucket
-\item GetBucketRequestPayment
+\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateBucket.html}{CreateBucket}
+\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketRequestPayment.html}{GetBucketRequestPayment}
 }
 }
 \section{Request syntax}{
@@ -36,7 +42,8 @@ The following operations are related to \code{PutBucketRequestPayment}:
   ContentMD5 = "string",
   RequestPaymentConfiguration = list(
     Payer = "Requester"|"BucketOwner"
-  )
+  ),
+  ExpectedBucketOwner = "string"
 )
 }
 }

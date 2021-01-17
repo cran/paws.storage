@@ -6,20 +6,23 @@
 configuration (identified by the analytics configuration ID) from the
 bucket}
 \usage{
-s3_get_bucket_analytics_configuration(Bucket, Id)
+s3_get_bucket_analytics_configuration(Bucket, Id, ExpectedBucketOwner)
 }
 \arguments{
 \item{Bucket}{[required] The name of the bucket from which an analytics configuration is
 retrieved.}
 
 \item{Id}{[required] The ID that identifies the analytics configuration.}
+
+\item{ExpectedBucketOwner}{The account id of the expected bucket owner. If the bucket is owned by a
+different account, the request will fail with an HTTP
+\verb{403 (Access Denied)} error.}
 }
 \description{
 This implementation of the GET operation returns an analytics
 configuration (identified by the analytics configuration ID) from the
 bucket.
-}
-\details{
+
 To use this operation, you must have permissions to perform the
 \code{s3:GetAnalyticsConfiguration} action. The bucket owner has this
 permission by default. The bucket owner can grant this permission to
@@ -27,15 +30,21 @@ others. For more information about permissions, see \href{https://docs.aws.amazo
 and \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/s3-access-control.html}{Managing Access Permissions to Your Amazon S3 Resources}
 in the \emph{Amazon Simple Storage Service Developer Guide}.
 
-For information about Amazon S3 analytics feature, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/analytics-storage-class.html}{Amazon S3 Analytics -- Storage Class Analysis}
+For information about Amazon S3 analytics feature, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/analytics-storage-class.html}{Amazon S3 Analytics – Storage Class Analysis}
 in the \emph{Amazon Simple Storage Service Developer Guide}.
 
 \strong{Related Resources}
+\itemize{
+\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketAnalyticsConfiguration.html}{DeleteBucketAnalyticsConfiguration}
+\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListBucketAnalyticsConfigurations.html}{ListBucketAnalyticsConfigurations}
+\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketAnalyticsConfiguration.html}{PutBucketAnalyticsConfiguration}
+}
 }
 \section{Request syntax}{
 \preformatted{svc$get_bucket_analytics_configuration(
   Bucket = "string",
-  Id = "string"
+  Id = "string",
+  ExpectedBucketOwner = "string"
 )
 }
 }

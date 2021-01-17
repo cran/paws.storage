@@ -5,36 +5,43 @@
 \title{Sets the versioning state of an existing bucket}
 \usage{
 s3_put_bucket_versioning(Bucket, ContentMD5, MFA,
-  VersioningConfiguration)
+  VersioningConfiguration, ExpectedBucketOwner)
 }
 \arguments{
 \item{Bucket}{[required] The bucket name.}
 
-\item{ContentMD5}{\\>The base64-encoded 128-bit MD5 digest of the data. You must use this
+\item{ContentMD5}{>The base64-encoded 128-bit MD5 digest of the data. You must use this
 header as a message integrity check to verify that the request body was
-not corrupted in transit. For more information, see \href{http://www.ietf.org/rfc/rfc1864.txt}{RFC 1864}.}
+not corrupted in transit. For more information, see \href{https://www.ietf.org/rfc/rfc1864.txt}{RFC 1864}.
 
-\item{MFA}{The concatenation of the authentication device\'s serial number, a
-space, and the value that is displayed on your authentication device.}
+For requests made using the AWS Command Line Interface (CLI) or AWS
+SDKs, this field is calculated automatically.}
+
+\item{MFA}{The concatenation of the authentication device's serial number, a space,
+and the value that is displayed on your authentication device.}
 
 \item{VersioningConfiguration}{[required] Container for setting the versioning state.}
+
+\item{ExpectedBucketOwner}{The account id of the expected bucket owner. If the bucket is owned by a
+different account, the request will fail with an HTTP
+\verb{403 (Access Denied)} error.}
 }
 \description{
 Sets the versioning state of an existing bucket. To set the versioning
 state, you must be the bucket owner.
-}
-\details{
+
 You can set the versioning state with one of the following values:
 
-\strong{Enabled}---Enables versioning for the objects in the bucket. All
+\strong{Enabled}—Enables versioning for the objects in the bucket. All
 objects added to the bucket receive a unique version ID.
 
-\strong{Suspended}---Disables versioning for the objects in the bucket. All
+\strong{Suspended}—Disables versioning for the objects in the bucket. All
 objects added to the bucket receive the version ID null.
 
 If the versioning state has never been set on a bucket, it has no
-versioning state; a GetBucketVersioning request does not return a
-versioning state value.
+versioning state; a
+\href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketVersioning.html}{GetBucketVersioning}
+request does not return a versioning state value.
 
 If the bucket owner enables MFA Delete in the bucket versioning
 configuration, the bucket owner must include the \verb{x-amz-mfa request}
@@ -51,9 +58,9 @@ object versions.) For more information, see \href{https://docs.aws.amazon.com/Am
 
 \strong{Related Resources}
 \itemize{
-\item CreateBucket
-\item DeleteBucket
-\item GetBucketVersioning
+\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateBucket.html}{CreateBucket}
+\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucket.html}{DeleteBucket}
+\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketVersioning.html}{GetBucketVersioning}
 }
 }
 \section{Request syntax}{
@@ -64,7 +71,8 @@ object versions.) For more information, see \href{https://docs.aws.amazon.com/Am
   VersioningConfiguration = list(
     MFADelete = "Enabled"|"Disabled",
     Status = "Enabled"|"Suspended"
-  )
+  ),
+  ExpectedBucketOwner = "string"
 )
 }
 }

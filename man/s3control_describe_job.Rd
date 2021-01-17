@@ -14,16 +14,15 @@ s3control_describe_job(AccountId, JobId)
 }
 \description{
 Retrieves the configuration parameters and status for a Batch Operations
-job. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/batch-ops-basics.html}{Amazon S3 Batch Operations}
-in the Amazon Simple Storage Service Developer Guide.
-}
-\details{
+job. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/batch-ops-basics.html}{S3 Batch Operations}
+in the \emph{Amazon Simple Storage Service Developer Guide}.
+
 Related actions include:
 \itemize{
-\item CreateJob
-\item ListJobs
-\item UpdateJobPriority
-\item UpdateJobStatus
+\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_CreateJob.html}{CreateJob}
+\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_ListJobs.html}{ListJobs}
+\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_UpdateJobPriority.html}{UpdateJobPriority}
+\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_UpdateJobStatus.html}{UpdateJobStatus}
 }
 }
 \section{Request syntax}{

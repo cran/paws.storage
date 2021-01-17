@@ -11,7 +11,7 @@ efs_put_lifecycle_configuration(FileSystemId, LifecyclePolicies)
 \item{FileSystemId}{[required] The ID of the file system for which you are creating the
 \code{LifecycleConfiguration} object (String).}
 
-\item{LifecyclePolicies}{[required] An array of \code{LifecyclePolicy} objects that define the file system\'s
+\item{LifecyclePolicies}{[required] An array of \code{LifecyclePolicy} objects that define the file system's
 \code{LifecycleConfiguration} object. A \code{LifecycleConfiguration} object tells
 lifecycle management when to transition files from the Standard storage
 class to the Infrequent Access storage class.}
@@ -22,8 +22,7 @@ object. A \code{LifecycleConfiguration} object defines when files in an
 Amazon EFS file system are automatically transitioned to the lower-cost
 EFS Infrequent Access (IA) storage class. A \code{LifecycleConfiguration}
 applies to all files in a file system.
-}
-\details{
+
 Each Amazon EFS file system supports one lifecycle configuration, which
 applies to all files in the file system. If a \code{LifecycleConfiguration}
 object already exists for the specified file system, a

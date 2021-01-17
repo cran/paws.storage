@@ -9,9 +9,9 @@ glacier_abort_multipart_upload(accountId, vaultName, uploadId)
 \arguments{
 \item{accountId}{[required] The \code{AccountId} value is the AWS account ID of the account that owns the
 vault. You can either specify an AWS account ID or optionally a single
-\'\code{-}\' (hyphen), in which case Amazon S3 Glacier uses the AWS account
-ID associated with the credentials used to sign the request. If you use
-an account ID, do not include any hyphens (\'-\') in the ID.}
+'\code{-}' (hyphen), in which case Amazon S3 Glacier uses the AWS account ID
+associated with the credentials used to sign the request. If you use an
+account ID, do not include any hyphens ('-') in the ID.}
 
 \item{vaultName}{[required] The name of the vault.}
 
@@ -19,8 +19,7 @@ an account ID, do not include any hyphens (\'-\') in the ID.}
 }
 \description{
 This operation aborts a multipart upload identified by the upload ID.
-}
-\details{
+
 After the Abort Multipart Upload request succeeds, you cannot upload any
 more parts to the multipart upload or complete the multipart upload.
 Aborting a completed upload fails. However, aborting an already-aborted
@@ -31,9 +30,9 @@ UploadMultipartPart and CompleteMultipartUpload.
 This operation is idempotent.
 
 An AWS account has full permission to perform all operations (actions).
-However, AWS Identity and Access Management (IAM) users don\'t have any
+However, AWS Identity and Access Management (IAM) users don't have any
 permissions by default. You must grant them explicit permission to
-perform specific actions. For more information, see \href{https://docs.aws.amazon.com/amazonglacier/latest/dev/using-iam-with-amazon-glacier.html}{Access Control Using AWS Identity and Access Management (IAM)}.
+perform specific actions. For more information, see \href{https://docs.aws.amazon.com/amazonglacier/latest/dev/auth-and-access-control.html}{Access Control Using AWS Identity and Access Management (IAM)}.
 
 For conceptual information and underlying REST API, see \href{https://docs.aws.amazon.com/amazonglacier/latest/dev/working-with-archives.html}{Working with Archives in Amazon S3 Glacier}
 and \href{https://docs.aws.amazon.com/amazonglacier/latest/dev/api-multipart-abort-upload.html}{Abort Multipart Upload}

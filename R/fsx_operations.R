@@ -3,16 +3,93 @@
 #' @include fsx_service.R
 NULL
 
+#' Use this action to associate one or more Domain Name Server (DNS)
+#' aliases with an existing Amazon FSx for Windows File Server file system
+#'
+#' @description
+#' Use this action to associate one or more Domain Name Server (DNS)
+#' aliases with an existing Amazon FSx for Windows File Server file system.
+#' A file systen can have a maximum of 50 DNS aliases associated with it at
+#' any one time. If you try to associate a DNS alias that is already
+#' associated with the file system, FSx takes no action on that alias in
+#' the request. For more information, see [Working with DNS
+#' Aliases](https://docs.aws.amazon.com/fsx/latest/WindowsGuide/managing-dns-aliases.html)
+#' and [Walkthrough 5: Using DNS aliases to access your file
+#' system](https://docs.aws.amazon.com/fsx/latest/WindowsGuide/walkthrough05-file-system-custom-CNAME.html),
+#' including additional steps you must take to be able to access your file
+#' system using a DNS alias.
+#' 
+#' The system response shows the DNS aliases that Amazon FSx is attempting
+#' to associate with the file system. Use the API operation to monitor the
+#' status of the aliases Amazon FSx is associating with the file system.
+#'
+#' @usage
+#' fsx_associate_file_system_aliases(ClientRequestToken, FileSystemId,
+#'   Aliases)
+#'
+#' @param ClientRequestToken 
+#' @param FileSystemId &#91;required&#93; Specifies the file system with which you want to associate one or more
+#' DNS aliases.
+#' @param Aliases &#91;required&#93; An array of one or more DNS alias names to associate with the file
+#' system. The alias name has to comply with the following formatting
+#' requirements:
+#' 
+#' -   Formatted as a fully-qualified domain name (FQDN),
+#'     *`hostname.domain`* , for example, `accounting.corp.example.com`.
+#' 
+#' -   Can contain alphanumeric characters and the hyphen (-).
+#' 
+#' -   Cannot start or end with a hyphen.
+#' 
+#' -   Can start with a numeric.
+#' 
+#' For DNS alias names, Amazon FSx stores alphabetic characters as
+#' lowercase letters (a-z), regardless of how you specify them: as
+#' uppercase letters, lowercase letters, or the corresponding letters in
+#' escape codes.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$associate_file_system_aliases(
+#'   ClientRequestToken = "string",
+#'   FileSystemId = "string",
+#'   Aliases = list(
+#'     "string"
+#'   )
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname fsx_associate_file_system_aliases
+fsx_associate_file_system_aliases <- function(ClientRequestToken = NULL, FileSystemId, Aliases) {
+  op <- new_operation(
+    name = "AssociateFileSystemAliases",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .fsx$associate_file_system_aliases_input(ClientRequestToken = ClientRequestToken, FileSystemId = FileSystemId, Aliases = Aliases)
+  output <- .fsx$associate_file_system_aliases_output()
+  config <- get_config()
+  svc <- .fsx$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.fsx$operations$associate_file_system_aliases <- fsx_associate_file_system_aliases
+
 #' Cancels an existing Amazon FSx for Lustre data repository task if that
 #' task is in either the PENDING or EXECUTING state
 #'
+#' @description
 #' Cancels an existing Amazon FSx for Lustre data repository task if that
 #' task is in either the `PENDING` or `EXECUTING` state. When you cancel a
 #' task, Amazon FSx does the following.
 #' 
 #' -   Any files that FSx has already exported are not reverted.
 #' 
-#' -   FSx continues to export any files that are \"in-flight\" when the
+#' -   FSx continues to export any files that are "in-flight" when the
 #'     cancel operation is received.
 #' 
 #' -   FSx does not export any files that have not yet been exported.
@@ -51,6 +128,7 @@ fsx_cancel_data_repository_task <- function(TaskId) {
 
 #' Creates a backup of an existing Amazon FSx file system
 #'
+#' @description
 #' Creates a backup of an existing Amazon FSx file system. Creating regular
 #' backups for your file system is a best practice, enabling you to restore
 #' a file system from a backup if an issue arises with the original file
@@ -61,17 +139,22 @@ fsx_cancel_data_repository_task <- function(TaskId) {
 #' 
 #' -   a Persistent deployment type
 #' 
-#' -   is *not* linked to an Amazon S3 data respository.
+#' -   is *not* linked to a data respository.
 #' 
-#' For more information, see
-#' <https://docs.aws.amazon.com/fsx/latest/LustreGuide/lustre-backups.html>.
+#' For more information about backing up Amazon FSx for Lustre file
+#' systems, see [Working with FSx for Lustre
+#' backups](https://docs.aws.amazon.com/fsx/latest/LustreGuide/using-backups-fsx.html).
+#' 
+#' For more information about backing up Amazon FSx for Windows file
+#' systems, see [Working with FSx for Windows
+#' backups](https://docs.aws.amazon.com/fsx/latest/WindowsGuide/using-backups.html).
 #' 
 #' If a backup with the specified client request token exists, and the
 #' parameters match, this operation returns the description of the existing
 #' backup. If a backup specified client request token exists, and the
-#' parameters don\'t match, this operation returns
+#' parameters don't match, this operation returns
 #' `IncompatibleParameterError`. If a backup with the specified client
-#' request token doesn\'t exist, `CreateBackup` does the following:
+#' request token doesn't exist, `CreateBackup` does the following:
 #' 
 #' -   Creates a new Amazon FSx backup with an assigned ID, and an initial
 #'     lifecycle state of `CREATING`.
@@ -85,7 +168,7 @@ fsx_cancel_data_repository_task <- function(TaskId) {
 #' and the initial call created a backup, the operation returns a
 #' successful result because all the parameters are the same.
 #' 
-#' The `CreateBackup` operation returns while the backup\'s lifecycle state
+#' The `CreateBackup` operation returns while the backup's lifecycle state
 #' is still `CREATING`. You can check the backup creation status by calling
 #' the DescribeBackups operation, which returns the backup state along with
 #' other information.
@@ -94,14 +177,15 @@ fsx_cancel_data_repository_task <- function(TaskId) {
 #' fsx_create_backup(FileSystemId, ClientRequestToken, Tags)
 #'
 #' @param FileSystemId &#91;required&#93; The ID of the file system to back up.
-#' @param ClientRequestToken A string of up to 64 ASCII characters that Amazon FSx uses to ensure
-#' idempotent creation. This string is automatically filled on your behalf
-#' when you use the AWS Command Line Interface (AWS CLI) or an AWS SDK.
-#' @param Tags The tags to apply to the backup at backup creation. The key value of the
-#' `Name` tag appears in the console as the backup name. If you have set
-#' `CopyTagsToBackups` to true, and you specify one or more tags using the
-#' `CreateBackup` action, no existing tags on the file system are copied
-#' from the file system to the backup.
+#' @param ClientRequestToken (Optional) A string of up to 64 ASCII characters that Amazon FSx uses to
+#' ensure idempotent creation. This string is automatically filled on your
+#' behalf when you use the AWS Command Line Interface (AWS CLI) or an AWS
+#' SDK.
+#' @param Tags (Optional) The tags to apply to the backup at backup creation. The key
+#' value of the `Name` tag appears in the console as the backup name. If
+#' you have set `CopyTagsToBackups` to true, and you specify one or more
+#' tags using the `CreateBackup` action, no existing file system tags are
+#' copied from the file system to the backup.
 #'
 #' @section Request syntax:
 #' ```
@@ -153,6 +237,7 @@ fsx_create_backup <- function(FileSystemId, ClientRequestToken = NULL, Tags = NU
 
 #' Creates an Amazon FSx for Lustre data repository task
 #'
+#' @description
 #' Creates an Amazon FSx for Lustre data repository task. You use data
 #' repository tasks to perform bulk operations between your Amazon FSx file
 #' system and its linked data repository. An example of a data repository
@@ -161,11 +246,11 @@ fsx_create_backup <- function(FileSystemId, ClientRequestToken = NULL, Tags = NU
 #' FSx file system to its linked data repository. A
 #' `CreateDataRepositoryTask` operation will fail if a data repository is
 #' not linked to the FSx file system. To learn more about data repository
-#' tasks, see [Using Data Repository
+#' tasks, see [Data Repository
 #' Tasks](https://docs.aws.amazon.com/fsx/latest/LustreGuide/data-repository-tasks.html).
 #' To learn more about linking a data repository to your file system, see
-#' [Setting the Export
-#' Prefix](https://docs.aws.amazon.com/fsx/latest/LustreGuide/export-data-repository.html#export-prefix).
+#' [Linking your file system to an S3
+#' bucket](https://docs.aws.amazon.com/fsx/latest/LustreGuide/create-fs-linked-data-repo.html).
 #'
 #' @usage
 #' fsx_create_data_repository_task(Type, Paths, FileSystemId, Report,
@@ -178,7 +263,7 @@ fsx_create_backup <- function(FileSystemId, ClientRequestToken = NULL, Tags = NU
 #' mount point of the file system. If the mount point is `/mnt/fsx` and
 #' `/mnt/fsx/path1` is a directory or file on the file system you want to
 #' export, then the path to provide is `path1`. If a path that you provide
-#' isn\'t valid, the task fails.
+#' isn't valid, the task fails.
 #' @param FileSystemId &#91;required&#93; 
 #' @param Report &#91;required&#93; Defines whether or not Amazon FSx provides a CompletionReport once the
 #' task has completed. A CompletionReport provides a detailed report on the
@@ -235,14 +320,15 @@ fsx_create_data_repository_task <- function(Type, Paths = NULL, FileSystemId, Re
 
 #' Creates a new, empty Amazon FSx file system
 #'
+#' @description
 #' Creates a new, empty Amazon FSx file system.
 #' 
 #' If a file system with the specified client request token exists and the
 #' parameters match, `CreateFileSystem` returns the description of the
 #' existing file system. If a file system specified client request token
-#' exists and the parameters don\'t match, this call returns
+#' exists and the parameters don't match, this call returns
 #' `IncompatibleParameterError`. If a file system with the specified client
-#' request token doesn\'t exist, `CreateFileSystem` does the following:
+#' request token doesn't exist, `CreateFileSystem` does the following:
 #' 
 #' -   Creates a new, empty Amazon FSx file system with an assigned ID, and
 #'     an initial lifecycle state of `CREATING`.
@@ -261,7 +347,7 @@ fsx_create_data_repository_task <- function(Type, Paths = NULL, FileSystemId, Re
 #' system, the client receives success as long as the parameters are the
 #' same.
 #' 
-#' The `CreateFileSystem` call returns while the file system\'s lifecycle
+#' The `CreateFileSystem` call returns while the file system's lifecycle
 #' state is still `CREATING`. You can check the file-system creation status
 #' by calling the DescribeFileSystems operation, which returns the file
 #' system state along with other information.
@@ -276,15 +362,19 @@ fsx_create_data_repository_task <- function(Type, Paths = NULL, FileSystemId, Re
 #' when you use the AWS Command Line Interface (AWS CLI) or an AWS SDK.
 #' @param FileSystemType &#91;required&#93; The type of Amazon FSx file system to create, either `WINDOWS` or
 #' `LUSTRE`.
-#' @param StorageCapacity &#91;required&#93; Sets the storage capacity of the file system that you\'re creating.
+#' @param StorageCapacity &#91;required&#93; Sets the storage capacity of the file system that you're creating.
 #' 
 #' For Lustre file systems:
 #' 
-#' -   For `SCRATCH_2` and `PERSISTENT_1` deployment types, valid values
-#'     are 1.2, 2.4, and increments of 2.4 TiB.
+#' -   For `SCRATCH_2` and `PERSISTENT_1 SSD` deployment types, valid
+#'     values are 1200 GiB, 2400 GiB, and increments of 2400 GiB.
 #' 
-#' -   For `SCRATCH_1` deployment type, valid values are 1.2, 2.4, and
-#'     increments of 3.6 TiB.
+#' -   For `PERSISTENT HDD` file systems, valid values are increments of
+#'     6000 GiB for 12 MB/s/TiB file systems and increments of 1800 GiB for
+#'     40 MB/s/TiB file systems.
+#' 
+#' -   For `SCRATCH_1` deployment type, valid values are 1200 GiB, 2400
+#'     GiB, and increments of 3600 GiB.
 #' 
 #' For Windows file systems:
 #' 
@@ -292,18 +382,21 @@ fsx_create_data_repository_task <- function(Type, Paths = NULL, FileSystemId, Re
 #' 
 #' -   If `StorageType=HDD`, valid values are 2000 GiB - 65,536 GiB (64
 #'     TiB).
-#' @param StorageType Sets the storage type for the Amazon FSx for Windows file system you\'re
-#' creating. Valid values are `SSD` and `HDD`.
+#' @param StorageType Sets the storage type for the file system you're creating. Valid values
+#' are `SSD` and `HDD`.
 #' 
 #' -   Set to `SSD` to use solid state drive storage. SSD is supported on
-#'     all Windows deployment types.
+#'     all Windows and Lustre deployment types.
 #' 
 #' -   Set to `HDD` to use hard disk drive storage. HDD is supported on
-#'     `SINGLE_AZ_2` and `MULTI_AZ_1` Windows file system deployment types.
+#'     `SINGLE_AZ_2` and `MULTI_AZ_1` Windows file system deployment types,
+#'     and on `PERSISTENT` Lustre file system deployment types.
 #' 
 #' Default value is `SSD`. For more information, see [Storage Type
 #' Options](https://docs.aws.amazon.com/fsx/latest/WindowsGuide/optimize-fsx-costs.html#storage-type-options)
-#' in the *Amazon FSx for Windows User Guide*.
+#' in the *Amazon FSx for Windows User Guide* and [Multiple Storage
+#' Options](https://docs.aws.amazon.com/fsx/latest/LustreGuide/what-is.html#storage-options)
+#' in the *Amazon FSx for Lustre User Guide*.
 #' @param SubnetIds &#91;required&#93; Specifies the IDs of the subnets that the file system will be accessible
 #' from. For Windows `MULTI_AZ_1` file system deployment types, provide
 #' exactly two subnet IDs, one for the preferred file server and one for
@@ -313,9 +406,9 @@ fsx_create_data_repository_task <- function(Type, Paths = NULL, FileSystemId, Re
 #' 
 #' For Windows `SINGLE_AZ_1` and `SINGLE_AZ_2` file system deployment types
 #' and Lustre file systems, provide exactly one subnet ID. The file server
-#' is launched in that subnet\'s Availability Zone.
+#' is launched in that subnet's Availability Zone.
 #' @param SecurityGroupIds A list of IDs specifying the security groups to apply to all network
-#' interfaces created for file system access. This list isn\'t returned in
+#' interfaces created for file system access. This list isn't returned in
 #' later requests to describe the file system.
 #' @param Tags The tags to apply to the file system being created. The key value of the
 #' `Name` tag appears in the console as the file system name.
@@ -361,7 +454,10 @@ fsx_create_data_repository_task <- function(Type, Paths = NULL, FileSystemId, Re
 #'     WeeklyMaintenanceStartTime = "string",
 #'     DailyAutomaticBackupStartTime = "string",
 #'     AutomaticBackupRetentionDays = 123,
-#'     CopyTagsToBackups = TRUE|FALSE
+#'     CopyTagsToBackups = TRUE|FALSE,
+#'     Aliases = list(
+#'       "string"
+#'     )
 #'   ),
 #'   LustreConfiguration = list(
 #'     WeeklyMaintenanceStartTime = "string",
@@ -369,25 +465,29 @@ fsx_create_data_repository_task <- function(Type, Paths = NULL, FileSystemId, Re
 #'     ExportPath = "string",
 #'     ImportedFileChunkSize = 123,
 #'     DeploymentType = "SCRATCH_1"|"SCRATCH_2"|"PERSISTENT_1",
+#'     AutoImportPolicy = "NONE"|"NEW"|"NEW_CHANGED",
 #'     PerUnitStorageThroughput = 123,
 #'     DailyAutomaticBackupStartTime = "string",
 #'     AutomaticBackupRetentionDays = 123,
-#'     CopyTagsToBackups = TRUE|FALSE
+#'     CopyTagsToBackups = TRUE|FALSE,
+#'     DriveCacheType = "NONE"|"READ"
 #'   )
 #' )
 #' ```
 #'
 #' @examples
 #' \dontrun{
-#' # This operation creates a new file system.
+#' # This operation creates a new Amazon FSx for Windows File Server file
+#' # system.
 #' svc$create_file_system(
 #'   ClientRequestToken = "a8ca07e4-61ec-4399-99f4-19853801bcd5",
 #'   FileSystemType = "WINDOWS",
-#'   KmsKeyId = "arn:aws:kms:us-east-1:012345678912:key/0ff3ea8d-130e-4133-877f-93908b6fdbd6",
+#'   KmsKeyId = "arn:aws:kms:us-east-1:012345678912:key/1111abcd-2222-3333-4444-55556666eeff",
 #'   SecurityGroupIds = list(
 #'     "sg-edcd9784"
 #'   ),
-#'   StorageCapacity = 300L,
+#'   StorageCapacity = 3200L,
+#'   StorageType = "HDD",
 #'   SubnetIds = list(
 #'     "subnet-1234abcd"
 #'   ),
@@ -399,9 +499,12 @@ fsx_create_data_repository_task <- function(Type, Paths = NULL, FileSystemId, Re
 #'   ),
 #'   WindowsConfiguration = list(
 #'     ActiveDirectoryId = "d-1234abcd12",
+#'     Aliases = list(
+#'       "accounting.corp.example.com"
+#'     ),
 #'     AutomaticBackupRetentionDays = 30L,
 #'     DailyAutomaticBackupStartTime = "05:00",
-#'     ThroughputCapacity = 8L,
+#'     ThroughputCapacity = 32L,
 #'     WeeklyMaintenanceStartTime = "1:05:00"
 #'   )
 #' )
@@ -429,14 +532,15 @@ fsx_create_file_system <- function(ClientRequestToken = NULL, FileSystemType, St
 
 #' Creates a new Amazon FSx file system from an existing Amazon FSx backup
 #'
+#' @description
 #' Creates a new Amazon FSx file system from an existing Amazon FSx backup.
 #' 
 #' If a file system with the specified client request token exists and the
 #' parameters match, this operation returns the description of the file
 #' system. If a client request token specified by the file system exists
-#' and the parameters don\'t match, this call returns
+#' and the parameters don't match, this call returns
 #' `IncompatibleParameterError`. If a file system with the specified client
-#' request token doesn\'t exist, this operation does the following:
+#' request token doesn't exist, this operation does the following:
 #' 
 #' -   Creates a new Amazon FSx file system from backup with an assigned
 #'     ID, and an initial lifecycle state of `CREATING`.
@@ -457,7 +561,7 @@ fsx_create_file_system <- function(ClientRequestToken = NULL, FileSystemType, St
 #' file system, the client receives success as long as the parameters are
 #' the same.
 #' 
-#' The `CreateFileSystemFromBackup` call returns while the file system\'s
+#' The `CreateFileSystemFromBackup` call returns while the file system's
 #' lifecycle state is still `CREATING`. You can check the file-system
 #' creation status by calling the DescribeFileSystems operation, which
 #' returns the file system state along with other information.
@@ -480,18 +584,18 @@ fsx_create_file_system <- function(ClientRequestToken = NULL, FileSystemType, St
 #' 
 #' For Windows `SINGLE_AZ_1` and `SINGLE_AZ_2` deployment types and Lustre
 #' file systems, provide exactly one subnet ID. The file server is launched
-#' in that subnet\'s Availability Zone.
+#' in that subnet's Availability Zone.
 #' @param SecurityGroupIds A list of IDs for the security groups that apply to the specified
 #' network interfaces created for file system access. These security groups
-#' apply to all network interfaces. This value isn\'t returned in later
+#' apply to all network interfaces. This value isn't returned in later
 #' DescribeFileSystem requests.
 #' @param Tags The tags to be applied to the file system at file system creation. The
 #' key value of the `Name` tag appears in the console as the file system
 #' name.
 #' @param WindowsConfiguration The configuration for this Microsoft Windows file system.
 #' @param LustreConfiguration 
-#' @param StorageType Sets the storage type for the Windows file system you\'re creating from
-#' a backup. Valid values are `SSD` and `HDD`.
+#' @param StorageType Sets the storage type for the Windows file system you're creating from a
+#' backup. Valid values are `SSD` and `HDD`.
 #' 
 #' -   Set to `SSD` to use solid state drive storage. Supported on all
 #'     Windows deployment types.
@@ -502,7 +606,7 @@ fsx_create_file_system <- function(ClientRequestToken = NULL, FileSystemType, St
 #' Default value is `SSD`.
 #' 
 #' HDD and SSD storage types have different minimum storage capacity
-#' requirements. A restored file system\'s storage capacity is tied to the
+#' requirements. A restored file system's storage capacity is tied to the
 #' file system that was backed up. You can create a file system that uses
 #' HDD storage from a backup of a file system that used SSD storage only if
 #' the original SSD file system had a storage capacity of at least 2000
@@ -543,7 +647,10 @@ fsx_create_file_system <- function(ClientRequestToken = NULL, FileSystemType, St
 #'     WeeklyMaintenanceStartTime = "string",
 #'     DailyAutomaticBackupStartTime = "string",
 #'     AutomaticBackupRetentionDays = 123,
-#'     CopyTagsToBackups = TRUE|FALSE
+#'     CopyTagsToBackups = TRUE|FALSE,
+#'     Aliases = list(
+#'       "string"
+#'     )
 #'   ),
 #'   LustreConfiguration = list(
 #'     WeeklyMaintenanceStartTime = "string",
@@ -551,10 +658,12 @@ fsx_create_file_system <- function(ClientRequestToken = NULL, FileSystemType, St
 #'     ExportPath = "string",
 #'     ImportedFileChunkSize = 123,
 #'     DeploymentType = "SCRATCH_1"|"SCRATCH_2"|"PERSISTENT_1",
+#'     AutoImportPolicy = "NONE"|"NEW"|"NEW_CHANGED",
 #'     PerUnitStorageThroughput = 123,
 #'     DailyAutomaticBackupStartTime = "string",
 #'     AutomaticBackupRetentionDays = 123,
-#'     CopyTagsToBackups = TRUE|FALSE
+#'     CopyTagsToBackups = TRUE|FALSE,
+#'     DriveCacheType = "NONE"|"READ"
 #'   ),
 #'   StorageType = "SSD"|"HDD"
 #' )
@@ -606,13 +715,14 @@ fsx_create_file_system_from_backup <- function(BackupId, ClientRequestToken = NU
 
 #' Deletes an Amazon FSx backup, deleting its contents
 #'
+#' @description
 #' Deletes an Amazon FSx backup, deleting its contents. After deletion, the
 #' backup no longer exists, and its data is gone.
 #' 
 #' The `DeleteBackup` call returns instantly. The backup will not show up
 #' in later `DescribeBackups` calls.
 #' 
-#' The data in a deleted backup is also deleted and can\'t be recovered by
+#' The data in a deleted backup is also deleted and can't be recovered by
 #' any means.
 #'
 #' @usage
@@ -661,13 +771,14 @@ fsx_delete_backup <- function(BackupId, ClientRequestToken = NULL) {
 
 #' Deletes a file system, deleting its contents
 #'
+#' @description
 #' Deletes a file system, deleting its contents. After deletion, the file
 #' system no longer exists, and its data is gone. Any existing automatic
 #' backups will also be deleted.
 #' 
 #' By default, when you delete an Amazon FSx for Windows File Server file
 #' system, a final backup is created upon deletion. This final backup is
-#' not subject to the file system\'s retention policy, and must be manually
+#' not subject to the file system's retention policy, and must be manually
 #' deleted.
 #' 
 #' The `DeleteFileSystem` action returns while the file system has the
@@ -681,8 +792,8 @@ fsx_delete_backup <- function(BackupId, ClientRequestToken = NULL) {
 #' BadRequest if a data repository task is in a `PENDING` or `EXECUTING`
 #' state.
 #' 
-#' The data in a deleted file system is also deleted and can\'t be
-#' recovered by any means.
+#' The data in a deleted file system is also deleted and can't be recovered
+#' by any means.
 #'
 #' @usage
 #' fsx_delete_file_system(FileSystemId, ClientRequestToken,
@@ -752,9 +863,10 @@ fsx_delete_file_system <- function(FileSystemId, ClientRequestToken = NULL, Wind
 #' Returns the description of specific Amazon FSx backups, if a BackupIds
 #' value is provided for that backup
 #'
+#' @description
 #' Returns the description of specific Amazon FSx backups, if a `BackupIds`
 #' value is provided for that backup. Otherwise, it returns all backups
-#' owned by your AWS account in the AWS Region of the endpoint that you\'re
+#' owned by your AWS account in the AWS Region of the endpoint that you're
 #' calling.
 #' 
 #' When retrieving all backups, you can optionally specify the `MaxResults`
@@ -787,8 +899,7 @@ fsx_delete_file_system <- function(FileSystemId, ClientRequestToken = NULL, Wind
 #' @param MaxResults Maximum number of backups to return in the response (integer). This
 #' parameter value must be greater than 0. The number of items that Amazon
 #' FSx returns is the minimum of the `MaxResults` parameter specified in
-#' the request and the service\'s internal maximum number of items per
-#' page.
+#' the request and the service's internal maximum number of items per page.
 #' @param NextToken Opaque pagination token returned from a previous `DescribeBackups`
 #' operation (String). If a token present, the action continues the list
 #' from where the returning call left off.
@@ -842,13 +953,14 @@ fsx_describe_backups <- function(BackupIds = NULL, Filters = NULL, MaxResults = 
 #' repository tasks, if one or more TaskIds values are provided in the
 #' request, or if filters are used in the request
 #'
+#' @description
 #' Returns the description of specific Amazon FSx for Lustre data
 #' repository tasks, if one or more `TaskIds` values are provided in the
 #' request, or if filters are used in the request. You can use filters to
 #' narrow the response to include just tasks for specific file systems, or
 #' tasks in a specific lifecycle state. Otherwise, it returns all data
 #' repository tasks owned by your AWS account in the AWS Region of the
-#' endpoint that you\'re calling.
+#' endpoint that you're calling.
 #' 
 #' When retrieving all tasks, you can paginate the response by using the
 #' optional `MaxResults` parameter to limit the number of tasks returned in
@@ -908,13 +1020,70 @@ fsx_describe_data_repository_tasks <- function(TaskIds = NULL, Filters = NULL, M
 }
 .fsx$operations$describe_data_repository_tasks <- fsx_describe_data_repository_tasks
 
+#' Returns the DNS aliases that are associated with the specified Amazon
+#' FSx for Windows File Server file system
+#'
+#' @description
+#' Returns the DNS aliases that are associated with the specified Amazon
+#' FSx for Windows File Server file system. A history of all DNS aliases
+#' that have been associated with and disassociated from the file system is
+#' available in the list of AdministrativeAction provided in the
+#' DescribeFileSystems operation response.
+#'
+#' @usage
+#' fsx_describe_file_system_aliases(ClientRequestToken, FileSystemId,
+#'   MaxResults, NextToken)
+#'
+#' @param ClientRequestToken 
+#' @param FileSystemId &#91;required&#93; The ID of the file system to return the associated DNS aliases for
+#' (String).
+#' @param MaxResults Maximum number of DNS aliases to return in the response (integer). This
+#' parameter value must be greater than 0. The number of items that Amazon
+#' FSx returns is the minimum of the `MaxResults` parameter specified in
+#' the request and the service's internal maximum number of items per page.
+#' @param NextToken Opaque pagination token returned from a previous
+#' `DescribeFileSystemAliases` operation (String). If a token is included
+#' in the request, the action continues the list from where the previous
+#' returning call left off.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$describe_file_system_aliases(
+#'   ClientRequestToken = "string",
+#'   FileSystemId = "string",
+#'   MaxResults = 123,
+#'   NextToken = "string"
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname fsx_describe_file_system_aliases
+fsx_describe_file_system_aliases <- function(ClientRequestToken = NULL, FileSystemId, MaxResults = NULL, NextToken = NULL) {
+  op <- new_operation(
+    name = "DescribeFileSystemAliases",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .fsx$describe_file_system_aliases_input(ClientRequestToken = ClientRequestToken, FileSystemId = FileSystemId, MaxResults = MaxResults, NextToken = NextToken)
+  output <- .fsx$describe_file_system_aliases_output()
+  config <- get_config()
+  svc <- .fsx$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.fsx$operations$describe_file_system_aliases <- fsx_describe_file_system_aliases
+
 #' Returns the description of specific Amazon FSx file systems, if a
 #' FileSystemIds value is provided for that file system
 #'
+#' @description
 #' Returns the description of specific Amazon FSx file systems, if a
 #' `FileSystemIds` value is provided for that file system. Otherwise, it
 #' returns descriptions of all file systems owned by your AWS account in
-#' the AWS Region of the endpoint that you\'re calling.
+#' the AWS Region of the endpoint that you're calling.
 #' 
 #' When retrieving all file system descriptions, you can optionally specify
 #' the `MaxResults` parameter to limit the number of descriptions in a
@@ -946,8 +1115,7 @@ fsx_describe_data_repository_tasks <- function(TaskIds = NULL, Filters = NULL, M
 #' @param MaxResults Maximum number of file systems to return in the response (integer). This
 #' parameter value must be greater than 0. The number of items that Amazon
 #' FSx returns is the minimum of the `MaxResults` parameter specified in
-#' the request and the service\'s internal maximum number of items per
-#' page.
+#' the request and the service's internal maximum number of items per page.
 #' @param NextToken Opaque pagination token returned from a previous `DescribeFileSystems`
 #' operation (String). If a token present, the action continues the list
 #' from where the returning call left off.
@@ -990,9 +1158,67 @@ fsx_describe_file_systems <- function(FileSystemIds = NULL, MaxResults = NULL, N
 }
 .fsx$operations$describe_file_systems <- fsx_describe_file_systems
 
+#' Use this action to disassociate, or remove, one or more Domain Name
+#' Service (DNS) aliases from an Amazon FSx for Windows File Server file
+#' system
+#'
+#' @description
+#' Use this action to disassociate, or remove, one or more Domain Name
+#' Service (DNS) aliases from an Amazon FSx for Windows File Server file
+#' system. If you attempt to disassociate a DNS alias that is not
+#' associated with the file system, Amazon FSx responds with a 400 Bad
+#' Request. For more information, see [Working with DNS
+#' Aliases](https://docs.aws.amazon.com/fsx/latest/WindowsGuide/managing-dns-aliases.html).
+#' 
+#' The system generated response showing the DNS aliases that Amazon FSx is
+#' attempting to disassociate from the file system. Use the API operation
+#' to monitor the status of the aliases Amazon FSx is disassociating with
+#' the file system.
+#'
+#' @usage
+#' fsx_disassociate_file_system_aliases(ClientRequestToken, FileSystemId,
+#'   Aliases)
+#'
+#' @param ClientRequestToken 
+#' @param FileSystemId &#91;required&#93; Specifies the file system from which to disassociate the DNS aliases.
+#' @param Aliases &#91;required&#93; An array of one or more DNS alias names to disassociate, or remove, from
+#' the file system.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$disassociate_file_system_aliases(
+#'   ClientRequestToken = "string",
+#'   FileSystemId = "string",
+#'   Aliases = list(
+#'     "string"
+#'   )
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname fsx_disassociate_file_system_aliases
+fsx_disassociate_file_system_aliases <- function(ClientRequestToken = NULL, FileSystemId, Aliases) {
+  op <- new_operation(
+    name = "DisassociateFileSystemAliases",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .fsx$disassociate_file_system_aliases_input(ClientRequestToken = ClientRequestToken, FileSystemId = FileSystemId, Aliases = Aliases)
+  output <- .fsx$disassociate_file_system_aliases_output()
+  config <- get_config()
+  svc <- .fsx$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.fsx$operations$disassociate_file_system_aliases <- fsx_disassociate_file_system_aliases
+
 #' Lists tags for an Amazon FSx file systems and backups in the case of
 #' Amazon FSx for Windows File Server
 #'
+#' @description
 #' Lists tags for an Amazon FSx file systems and backups in the case of
 #' Amazon FSx for Windows File Server.
 #' 
@@ -1024,8 +1250,7 @@ fsx_describe_file_systems <- function(FileSystemIds = NULL, MaxResults = NULL, N
 #' @param MaxResults Maximum number of tags to return in the response (integer). This
 #' parameter value must be greater than 0. The number of items that Amazon
 #' FSx returns is the minimum of the `MaxResults` parameter specified in
-#' the request and the service\'s internal maximum number of items per
-#' page.
+#' the request and the service's internal maximum number of items per page.
 #' @param NextToken Opaque pagination token returned from a previous `ListTagsForResource`
 #' operation (String). If a token present, the action continues the list
 #' from where the returning call left off.
@@ -1069,6 +1294,7 @@ fsx_list_tags_for_resource <- function(ResourceARN, MaxResults = NULL, NextToken
 
 #' Tags an Amazon FSx resource
 #'
+#' @description
 #' Tags an Amazon FSx resource.
 #'
 #' @usage
@@ -1128,6 +1354,7 @@ fsx_tag_resource <- function(ResourceARN, Tags) {
 
 #' This action removes a tag from an Amazon FSx resource
 #'
+#' @description
 #' This action removes a tag from an Amazon FSx resource.
 #'
 #' @usage
@@ -1135,7 +1362,7 @@ fsx_tag_resource <- function(ResourceARN, Tags) {
 #'
 #' @param ResourceARN &#91;required&#93; The ARN of the Amazon FSx resource to untag.
 #' @param TagKeys &#91;required&#93; A list of keys of tags on the resource to untag. In case the tag key
-#' doesn\'t exist, the call will still succeed to be idempotent.
+#' doesn't exist, the call will still succeed to be idempotent.
 #'
 #' @section Request syntax:
 #' ```
@@ -1181,10 +1408,12 @@ fsx_untag_resource <- function(ResourceARN, TagKeys) {
 #' Use this operation to update the configuration of an existing Amazon FSx
 #' file system
 #'
+#' @description
 #' Use this operation to update the configuration of an existing Amazon FSx
-#' file system. For an Amazon FSx for Lustre file system, you can update
-#' only the WeeklyMaintenanceStartTime. For an Amazon for Windows File
-#' Server file system, you can update the following properties:
+#' file system. You can update multiple properties in a single request.
+#' 
+#' For Amazon FSx for Windows File Server file systems, you can update the
+#' following properties:
 #' 
 #' -   AutomaticBackupRetentionDays
 #' 
@@ -1198,7 +1427,18 @@ fsx_untag_resource <- function(ResourceARN, TagKeys) {
 #' 
 #' -   WeeklyMaintenanceStartTime
 #' 
-#' You can update multiple properties in a single request.
+#' For Amazon FSx for Lustre file systems, you can update the following
+#' properties:
+#' 
+#' -   AutoImportPolicy
+#' 
+#' -   AutomaticBackupRetentionDays
+#' 
+#' -   DailyAutomaticBackupStartTime
+#' 
+#' -   StorageCapacity
+#' 
+#' -   WeeklyMaintenanceStartTime
 #'
 #' @usage
 #' fsx_update_file_system(FileSystemId, ClientRequestToken,
@@ -1208,16 +1448,38 @@ fsx_untag_resource <- function(ResourceARN, TagKeys) {
 #' @param ClientRequestToken A string of up to 64 ASCII characters that Amazon FSx uses to ensure
 #' idempotent updates. This string is automatically filled on your behalf
 #' when you use the AWS Command Line Interface (AWS CLI) or an AWS SDK.
-#' @param StorageCapacity Use this parameter to increase the storage capacity of an Amazon FSx for
-#' Windows File Server file system. Specifies the storage capacity target
-#' value, GiB, for the file system you\'re updating. The storage capacity
-#' target value must be at least 10 percent (%) greater than the current
-#' storage capacity value. In order to increase storage capacity, the file
-#' system needs to have at least 16 MB/s of throughput capacity. You cannot
-#' make a storage capacity increase request if there is an existing storage
-#' capacity increase request in progress. For more information, see
-#' [Managing Storage
-#' Capacity](https://docs.aws.amazon.com/fsx/latest/WindowsGuide/managing-storage-capacity.html).
+#' @param StorageCapacity Use this parameter to increase the storage capacity of an Amazon FSx
+#' file system. Specifies the storage capacity target value, GiB, to
+#' increase the storage capacity for the file system that you're updating.
+#' You cannot make a storage capacity increase request if there is an
+#' existing storage capacity increase request in progress.
+#' 
+#' For Windows file systems, the storage capacity target value must be at
+#' least 10 percent (%) greater than the current storage capacity value. In
+#' order to increase storage capacity, the file system must have at least
+#' 16 MB/s of throughput capacity.
+#' 
+#' For Lustre file systems, the storage capacity target value can be the
+#' following:
+#' 
+#' -   For `SCRATCH_2` and `PERSISTENT_1 SSD` deployment types, valid
+#'     values are in multiples of 2400 GiB. The value must be greater than
+#'     the current storage capacity.
+#' 
+#' -   For `PERSISTENT HDD` file systems, valid values are multiples of
+#'     6000 GiB for 12 MB/s/TiB file systems and multiples of 1800 GiB for
+#'     40 MB/s/TiB file systems. The values must be greater than the
+#'     current storage capacity.
+#' 
+#' -   For `SCRATCH_1` file systems, you cannot increase the storage
+#'     capacity.
+#' 
+#' For more information, see [Managing storage
+#' capacity](https://docs.aws.amazon.com/fsx/latest/WindowsGuide/managing-storage-capacity.html)
+#' in the *Amazon FSx for Windows File Server User Guide* and [Managing
+#' storage and throughput
+#' capacity](https://docs.aws.amazon.com/fsx/latest/LustreGuide/managing-storage-capacity.html)
+#' in the *Amazon FSx for Lustre User Guide*.
 #' @param WindowsConfiguration The configuration updates for an Amazon FSx for Windows File Server file
 #' system.
 #' @param LustreConfiguration 
@@ -1244,7 +1506,8 @@ fsx_untag_resource <- function(ResourceARN, TagKeys) {
 #'   LustreConfiguration = list(
 #'     WeeklyMaintenanceStartTime = "string",
 #'     DailyAutomaticBackupStartTime = "string",
-#'     AutomaticBackupRetentionDays = 123
+#'     AutomaticBackupRetentionDays = 123,
+#'     AutoImportPolicy = "NONE"|"NEW"|"NEW_CHANGED"
 #'   )
 #' )
 #' ```

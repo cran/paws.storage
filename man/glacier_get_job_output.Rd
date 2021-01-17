@@ -10,9 +10,9 @@ glacier_get_job_output(accountId, vaultName, jobId, range)
 \arguments{
 \item{accountId}{[required] The \code{AccountId} value is the AWS account ID of the account that owns the
 vault. You can either specify an AWS account ID or optionally a single
-\'\code{-}\' (hyphen), in which case Amazon S3 Glacier uses the AWS account
-ID associated with the credentials used to sign the request. If you use
-an account ID, do not include any hyphens (\'-\') in the ID.}
+'\code{-}' (hyphen), in which case Amazon S3 Glacier uses the AWS account ID
+associated with the credentials used to sign the request. If you use an
+account ID, do not include any hyphens ('-') in the ID.}
 
 \item{vaultName}{[required] The name of the vault.}
 
@@ -53,8 +53,7 @@ This operation downloads the output of the job you initiated using
 InitiateJob. Depending on the job type you specified when you initiated
 the job, the output will be either the content of an archive or a vault
 inventory.
-}
-\details{
+
 You can download all the job output or download a portion of the output
 by specifying a byte range. In the case of an archive retrieval job,
 depending on the byte range you specify, Amazon S3 Glacier (Glacier)
@@ -87,9 +86,9 @@ the job. That is, you can download the job output within the 24 hours
 period after Amazon Glacier completes the job.
 
 An AWS account has full permission to perform all operations (actions).
-However, AWS Identity and Access Management (IAM) users don\'t have any
+However, AWS Identity and Access Management (IAM) users don't have any
 permissions by default. You must grant them explicit permission to
-perform specific actions. For more information, see \href{https://docs.aws.amazon.com/amazonglacier/latest/dev/using-iam-with-amazon-glacier.html}{Access Control Using AWS Identity and Access Management (IAM)}.
+perform specific actions. For more information, see \href{https://docs.aws.amazon.com/amazonglacier/latest/dev/auth-and-access-control.html}{Access Control Using AWS Identity and Access Management (IAM)}.
 
 For conceptual information and the underlying REST API, see \href{https://docs.aws.amazon.com/amazonglacier/latest/dev/vault-inventory.html}{Downloading a Vault Inventory},
 \href{https://docs.aws.amazon.com/amazonglacier/latest/dev/downloading-an-archive.html}{Downloading an Archive},

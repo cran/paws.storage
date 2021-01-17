@@ -16,14 +16,17 @@ when you use the AWS Command Line Interface (AWS CLI) or an AWS SDK.}
 \item{FileSystemType}{[required] The type of Amazon FSx file system to create, either \code{WINDOWS} or
 \code{LUSTRE}.}
 
-\item{StorageCapacity}{[required] Sets the storage capacity of the file system that you\'re creating.
+\item{StorageCapacity}{[required] Sets the storage capacity of the file system that you're creating.
 
 For Lustre file systems:
 \itemize{
-\item For \code{SCRATCH_2} and \code{PERSISTENT_1} deployment types, valid values
-are 1.2, 2.4, and increments of 2.4 TiB.
-\item For \code{SCRATCH_1} deployment type, valid values are 1.2, 2.4, and
-increments of 3.6 TiB.
+\item For \code{SCRATCH_2} and \verb{PERSISTENT_1 SSD} deployment types, valid
+values are 1200 GiB, 2400 GiB, and increments of 2400 GiB.
+\item For \verb{PERSISTENT HDD} file systems, valid values are increments of
+6000 GiB for 12 MB/s/TiB file systems and increments of 1800 GiB for
+40 MB/s/TiB file systems.
+\item For \code{SCRATCH_1} deployment type, valid values are 1200 GiB, 2400
+GiB, and increments of 3600 GiB.
 }
 
 For Windows file systems:
@@ -33,17 +36,19 @@ For Windows file systems:
 TiB).
 }}
 
-\item{StorageType}{Sets the storage type for the Amazon FSx for Windows file system you\'re
-creating. Valid values are \code{SSD} and \code{HDD}.
+\item{StorageType}{Sets the storage type for the file system you're creating. Valid values
+are \code{SSD} and \code{HDD}.
 \itemize{
 \item Set to \code{SSD} to use solid state drive storage. SSD is supported on
-all Windows deployment types.
+all Windows and Lustre deployment types.
 \item Set to \code{HDD} to use hard disk drive storage. HDD is supported on
-\code{SINGLE_AZ_2} and \code{MULTI_AZ_1} Windows file system deployment types.
+\code{SINGLE_AZ_2} and \code{MULTI_AZ_1} Windows file system deployment types,
+and on \code{PERSISTENT} Lustre file system deployment types.
 }
 
 Default value is \code{SSD}. For more information, see \href{https://docs.aws.amazon.com/fsx/latest/WindowsGuide/optimize-fsx-costs.html#storage-type-options}{Storage Type Options}
-in the \emph{Amazon FSx for Windows User Guide}.}
+in the \emph{Amazon FSx for Windows User Guide} and \href{https://docs.aws.amazon.com/fsx/latest/LustreGuide/what-is.html#storage-options}{Multiple Storage Options}
+in the \emph{Amazon FSx for Lustre User Guide}.}
 
 \item{SubnetIds}{[required] Specifies the IDs of the subnets that the file system will be accessible
 from. For Windows \code{MULTI_AZ_1} file system deployment types, provide
@@ -54,10 +59,10 @@ property.
 
 For Windows \code{SINGLE_AZ_1} and \code{SINGLE_AZ_2} file system deployment types
 and Lustre file systems, provide exactly one subnet ID. The file server
-is launched in that subnet\'s Availability Zone.}
+is launched in that subnet's Availability Zone.}
 
 \item{SecurityGroupIds}{A list of IDs specifying the security groups to apply to all network
-interfaces created for file system access. This list isn\'t returned in
+interfaces created for file system access. This list isn't returned in
 later requests to describe the file system.}
 
 \item{Tags}{The tags to apply to the file system being created. The key value of the
@@ -71,14 +76,13 @@ later requests to describe the file system.}
 }
 \description{
 Creates a new, empty Amazon FSx file system.
-}
-\details{
+
 If a file system with the specified client request token exists and the
 parameters match, \code{CreateFileSystem} returns the description of the
 existing file system. If a file system specified client request token
-exists and the parameters don\'t match, this call returns
+exists and the parameters don't match, this call returns
 \code{IncompatibleParameterError}. If a file system with the specified client
-request token doesn\'t exist, \code{CreateFileSystem} does the following:
+request token doesn't exist, \code{CreateFileSystem} does the following:
 \itemize{
 \item Creates a new, empty Amazon FSx file system with an assigned ID, and
 an initial lifecycle state of \code{CREATING}.
@@ -97,7 +101,7 @@ use the same client request token and the initial call created a file
 system, the client receives success as long as the parameters are the
 same.
 
-The \code{CreateFileSystem} call returns while the file system\'s lifecycle
+The \code{CreateFileSystem} call returns while the file system's lifecycle
 state is still \code{CREATING}. You can check the file-system creation status
 by calling the DescribeFileSystems operation, which returns the file
 system state along with other information.
@@ -139,7 +143,10 @@ system state along with other information.
     WeeklyMaintenanceStartTime = "string",
     DailyAutomaticBackupStartTime = "string",
     AutomaticBackupRetentionDays = 123,
-    CopyTagsToBackups = TRUE|FALSE
+    CopyTagsToBackups = TRUE|FALSE,
+    Aliases = list(
+      "string"
+    )
   ),
   LustreConfiguration = list(
     WeeklyMaintenanceStartTime = "string",
@@ -147,10 +154,12 @@ system state along with other information.
     ExportPath = "string",
     ImportedFileChunkSize = 123,
     DeploymentType = "SCRATCH_1"|"SCRATCH_2"|"PERSISTENT_1",
+    AutoImportPolicy = "NONE"|"NEW"|"NEW_CHANGED",
     PerUnitStorageThroughput = 123,
     DailyAutomaticBackupStartTime = "string",
     AutomaticBackupRetentionDays = 123,
-    CopyTagsToBackups = TRUE|FALSE
+    CopyTagsToBackups = TRUE|FALSE,
+    DriveCacheType = "NONE"|"READ"
   )
 )
 }
@@ -158,15 +167,17 @@ system state along with other information.
 
 \examples{
 \dontrun{
-# This operation creates a new file system.
+# This operation creates a new Amazon FSx for Windows File Server file
+# system.
 svc$create_file_system(
   ClientRequestToken = "a8ca07e4-61ec-4399-99f4-19853801bcd5",
   FileSystemType = "WINDOWS",
-  KmsKeyId = "arn:aws:kms:us-east-1:012345678912:key/0ff3ea8d-130e-4133-877f-93908b6fdbd6",
+  KmsKeyId = "arn:aws:kms:us-east-1:012345678912:key/1111abcd-2222-3333-4444-55556666eeff",
   SecurityGroupIds = list(
     "sg-edcd9784"
   ),
-  StorageCapacity = 300L,
+  StorageCapacity = 3200L,
+  StorageType = "HDD",
   SubnetIds = list(
     "subnet-1234abcd"
   ),
@@ -178,9 +189,12 @@ svc$create_file_system(
   ),
   WindowsConfiguration = list(
     ActiveDirectoryId = "d-1234abcd12",
+    Aliases = list(
+      "accounting.corp.example.com"
+    ),
     AutomaticBackupRetentionDays = 30L,
     DailyAutomaticBackupStartTime = "05:00",
-    ThroughputCapacity = 8L,
+    ThroughputCapacity = 32L,
     WeeklyMaintenanceStartTime = "1:05:00"
   )
 )

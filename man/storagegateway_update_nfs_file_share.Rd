@@ -7,7 +7,7 @@
 storagegateway_update_nfs_file_share(FileShareARN, KMSEncrypted, KMSKey,
   NFSFileShareDefaults, DefaultStorageClass, ObjectACL, ClientList,
   Squash, ReadOnly, GuessMIMETypeEnabled, RequesterPays, FileShareName,
-  CacheAttributes)
+  CacheAttributes, NotificationPolicy)
 }
 \arguments{
 \item{FileShareARN}{[required] The Amazon Resource Name (ARN) of the file share to be updated.}
@@ -15,7 +15,7 @@ storagegateway_update_nfs_file_share(FileShareARN, KMSEncrypted, KMSKey,
 \item{KMSEncrypted}{Set to \code{true} to use Amazon S3 server-side encryption with your own AWS
 KMS key, or \code{false} to use a key managed by Amazon S3. Optional.
 
-Valid Values: \code{true} \\| \code{false}}
+Valid Values: \code{true} | \code{false}}
 
 \item{KMSKey}{The Amazon Resource Name (ARN) of a symmetric customer master key (CMK)
 used for Amazon S3 server-side encryption. Storage Gateway does not
@@ -28,8 +28,8 @@ is \code{true}. Optional.}
 the file gateway. The default value is \code{S3_INTELLIGENT_TIERING}.
 Optional.
 
-Valid Values: \code{S3_STANDARD} \\| \code{S3_INTELLIGENT_TIERING} \\|
-\code{S3_STANDARD_IA} \\| \code{S3_ONEZONE_IA}}
+Valid Values: \code{S3_STANDARD} | \code{S3_INTELLIGENT_TIERING} |
+\code{S3_STANDARD_IA} | \code{S3_ONEZONE_IA}}
 
 \item{ObjectACL}{A value that sets the access control list (ACL) permission for objects
 in the S3 bucket that a file gateway puts objects into. The default
@@ -50,13 +50,13 @@ Valid values are the following:
 \item{ReadOnly}{A value that sets the write status of a file share. Set this value to
 \code{true} to set the write status to read-only, otherwise set to \code{false}.
 
-Valid Values: \code{true} \\| \code{false}}
+Valid Values: \code{true} | \code{false}}
 
 \item{GuessMIMETypeEnabled}{A value that enables guessing of the MIME type for uploaded objects
 based on file extensions. Set this value to \code{true} to enable MIME type
 guessing, otherwise set to \code{false}. The default value is \code{true}.
 
-Valid Values: \code{true} \\| \code{false}}
+Valid Values: \code{true} | \code{false}}
 
 \item{RequesterPays}{A value that sets who pays the cost of the request and the cost
 associated with data download from the S3 bucket. If this value is set
@@ -67,7 +67,7 @@ pays. However, the S3 bucket owner always pays the cost of storing data.
 share, so make sure that the configuration on the file share is the same
 as the S3 bucket configuration.
 
-Valid Values: \code{true} \\| \code{false}}
+Valid Values: \code{true} | \code{false}}
 
 \item{FileShareName}{The name of the file share. Optional.
 
@@ -75,16 +75,17 @@ Valid Values: \code{true} \\| \code{false}}
 \code{LocationARN}.}
 
 \item{CacheAttributes}{Refresh cache information.}
+
+\item{NotificationPolicy}{The notification policy of the file share.}
 }
 \description{
 Updates a Network File System (NFS) file share. This operation is only
 supported in the file gateway type.
-}
-\details{
+
 To leave a file share field unchanged, set the corresponding input field
 to null.
 
-Updates the following file share setting:
+Updates the following file share settings:
 \itemize{
 \item Default storage class for your S3 bucket
 \item Metadata defaults for your S3 bucket
@@ -92,9 +93,6 @@ Updates the following file share setting:
 \item Squash settings
 \item Write status of your file share
 }
-
-To leave a file share field unchanged, set the corresponding input field
-to null. This operation is only supported in file gateways.
 }
 \section{Request syntax}{
 \preformatted{svc$update_nfs_file_share(
@@ -119,7 +117,8 @@ to null. This operation is only supported in file gateways.
   FileShareName = "string",
   CacheAttributes = list(
     CacheStaleTimeoutInSeconds = 123
-  )
+  ),
+  NotificationPolicy = "string"
 )
 }
 }

@@ -5,25 +5,30 @@
 \title{Creates a new lifecycle configuration for the bucket or replaces an
 existing lifecycle configuration}
 \usage{
-s3_put_bucket_lifecycle_configuration(Bucket, LifecycleConfiguration)
+s3_put_bucket_lifecycle_configuration(Bucket, LifecycleConfiguration,
+  ExpectedBucketOwner)
 }
 \arguments{
 \item{Bucket}{[required] The name of the bucket for which to set the configuration.}
 
 \item{LifecycleConfiguration}{Container for lifecycle rules. You can add as many as 1,000 rules.}
+
+\item{ExpectedBucketOwner}{The account id of the expected bucket owner. If the bucket is owned by a
+different account, the request will fail with an HTTP
+\verb{403 (Access Denied)} error.}
 }
 \description{
 Creates a new lifecycle configuration for the bucket or replaces an
 existing lifecycle configuration. For information about lifecycle
 configuration, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/s3-access-control.html}{Managing Access Permissions to Your Amazon S3 Resources}.
-}
-\details{
+
 Bucket lifecycle configuration now supports specifying a lifecycle rule
 using an object key name prefix, one or more object tags, or a
 combination of both. Accordingly, this section describes the latest API.
 The previous version of the API supported filtering based only on an
 object key name prefix, which is supported for backward compatibility.
-For the related API description, see PutBucketLifecycle.
+For the related API description, see
+\href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketLifecycle.html}{PutBucketLifecycle}.
 
 \strong{Rules}
 
@@ -72,8 +77,8 @@ For more information about permissions, see \href{https://docs.aws.amazon.com/Am
 The following are related to \code{PutBucketLifecycleConfiguration}:
 \itemize{
 \item \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/lifecycle-configuration-examples.html}{Examples of Lifecycle Configuration}
-\item GetBucketLifecycleConfiguration
-\item DeleteBucketLifecycle
+\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLifecycleConfiguration.html}{GetBucketLifecycleConfiguration}
+\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketLifecycle.html}{DeleteBucketLifecycle}
 }
 }
 \section{Request syntax}{
@@ -131,7 +136,8 @@ The following are related to \code{PutBucketLifecycleConfiguration}:
         )
       )
     )
-  )
+  ),
+  ExpectedBucketOwner = "string"
 )
 }
 }

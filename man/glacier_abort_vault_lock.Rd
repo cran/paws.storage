@@ -10,10 +10,10 @@ glacier_abort_vault_lock(accountId, vaultName)
 \arguments{
 \item{accountId}{[required] The \code{AccountId} value is the AWS account ID. This value must match the
 AWS account ID associated with the credentials used to sign the request.
-You can either specify an AWS account ID or optionally a single \'\code{-}\'
+You can either specify an AWS account ID or optionally a single '\code{-}'
 (hyphen), in which case Amazon Glacier uses the AWS account ID
 associated with the credentials used to sign the request. If you specify
-your account ID, do not include any hyphens (\'-\') in the ID.}
+your account ID, do not include any hyphens ('-') in the ID.}
 
 \item{vaultName}{[required] The name of the vault.}
 }
@@ -23,8 +23,7 @@ in the \code{Locked} state. If the vault lock is in the \code{Locked} state when
 this operation is requested, the operation returns an
 \code{AccessDeniedException} error. Aborting the vault locking process
 removes the vault lock policy from the specified vault.
-}
-\details{
+
 A vault lock is put into the \code{InProgress} state by calling
 InitiateVaultLock. A vault lock is put into the \code{Locked} state by
 calling CompleteVaultLock. You can get the state of a vault lock by

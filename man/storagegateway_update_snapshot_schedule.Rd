@@ -25,15 +25,14 @@ a key-value pair.
 
 Valid characters for key and value are letters, spaces, and numbers
 representable in UTF-8 format, and the following special characters: + -
-= . \\_ : / @. The maximum length of a tag\'s key is 128 characters, and
-the maximum length for a tag\'s value is 256.}
+= . \\_ : / @. The maximum length of a tag's key is 128 characters, and
+the maximum length for a tag's value is 256.}
 }
 \description{
 Updates a snapshot schedule configured for a gateway volume. This
 operation is only supported in the cached volume and stored volume
 gateway types.
-}
-\details{
+
 The default snapshot schedule for volume is once every 24 hours,
 starting at the creation time of the volume. You can use this API to
 change the snapshot schedule configured for the volume.
