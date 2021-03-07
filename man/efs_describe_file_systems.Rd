@@ -14,8 +14,9 @@ response is paginated at 100 per page if you have more than 100 file
 systems.}
 
 \item{Marker}{(Optional) Opaque pagination token returned from a previous
-\code{DescribeFileSystems} operation (String). If present, specifies to
-continue the list from where the returning call had left off.}
+\code{\link[=efs_describe_file_systems]{describe_file_systems}} operation (String).
+If present, specifies to continue the list from where the returning call
+had left off.}
 
 \item{CreationToken}{(Optional) Restricts the list to the file system with this creation
 token (String). You specify a creation token when you create an Amazon
@@ -23,6 +24,46 @@ EFS file system.}
 
 \item{FileSystemId}{(Optional) ID of the file system whose description you want to retrieve
 (String).}
+}
+\value{
+A list with the following syntax:\preformatted{list(
+  Marker = "string",
+  FileSystems = list(
+    list(
+      OwnerId = "string",
+      CreationToken = "string",
+      FileSystemId = "string",
+      FileSystemArn = "string",
+      CreationTime = as.POSIXct(
+        "2015-01-01"
+      ),
+      LifeCycleState = "creating"|"available"|"updating"|"deleting"|"deleted",
+      Name = "string",
+      NumberOfMountTargets = 123,
+      SizeInBytes = list(
+        Value = 123,
+        Timestamp = as.POSIXct(
+          "2015-01-01"
+        ),
+        ValueInIA = 123,
+        ValueInStandard = 123
+      ),
+      PerformanceMode = "generalPurpose"|"maxIO",
+      Encrypted = TRUE|FALSE,
+      KmsKeyId = "string",
+      ThroughputMode = "bursting"|"provisioned",
+      ProvisionedThroughputInMibps = 123.0,
+      Tags = list(
+        list(
+          Key = "string",
+          Value = "string"
+        )
+      )
+    )
+  ),
+  NextMarker = "string"
+)
+}
 }
 \description{
 Returns the description of a specific Amazon EFS file system if either
@@ -40,14 +81,16 @@ subsequent request with the \code{Marker} request parameter set to the value
 of \code{NextMarker}.
 
 To retrieve a list of your file system descriptions, this operation is
-used in an iterative process, where \code{DescribeFileSystems} is called
-first without the \code{Marker} and then the operation continues to call it
-with the \code{Marker} parameter set to the value of the \code{NextMarker} from
-the previous response until the response has no \code{NextMarker}.
+used in an iterative process, where
+\code{\link[=efs_describe_file_systems]{describe_file_systems}} is called first
+without the \code{Marker} and then the operation continues to call it with
+the \code{Marker} parameter set to the value of the \code{NextMarker} from the
+previous response until the response has no \code{NextMarker}.
 
 The order of file systems returned in the response of one
-\code{DescribeFileSystems} call and the order of file systems returned across
-the responses of a multi-call iteration is unspecified.
+\code{\link[=efs_describe_file_systems]{describe_file_systems}} call and the order
+of file systems returned across the responses of a multi-call iteration
+is unspecified.
 
 This operation requires permissions for the
 \code{elasticfilesystem:DescribeFileSystems} action.

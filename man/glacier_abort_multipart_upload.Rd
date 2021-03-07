@@ -17,6 +17,9 @@ account ID, do not include any hyphens ('-') in the ID.}
 
 \item{uploadId}{[required] The upload ID of the multipart upload to delete.}
 }
+\value{
+An empty list.
+}
 \description{
 This operation aborts a multipart upload identified by the upload ID.
 
@@ -25,7 +28,8 @@ more parts to the multipart upload or complete the multipart upload.
 Aborting a completed upload fails. However, aborting an already-aborted
 upload will succeed, for a short time. For more information about
 uploading a part and completing a multipart upload, see
-UploadMultipartPart and CompleteMultipartUpload.
+\code{\link[=glacier_upload_multipart_part]{upload_multipart_part}} and
+\code{\link[=glacier_complete_multipart_upload]{complete_multipart_upload}}.
 
 This operation is idempotent.
 
@@ -53,7 +57,7 @@ in the \emph{Amazon Glacier Developer Guide}.
 # my-vault:
 svc$abort_multipart_upload(
   accountId = "-",
-  uploadId = "19gaRezEXAMPLES6Ry5YYdqthHOC_kGRCT03L9yetr220UmPtBYKk-OssZtLqyFu7sY1_lR7vgFuJV...",
+  uploadId = "19gaRezEXAMPLES6Ry5YYdqthHOC_kGRCT03L9yetr220UmPtBYKk-OssZtLq...",
   vaultName = "my-vault"
 )
 }

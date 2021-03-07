@@ -50,6 +50,13 @@ This is not supported by Amazon S3 on Outposts buckets.}
 
 This is required by Amazon S3 on Outposts buckets.}
 }
+\value{
+A list with the following syntax:\preformatted{list(
+  Location = "string",
+  BucketArn = "string"
+)
+}
+}
 \description{
 This API operation creates an Amazon S3 on Outposts bucket. To create an
 S3 bucket, see \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateBucket.html}{Create Bucket}
@@ -57,11 +64,11 @@ in the \emph{Amazon Simple Storage Service API}.
 
 Creates a new Outposts bucket. By creating the bucket, you become the
 bucket owner. To create an Outposts bucket, you must have S3 on
-Outposts. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/S3onOutposts.html}{Using Amazon S3 on Outposts}
+Outposts. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/S3onOutposts.html}{Using Amazon S3 on Outposts}
 in \emph{Amazon Simple Storage Service Developer Guide}.
 
 Not every string is an acceptable bucket name. For information on bucket
-naming restrictions, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html#bucketnamingrules}{Working with Amazon S3 Buckets}.
+naming restrictions, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/BucketRestrictions.html#bucketnamingrules}{Working with Amazon S3 Buckets}.
 
 S3 on Outposts buckets do not support
 \itemize{
@@ -78,14 +85,14 @@ your API request, see the
 \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_CreateBucket.html#API_control_CreateBucket_Examples}{Examples}
 section.
 
-The following actions are related to \code{CreateBucket} for Amazon S3 on
-Outposts:
+The following actions are related to
+\code{\link[=s3control_create_bucket]{create_bucket}} for Amazon S3 on Outposts:
 \itemize{
 \item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObject.html}{PutObject}
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_GetBucket.html}{GetBucket}
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_DeleteBucket.html}{DeleteBucket}
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_CreateAccessPoint.html}{CreateAccessPoint}
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_PutAccessPointPolicy.html}{PutAccessPointPolicy}
+\item \code{\link[=s3control_get_bucket]{get_bucket}}
+\item \code{\link[=s3control_delete_bucket]{delete_bucket}}
+\item \code{\link[=s3control_create_access_point]{create_access_point}}
+\item \code{\link[=s3control_put_access_point_policy]{put_access_point_policy}}
 }
 }
 \section{Request syntax}{

@@ -9,14 +9,21 @@ storagegateway_update_gateway_software_now(GatewayARN)
 \arguments{
 \item{GatewayARN}{[required]}
 }
+\value{
+A list with the following syntax:\preformatted{list(
+  GatewayARN = "string"
+)
+}
+}
 \description{
 Updates the gateway virtual machine (VM) software. The request
 immediately triggers the software update.
 
 When you make this request, you get a \verb{200 OK} success response
 immediately. However, it might take some time for the update to
-complete. You can call DescribeGatewayInformation to verify the gateway
-is in the \code{STATE_RUNNING} state.
+complete. You can call
+\code{\link[=storagegateway_describe_gateway_information]{describe_gateway_information}}
+to verify the gateway is in the \code{STATE_RUNNING} state.
 
 A software update forces a system restart of your gateway. You can
 minimize the chance of any disruption to your applications by increasing

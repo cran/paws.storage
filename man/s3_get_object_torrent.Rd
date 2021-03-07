@@ -18,10 +18,17 @@ torrent files.}
 different account, the request will fail with an HTTP
 \verb{403 (Access Denied)} error.}
 }
+\value{
+A list with the following syntax:\preformatted{list(
+  Body = raw,
+  RequestCharged = "requester"
+)
+}
+}
 \description{
 Returns torrent files from a bucket. BitTorrent can save you bandwidth
 when you're distributing large files. For more information about
-BitTorrent, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/S3Torrent.html}{Using BitTorrent with Amazon S3}.
+BitTorrent, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/S3Torrent.html}{Using BitTorrent with Amazon S3}.
 
 You can get torrent only for objects that are less than 5 GB in size,
 and that are not encrypted using server-side encryption with a
@@ -31,9 +38,10 @@ To use GET, you must have READ access to the object.
 
 This action is not supported by Amazon S3 on Outposts.
 
-The following operation is related to \code{GetObjectTorrent}:
+The following operation is related to
+\code{\link[=s3_get_object_torrent]{get_object_torrent}}:
 \itemize{
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObject.html}{GetObject}
+\item \code{\link[=s3_get_object]{get_object}}
 }
 }
 \section{Request syntax}{

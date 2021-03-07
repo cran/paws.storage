@@ -54,7 +54,7 @@ in the \emph{Amazon FSx for Lustre User Guide}.}
 from. For Windows \code{MULTI_AZ_1} file system deployment types, provide
 exactly two subnet IDs, one for the preferred file server and one for
 the standby file server. You specify one of these subnets as the
-preferred subnet using the \verb{WindowsConfiguration &gt; PreferredSubnetID}
+preferred subnet using the \code{WindowsConfiguration > PreferredSubnetID}
 property.
 
 For Windows \code{SINGLE_AZ_1} and \code{SINGLE_AZ_2} file system deployment types
@@ -74,15 +74,115 @@ later requests to describe the file system.}
 
 \item{LustreConfiguration}{}
 }
+\value{
+A list with the following syntax:\preformatted{list(
+  FileSystem = list(
+    OwnerId = "string",
+    CreationTime = as.POSIXct(
+      "2015-01-01"
+    ),
+    FileSystemId = "string",
+    FileSystemType = "WINDOWS"|"LUSTRE",
+    Lifecycle = "AVAILABLE"|"CREATING"|"FAILED"|"DELETING"|"MISCONFIGURED"|"UPDATING",
+    FailureDetails = list(
+      Message = "string"
+    ),
+    StorageCapacity = 123,
+    StorageType = "SSD"|"HDD",
+    VpcId = "string",
+    SubnetIds = list(
+      "string"
+    ),
+    NetworkInterfaceIds = list(
+      "string"
+    ),
+    DNSName = "string",
+    KmsKeyId = "string",
+    ResourceARN = "string",
+    Tags = list(
+      list(
+        Key = "string",
+        Value = "string"
+      )
+    ),
+    WindowsConfiguration = list(
+      ActiveDirectoryId = "string",
+      SelfManagedActiveDirectoryConfiguration = list(
+        DomainName = "string",
+        OrganizationalUnitDistinguishedName = "string",
+        FileSystemAdministratorsGroup = "string",
+        UserName = "string",
+        DnsIps = list(
+          "string"
+        )
+      ),
+      DeploymentType = "MULTI_AZ_1"|"SINGLE_AZ_1"|"SINGLE_AZ_2",
+      RemoteAdministrationEndpoint = "string",
+      PreferredSubnetId = "string",
+      PreferredFileServerIp = "string",
+      ThroughputCapacity = 123,
+      MaintenanceOperationsInProgress = list(
+        "PATCHING"|"BACKING_UP"
+      ),
+      WeeklyMaintenanceStartTime = "string",
+      DailyAutomaticBackupStartTime = "string",
+      AutomaticBackupRetentionDays = 123,
+      CopyTagsToBackups = TRUE|FALSE,
+      Aliases = list(
+        list(
+          Name = "string",
+          Lifecycle = "AVAILABLE"|"CREATING"|"DELETING"|"CREATE_FAILED"|"DELETE_FAILED"
+        )
+      )
+    ),
+    LustreConfiguration = list(
+      WeeklyMaintenanceStartTime = "string",
+      DataRepositoryConfiguration = list(
+        Lifecycle = "CREATING"|"AVAILABLE"|"MISCONFIGURED"|"UPDATING"|"DELETING",
+        ImportPath = "string",
+        ExportPath = "string",
+        ImportedFileChunkSize = 123,
+        AutoImportPolicy = "NONE"|"NEW"|"NEW_CHANGED",
+        FailureDetails = list(
+          Message = "string"
+        )
+      ),
+      DeploymentType = "SCRATCH_1"|"SCRATCH_2"|"PERSISTENT_1",
+      PerUnitStorageThroughput = 123,
+      MountName = "string",
+      DailyAutomaticBackupStartTime = "string",
+      AutomaticBackupRetentionDays = 123,
+      CopyTagsToBackups = TRUE|FALSE,
+      DriveCacheType = "NONE"|"READ"
+    ),
+    AdministrativeActions = list(
+      list(
+        AdministrativeActionType = "FILE_SYSTEM_UPDATE"|"STORAGE_OPTIMIZATION"|"FILE_SYSTEM_ALIAS_ASSOCIATION"|"FILE_SYSTEM_ALIAS_DISASSOCIATION",
+        ProgressPercent = 123,
+        RequestTime = as.POSIXct(
+          "2015-01-01"
+        ),
+        Status = "FAILED"|"IN_PROGRESS"|"PENDING"|"COMPLETED"|"UPDATED_OPTIMIZING",
+        TargetFileSystemValues = list(),
+        FailureDetails = list(
+          Message = "string"
+        )
+      )
+    )
+  )
+)
+}
+}
 \description{
 Creates a new, empty Amazon FSx file system.
 
 If a file system with the specified client request token exists and the
-parameters match, \code{CreateFileSystem} returns the description of the
-existing file system. If a file system specified client request token
-exists and the parameters don't match, this call returns
-\code{IncompatibleParameterError}. If a file system with the specified client
-request token doesn't exist, \code{CreateFileSystem} does the following:
+parameters match, \code{\link[=fsx_create_file_system]{create_file_system}} returns
+the description of the existing file system. If a file system specified
+client request token exists and the parameters don't match, this call
+returns \code{IncompatibleParameterError}. If a file system with the
+specified client request token doesn't exist,
+\code{\link[=fsx_create_file_system]{create_file_system}} does the following:
 \itemize{
 \item Creates a new, empty Amazon FSx file system with an assigned ID, and
 an initial lifecycle state of \code{CREATING}.
@@ -93,18 +193,19 @@ This operation requires a client request token in the request that
 Amazon FSx uses to ensure idempotent creation. This means that calling
 the operation multiple times with the same client request token has no
 effect. By using the idempotent operation, you can retry a
-\code{CreateFileSystem} operation without the risk of creating an extra file
-system. This approach can be useful when an initial call fails in a way
-that makes it unclear whether a file system was created. Examples are if
-a transport level timeout occurred, or your connection was reset. If you
-use the same client request token and the initial call created a file
-system, the client receives success as long as the parameters are the
-same.
+\code{\link[=fsx_create_file_system]{create_file_system}} operation without the
+risk of creating an extra file system. This approach can be useful when
+an initial call fails in a way that makes it unclear whether a file
+system was created. Examples are if a transport level timeout occurred,
+or your connection was reset. If you use the same client request token
+and the initial call created a file system, the client receives success
+as long as the parameters are the same.
 
-The \code{CreateFileSystem} call returns while the file system's lifecycle
-state is still \code{CREATING}. You can check the file-system creation status
-by calling the DescribeFileSystems operation, which returns the file
-system state along with other information.
+The \code{\link[=fsx_create_file_system]{create_file_system}} call returns while
+the file system's lifecycle state is still \code{CREATING}. You can check the
+file-system creation status by calling the
+\code{\link[=fsx_describe_file_systems]{describe_file_systems}} operation, which
+returns the file system state along with other information.
 }
 \section{Request syntax}{
 \preformatted{svc$create_file_system(

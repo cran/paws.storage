@@ -14,14 +14,21 @@ configuration}
 different account, the request will fail with an HTTP
 \verb{403 (Access Denied)} error.}
 }
+\value{
+A list with the following syntax:\preformatted{list(
+  Payer = "Requester"|"BucketOwner"
+)
+}
+}
 \description{
 Returns the request payment configuration of a bucket. To use this
 version of the operation, you must be the bucket owner. For more
-information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/RequesterPaysBuckets.html}{Requester Pays Buckets}.
+information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/RequesterPaysBuckets.html}{Requester Pays Buckets}.
 
-The following operations are related to \code{GetBucketRequestPayment}:
+The following operations are related to
+\code{\link[=s3_get_bucket_request_payment]{get_bucket_request_payment}}:
 \itemize{
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjects.html}{ListObjects}
+\item \code{\link[=s3_list_objects]{list_objects}}
 }
 }
 \section{Request syntax}{

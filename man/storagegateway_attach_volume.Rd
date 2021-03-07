@@ -25,7 +25,8 @@ previously used for this volume as the new target name.}
 gateway.}
 
 \item{NetworkInterfaceId}{[required] The network interface of the gateway on which to expose the iSCSI
-target. Only IPv4 addresses are accepted. Use DescribeGatewayInformation
+target. Only IPv4 addresses are accepted. Use
+\code{\link[=storagegateway_describe_gateway_information]{describe_gateway_information}}
 to get a list of the network interfaces available on a gateway.
 
 Valid Values: A valid IP address.}
@@ -33,6 +34,13 @@ Valid Values: A valid IP address.}
 \item{DiskId}{The unique device ID or other distinguishing data that identifies the
 local disk used to create the volume. This value is only required when
 you are attaching a stored volume.}
+}
+\value{
+A list with the following syntax:\preformatted{list(
+  VolumeARN = "string",
+  TargetARN = "string"
+)
+}
 }
 \description{
 Connects a volume to an iSCSI connection and then attaches the volume to

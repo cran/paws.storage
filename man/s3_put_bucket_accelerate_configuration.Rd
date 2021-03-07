@@ -16,6 +16,9 @@ s3_put_bucket_accelerate_configuration(Bucket, AccelerateConfiguration,
 different account, the request will fail with an HTTP
 \verb{403 (Access Denied)} error.}
 }
+\value{
+An empty list.
+}
 \description{
 Sets the accelerate configuration of an existing bucket. Amazon S3
 Transfer Acceleration is a bucket-level feature that enables you to
@@ -24,8 +27,8 @@ perform faster data transfers to Amazon S3.
 To use this operation, you must have permission to perform the
 s3:PutAccelerateConfiguration action. The bucket owner has this
 permission by default. The bucket owner can grant this permission to
-others. For more information about permissions, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/using-with-s3-actions.html#using-with-s3-actions-related-to-bucket-subresources}{Permissions Related to Bucket Subresource Operations}
-and \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/s3-access-control.html}{Managing Access Permissions to Your Amazon S3 Resources}.
+others. For more information about permissions, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-with-s3-actions.html#using-with-s3-actions-related-to-bucket-subresources}{Permissions Related to Bucket Subresource Operations}
+and \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-access-control.html}{Managing Access Permissions to Your Amazon S3 Resources}.
 
 The Transfer Acceleration state of a bucket can be set to one of the
 following two values:
@@ -35,7 +38,7 @@ following two values:
 }
 
 The
-\href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketAccelerateConfiguration.html}{GetBucketAccelerateConfiguration}
+\code{\link[=s3_get_bucket_accelerate_configuration]{get_bucket_accelerate_configuration}}
 operation returns the transfer acceleration state of a bucket.
 
 After setting the Transfer Acceleration state of a bucket to Enabled, it
@@ -45,13 +48,13 @@ bucket increase.
 The name of the bucket used for Transfer Acceleration must be
 DNS-compliant and must not contain periods (".").
 
-For more information about transfer acceleration, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/transfer-acceleration.html}{Transfer Acceleration}.
+For more information about transfer acceleration, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/transfer-acceleration.html}{Transfer Acceleration}.
 
 The following operations are related to
-\code{PutBucketAccelerateConfiguration}:
+\code{\link[=s3_put_bucket_accelerate_configuration]{put_bucket_accelerate_configuration}}:
 \itemize{
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketAccelerateConfiguration.html}{GetBucketAccelerateConfiguration}
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateBucket.html}{CreateBucket}
+\item \code{\link[=s3_get_bucket_accelerate_configuration]{get_bucket_accelerate_configuration}}
+\item \code{\link[=s3_create_bucket]{create_bucket}}
 }
 }
 \section{Request syntax}{

@@ -15,8 +15,9 @@ ignored. The response is paginated at 100 per page if you have more than
 100 mount targets.}
 
 \item{Marker}{(Optional) Opaque pagination token returned from a previous
-\code{DescribeMountTargets} operation (String). If present, it specifies to
-continue the list from where the previous returning call left off.}
+\code{\link[=efs_describe_mount_targets]{describe_mount_targets}} operation
+(String). If present, it specifies to continue the list from where the
+previous returning call left off.}
 
 \item{FileSystemId}{(Optional) ID of the file system whose mount targets you want to list
 (String). It must be included in your request if an \code{AccessPointId} or
@@ -31,6 +32,27 @@ included. Accepts either a mount target ID or ARN as input.}
 to list. It must be included in your request if a \code{FileSystemId} or
 \code{MountTargetId} is not included in your request. Accepts either an
 access point ID or ARN as input.}
+}
+\value{
+A list with the following syntax:\preformatted{list(
+  Marker = "string",
+  MountTargets = list(
+    list(
+      OwnerId = "string",
+      MountTargetId = "string",
+      FileSystemId = "string",
+      SubnetId = "string",
+      LifeCycleState = "creating"|"available"|"updating"|"deleting"|"deleted",
+      IpAddress = "string",
+      NetworkInterfaceId = "string",
+      AvailabilityZoneId = "string",
+      AvailabilityZoneName = "string",
+      VpcId = "string"
+    )
+  ),
+  NextMarker = "string"
+)
+}
 }
 \description{
 Returns the descriptions of all the current mount targets, or a specific

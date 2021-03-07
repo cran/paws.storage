@@ -19,6 +19,9 @@ s3_put_bucket_metrics_configuration(Bucket, Id, MetricsConfiguration,
 different account, the request will fail with an HTTP
 \verb{403 (Access Denied)} error.}
 }
+\value{
+An empty list.
+}
 \description{
 Sets a metrics configuration (specified by the metrics configuration ID)
 for the bucket. You can have up to 1,000 metrics configurations per
@@ -29,20 +32,22 @@ don't include the elements you want to keep, they are erased.
 To use this operation, you must have permissions to perform the
 \code{s3:PutMetricsConfiguration} action. The bucket owner has this
 permission by default. The bucket owner can grant this permission to
-others. For more information about permissions, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/using-with-s3-actions.html#using-with-s3-actions-related-to-bucket-subresources}{Permissions Related to Bucket Subresource Operations}
-and \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/s3-access-control.html}{Managing Access Permissions to Your Amazon S3 Resources}.
+others. For more information about permissions, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-with-s3-actions.html#using-with-s3-actions-related-to-bucket-subresources}{Permissions Related to Bucket Subresource Operations}
+and \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-access-control.html}{Managing Access Permissions to Your Amazon S3 Resources}.
 
 For information about CloudWatch request metrics for Amazon S3, see
-\href{https://docs.aws.amazon.com/AmazonS3/latest/dev/cloudwatch-monitoring.html}{Monitoring Metrics with Amazon CloudWatch}.
+\href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/cloudwatch-monitoring.html}{Monitoring Metrics with Amazon CloudWatch}.
 
-The following operations are related to \code{PutBucketMetricsConfiguration}:
+The following operations are related to
+\code{\link[=s3_put_bucket_metrics_configuration]{put_bucket_metrics_configuration}}:
 \itemize{
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketMetricsConfiguration.html}{DeleteBucketMetricsConfiguration}
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketMetricsConfiguration.html}{PutBucketMetricsConfiguration}
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListBucketMetricsConfigurations.html}{ListBucketMetricsConfigurations}
+\item \code{\link[=s3_delete_bucket_metrics_configuration]{delete_bucket_metrics_configuration}}
+\item \code{\link[=s3_put_bucket_metrics_configuration]{put_bucket_metrics_configuration}}
+\item \code{\link[=s3_list_bucket_metrics_configurations]{list_bucket_metrics_configurations}}
 }
 
-\code{GetBucketLifecycle} has the following special error:
+\code{\link[=s3_get_bucket_lifecycle]{get_bucket_lifecycle}} has the following
+special error:
 \itemize{
 \item Error code: \code{TooManyConfigurations}
 \itemize{

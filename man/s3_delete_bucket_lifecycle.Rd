@@ -13,6 +13,9 @@ s3_delete_bucket_lifecycle(Bucket, ExpectedBucketOwner)
 different account, the request will fail with an HTTP
 \verb{403 (Access Denied)} error.}
 }
+\value{
+An empty list.
+}
 \description{
 Deletes the lifecycle configuration from the specified bucket. Amazon S3
 removes all the lifecycle configuration rules in the lifecycle
@@ -28,12 +31,12 @@ others.
 There is usually some time lag before lifecycle configuration deletion
 is fully propagated to all the Amazon S3 systems.
 
-For more information about the object expiration, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/intro-lifecycle-rules.html#intro-lifecycle-rules-actions}{Elements to Describe Lifecycle Actions}.
+For more information about the object expiration, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/intro-lifecycle-rules.html#intro-lifecycle-rules-actions}{Elements to Describe Lifecycle Actions}.
 
 Related actions include:
 \itemize{
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketLifecycleConfiguration.html}{PutBucketLifecycleConfiguration}
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLifecycleConfiguration.html}{GetBucketLifecycleConfiguration}
+\item \code{\link[=s3_put_bucket_lifecycle_configuration]{put_bucket_lifecycle_configuration}}
+\item \code{\link[=s3_get_bucket_lifecycle_configuration]{get_bucket_lifecycle_configuration}}
 }
 }
 \section{Request syntax}{

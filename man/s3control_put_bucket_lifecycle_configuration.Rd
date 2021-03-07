@@ -15,17 +15,20 @@ s3control_put_bucket_lifecycle_configuration(AccountId, Bucket,
 
 \item{LifecycleConfiguration}{Container for lifecycle rules. You can add as many as 1,000 rules.}
 }
+\value{
+An empty list.
+}
 \description{
 This action puts a lifecycle configuration to an Amazon S3 on Outposts
 bucket. To put a lifecycle configuration to an S3 bucket, see
-\href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketLifecycleConfiguration.html}{PutBucketLifecycleConfiguration}
+\code{\link[=s3control_put_bucket_lifecycle_configuration]{put_bucket_lifecycle_configuration}}
 in the \emph{Amazon Simple Storage Service API}.
 
 Creates a new lifecycle configuration for the Outposts bucket or
 replaces an existing lifecycle configuration. Outposts buckets only
 support lifecycle configurations that delete/expire objects after a
 certain period of time and abort incomplete multipart uploads. For more
-information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/S3onOutposts.html}{Managing Lifecycle Permissions for Amazon S3 on Outposts}.
+information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/S3onOutposts.html}{Managing Lifecycle Permissions for Amazon S3 on Outposts}.
 
 All Amazon S3 on Outposts REST API requests for this action require an
 additional parameter of \code{x-amz-outpost-id} to be passed with the request
@@ -36,10 +39,11 @@ derived using the access point ARN, see the
 \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_PutBucketLifecycleConfiguration.html#API_control_PutBucketLifecycleConfiguration_Examples}{Examples}
 section.
 
-The following actions are related to \code{PutBucketLifecycleConfiguration}:
+The following actions are related to
+\code{\link[=s3control_put_bucket_lifecycle_configuration]{put_bucket_lifecycle_configuration}}:
 \itemize{
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_GetBucketLifecycleConfiguration.html}{GetBucketLifecycleConfiguration}
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_DeleteBucketLifecycleConfiguration.html}{DeleteBucketLifecycleConfiguration}
+\item \code{\link[=s3control_get_bucket_lifecycle_configuration]{get_bucket_lifecycle_configuration}}
+\item \code{\link[=s3control_delete_bucket_lifecycle_configuration]{delete_bucket_lifecycle_configuration}}
 }
 }
 \section{Request syntax}{

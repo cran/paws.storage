@@ -21,7 +21,7 @@ you must specify the name and the x-amz-outpost-id as well.
 
 For using this parameter with S3 on Outposts with the AWS SDK and CLI,
 you must specify the ARN of the bucket accessed in the format
-\verb{arn:aws:s3-outposts:&lt;Region&gt;:&lt;account-id&gt;:outpost/&lt;outpost-id&gt;/bucket/&lt;my-bucket-name&gt;}.
+\verb{arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>}.
 For example, to access the bucket \code{reports} through outpost \code{my-outpost}
 owned by account \code{123456789012} in Region \code{us-west-2}, use the URL
 encoding of
@@ -36,9 +36,15 @@ buckets.}
 
 \item{PublicAccessBlockConfiguration}{}
 }
+\value{
+A list with the following syntax:\preformatted{list(
+  AccessPointArn = "string"
+)
+}
+}
 \description{
 Creates an access point and associates it with the specified bucket. For
-more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/access-points.html}{Managing Data Access with Amazon S3 Access Points}
+more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points.html}{Managing Data Access with Amazon S3 Access Points}
 in the \emph{Amazon Simple Storage Service Developer Guide}.
 
 \strong{Using this action with Amazon S3 on Outposts}
@@ -52,7 +58,7 @@ Outposts only supports VPC style access points.
 \item Does not support object lock for S3 on Outposts buckets.
 }
 
-For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/S3onOutposts.html}{Using Amazon S3 on Outposts}
+For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/S3onOutposts.html}{Using Amazon S3 on Outposts}
 in the \emph{Amazon Simple Storage Service Developer Guide} .
 
 All Amazon S3 on Outposts REST API requests for this action require an
@@ -64,11 +70,12 @@ derived using the access point ARN, see the
 \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_CreateAccessPoint.html#API_control_CreateAccessPoint_Examples}{Examples}
 section.
 
-The following actions are related to \code{CreateAccessPoint}:
+The following actions are related to
+\code{\link[=s3control_create_access_point]{create_access_point}}:
 \itemize{
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_GetAccessPoint.html}{GetAccessPoint}
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_DeleteAccessPoint.html}{DeleteAccessPoint}
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_ListAccessPoints.html}{ListAccessPoints}
+\item \code{\link[=s3control_get_access_point]{get_access_point}}
+\item \code{\link[=s3control_delete_access_point]{delete_access_point}}
+\item \code{\link[=s3control_list_access_points]{list_access_points}}
 }
 }
 \section{Request syntax}{

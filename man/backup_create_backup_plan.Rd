@@ -19,13 +19,32 @@ the risk of running the operation twice. If the request includes a
 \code{CreatorRequestId} that matches an existing backup plan, that plan is
 returned. This parameter is optional.}
 }
+\value{
+A list with the following syntax:\preformatted{list(
+  BackupPlanId = "string",
+  BackupPlanArn = "string",
+  CreationDate = as.POSIXct(
+    "2015-01-01"
+  ),
+  VersionId = "string",
+  AdvancedBackupSettings = list(
+    list(
+      ResourceType = "string",
+      BackupOptions = list(
+        "string"
+      )
+    )
+  )
+)
+}
+}
 \description{
 Creates a backup plan using a backup plan name and backup rules. A
 backup plan is a document that contains information that AWS Backup uses
 to schedule tasks that create recovery points for resources.
 
-If you call \code{CreateBackupPlan} with a plan that already exists, an
-\code{AlreadyExistsException} is returned.
+If you call \code{\link[=backup_create_backup_plan]{create_backup_plan}} with a
+plan that already exists, an \code{AlreadyExistsException} is returned.
 }
 \section{Request syntax}{
 \preformatted{svc$create_backup_plan(

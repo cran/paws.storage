@@ -22,18 +22,44 @@ that Amazon S3 returned in the \code{NextToken} element of the
 response will include a pagination token in the \code{NextToken} field to
 enable you to retrieve the next page of results.}
 }
+\value{
+A list with the following syntax:\preformatted{list(
+  NextToken = "string",
+  Jobs = list(
+    list(
+      JobId = "string",
+      Description = "string",
+      Operation = "LambdaInvoke"|"S3PutObjectCopy"|"S3PutObjectAcl"|"S3PutObjectTagging"|"S3InitiateRestoreObject"|"S3PutObjectLegalHold"|"S3PutObjectRetention",
+      Priority = 123,
+      Status = "Active"|"Cancelled"|"Cancelling"|"Complete"|"Completing"|"Failed"|"Failing"|"New"|"Paused"|"Pausing"|"Preparing"|"Ready"|"Suspended",
+      CreationTime = as.POSIXct(
+        "2015-01-01"
+      ),
+      TerminationDate = as.POSIXct(
+        "2015-01-01"
+      ),
+      ProgressSummary = list(
+        TotalNumberOfTasks = 123,
+        NumberOfTasksSucceeded = 123,
+        NumberOfTasksFailed = 123
+      )
+    )
+  )
+)
+}
+}
 \description{
 Lists current S3 Batch Operations jobs and jobs that have ended within
 the last 30 days for the AWS account making the request. For more
-information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/batch-ops-basics.html}{S3 Batch Operations}
+information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/batch-ops-basics.html}{S3 Batch Operations}
 in the \emph{Amazon Simple Storage Service Developer Guide}.
 
 Related actions include:
 \itemize{
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_CreateJob.html}{CreateJob}
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_DescribeJob.html}{DescribeJob}
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_UpdateJobPriority.html}{UpdateJobPriority}
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_UpdateJobStatus.html}{UpdateJobStatus}
+\item \code{\link[=s3control_create_job]{create_job}}
+\item \code{\link[=s3control_describe_job]{describe_job}}
+\item \code{\link[=s3control_update_job_priority]{update_job_priority}}
+\item \code{\link[=s3control_update_job_status]{update_job_status}}
 }
 }
 \section{Request syntax}{

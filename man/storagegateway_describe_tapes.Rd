@@ -15,8 +15,9 @@ the virtual tapes you want to describe. If this parameter is not
 specified, Tape gateway returns a description of all virtual tapes
 associated with the specified gateway.}
 
-\item{Marker}{A marker value, obtained in a previous call to \code{DescribeTapes}. This
-marker indicates which page of results to retrieve.
+\item{Marker}{A marker value, obtained in a previous call to
+\code{\link[=storagegateway_describe_tapes]{describe_tapes}}. This marker indicates
+which page of results to retrieve.
 
 If not specified, the first page of results is retrieved.}
 
@@ -24,6 +25,35 @@ If not specified, the first page of results is retrieved.}
 specified number.
 
 Amazon Web Services may impose its own limit, if this field is not set.}
+}
+\value{
+A list with the following syntax:\preformatted{list(
+  Tapes = list(
+    list(
+      TapeARN = "string",
+      TapeBarcode = "string",
+      TapeCreatedDate = as.POSIXct(
+        "2015-01-01"
+      ),
+      TapeSizeInBytes = 123,
+      TapeStatus = "string",
+      VTLDevice = "string",
+      Progress = 123.0,
+      TapeUsedInBytes = 123,
+      KMSKey = "string",
+      PoolId = "string",
+      Worm = TRUE|FALSE,
+      RetentionStartDate = as.POSIXct(
+        "2015-01-01"
+      ),
+      PoolEntryDate = as.POSIXct(
+        "2015-01-01"
+      )
+    )
+  ),
+  Marker = "string"
+)
+}
 }
 \description{
 Returns a description of the specified Amazon Resource Name (ARN) of

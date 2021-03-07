@@ -16,9 +16,12 @@ s3_put_bucket_notification_configuration(Bucket,
 different account, the request will fail with an HTTP
 \verb{403 (Access Denied)} error.}
 }
+\value{
+An empty list.
+}
 \description{
 Enables notifications of specified events for a bucket. For more
-information about event notifications, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/NotificationHowTo.html}{Configuring Event Notifications}.
+information about event notifications, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/NotificationHowTo.html}{Configuring Event Notifications}.
 
 Using this API, you can replace an existing notification configuration.
 The configuration is an XML file that defines the event types that you
@@ -30,9 +33,9 @@ By default, your bucket has no event notifications configured. That is,
 the notification configuration will be an empty
 \code{NotificationConfiguration}.
 
-\verb{&lt;NotificationConfiguration&gt;}
+\verb{<NotificationConfiguration>}
 
-\verb{&lt;/NotificationConfiguration&gt;}
+\verb{</NotificationConfiguration>}
 
 This operation replaces the existing notification configuration with the
 configuration you include in the request body.
@@ -43,7 +46,7 @@ Simple Notification Service (Amazon SNS) or Amazon Simple Queue Service
 permission to publish to it by sending a test notification. In the case
 of AWS Lambda destinations, Amazon S3 verifies that the Lambda function
 permissions grant Amazon S3 permission to invoke the function from the
-Amazon S3 bucket. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/NotificationHowTo.html}{Configuring Notifications for Amazon S3 Events}.
+Amazon S3 bucket. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/NotificationHowTo.html}{Configuring Notifications for Amazon S3 Events}.
 
 You can disable notifications by adding the empty
 NotificationConfiguration element.
@@ -69,9 +72,9 @@ include the \code{x-amz-sns-test-message-id} header containing the message ID
 of the test notification sent to the topic.
 
 The following operation is related to
-\code{PutBucketNotificationConfiguration}:
+\code{\link[=s3_put_bucket_notification_configuration]{put_bucket_notification_configuration}}:
 \itemize{
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketNotificationConfiguration.html}{GetBucketNotificationConfiguration}
+\item \code{\link[=s3_get_bucket_notification_configuration]{get_bucket_notification_configuration}}
 }
 }
 \section{Request syntax}{

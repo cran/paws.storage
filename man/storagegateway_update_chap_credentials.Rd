@@ -11,8 +11,8 @@ storagegateway_update_chap_credentials(TargetARN,
 }
 \arguments{
 \item{TargetARN}{[required] The Amazon Resource Name (ARN) of the iSCSI volume target. Use the
-DescribeStorediSCSIVolumes operation to return the TargetARN for
-specified VolumeARN.}
+\code{\link[=storagegateway_describe_storedi_scsi_volumes]{describe_storedi_scsi_volumes}}
+operation to return the TargetARN for specified VolumeARN.}
 
 \item{SecretToAuthenticateInitiator}{[required] The secret key that the initiator (for example, the Windows client) must
 provide to participate in mutual CHAP with the target.
@@ -27,6 +27,13 @@ CHAP with the initiator (e.g. Windows client).
 Byte constraints: Minimum bytes of 12. Maximum bytes of 16.
 
 The secret key must be between 12 and 16 bytes when encoded in UTF-8.}
+}
+\value{
+A list with the following syntax:\preformatted{list(
+  TargetARN = "string",
+  InitiatorName = "string"
+)
+}
 }
 \description{
 Updates the Challenge-Handshake Authentication Protocol (CHAP)
@@ -55,7 +62,7 @@ svc$update_chap_credentials(
   InitiatorName = "iqn.1991-05.com.microsoft:computername.domain.example.com",
   SecretToAuthenticateInitiator = "111111111111",
   SecretToAuthenticateTarget = "222222222222",
-  TargetARN = "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B/target/iqn..."
+  TargetARN = "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12..."
 )
 }
 

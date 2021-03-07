@@ -7,8 +7,9 @@
 storagegateway_create_snapshot(VolumeARN, SnapshotDescription, Tags)
 }
 \arguments{
-\item{VolumeARN}{[required] The Amazon Resource Name (ARN) of the volume. Use the ListVolumes
-operation to return a list of gateway volumes.}
+\item{VolumeARN}{[required] The Amazon Resource Name (ARN) of the volume. Use the
+\code{\link[=storagegateway_list_volumes]{list_volumes}} operation to return a list
+of gateway volumes.}
 
 \item{SnapshotDescription}{[required] Textual description of the snapshot that appears in the Amazon EC2
 console, Elastic Block Store snapshots panel in the \strong{Description}
@@ -20,8 +21,15 @@ a key-value pair.
 
 Valid characters for key and value are letters, spaces, and numbers
 representable in UTF-8 format, and the following special characters: + -
-= . \\_ : / @. The maximum length of a tag's key is 128 characters, and
+= . _ : / @. The maximum length of a tag's key is 128 characters, and
 the maximum length for a tag's value is 256.}
+}
+\value{
+A list with the following syntax:\preformatted{list(
+  VolumeARN = "string",
+  SnapshotId = "string"
+)
+}
 }
 \description{
 Initiates a snapshot of a volume.
@@ -34,14 +42,15 @@ snapshots of your gateway volume on a scheduled or ad hoc basis. This
 API enables you to take an ad hoc snapshot. For more information, see
 \href{https://docs.aws.amazon.com/storagegateway/latest/userguide/managing-volumes.html#SchedulingSnapshot}{Editing a snapshot schedule}.
 
-In the \code{CreateSnapshot} request, you identify the volume by providing
-its Amazon Resource Name (ARN). You must also provide description for
-the snapshot. When AWS Storage Gateway takes the snapshot of specified
-volume, the snapshot and description appears in the AWS Storage Gateway
-console. In response, AWS Storage Gateway returns you a snapshot ID. You
-can use this snapshot ID to check the snapshot progress or later use it
-when you want to create a volume from a snapshot. This operation is only
-supported in stored and cached volume gateway type.
+In the \code{\link[=storagegateway_create_snapshot]{create_snapshot}} request, you
+identify the volume by providing its Amazon Resource Name (ARN). You
+must also provide description for the snapshot. When AWS Storage Gateway
+takes the snapshot of specified volume, the snapshot and description
+appears in the AWS Storage Gateway console. In response, AWS Storage
+Gateway returns you a snapshot ID. You can use this snapshot ID to check
+the snapshot progress or later use it when you want to create a volume
+from a snapshot. This operation is only supported in stored and cached
+volume gateway type.
 
 To list or delete a snapshot, you must use the Amazon EC2 API. For more
 information, see
@@ -74,7 +83,7 @@ page.
 # Initiates an ad-hoc snapshot of a gateway volume.
 svc$create_snapshot(
   SnapshotDescription = "My root volume snapshot as of 10/03/2017",
-  VolumeARN = "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B/volume/vol..."
+  VolumeARN = "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12..."
 )
 }
 

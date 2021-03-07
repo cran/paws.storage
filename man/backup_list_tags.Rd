@@ -10,7 +10,8 @@ backup_list_tags(ResourceArn, NextToken, MaxResults)
 \arguments{
 \item{ResourceArn}{[required] An Amazon Resource Name (ARN) that uniquely identifies a resource. The
 format of the ARN depends on the type of resource. Valid targets for
-\code{ListTags} are recovery points, backup plans, and backup vaults.}
+\code{\link[=backup_list_tags]{list_tags}} are recovery points, backup plans, and
+backup vaults.}
 
 \item{NextToken}{The next item following a partial list of returned items. For example,
 if a request is made to return \code{maxResults} number of items, \code{NextToken}
@@ -19,11 +20,21 @@ pointed to by the next token.}
 
 \item{MaxResults}{The maximum number of items to be returned.}
 }
+\value{
+A list with the following syntax:\preformatted{list(
+  NextToken = "string",
+  Tags = list(
+    "string"
+  )
+)
+}
+}
 \description{
 Returns a list of key-value pairs assigned to a target recovery point,
 backup plan, or backup vault.
 
-\code{ListTags} are currently only supported with Amazon EFS backups.
+\code{\link[=backup_list_tags]{list_tags}} are currently only supported with Amazon
+EFS backups.
 }
 \section{Request syntax}{
 \preformatted{svc$list_tags(

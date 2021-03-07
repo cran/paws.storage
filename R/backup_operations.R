@@ -10,8 +10,8 @@ NULL
 #' backup plan is a document that contains information that AWS Backup uses
 #' to schedule tasks that create recovery points for resources.
 #' 
-#' If you call `CreateBackupPlan` with a plan that already exists, an
-#' `AlreadyExistsException` is returned.
+#' If you call [`create_backup_plan`][backup_create_backup_plan] with a
+#' plan that already exists, an `AlreadyExistsException` is returned.
 #'
 #' @usage
 #' backup_create_backup_plan(BackupPlan, BackupPlanTags, CreatorRequestId)
@@ -25,6 +25,27 @@ NULL
 #' the risk of running the operation twice. If the request includes a
 #' `CreatorRequestId` that matches an existing backup plan, that plan is
 #' returned. This parameter is optional.
+#'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   BackupPlanId = "string",
+#'   BackupPlanArn = "string",
+#'   CreationDate = as.POSIXct(
+#'     "2015-01-01"
+#'   ),
+#'   VersionId = "string",
+#'   AdvancedBackupSettings = list(
+#'     list(
+#'       ResourceType = "string",
+#'       BackupOptions = list(
+#'         "string"
+#'       )
+#'     )
+#'   )
+#' )
+#' ```
 #'
 #' @section Request syntax:
 #' ```
@@ -138,6 +159,18 @@ backup_create_backup_plan <- function(BackupPlan, BackupPlanTags = NULL, Creator
 #' @param CreatorRequestId A unique string that identifies the request and allows failed requests
 #' to be retried without the risk of running the operation twice.
 #'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   SelectionId = "string",
+#'   BackupPlanId = "string",
+#'   CreationDate = as.POSIXct(
+#'     "2015-01-01"
+#'   )
+#' )
+#' ```
+#'
 #' @section Request syntax:
 #' ```
 #' svc$create_backup_selection(
@@ -184,8 +217,9 @@ backup_create_backup_selection <- function(BackupPlanId, BackupSelection, Creato
 #'
 #' @description
 #' Creates a logical container where backups are stored. A
-#' `CreateBackupVault` request includes a name, optionally one or more
-#' resource tags, an encryption key, and a request ID.
+#' [`create_backup_vault`][backup_create_backup_vault] request includes a
+#' name, optionally one or more resource tags, an encryption key, and a
+#' request ID.
 #' 
 #' Sensitive data, such as passport numbers, should not be included the
 #' name of a backup vault.
@@ -205,6 +239,18 @@ backup_create_backup_selection <- function(BackupPlanId, BackupSelection, Creato
 #' `arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab`.
 #' @param CreatorRequestId A unique string that identifies the request and allows failed requests
 #' to be retried without the risk of running the operation twice.
+#'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   BackupVaultName = "string",
+#'   BackupVaultArn = "string",
+#'   CreationDate = as.POSIXct(
+#'     "2015-01-01"
+#'   )
+#' )
+#' ```
 #'
 #' @section Request syntax:
 #' ```
@@ -251,6 +297,19 @@ backup_create_backup_vault <- function(BackupVaultName, BackupVaultTags = NULL, 
 #'
 #' @param BackupPlanId &#91;required&#93; Uniquely identifies a backup plan.
 #'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   BackupPlanId = "string",
+#'   BackupPlanArn = "string",
+#'   DeletionDate = as.POSIXct(
+#'     "2015-01-01"
+#'   ),
+#'   VersionId = "string"
+#' )
+#' ```
+#'
 #' @section Request syntax:
 #' ```
 #' svc$delete_backup_plan(
@@ -291,6 +350,9 @@ backup_delete_backup_plan <- function(BackupPlanId) {
 #' @param BackupPlanId &#91;required&#93; Uniquely identifies a backup plan.
 #' @param SelectionId &#91;required&#93; Uniquely identifies the body of a request to assign a set of resources
 #' to a backup plan.
+#'
+#' @return
+#' An empty list.
 #'
 #' @section Request syntax:
 #' ```
@@ -334,6 +396,9 @@ backup_delete_backup_selection <- function(BackupPlanId, SelectionId) {
 #' them and the AWS Region where they are created. They consist of
 #' lowercase letters, numbers, and hyphens.
 #'
+#' @return
+#' An empty list.
+#'
 #' @section Request syntax:
 #' ```
 #' svc$delete_backup_vault(
@@ -374,6 +439,9 @@ backup_delete_backup_vault <- function(BackupVaultName) {
 #' them and the AWS Region where they are created. They consist of
 #' lowercase letters, numbers, and hyphens.
 #'
+#' @return
+#' An empty list.
+#'
 #' @section Request syntax:
 #' ```
 #' svc$delete_backup_vault_access_policy(
@@ -413,6 +481,9 @@ backup_delete_backup_vault_access_policy <- function(BackupVaultName) {
 #' are identified by names that are unique to the account used to create
 #' them and the Region where they are created. They consist of lowercase
 #' letters, numbers, and hyphens.
+#'
+#' @return
+#' An empty list.
 #'
 #' @section Request syntax:
 #' ```
@@ -457,6 +528,9 @@ backup_delete_backup_vault_notifications <- function(BackupVaultName) {
 #' for example,
 #' `arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45`.
 #'
+#' @return
+#' An empty list.
+#'
 #' @section Request syntax:
 #' ```
 #' svc$delete_recovery_point(
@@ -494,6 +568,48 @@ backup_delete_recovery_point <- function(BackupVaultName, RecoveryPointArn) {
 #' backup_describe_backup_job(BackupJobId)
 #'
 #' @param BackupJobId &#91;required&#93; Uniquely identifies a request to AWS Backup to back up a resource.
+#'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   AccountId = "string",
+#'   BackupJobId = "string",
+#'   BackupVaultName = "string",
+#'   BackupVaultArn = "string",
+#'   RecoveryPointArn = "string",
+#'   ResourceArn = "string",
+#'   CreationDate = as.POSIXct(
+#'     "2015-01-01"
+#'   ),
+#'   CompletionDate = as.POSIXct(
+#'     "2015-01-01"
+#'   ),
+#'   State = "CREATED"|"PENDING"|"RUNNING"|"ABORTING"|"ABORTED"|"COMPLETED"|"FAILED"|"EXPIRED",
+#'   StatusMessage = "string",
+#'   PercentDone = "string",
+#'   BackupSizeInBytes = 123,
+#'   IamRoleArn = "string",
+#'   CreatedBy = list(
+#'     BackupPlanId = "string",
+#'     BackupPlanArn = "string",
+#'     BackupPlanVersion = "string",
+#'     BackupRuleId = "string"
+#'   ),
+#'   ResourceType = "string",
+#'   BytesTransferred = 123,
+#'   ExpectedCompletionDate = as.POSIXct(
+#'     "2015-01-01"
+#'   ),
+#'   StartBy = as.POSIXct(
+#'     "2015-01-01"
+#'   ),
+#'   BackupOptions = list(
+#'     "string"
+#'   ),
+#'   BackupType = "string"
+#' )
+#' ```
 #'
 #' @section Request syntax:
 #' ```
@@ -535,6 +651,21 @@ backup_describe_backup_job <- function(BackupJobId) {
 #' them and the AWS Region where they are created. They consist of
 #' lowercase letters, numbers, and hyphens.
 #'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   BackupVaultName = "string",
+#'   BackupVaultArn = "string",
+#'   EncryptionKeyArn = "string",
+#'   CreationDate = as.POSIXct(
+#'     "2015-01-01"
+#'   ),
+#'   CreatorRequestId = "string",
+#'   NumberOfRecoveryPoints = 123
+#' )
+#' ```
+#'
 #' @section Request syntax:
 #' ```
 #' svc$describe_backup_vault(
@@ -572,6 +703,39 @@ backup_describe_backup_vault <- function(BackupVaultName) {
 #'
 #' @param CopyJobId &#91;required&#93; Uniquely identifies a copy job.
 #'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   CopyJob = list(
+#'     AccountId = "string",
+#'     CopyJobId = "string",
+#'     SourceBackupVaultArn = "string",
+#'     SourceRecoveryPointArn = "string",
+#'     DestinationBackupVaultArn = "string",
+#'     DestinationRecoveryPointArn = "string",
+#'     ResourceArn = "string",
+#'     CreationDate = as.POSIXct(
+#'       "2015-01-01"
+#'     ),
+#'     CompletionDate = as.POSIXct(
+#'       "2015-01-01"
+#'     ),
+#'     State = "CREATED"|"RUNNING"|"COMPLETED"|"FAILED",
+#'     StatusMessage = "string",
+#'     BackupSizeInBytes = 123,
+#'     IamRoleArn = "string",
+#'     CreatedBy = list(
+#'       BackupPlanId = "string",
+#'       BackupPlanArn = "string",
+#'       BackupPlanVersion = "string",
+#'       BackupRuleId = "string"
+#'     ),
+#'     ResourceType = "string"
+#'   )
+#' )
+#' ```
+#'
 #' @section Request syntax:
 #' ```
 #' svc$describe_copy_job(
@@ -606,6 +770,19 @@ backup_describe_copy_job <- function(CopyJobId) {
 #'
 #' @usage
 #' backup_describe_global_settings()
+#'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   GlobalSettings = list(
+#'     "string"
+#'   ),
+#'   LastUpdateTime = as.POSIXct(
+#'     "2015-01-01"
+#'   )
+#' )
+#' ```
 #'
 #' @section Request syntax:
 #' ```
@@ -646,6 +823,18 @@ backup_describe_global_settings <- function() {
 #'
 #' @param ResourceArn &#91;required&#93; An Amazon Resource Name (ARN) that uniquely identifies a resource. The
 #' format of the ARN depends on the resource type.
+#'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   ResourceArn = "string",
+#'   ResourceType = "string",
+#'   LastBackupTime = as.POSIXct(
+#'     "2015-01-01"
+#'   )
+#' )
+#' ```
 #'
 #' @section Request syntax:
 #' ```
@@ -692,6 +881,52 @@ backup_describe_protected_resource <- function(ResourceArn) {
 #' for example,
 #' `arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45`.
 #'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   RecoveryPointArn = "string",
+#'   BackupVaultName = "string",
+#'   BackupVaultArn = "string",
+#'   SourceBackupVaultArn = "string",
+#'   ResourceArn = "string",
+#'   ResourceType = "string",
+#'   CreatedBy = list(
+#'     BackupPlanId = "string",
+#'     BackupPlanArn = "string",
+#'     BackupPlanVersion = "string",
+#'     BackupRuleId = "string"
+#'   ),
+#'   IamRoleArn = "string",
+#'   Status = "COMPLETED"|"PARTIAL"|"DELETING"|"EXPIRED",
+#'   CreationDate = as.POSIXct(
+#'     "2015-01-01"
+#'   ),
+#'   CompletionDate = as.POSIXct(
+#'     "2015-01-01"
+#'   ),
+#'   BackupSizeInBytes = 123,
+#'   CalculatedLifecycle = list(
+#'     MoveToColdStorageAt = as.POSIXct(
+#'       "2015-01-01"
+#'     ),
+#'     DeleteAt = as.POSIXct(
+#'       "2015-01-01"
+#'     )
+#'   ),
+#'   Lifecycle = list(
+#'     MoveToColdStorageAfterDays = 123,
+#'     DeleteAfterDays = 123
+#'   ),
+#'   EncryptionKeyArn = "string",
+#'   IsEncrypted = TRUE|FALSE,
+#'   StorageClass = "WARM"|"COLD"|"DELETED",
+#'   LastRestoreTime = as.POSIXct(
+#'     "2015-01-01"
+#'   )
+#' )
+#' ```
+#'
 #' @section Request syntax:
 #' ```
 #' svc$describe_recovery_point(
@@ -733,6 +968,16 @@ backup_describe_recovery_point <- function(BackupVaultName, RecoveryPointArn) {
 #' @usage
 #' backup_describe_region_settings()
 #'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   ResourceTypeOptInPreference = list(
+#'     TRUE|FALSE
+#'   )
+#' )
+#' ```
+#'
 #' @section Request syntax:
 #' ```
 #' svc$describe_region_settings()
@@ -769,6 +1014,30 @@ backup_describe_region_settings <- function() {
 #' backup_describe_restore_job(RestoreJobId)
 #'
 #' @param RestoreJobId &#91;required&#93; Uniquely identifies the job that restores a recovery point.
+#'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   AccountId = "string",
+#'   RestoreJobId = "string",
+#'   RecoveryPointArn = "string",
+#'   CreationDate = as.POSIXct(
+#'     "2015-01-01"
+#'   ),
+#'   CompletionDate = as.POSIXct(
+#'     "2015-01-01"
+#'   ),
+#'   Status = "PENDING"|"RUNNING"|"COMPLETED"|"ABORTED"|"FAILED",
+#'   StatusMessage = "string",
+#'   PercentDone = "string",
+#'   BackupSizeInBytes = 123,
+#'   IamRoleArn = "string",
+#'   ExpectedCompletionTimeMinutes = 123,
+#'   CreatedResourceArn = "string",
+#'   ResourceType = "string"
+#' )
+#' ```
 #'
 #' @section Request syntax:
 #' ```
@@ -808,6 +1077,14 @@ backup_describe_restore_job <- function(RestoreJobId) {
 #' backup_export_backup_plan_template(BackupPlanId)
 #'
 #' @param BackupPlanId &#91;required&#93; Uniquely identifies a backup plan.
+#'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   BackupPlanTemplateJson = "string"
+#' )
+#' ```
 #'
 #' @section Request syntax:
 #' ```
@@ -849,6 +1126,71 @@ backup_export_backup_plan_template <- function(BackupPlanId) {
 #' @param VersionId Unique, randomly generated, Unicode, UTF-8 encoded strings that are at
 #' most 1,024 bytes long. Version IDs cannot be edited.
 #'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   BackupPlan = list(
+#'     BackupPlanName = "string",
+#'     Rules = list(
+#'       list(
+#'         RuleName = "string",
+#'         TargetBackupVaultName = "string",
+#'         ScheduleExpression = "string",
+#'         StartWindowMinutes = 123,
+#'         CompletionWindowMinutes = 123,
+#'         Lifecycle = list(
+#'           MoveToColdStorageAfterDays = 123,
+#'           DeleteAfterDays = 123
+#'         ),
+#'         RecoveryPointTags = list(
+#'           "string"
+#'         ),
+#'         RuleId = "string",
+#'         CopyActions = list(
+#'           list(
+#'             Lifecycle = list(
+#'               MoveToColdStorageAfterDays = 123,
+#'               DeleteAfterDays = 123
+#'             ),
+#'             DestinationBackupVaultArn = "string"
+#'           )
+#'         )
+#'       )
+#'     ),
+#'     AdvancedBackupSettings = list(
+#'       list(
+#'         ResourceType = "string",
+#'         BackupOptions = list(
+#'           "string"
+#'         )
+#'       )
+#'     )
+#'   ),
+#'   BackupPlanId = "string",
+#'   BackupPlanArn = "string",
+#'   VersionId = "string",
+#'   CreatorRequestId = "string",
+#'   CreationDate = as.POSIXct(
+#'     "2015-01-01"
+#'   ),
+#'   DeletionDate = as.POSIXct(
+#'     "2015-01-01"
+#'   ),
+#'   LastExecutionDate = as.POSIXct(
+#'     "2015-01-01"
+#'   ),
+#'   AdvancedBackupSettings = list(
+#'     list(
+#'       ResourceType = "string",
+#'       BackupOptions = list(
+#'         "string"
+#'       )
+#'     )
+#'   )
+#' )
+#' ```
+#'
 #' @section Request syntax:
 #' ```
 #' svc$get_backup_plan(
@@ -887,6 +1229,50 @@ backup_get_backup_plan <- function(BackupPlanId, VersionId = NULL) {
 #'
 #' @param BackupPlanTemplateJson &#91;required&#93; A customer-supplied backup plan document in JSON format.
 #'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   BackupPlan = list(
+#'     BackupPlanName = "string",
+#'     Rules = list(
+#'       list(
+#'         RuleName = "string",
+#'         TargetBackupVaultName = "string",
+#'         ScheduleExpression = "string",
+#'         StartWindowMinutes = 123,
+#'         CompletionWindowMinutes = 123,
+#'         Lifecycle = list(
+#'           MoveToColdStorageAfterDays = 123,
+#'           DeleteAfterDays = 123
+#'         ),
+#'         RecoveryPointTags = list(
+#'           "string"
+#'         ),
+#'         RuleId = "string",
+#'         CopyActions = list(
+#'           list(
+#'             Lifecycle = list(
+#'               MoveToColdStorageAfterDays = 123,
+#'               DeleteAfterDays = 123
+#'             ),
+#'             DestinationBackupVaultArn = "string"
+#'           )
+#'         )
+#'       )
+#'     ),
+#'     AdvancedBackupSettings = list(
+#'       list(
+#'         ResourceType = "string",
+#'         BackupOptions = list(
+#'           "string"
+#'         )
+#'       )
+#'     )
+#'   )
+#' )
+#' ```
+#'
 #' @section Request syntax:
 #' ```
 #' svc$get_backup_plan_from_json(
@@ -923,6 +1309,50 @@ backup_get_backup_plan_from_json <- function(BackupPlanTemplateJson) {
 #' backup_get_backup_plan_from_template(BackupPlanTemplateId)
 #'
 #' @param BackupPlanTemplateId &#91;required&#93; Uniquely identifies a stored backup plan template.
+#'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   BackupPlanDocument = list(
+#'     BackupPlanName = "string",
+#'     Rules = list(
+#'       list(
+#'         RuleName = "string",
+#'         TargetBackupVaultName = "string",
+#'         ScheduleExpression = "string",
+#'         StartWindowMinutes = 123,
+#'         CompletionWindowMinutes = 123,
+#'         Lifecycle = list(
+#'           MoveToColdStorageAfterDays = 123,
+#'           DeleteAfterDays = 123
+#'         ),
+#'         RecoveryPointTags = list(
+#'           "string"
+#'         ),
+#'         RuleId = "string",
+#'         CopyActions = list(
+#'           list(
+#'             Lifecycle = list(
+#'               MoveToColdStorageAfterDays = 123,
+#'               DeleteAfterDays = 123
+#'             ),
+#'             DestinationBackupVaultArn = "string"
+#'           )
+#'         )
+#'       )
+#'     ),
+#'     AdvancedBackupSettings = list(
+#'       list(
+#'         ResourceType = "string",
+#'         BackupOptions = list(
+#'           "string"
+#'         )
+#'       )
+#'     )
+#'   )
+#' )
+#' ```
 #'
 #' @section Request syntax:
 #' ```
@@ -964,6 +1394,33 @@ backup_get_backup_plan_from_template <- function(BackupPlanTemplateId) {
 #' @param BackupPlanId &#91;required&#93; Uniquely identifies a backup plan.
 #' @param SelectionId &#91;required&#93; Uniquely identifies the body of a request to assign a set of resources
 #' to a backup plan.
+#'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   BackupSelection = list(
+#'     SelectionName = "string",
+#'     IamRoleArn = "string",
+#'     Resources = list(
+#'       "string"
+#'     ),
+#'     ListOfTags = list(
+#'       list(
+#'         ConditionType = "STRINGEQUALS",
+#'         ConditionKey = "string",
+#'         ConditionValue = "string"
+#'       )
+#'     )
+#'   ),
+#'   SelectionId = "string",
+#'   BackupPlanId = "string",
+#'   CreationDate = as.POSIXct(
+#'     "2015-01-01"
+#'   ),
+#'   CreatorRequestId = "string"
+#' )
+#' ```
 #'
 #' @section Request syntax:
 #' ```
@@ -1008,6 +1465,16 @@ backup_get_backup_selection <- function(BackupPlanId, SelectionId) {
 #' them and the AWS Region where they are created. They consist of
 #' lowercase letters, numbers, and hyphens.
 #'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   BackupVaultName = "string",
+#'   BackupVaultArn = "string",
+#'   Policy = "string"
+#' )
+#' ```
+#'
 #' @section Request syntax:
 #' ```
 #' svc$get_backup_vault_access_policy(
@@ -1047,6 +1514,19 @@ backup_get_backup_vault_access_policy <- function(BackupVaultName) {
 #' are identified by names that are unique to the account used to create
 #' them and the AWS Region where they are created. They consist of
 #' lowercase letters, numbers, and hyphens.
+#'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   BackupVaultName = "string",
+#'   BackupVaultArn = "string",
+#'   SNSTopicArn = "string",
+#'   BackupVaultEvents = list(
+#'     "BACKUP_JOB_STARTED"|"BACKUP_JOB_COMPLETED"|"BACKUP_JOB_SUCCESSFUL"|"BACKUP_JOB_FAILED"|"BACKUP_JOB_EXPIRED"|"RESTORE_JOB_STARTED"|"RESTORE_JOB_COMPLETED"|"RESTORE_JOB_SUCCESSFUL"|"RESTORE_JOB_FAILED"|"COPY_JOB_STARTED"|"COPY_JOB_SUCCESSFUL"|"COPY_JOB_FAILED"|"RECOVERY_POINT_MODIFIED"|"BACKUP_PLAN_CREATED"|"BACKUP_PLAN_MODIFIED"
+#'   )
+#' )
+#' ```
 #'
 #' @section Request syntax:
 #' ```
@@ -1094,6 +1574,18 @@ backup_get_backup_vault_notifications <- function(BackupVaultName) {
 #' for example,
 #' `arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45`.
 #'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   BackupVaultArn = "string",
+#'   RecoveryPointArn = "string",
+#'   RestoreMetadata = list(
+#'     "string"
+#'   )
+#' )
+#' ```
+#'
 #' @section Request syntax:
 #' ```
 #' svc$get_recovery_point_restore_metadata(
@@ -1131,6 +1623,16 @@ backup_get_recovery_point_restore_metadata <- function(BackupVaultName, Recovery
 #' backup_get_supported_resource_types()
 #'
 
+#'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   ResourceTypes = list(
+#'     "string"
+#'   )
+#' )
+#' ```
 #'
 
 #'
@@ -1194,6 +1696,53 @@ backup_get_supported_resource_types <- function() {
 #' @param ByAccountId The account ID to list the jobs from. Returns only backup jobs
 #' associated with the specified account ID.
 #'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   BackupJobs = list(
+#'     list(
+#'       AccountId = "string",
+#'       BackupJobId = "string",
+#'       BackupVaultName = "string",
+#'       BackupVaultArn = "string",
+#'       RecoveryPointArn = "string",
+#'       ResourceArn = "string",
+#'       CreationDate = as.POSIXct(
+#'         "2015-01-01"
+#'       ),
+#'       CompletionDate = as.POSIXct(
+#'         "2015-01-01"
+#'       ),
+#'       State = "CREATED"|"PENDING"|"RUNNING"|"ABORTING"|"ABORTED"|"COMPLETED"|"FAILED"|"EXPIRED",
+#'       StatusMessage = "string",
+#'       PercentDone = "string",
+#'       BackupSizeInBytes = 123,
+#'       IamRoleArn = "string",
+#'       CreatedBy = list(
+#'         BackupPlanId = "string",
+#'         BackupPlanArn = "string",
+#'         BackupPlanVersion = "string",
+#'         BackupRuleId = "string"
+#'       ),
+#'       ExpectedCompletionDate = as.POSIXct(
+#'         "2015-01-01"
+#'       ),
+#'       StartBy = as.POSIXct(
+#'         "2015-01-01"
+#'       ),
+#'       ResourceType = "string",
+#'       BytesTransferred = 123,
+#'       BackupOptions = list(
+#'         "string"
+#'       ),
+#'       BackupType = "string"
+#'     )
+#'   ),
+#'   NextToken = "string"
+#' )
+#' ```
+#'
 #' @section Request syntax:
 #' ```
 #' svc$list_backup_jobs(
@@ -1249,6 +1798,20 @@ backup_list_backup_jobs <- function(NextToken = NULL, MaxResults = NULL, ByResou
 #' pointed to by the next token.
 #' @param MaxResults The maximum number of items to be returned.
 #'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   NextToken = "string",
+#'   BackupPlanTemplatesList = list(
+#'     list(
+#'       BackupPlanTemplateId = "string",
+#'       BackupPlanTemplateName = "string"
+#'     )
+#'   )
+#' )
+#' ```
+#'
 #' @section Request syntax:
 #' ```
 #' svc$list_backup_plan_templates(
@@ -1295,6 +1858,40 @@ backup_list_backup_plan_templates <- function(NextToken = NULL, MaxResults = NUL
 #' allows you to return more items in your list starting at the location
 #' pointed to by the next token.
 #' @param MaxResults The maximum number of items to be returned.
+#'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   NextToken = "string",
+#'   BackupPlanVersionsList = list(
+#'     list(
+#'       BackupPlanArn = "string",
+#'       BackupPlanId = "string",
+#'       CreationDate = as.POSIXct(
+#'         "2015-01-01"
+#'       ),
+#'       DeletionDate = as.POSIXct(
+#'         "2015-01-01"
+#'       ),
+#'       VersionId = "string",
+#'       BackupPlanName = "string",
+#'       CreatorRequestId = "string",
+#'       LastExecutionDate = as.POSIXct(
+#'         "2015-01-01"
+#'       ),
+#'       AdvancedBackupSettings = list(
+#'         list(
+#'           ResourceType = "string",
+#'           BackupOptions = list(
+#'             "string"
+#'           )
+#'         )
+#'       )
+#'     )
+#'   )
+#' )
+#' ```
 #'
 #' @section Request syntax:
 #' ```
@@ -1345,6 +1942,40 @@ backup_list_backup_plan_versions <- function(BackupPlanId, NextToken = NULL, Max
 #' @param IncludeDeleted A Boolean value with a default value of `FALSE` that returns deleted
 #' backup plans when set to `TRUE`.
 #'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   NextToken = "string",
+#'   BackupPlansList = list(
+#'     list(
+#'       BackupPlanArn = "string",
+#'       BackupPlanId = "string",
+#'       CreationDate = as.POSIXct(
+#'         "2015-01-01"
+#'       ),
+#'       DeletionDate = as.POSIXct(
+#'         "2015-01-01"
+#'       ),
+#'       VersionId = "string",
+#'       BackupPlanName = "string",
+#'       CreatorRequestId = "string",
+#'       LastExecutionDate = as.POSIXct(
+#'         "2015-01-01"
+#'       ),
+#'       AdvancedBackupSettings = list(
+#'         list(
+#'           ResourceType = "string",
+#'           BackupOptions = list(
+#'             "string"
+#'           )
+#'         )
+#'       )
+#'     )
+#'   )
+#' )
+#' ```
+#'
 #' @section Request syntax:
 #' ```
 #' svc$list_backup_plans(
@@ -1391,6 +2022,26 @@ backup_list_backup_plans <- function(NextToken = NULL, MaxResults = NULL, Includ
 #' pointed to by the next token.
 #' @param MaxResults The maximum number of items to be returned.
 #'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   NextToken = "string",
+#'   BackupSelectionsList = list(
+#'     list(
+#'       SelectionId = "string",
+#'       SelectionName = "string",
+#'       BackupPlanId = "string",
+#'       CreationDate = as.POSIXct(
+#'         "2015-01-01"
+#'       ),
+#'       CreatorRequestId = "string",
+#'       IamRoleArn = "string"
+#'     )
+#'   )
+#' )
+#' ```
+#'
 #' @section Request syntax:
 #' ```
 #' svc$list_backup_selections(
@@ -1435,6 +2086,26 @@ backup_list_backup_selections <- function(BackupPlanId, NextToken = NULL, MaxRes
 #' allows you to return more items in your list starting at the location
 #' pointed to by the next token.
 #' @param MaxResults The maximum number of items to be returned.
+#'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   BackupVaultList = list(
+#'     list(
+#'       BackupVaultName = "string",
+#'       BackupVaultArn = "string",
+#'       CreationDate = as.POSIXct(
+#'         "2015-01-01"
+#'       ),
+#'       EncryptionKeyArn = "string",
+#'       CreatorRequestId = "string",
+#'       NumberOfRecoveryPoints = 123
+#'     )
+#'   ),
+#'   NextToken = "string"
+#' )
+#' ```
 #'
 #' @section Request syntax:
 #' ```
@@ -1503,6 +2174,42 @@ backup_list_backup_vaults <- function(NextToken = NULL, MaxResults = NULL) {
 #' @param ByAccountId The account ID to list the jobs from. Returns only copy jobs associated
 #' with the specified account ID.
 #'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   CopyJobs = list(
+#'     list(
+#'       AccountId = "string",
+#'       CopyJobId = "string",
+#'       SourceBackupVaultArn = "string",
+#'       SourceRecoveryPointArn = "string",
+#'       DestinationBackupVaultArn = "string",
+#'       DestinationRecoveryPointArn = "string",
+#'       ResourceArn = "string",
+#'       CreationDate = as.POSIXct(
+#'         "2015-01-01"
+#'       ),
+#'       CompletionDate = as.POSIXct(
+#'         "2015-01-01"
+#'       ),
+#'       State = "CREATED"|"RUNNING"|"COMPLETED"|"FAILED",
+#'       StatusMessage = "string",
+#'       BackupSizeInBytes = 123,
+#'       IamRoleArn = "string",
+#'       CreatedBy = list(
+#'         BackupPlanId = "string",
+#'         BackupPlanArn = "string",
+#'         BackupPlanVersion = "string",
+#'         BackupRuleId = "string"
+#'       ),
+#'       ResourceType = "string"
+#'     )
+#'   ),
+#'   NextToken = "string"
+#' )
+#' ```
+#'
 #' @section Request syntax:
 #' ```
 #' svc$list_copy_jobs(
@@ -1559,6 +2266,23 @@ backup_list_copy_jobs <- function(NextToken = NULL, MaxResults = NULL, ByResourc
 #' allows you to return more items in your list starting at the location
 #' pointed to by the next token.
 #' @param MaxResults The maximum number of items to be returned.
+#'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   Results = list(
+#'     list(
+#'       ResourceArn = "string",
+#'       ResourceType = "string",
+#'       LastBackupTime = as.POSIXct(
+#'         "2015-01-01"
+#'       )
+#'     )
+#'   ),
+#'   NextToken = "string"
+#' )
+#' ```
 #'
 #' @section Request syntax:
 #' ```
@@ -1618,6 +2342,56 @@ backup_list_protected_resources <- function(NextToken = NULL, MaxResults = NULL)
 #' @param ByCreatedAfter Returns only recovery points that were created after the specified
 #' timestamp.
 #'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   NextToken = "string",
+#'   RecoveryPoints = list(
+#'     list(
+#'       RecoveryPointArn = "string",
+#'       BackupVaultName = "string",
+#'       BackupVaultArn = "string",
+#'       SourceBackupVaultArn = "string",
+#'       ResourceArn = "string",
+#'       ResourceType = "string",
+#'       CreatedBy = list(
+#'         BackupPlanId = "string",
+#'         BackupPlanArn = "string",
+#'         BackupPlanVersion = "string",
+#'         BackupRuleId = "string"
+#'       ),
+#'       IamRoleArn = "string",
+#'       Status = "COMPLETED"|"PARTIAL"|"DELETING"|"EXPIRED",
+#'       CreationDate = as.POSIXct(
+#'         "2015-01-01"
+#'       ),
+#'       CompletionDate = as.POSIXct(
+#'         "2015-01-01"
+#'       ),
+#'       BackupSizeInBytes = 123,
+#'       CalculatedLifecycle = list(
+#'         MoveToColdStorageAt = as.POSIXct(
+#'           "2015-01-01"
+#'         ),
+#'         DeleteAt = as.POSIXct(
+#'           "2015-01-01"
+#'         )
+#'       ),
+#'       Lifecycle = list(
+#'         MoveToColdStorageAfterDays = 123,
+#'         DeleteAfterDays = 123
+#'       ),
+#'       EncryptionKeyArn = "string",
+#'       IsEncrypted = TRUE|FALSE,
+#'       LastRestoreTime = as.POSIXct(
+#'         "2015-01-01"
+#'       )
+#'     )
+#'   )
+#' )
+#' ```
+#'
 #' @section Request syntax:
 #' ```
 #' svc$list_recovery_points_by_backup_vault(
@@ -1675,6 +2449,26 @@ backup_list_recovery_points_by_backup_vault <- function(BackupVaultName, NextTok
 #' pointed to by the next token.
 #' @param MaxResults The maximum number of items to be returned.
 #'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   NextToken = "string",
+#'   RecoveryPoints = list(
+#'     list(
+#'       RecoveryPointArn = "string",
+#'       CreationDate = as.POSIXct(
+#'         "2015-01-01"
+#'       ),
+#'       Status = "COMPLETED"|"PARTIAL"|"DELETING"|"EXPIRED",
+#'       EncryptionKeyArn = "string",
+#'       BackupSizeBytes = 123,
+#'       BackupVaultName = "string"
+#'     )
+#'   )
+#' )
+#' ```
+#'
 #' @section Request syntax:
 #' ```
 #' svc$list_recovery_points_by_resource(
@@ -1726,6 +2520,35 @@ backup_list_recovery_points_by_resource <- function(ResourceArn, NextToken = NUL
 #' @param ByCreatedAfter Returns only restore jobs that were created after the specified date.
 #' @param ByStatus Returns only restore jobs associated with the specified job status.
 #'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   RestoreJobs = list(
+#'     list(
+#'       AccountId = "string",
+#'       RestoreJobId = "string",
+#'       RecoveryPointArn = "string",
+#'       CreationDate = as.POSIXct(
+#'         "2015-01-01"
+#'       ),
+#'       CompletionDate = as.POSIXct(
+#'         "2015-01-01"
+#'       ),
+#'       Status = "PENDING"|"RUNNING"|"COMPLETED"|"ABORTED"|"FAILED",
+#'       StatusMessage = "string",
+#'       PercentDone = "string",
+#'       BackupSizeInBytes = 123,
+#'       IamRoleArn = "string",
+#'       ExpectedCompletionTimeMinutes = 123,
+#'       CreatedResourceArn = "string",
+#'       ResourceType = "string"
+#'     )
+#'   ),
+#'   NextToken = "string"
+#' )
+#' ```
+#'
 #' @section Request syntax:
 #' ```
 #' svc$list_restore_jobs(
@@ -1769,19 +2592,32 @@ backup_list_restore_jobs <- function(NextToken = NULL, MaxResults = NULL, ByAcco
 #' Returns a list of key-value pairs assigned to a target recovery point,
 #' backup plan, or backup vault.
 #' 
-#' `ListTags` are currently only supported with Amazon EFS backups.
+#' [`list_tags`][backup_list_tags] are currently only supported with Amazon
+#' EFS backups.
 #'
 #' @usage
 #' backup_list_tags(ResourceArn, NextToken, MaxResults)
 #'
 #' @param ResourceArn &#91;required&#93; An Amazon Resource Name (ARN) that uniquely identifies a resource. The
 #' format of the ARN depends on the type of resource. Valid targets for
-#' `ListTags` are recovery points, backup plans, and backup vaults.
+#' [`list_tags`][backup_list_tags] are recovery points, backup plans, and
+#' backup vaults.
 #' @param NextToken The next item following a partial list of returned items. For example,
 #' if a request is made to return `maxResults` number of items, `NextToken`
 #' allows you to return more items in your list starting at the location
 #' pointed to by the next token.
 #' @param MaxResults The maximum number of items to be returned.
+#'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   NextToken = "string",
+#'   Tags = list(
+#'     "string"
+#'   )
+#' )
+#' ```
 #'
 #' @section Request syntax:
 #' ```
@@ -1828,6 +2664,9 @@ backup_list_tags <- function(ResourceArn, NextToken = NULL, MaxResults = NULL) {
 #' them and the AWS Region where they are created. They consist of
 #' lowercase letters, numbers, and hyphens.
 #' @param Policy The backup vault access policy document in JSON format.
+#'
+#' @return
+#' An empty list.
 #'
 #' @section Request syntax:
 #' ```
@@ -1877,6 +2716,9 @@ backup_put_backup_vault_access_policy <- function(BackupVaultName, Policy = NULL
 #' `arn:aws:sns:us-west-2:111122223333:MyVaultTopic`.
 #' @param BackupVaultEvents &#91;required&#93; An array of events that indicate the status of jobs to back up resources
 #' to the backup vault.
+#'
+#' @return
+#' An empty list.
 #'
 #' @section Request syntax:
 #' ```
@@ -1928,7 +2770,7 @@ backup_put_backup_vault_notifications <- function(BackupVaultName, SNSTopicArn, 
 #' @param IamRoleArn &#91;required&#93; Specifies the IAM role ARN used to create the target recovery point; for
 #' example, `arn:aws:iam::123456789012:role/S3Access`.
 #' @param IdempotencyToken A customer chosen string that can be used to distinguish between calls
-#' to `StartBackupJob`.
+#' to [`start_backup_job`][backup_start_backup_job].
 #' @param StartWindowMinutes A value in minutes after a backup is scheduled before a job will be
 #' canceled if it doesn't start successfully. This value is optional.
 #' @param CompleteWindowMinutes A value in minutes after a backup job is successfully started before it
@@ -1952,6 +2794,18 @@ backup_put_backup_vault_notifications <- function(BackupVaultName, SNSTopicArn, 
 #' backup option and create a VSS Windows backup. Set to
 #' “WindowsVSS”:”disabled” to create a regular backup. The WindowsVSS
 #' option is not enabled by default.
+#'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   BackupJobId = "string",
+#'   RecoveryPointArn = "string",
+#'   CreationDate = as.POSIXct(
+#'     "2015-01-01"
+#'   )
+#' )
+#' ```
 #'
 #' @section Request syntax:
 #' ```
@@ -2017,8 +2871,19 @@ backup_start_backup_job <- function(BackupVaultName, ResourceArn, IamRoleArn, Id
 #' @param IamRoleArn &#91;required&#93; Specifies the IAM role ARN used to copy the target recovery point; for
 #' example, `arn:aws:iam::123456789012:role/S3Access`.
 #' @param IdempotencyToken A customer chosen string that can be used to distinguish between calls
-#' to `StartCopyJob`.
+#' to [`start_copy_job`][backup_start_copy_job].
 #' @param Lifecycle 
+#'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   CopyJobId = "string",
+#'   CreationDate = as.POSIXct(
+#'     "2015-01-01"
+#'   )
+#' )
+#' ```
 #'
 #' @section Request syntax:
 #' ```
@@ -2070,9 +2935,11 @@ backup_start_copy_job <- function(RecoveryPointArn, SourceBackupVaultName, Desti
 #' resource name, required to restore a recovery point.
 #' 
 #' You can get configuration metadata about a resource at the time it was
-#' backed up by calling `GetRecoveryPointRestoreMetadata`. However, values
-#' in addition to those provided by `GetRecoveryPointRestoreMetadata` might
-#' be required to restore a resource. For example, you might need to
+#' backed up by calling
+#' [`get_recovery_point_restore_metadata`][backup_get_recovery_point_restore_metadata].
+#' However, values in addition to those provided by
+#' [`get_recovery_point_restore_metadata`][backup_get_recovery_point_restore_metadata]
+#' might be required to restore a resource. For example, you might need to
 #' provide a new resource name if the original already exists.
 #' 
 #' You need to specify specific metadata to restore an Amazon Elastic File
@@ -2080,7 +2947,7 @@ backup_start_copy_job <- function(RecoveryPointArn, SourceBackupVaultName, Desti
 #' 
 #' -   `file-system-id`: The ID of the Amazon EFS file system that is
 #'     backed up by AWS Backup. Returned in
-#'     `GetRecoveryPointRestoreMetadata`.
+#'     [`get_recovery_point_restore_metadata`][backup_get_recovery_point_restore_metadata].
 #' 
 #' -   `Encrypted`: A Boolean value that, if true, specifies that the file
 #'     system is encrypted. If `KmsKeyId` is specified, `Encrypted` must be
@@ -2107,7 +2974,7 @@ backup_start_copy_job <- function(RecoveryPointArn, SourceBackupVaultName, Desti
 #' create the target recovery point; for example,
 #' `arn:aws:iam::123456789012:role/S3Access`.
 #' @param IdempotencyToken A customer chosen string that can be used to distinguish between calls
-#' to `StartRestoreJob`.
+#' to [`start_restore_job`][backup_start_restore_job].
 #' @param ResourceType Starts a job to restore a recovery point for one of the following
 #' resources:
 #' 
@@ -2122,6 +2989,14 @@ backup_start_copy_job <- function(RecoveryPointArn, SourceBackupVaultName, Desti
 #' -   `RDS` for Amazon Relational Database Service
 #' 
 #' -   `Storage Gateway` for AWS Storage Gateway
+#'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   RestoreJobId = "string"
+#' )
+#' ```
 #'
 #' @section Request syntax:
 #' ```
@@ -2166,6 +3041,9 @@ backup_start_restore_job <- function(RecoveryPointArn, Metadata, IamRoleArn, Ide
 #'
 #' @param BackupJobId &#91;required&#93; Uniquely identifies a request to AWS Backup to back up a resource.
 #'
+#' @return
+#' An empty list.
+#'
 #' @section Request syntax:
 #' ```
 #' svc$stop_backup_job(
@@ -2207,6 +3085,9 @@ backup_stop_backup_job <- function(BackupJobId) {
 #' depends on the type of the tagged resource.
 #' @param Tags &#91;required&#93; Key-value pairs that are used to help organize your resources. You can
 #' assign your own metadata to the resources you create.
+#'
+#' @return
+#' An empty list.
 #'
 #' @section Request syntax:
 #' ```
@@ -2253,6 +3134,9 @@ backup_tag_resource <- function(ResourceArn, Tags) {
 #' @param TagKeyList &#91;required&#93; A list of keys to identify which key-value tags to remove from a
 #' resource.
 #'
+#' @return
+#' An empty list.
+#'
 #' @section Request syntax:
 #' ```
 #' svc$untag_resource(
@@ -2297,6 +3181,27 @@ backup_untag_resource <- function(ResourceArn, TagKeyList) {
 #' @param BackupPlanId &#91;required&#93; Uniquely identifies a backup plan.
 #' @param BackupPlan &#91;required&#93; Specifies the body of a backup plan. Includes a `BackupPlanName` and one
 #' or more sets of `Rules`.
+#'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   BackupPlanId = "string",
+#'   BackupPlanArn = "string",
+#'   CreationDate = as.POSIXct(
+#'     "2015-01-01"
+#'   ),
+#'   VersionId = "string",
+#'   AdvancedBackupSettings = list(
+#'     list(
+#'       ResourceType = "string",
+#'       BackupOptions = list(
+#'         "string"
+#'       )
+#'     )
+#'   )
+#' )
+#' ```
 #'
 #' @section Request syntax:
 #' ```
@@ -2365,12 +3270,16 @@ backup_update_backup_plan <- function(BackupPlanId, BackupPlan) {
 #'
 #' @description
 #' Updates the current global settings for the AWS Account. Use the
-#' `DescribeGlobalSettings` API to determine the current settings.
+#' [`describe_global_settings`][backup_describe_global_settings] API to
+#' determine the current settings.
 #'
 #' @usage
 #' backup_update_global_settings(GlobalSettings)
 #'
 #' @param GlobalSettings A list of resources along with the opt-in preferences for the account.
+#'
+#' @return
+#' An empty list.
 #'
 #' @section Request syntax:
 #' ```
@@ -2437,6 +3346,27 @@ backup_update_global_settings <- function(GlobalSettings = NULL) {
 #' “transition to cold after days” setting cannot be changed after a backup
 #' has been transitioned to cold.
 #'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   BackupVaultArn = "string",
+#'   RecoveryPointArn = "string",
+#'   Lifecycle = list(
+#'     MoveToColdStorageAfterDays = 123,
+#'     DeleteAfterDays = 123
+#'   ),
+#'   CalculatedLifecycle = list(
+#'     MoveToColdStorageAt = as.POSIXct(
+#'       "2015-01-01"
+#'     ),
+#'     DeleteAt = as.POSIXct(
+#'       "2015-01-01"
+#'     )
+#'   )
+#' )
+#' ```
+#'
 #' @section Request syntax:
 #' ```
 #' svc$update_recovery_point_lifecycle(
@@ -2477,14 +3407,17 @@ backup_update_recovery_point_lifecycle <- function(BackupVaultName, RecoveryPoin
 #' that service's resources in this Region, when the resource is included
 #' in an on-demand backup or scheduled backup plan. Otherwise, AWS Backup
 #' does not try to protect that service's resources in this Region. Use the
-#' `DescribeRegionSettings` API to determine the resource types that are
-#' supported.
+#' [`describe_region_settings`][backup_describe_region_settings] API to
+#' determine the resource types that are supported.
 #'
 #' @usage
 #' backup_update_region_settings(ResourceTypeOptInPreference)
 #'
 #' @param ResourceTypeOptInPreference Updates the list of services along with the opt-in preferences for the
 #' Region.
+#'
+#' @return
+#' An empty list.
 #'
 #' @section Request syntax:
 #' ```

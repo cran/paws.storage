@@ -18,6 +18,31 @@ using the AWS CLI or SDK.}
 
 \item{LustreConfiguration}{}
 }
+\value{
+A list with the following syntax:\preformatted{list(
+  FileSystemId = "string",
+  Lifecycle = "AVAILABLE"|"CREATING"|"FAILED"|"DELETING"|"MISCONFIGURED"|"UPDATING",
+  WindowsResponse = list(
+    FinalBackupId = "string",
+    FinalBackupTags = list(
+      list(
+        Key = "string",
+        Value = "string"
+      )
+    )
+  ),
+  LustreResponse = list(
+    FinalBackupId = "string",
+    FinalBackupTags = list(
+      list(
+        Key = "string",
+        Value = "string"
+      )
+    )
+  )
+)
+}
+}
 \description{
 Deletes a file system, deleting its contents. After deletion, the file
 system no longer exists, and its data is gone. Any existing automatic
@@ -28,12 +53,14 @@ system, a final backup is created upon deletion. This final backup is
 not subject to the file system's retention policy, and must be manually
 deleted.
 
-The \code{DeleteFileSystem} action returns while the file system has the
-\code{DELETING} status. You can check the file system deletion status by
-calling the DescribeFileSystems action, which returns a list of file
-systems in your account. If you pass the file system ID for a deleted
-file system, the DescribeFileSystems returns a \code{FileSystemNotFound}
-error.
+The \code{\link[=fsx_delete_file_system]{delete_file_system}} action returns while
+the file system has the \code{DELETING} status. You can check the file system
+deletion status by calling the
+\code{\link[=fsx_describe_file_systems]{describe_file_systems}} action, which
+returns a list of file systems in your account. If you pass the file
+system ID for a deleted file system, the
+\code{\link[=fsx_describe_file_systems]{describe_file_systems}} returns a
+\code{FileSystemNotFound} error.
 
 Deleting an Amazon FSx for Lustre file system will fail with a 400
 BadRequest if a data repository task is in a \code{PENDING} or \code{EXECUTING}

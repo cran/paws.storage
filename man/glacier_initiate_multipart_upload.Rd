@@ -26,11 +26,18 @@ is 4 GB (4096 MB).}
 \item{partSize}{The size of each part except the last, in bytes. The last part can be
 smaller than this part size.}
 }
+\value{
+A list with the following syntax:\preformatted{list(
+  location = "string",
+  uploadId = "string"
+)
+}
+}
 \description{
 This operation initiates a multipart upload. Amazon S3 Glacier creates a
 multipart upload resource and returns its ID in the response. The
 multipart upload ID is used in subsequent requests to upload parts of an
-archive (see UploadMultipartPart).
+archive (see \code{\link[=glacier_upload_multipart_part]{upload_multipart_part}}).
 
 When you initiate a multipart upload, you specify the part size in
 number of bytes. The part size must be a megabyte (1024 KB) multiplied
@@ -38,11 +45,12 @@ by a power of 2-for example, 1048576 (1 MB), 2097152 (2 MB), 4194304 (4
 MB), 8388608 (8 MB), and so on. The minimum allowable part size is 1 MB,
 and the maximum is 4 GB.
 
-Every part you upload to this resource (see UploadMultipartPart), except
-the last one, must have the same size. The last one can be the same size
-or smaller. For example, suppose you want to upload a 16.2 MB file. If
-you initiate the multipart upload with a part size of 4 MB, you will
-upload four parts of 4 MB each and one part of 0.2 MB.
+Every part you upload to this resource (see
+\code{\link[=glacier_upload_multipart_part]{upload_multipart_part}}), except the
+last one, must have the same size. The last one can be the same size or
+smaller. For example, suppose you want to upload a 16.2 MB file. If you
+initiate the multipart upload with a part size of 4 MB, you will upload
+four parts of 4 MB each and one part of 0.2 MB.
 
 You don't need to know the size of the archive when you start a
 multipart upload because Amazon S3 Glacier does not require you to

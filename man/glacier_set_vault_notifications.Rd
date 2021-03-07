@@ -19,6 +19,9 @@ account ID, do not include any hyphens ('-') in the ID.}
 
 \item{vaultNotificationConfig}{Provides options for specifying notification configuration.}
 }
+\value{
+An empty list.
+}
 \description{
 This operation configures notifications that will be sent when specific
 events happen to a vault. By default, you don't get any notifications.
@@ -34,15 +37,17 @@ publish notifications to the topic. You can configure a vault to publish
 a notification for the following vault events:
 \itemize{
 \item \strong{ArchiveRetrievalCompleted} This event occurs when a job that was
-initiated for an archive retrieval is completed (InitiateJob). The
-status of the completed job can be "Succeeded" or "Failed". The
-notification sent to the SNS topic is the same output as returned
-from DescribeJob.
+initiated for an archive retrieval is completed
+(\code{\link[=glacier_initiate_job]{initiate_job}}). The status of the
+completed job can be "Succeeded" or "Failed". The notification sent
+to the SNS topic is the same output as returned from
+\code{\link[=glacier_describe_job]{describe_job}}.
 \item \strong{InventoryRetrievalCompleted} This event occurs when a job that
-was initiated for an inventory retrieval is completed (InitiateJob).
-The status of the completed job can be "Succeeded" or "Failed". The
-notification sent to the SNS topic is the same output as returned
-from DescribeJob.
+was initiated for an inventory retrieval is completed
+(\code{\link[=glacier_initiate_job]{initiate_job}}). The status of the
+completed job can be "Succeeded" or "Failed". The notification sent
+to the SNS topic is the same output as returned from
+\code{\link[=glacier_describe_job]{describe_job}}.
 }
 
 An AWS account has full permission to perform all operations (actions).

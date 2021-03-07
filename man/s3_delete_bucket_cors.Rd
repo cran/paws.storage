@@ -13,6 +13,9 @@ s3_delete_bucket_cors(Bucket, ExpectedBucketOwner)
 different account, the request will fail with an HTTP
 \verb{403 (Access Denied)} error.}
 }
+\value{
+An empty list.
+}
 \description{
 Deletes the \code{cors} configuration information set for the bucket.
 
@@ -20,12 +23,12 @@ To use this operation, you must have permission to perform the
 \code{s3:PutBucketCORS} action. The bucket owner has this permission by
 default and can grant this permission to others.
 
-For information about \code{cors}, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/cors.html}{Enabling Cross-Origin Resource Sharing} in
-the \emph{Amazon Simple Storage Service Developer Guide}.
+For information about \code{cors}, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/cors.html}{Enabling Cross-Origin Resource Sharing}
+in the \emph{Amazon Simple Storage Service Developer Guide}.
 
 \strong{Related Resources:}
 \itemize{
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketCors.html}{PutBucketCors}
+\item \code{\link[=s3_put_bucket_cors]{put_bucket_cors}}
 \item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/RESTOPTIONSobject.html}{RESTOPTIONSobject}
 }
 }

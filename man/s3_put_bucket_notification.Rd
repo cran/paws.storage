@@ -10,7 +10,8 @@ s3_put_bucket_notification(Bucket, ContentMD5,
 \arguments{
 \item{Bucket}{[required] The name of the bucket.}
 
-\item{ContentMD5}{The MD5 hash of the \code{PutPublicAccessBlock} request body.
+\item{ContentMD5}{The MD5 hash of the
+\code{\link[=s3_put_public_access_block]{put_public_access_block}} request body.
 
 For requests made using the AWS Command Line Interface (CLI) or AWS
 SDKs, this field is calculated automatically.}
@@ -21,9 +22,12 @@ SDKs, this field is calculated automatically.}
 different account, the request will fail with an HTTP
 \verb{403 (Access Denied)} error.}
 }
+\value{
+An empty list.
+}
 \description{
 No longer used, see the
-\href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketNotificationConfiguration.html}{PutBucketNotificationConfiguration}
+\code{\link[=s3_put_bucket_notification_configuration]{put_bucket_notification_configuration}}
 operation.
 }
 \section{Request syntax}{

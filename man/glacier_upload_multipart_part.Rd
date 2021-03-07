@@ -27,6 +27,12 @@ follows RFC 2616. An example header is Content-Range:bytes 0-4194303/*.}
 
 \item{body}{The data to upload.}
 }
+\value{
+A list with the following syntax:\preformatted{list(
+  checksum = "string"
+)
+}
+}
 \description{
 This operation uploads a part of an archive. You can upload archive
 parts in any order. You can also upload them in parallel. You can upload
@@ -43,8 +49,9 @@ values don't match, the operation fails. For information about
 computing a SHA256 tree hash, see \href{https://docs.aws.amazon.com/amazonglacier/latest/dev/checksum-calculations.html}{Computing Checksums}.
 \item \strong{Part size does not match}The size of each part except the last
 must match the size specified in the corresponding
-InitiateMultipartUpload request. The size of the last part must be
-the same size as, or smaller than, the specified size.
+\code{\link[=glacier_initiate_multipart_upload]{initiate_multipart_upload}}
+request. The size of the last part must be the same size as, or
+smaller than, the specified size.
 
 If you upload a part whose size is smaller than the part size you
 specified in your initiate multipart upload request and that part is
@@ -93,7 +100,7 @@ svc$upload_multipart_part(
   body = "part1",
   checksum = "c06f7cd4baacb087002a99a5f48bf953",
   range = "bytes 0-1048575/*",
-  uploadId = "19gaRezEXAMPLES6Ry5YYdqthHOC_kGRCT03L9yetr220UmPtBYKk-OssZtLqyFu7sY1_lR7vgFuJV...",
+  uploadId = "19gaRezEXAMPLES6Ry5YYdqthHOC_kGRCT03L9yetr220UmPtBYKk-OssZtLq...",
   vaultName = "examplevault"
 )
 }

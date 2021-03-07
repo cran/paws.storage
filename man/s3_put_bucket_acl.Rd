@@ -40,9 +40,12 @@ bucket.}
 different account, the request will fail with an HTTP
 \verb{403 (Access Denied)} error.}
 }
+\value{
+An empty list.
+}
 \description{
 Sets the permissions on an existing bucket using access control lists
-(ACL). For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/S3_ACLs_UsingACLs.html}{Using ACLs}.
+(ACL). For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/acl_overview.html}{Using ACLs}.
 To set the ACL of a bucket, you must have \code{WRITE_ACP} permission.
 
 You can use one of the following two ways to set a bucket's permissions:
@@ -68,7 +71,7 @@ supports a set of predefined ACLs, known as \emph{canned ACLs}. Each
 canned ACL has a predefined set of grantees and permissions. Specify
 the canned ACL name as the value of \code{x-amz-acl}. If you use this
 header, you cannot use other access control-specific headers in your
-request. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#CannedACL}{Canned ACL}.
+request. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/acl-overview.html#CannedACL}{Canned ACL}.
 \item Specify access permissions explicitly with the \code{x-amz-grant-read},
 \code{x-amz-grant-read-acp}, \code{x-amz-grant-write-acp}, and
 \code{x-amz-grant-full-control} headers. When using these headers, you
@@ -76,7 +79,7 @@ specify explicit access permissions and grantees (AWS accounts or
 Amazon S3 groups) who will receive the permission. If you use these
 ACL-specific headers, you cannot use the \code{x-amz-acl} header to set a
 canned ACL. These parameters map to the set of permissions that
-Amazon S3 supports in an ACL. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html}{Access Control List (ACL) Overview}.
+Amazon S3 supports in an ACL. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/acl-overview.html}{Access Control List (ACL) Overview}.
 
 You specify each grantee as a type=value pair, where the type is one
 of the following:
@@ -123,15 +126,15 @@ rights (using request elements) in the following ways:
 \itemize{
 \item By the person's ID:
 
-\verb{&lt;Grantee xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CanonicalUser"&gt;&lt;ID&gt;&lt;&gt;ID&lt;&gt;&lt;/ID&gt;&lt;DisplayName&gt;&lt;&gt;GranteesEmail&lt;&gt;&lt;/DisplayName&gt; &lt;/Grantee&gt;}
+\verb{<Grantee xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CanonicalUser"><ID><>ID<></ID><DisplayName><>GranteesEmail<></DisplayName> </Grantee>}
 
 DisplayName is optional and ignored in the request
 \item By URI:
 
-\verb{&lt;Grantee xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Group"&gt;&lt;URI&gt;&lt;&gt;http://acs.amazonaws.com/groups/global/AuthenticatedUsers&lt;&gt;&lt;/URI&gt;&lt;/Grantee&gt;}
+\verb{<Grantee xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Group"><URI><>http://acs.amazonaws.com/groups/global/AuthenticatedUsers<></URI></Grantee>}
 \item By Email address:
 
-\verb{&lt;Grantee xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="AmazonCustomerByEmail"&gt;&lt;EmailAddress&gt;&lt;&gt;Grantees@email.com&lt;&gt;&lt;/EmailAddress&gt;lt;/Grantee&gt;}
+\verb{<Grantee xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="AmazonCustomerByEmail"><EmailAddress><>Grantees@email.com<></EmailAddress>lt;/Grantee>}
 
 The grantee is resolved to the CanonicalUser and, in a response to a
 GET Object acl request, appears as the CanonicalUser.
@@ -156,9 +159,9 @@ in the AWS General Reference.
 
 \strong{Related Resources}
 \itemize{
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateBucket.html}{CreateBucket}
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucket.html}{DeleteBucket}
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectAcl.html}{GetObjectAcl}
+\item \code{\link[=s3_create_bucket]{create_bucket}}
+\item \code{\link[=s3_delete_bucket]{delete_bucket}}
+\item \code{\link[=s3_get_object_acl]{get_object_acl}}
 }
 }
 \section{Request syntax}{

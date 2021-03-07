@@ -24,6 +24,13 @@ and used for the update. The default is \code{true}.
 
 Valid Values: \code{true} | \code{false}}
 }
+\value{
+A list with the following syntax:\preformatted{list(
+  FileShareARN = "string",
+  NotificationId = "string"
+)
+}
+}
 \description{
 Refreshes the cache for the specified file share. This operation finds
 objects in the Amazon S3 bucket that were added, removed, or replaced
@@ -40,7 +47,7 @@ necessarily mean that the file refresh has completed. You should use the
 refresh-complete notification to determine that the operation has
 completed before you check for new files on the gateway file share. You
 can subscribe to be notified through an CloudWatch event when your
-\code{RefreshCache} operation completes.
+\code{\link[=storagegateway_refresh_cache]{refresh_cache}} operation completes.
 
 Throttle limit: This API is asynchronous so the gateway will accept no
 more than two refreshes at any time. We recommend using the

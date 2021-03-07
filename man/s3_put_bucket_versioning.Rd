@@ -26,6 +26,9 @@ and the value that is displayed on your authentication device.}
 different account, the request will fail with an HTTP
 \verb{403 (Access Denied)} error.}
 }
+\value{
+An empty list.
+}
 \description{
 Sets the versioning state of an existing bucket. To set the versioning
 state, you must be the bucket owner.
@@ -39,8 +42,7 @@ objects added to the bucket receive a unique version ID.
 objects added to the bucket receive the version ID null.
 
 If the versioning state has never been set on a bucket, it has no
-versioning state; a
-\href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketVersioning.html}{GetBucketVersioning}
+versioning state; a \code{\link[=s3_get_bucket_versioning]{get_bucket_versioning}}
 request does not return a versioning state value.
 
 If the bucket owner enables MFA Delete in the bucket versioning
@@ -54,13 +56,13 @@ you enable versioning, you must add a noncurrent expiration policy. The
 noncurrent expiration lifecycle policy will manage the deletes of the
 noncurrent object versions in the version-enabled bucket. (A
 version-enabled bucket maintains one current and zero or more noncurrent
-object versions.) For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/object-lifecycle-mgmt.html#lifecycle-and-other-bucket-config}{Lifecycle and Versioning}.
+object versions.) For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lifecycle-mgmt.html#lifecycle-and-other-bucket-config}{Lifecycle and Versioning}.
 
 \strong{Related Resources}
 \itemize{
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateBucket.html}{CreateBucket}
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucket.html}{DeleteBucket}
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketVersioning.html}{GetBucketVersioning}
+\item \code{\link[=s3_create_bucket]{create_bucket}}
+\item \code{\link[=s3_delete_bucket]{delete_bucket}}
+\item \code{\link[=s3_get_bucket_versioning]{get_bucket_versioning}}
 }
 }
 \section{Request syntax}{

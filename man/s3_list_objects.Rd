@@ -15,7 +15,7 @@ the access point hostname. The access point hostname takes the form
 \emph{AccessPointName}-\emph{AccountId}.s3-accesspoint.\emph{Region}.amazonaws.com.
 When using this operation with an access point through the AWS SDKs, you
 provide the access point ARN in place of the bucket name. For more
-information about access point ARNs, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/using-access-points.html}{Using Access Points}
+information about access point ARNs, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-access-points.html}{Using Access Points}
 in the \emph{Amazon Simple Storage Service Developer Guide}.
 
 When using this API with Amazon S3 on Outposts, you must direct requests
@@ -24,7 +24,7 @@ form
 \emph{AccessPointName}-\emph{AccountId}.\emph{outpostID}.s3-outposts.\emph{Region}.amazonaws.com.
 When using this operation using S3 on Outposts through the AWS SDKs, you
 provide the Outposts bucket ARN in place of the bucket name. For more
-information about S3 on Outposts ARNs, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/S3onOutposts.html}{Using S3 on Outposts}
+information about S3 on Outposts ARNs, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/S3onOutposts.html}{Using S3 on Outposts}
 in the \emph{Amazon Simple Storage Service Developer Guide}.}
 
 \item{Delimiter}{A delimiter is a character you use to group keys.}
@@ -47,6 +47,39 @@ their requests.}
 different account, the request will fail with an HTTP
 \verb{403 (Access Denied)} error.}
 }
+\value{
+A list with the following syntax:\preformatted{list(
+  IsTruncated = TRUE|FALSE,
+  Marker = "string",
+  NextMarker = "string",
+  Contents = list(
+    list(
+      Key = "string",
+      LastModified = as.POSIXct(
+        "2015-01-01"
+      ),
+      ETag = "string",
+      Size = 123,
+      StorageClass = "STANDARD"|"REDUCED_REDUNDANCY"|"GLACIER"|"STANDARD_IA"|"ONEZONE_IA"|"INTELLIGENT_TIERING"|"DEEP_ARCHIVE"|"OUTPOSTS",
+      Owner = list(
+        DisplayName = "string",
+        ID = "string"
+      )
+    )
+  ),
+  Name = "string",
+  Prefix = "string",
+  Delimiter = "string",
+  MaxKeys = 123,
+  CommonPrefixes = list(
+    list(
+      Prefix = "string"
+    )
+  ),
+  EncodingType = "url"
+)
+}
+}
 \description{
 Returns some or all (up to 1,000) of the objects in a bucket. You can
 use the request parameters as selection criteria to return a subset of
@@ -55,17 +88,18 @@ XML. Be sure to design your application to parse the contents of the
 response and handle it appropriately.
 
 This API has been revised. We recommend that you use the newer version,
-\href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html}{ListObjectsV2},
-when developing applications. For backward compatibility, Amazon S3
-continues to support \code{ListObjects}.
+\code{\link[=s3_list_objects_v2]{list_objects_v2}}, when developing applications.
+For backward compatibility, Amazon S3 continues to support
+\code{\link[=s3_list_objects]{list_objects}}.
 
-The following operations are related to \code{ListObjects}:
+The following operations are related to
+\code{\link[=s3_list_objects]{list_objects}}:
 \itemize{
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html}{ListObjectsV2}
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObject.html}{GetObject}
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObject.html}{PutObject}
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateBucket.html}{CreateBucket}
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListBuckets.html}{ListBuckets}
+\item \code{\link[=s3_list_objects_v2]{list_objects_v2}}
+\item \code{\link[=s3_get_object]{get_object}}
+\item \code{\link[=s3_put_object]{put_object}}
+\item \code{\link[=s3_create_bucket]{create_bucket}}
+\item \code{\link[=s3_list_buckets]{list_buckets}}
 }
 }
 \section{Request syntax}{

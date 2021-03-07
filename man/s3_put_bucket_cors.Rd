@@ -11,8 +11,8 @@ s3_put_bucket_cors(Bucket, CORSConfiguration, ContentMD5,
 \item{Bucket}{[required] Specifies the bucket impacted by the \code{cors}configuration.}
 
 \item{CORSConfiguration}{[required] Describes the cross-origin access configuration for objects in an Amazon
-S3 bucket. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/cors.html}{Enabling Cross-Origin Resource Sharing} in
-the \emph{Amazon Simple Storage Service Developer Guide}.}
+S3 bucket. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/cors.html}{Enabling Cross-Origin Resource Sharing}
+in the \emph{Amazon Simple Storage Service Developer Guide}.}
 
 \item{ContentMD5}{The base64-encoded 128-bit MD5 digest of the data. This header must be
 used as a message integrity check to verify that the request body was
@@ -24,6 +24,9 @@ SDKs, this field is calculated automatically.}
 \item{ExpectedBucketOwner}{The account id of the expected bucket owner. If the bucket is owned by a
 different account, the request will fail with an HTTP
 \verb{403 (Access Denied)} error.}
+}
+\value{
+An empty list.
 }
 \description{
 Sets the \code{cors} configuration for your bucket. If the configuration
@@ -60,13 +63,13 @@ request header of a pre-flight request must match an \code{AllowedHeader}
 element.
 }
 
-For more information about CORS, go to \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/cors.html}{Enabling Cross-Origin Resource Sharing} in
-the \emph{Amazon Simple Storage Service Developer Guide}.
+For more information about CORS, go to \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/cors.html}{Enabling Cross-Origin Resource Sharing}
+in the \emph{Amazon Simple Storage Service Developer Guide}.
 
 \strong{Related Resources}
 \itemize{
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketCors.html}{GetBucketCors}
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketCors.html}{DeleteBucketCors}
+\item \code{\link[=s3_get_bucket_cors]{get_bucket_cors}}
+\item \code{\link[=s3_delete_bucket_cors]{delete_bucket_cors}}
 \item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/RESTOPTIONSobject.html}{RESTOPTIONSobject}
 }
 }

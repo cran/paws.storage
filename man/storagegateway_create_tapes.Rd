@@ -10,8 +10,9 @@ storagegateway_create_tapes(GatewayARN, TapeSizeInBytes, ClientToken,
 }
 \arguments{
 \item{GatewayARN}{[required] The unique Amazon Resource Name (ARN) that represents the gateway to
-associate the virtual tapes with. Use the ListGateways operation to
-return a list of gateways for your account and AWS Region.}
+associate the virtual tapes with. Use the
+\code{\link[=storagegateway_list_gateways]{list_gateways}} operation to return a
+list of gateways for your account and AWS Region.}
 
 \item{TapeSizeInBytes}{[required] The size, in bytes, of the virtual tapes that you want to create.
 
@@ -57,8 +58,16 @@ is a key-value pair.
 
 Valid characters for key and value are letters, spaces, and numbers
 representable in UTF-8 format, and the following special characters: + -
-= . \\_ : / @. The maximum length of a tag's key is 128 characters, and
+= . _ : / @. The maximum length of a tag's key is 128 characters, and
 the maximum length for a tag's value is 256.}
+}
+\value{
+A list with the following syntax:\preformatted{list(
+  TapeARNs = list(
+    "string"
+  )
+)
+}
 }
 \description{
 Creates one or more virtual tapes. You write data to the virtual tapes
@@ -66,8 +75,8 @@ and then archive the tapes. This operation is only supported in the tape
 gateway type.
 
 Cache storage must be allocated to the gateway before you can create
-virtual tapes. Use the AddCache operation to add cache storage to a
-gateway.
+virtual tapes. Use the \code{\link[=storagegateway_add_cache]{add_cache}} operation
+to add cache storage to a gateway.
 }
 \section{Request syntax}{
 \preformatted{svc$create_tapes(

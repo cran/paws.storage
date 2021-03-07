@@ -3,8 +3,7 @@
 \name{glacier_get_vault_lock}
 \alias{glacier_get_vault_lock}
 \title{This operation retrieves the following attributes from the lock-policy
-subresource set on the specified vault: - The vault lock policy set on
-the vault}
+subresource set on the specified vault:}
 \usage{
 glacier_get_vault_lock(accountId, vaultName)
 }
@@ -16,6 +15,15 @@ associated with the credentials used to sign the request. If you use an
 account ID, do not include any hyphens ('-') in the ID.}
 
 \item{vaultName}{[required] The name of the vault.}
+}
+\value{
+A list with the following syntax:\preformatted{list(
+  Policy = "string",
+  State = "string",
+  ExpirationDate = "string",
+  CreationDate = "string"
+)
+}
 }
 \description{
 This operation retrieves the following attributes from the \code{lock-policy}
@@ -31,10 +39,12 @@ state.
 }
 
 A vault lock is put into the \code{InProgress} state by calling
-InitiateVaultLock. A vault lock is put into the \code{Locked} state by
-calling CompleteVaultLock. You can abort the vault locking process by
-calling AbortVaultLock. For more information about the vault locking
-process, \href{https://docs.aws.amazon.com/amazonglacier/latest/dev/vault-lock.html}{Amazon Glacier Vault Lock}.
+\code{\link[=glacier_initiate_vault_lock]{initiate_vault_lock}}. A vault lock is
+put into the \code{Locked} state by calling
+\code{\link[=glacier_complete_vault_lock]{complete_vault_lock}}. You can abort the
+vault locking process by calling
+\code{\link[=glacier_abort_vault_lock]{abort_vault_lock}}. For more information
+about the vault locking process, \href{https://docs.aws.amazon.com/amazonglacier/latest/dev/vault-lock.html}{Amazon Glacier Vault Lock}.
 
 If there is no vault lock policy set on the vault, the operation returns
 a \verb{404 Not found} error. For more information about vault lock policies,

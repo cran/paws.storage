@@ -48,6 +48,19 @@ NULL
 #' uppercase letters, lowercase letters, or the corresponding letters in
 #' escape codes.
 #'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   Aliases = list(
+#'     list(
+#'       Name = "string",
+#'       Lifecycle = "AVAILABLE"|"CREATING"|"DELETING"|"CREATE_FAILED"|"DELETE_FAILED"
+#'     )
+#'   )
+#' )
+#' ```
+#'
 #' @section Request syntax:
 #' ```
 #' svc$associate_file_system_aliases(
@@ -98,6 +111,15 @@ fsx_associate_file_system_aliases <- function(ClientRequestToken = NULL, FileSys
 #' fsx_cancel_data_repository_task(TaskId)
 #'
 #' @param TaskId &#91;required&#93; Specifies the data repository task to cancel.
+#'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   Lifecycle = "PENDING"|"EXECUTING"|"FAILED"|"SUCCEEDED"|"CANCELED"|"CANCELING",
+#'   TaskId = "string"
+#' )
+#' ```
 #'
 #' @section Request syntax:
 #' ```
@@ -154,24 +176,27 @@ fsx_cancel_data_repository_task <- function(TaskId) {
 #' backup. If a backup specified client request token exists, and the
 #' parameters don't match, this operation returns
 #' `IncompatibleParameterError`. If a backup with the specified client
-#' request token doesn't exist, `CreateBackup` does the following:
+#' request token doesn't exist, [`create_backup`][fsx_create_backup] does
+#' the following:
 #' 
 #' -   Creates a new Amazon FSx backup with an assigned ID, and an initial
 #'     lifecycle state of `CREATING`.
 #' 
 #' -   Returns the description of the backup.
 #' 
-#' By using the idempotent operation, you can retry a `CreateBackup`
-#' operation without the risk of creating an extra backup. This approach
-#' can be useful when an initial call fails in a way that makes it unclear
-#' whether a backup was created. If you use the same client request token
-#' and the initial call created a backup, the operation returns a
-#' successful result because all the parameters are the same.
+#' By using the idempotent operation, you can retry a
+#' [`create_backup`][fsx_create_backup] operation without the risk of
+#' creating an extra backup. This approach can be useful when an initial
+#' call fails in a way that makes it unclear whether a backup was created.
+#' If you use the same client request token and the initial call created a
+#' backup, the operation returns a successful result because all the
+#' parameters are the same.
 #' 
-#' The `CreateBackup` operation returns while the backup's lifecycle state
-#' is still `CREATING`. You can check the backup creation status by calling
-#' the DescribeBackups operation, which returns the backup state along with
-#' other information.
+#' The [`create_backup`][fsx_create_backup] operation returns while the
+#' backup's lifecycle state is still `CREATING`. You can check the backup
+#' creation status by calling the
+#' [`describe_backups`][fsx_describe_backups] operation, which returns the
+#' backup state along with other information.
 #'
 #' @usage
 #' fsx_create_backup(FileSystemId, ClientRequestToken, Tags)
@@ -184,8 +209,133 @@ fsx_cancel_data_repository_task <- function(TaskId) {
 #' @param Tags (Optional) The tags to apply to the backup at backup creation. The key
 #' value of the `Name` tag appears in the console as the backup name. If
 #' you have set `CopyTagsToBackups` to true, and you specify one or more
-#' tags using the `CreateBackup` action, no existing file system tags are
-#' copied from the file system to the backup.
+#' tags using the [`create_backup`][fsx_create_backup] action, no existing
+#' file system tags are copied from the file system to the backup.
+#'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   Backup = list(
+#'     BackupId = "string",
+#'     Lifecycle = "AVAILABLE"|"CREATING"|"TRANSFERRING"|"DELETED"|"FAILED"|"PENDING",
+#'     FailureDetails = list(
+#'       Message = "string"
+#'     ),
+#'     Type = "AUTOMATIC"|"USER_INITIATED"|"AWS_BACKUP",
+#'     ProgressPercent = 123,
+#'     CreationTime = as.POSIXct(
+#'       "2015-01-01"
+#'     ),
+#'     KmsKeyId = "string",
+#'     ResourceARN = "string",
+#'     Tags = list(
+#'       list(
+#'         Key = "string",
+#'         Value = "string"
+#'       )
+#'     ),
+#'     FileSystem = list(
+#'       OwnerId = "string",
+#'       CreationTime = as.POSIXct(
+#'         "2015-01-01"
+#'       ),
+#'       FileSystemId = "string",
+#'       FileSystemType = "WINDOWS"|"LUSTRE",
+#'       Lifecycle = "AVAILABLE"|"CREATING"|"FAILED"|"DELETING"|"MISCONFIGURED"|"UPDATING",
+#'       FailureDetails = list(
+#'         Message = "string"
+#'       ),
+#'       StorageCapacity = 123,
+#'       StorageType = "SSD"|"HDD",
+#'       VpcId = "string",
+#'       SubnetIds = list(
+#'         "string"
+#'       ),
+#'       NetworkInterfaceIds = list(
+#'         "string"
+#'       ),
+#'       DNSName = "string",
+#'       KmsKeyId = "string",
+#'       ResourceARN = "string",
+#'       Tags = list(
+#'         list(
+#'           Key = "string",
+#'           Value = "string"
+#'         )
+#'       ),
+#'       WindowsConfiguration = list(
+#'         ActiveDirectoryId = "string",
+#'         SelfManagedActiveDirectoryConfiguration = list(
+#'           DomainName = "string",
+#'           OrganizationalUnitDistinguishedName = "string",
+#'           FileSystemAdministratorsGroup = "string",
+#'           UserName = "string",
+#'           DnsIps = list(
+#'             "string"
+#'           )
+#'         ),
+#'         DeploymentType = "MULTI_AZ_1"|"SINGLE_AZ_1"|"SINGLE_AZ_2",
+#'         RemoteAdministrationEndpoint = "string",
+#'         PreferredSubnetId = "string",
+#'         PreferredFileServerIp = "string",
+#'         ThroughputCapacity = 123,
+#'         MaintenanceOperationsInProgress = list(
+#'           "PATCHING"|"BACKING_UP"
+#'         ),
+#'         WeeklyMaintenanceStartTime = "string",
+#'         DailyAutomaticBackupStartTime = "string",
+#'         AutomaticBackupRetentionDays = 123,
+#'         CopyTagsToBackups = TRUE|FALSE,
+#'         Aliases = list(
+#'           list(
+#'             Name = "string",
+#'             Lifecycle = "AVAILABLE"|"CREATING"|"DELETING"|"CREATE_FAILED"|"DELETE_FAILED"
+#'           )
+#'         )
+#'       ),
+#'       LustreConfiguration = list(
+#'         WeeklyMaintenanceStartTime = "string",
+#'         DataRepositoryConfiguration = list(
+#'           Lifecycle = "CREATING"|"AVAILABLE"|"MISCONFIGURED"|"UPDATING"|"DELETING",
+#'           ImportPath = "string",
+#'           ExportPath = "string",
+#'           ImportedFileChunkSize = 123,
+#'           AutoImportPolicy = "NONE"|"NEW"|"NEW_CHANGED",
+#'           FailureDetails = list(
+#'             Message = "string"
+#'           )
+#'         ),
+#'         DeploymentType = "SCRATCH_1"|"SCRATCH_2"|"PERSISTENT_1",
+#'         PerUnitStorageThroughput = 123,
+#'         MountName = "string",
+#'         DailyAutomaticBackupStartTime = "string",
+#'         AutomaticBackupRetentionDays = 123,
+#'         CopyTagsToBackups = TRUE|FALSE,
+#'         DriveCacheType = "NONE"|"READ"
+#'       ),
+#'       AdministrativeActions = list(
+#'         list(
+#'           AdministrativeActionType = "FILE_SYSTEM_UPDATE"|"STORAGE_OPTIMIZATION"|"FILE_SYSTEM_ALIAS_ASSOCIATION"|"FILE_SYSTEM_ALIAS_DISASSOCIATION",
+#'           ProgressPercent = 123,
+#'           RequestTime = as.POSIXct(
+#'             "2015-01-01"
+#'           ),
+#'           Status = "FAILED"|"IN_PROGRESS"|"PENDING"|"COMPLETED"|"UPDATED_OPTIMIZING",
+#'           TargetFileSystemValues = list(),
+#'           FailureDetails = list(
+#'             Message = "string"
+#'           )
+#'         )
+#'       )
+#'     ),
+#'     DirectoryInformation = list(
+#'       DomainName = "string",
+#'       ActiveDirectoryId = "string"
+#'     )
+#'   )
+#' )
+#' ```
 #'
 #' @section Request syntax:
 #' ```
@@ -244,9 +394,9 @@ fsx_create_backup <- function(FileSystemId, ClientRequestToken = NULL, Tags = NU
 #' task is exporting any data and metadata changes, including POSIX
 #' metadata, to files, directories, and symbolic links (symlinks) from your
 #' FSx file system to its linked data repository. A
-#' `CreateDataRepositoryTask` operation will fail if a data repository is
-#' not linked to the FSx file system. To learn more about data repository
-#' tasks, see [Data Repository
+#' [`create_data_repository_task`][fsx_create_data_repository_task]
+#' operation will fail if a data repository is not linked to the FSx file
+#' system. To learn more about data repository tasks, see [Data Repository
 #' Tasks](https://docs.aws.amazon.com/fsx/latest/LustreGuide/data-repository-tasks.html).
 #' To learn more about linking a data repository to your file system, see
 #' [Linking your file system to an S3
@@ -273,6 +423,55 @@ fsx_create_backup <- function(FileSystemId, ClientRequestToken = NULL, Tags = NU
 #' Reports](https://docs.aws.amazon.com/fsx/latest/LustreGuide/task-completion-report.html).
 #' @param ClientRequestToken 
 #' @param Tags 
+#'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   DataRepositoryTask = list(
+#'     TaskId = "string",
+#'     Lifecycle = "PENDING"|"EXECUTING"|"FAILED"|"SUCCEEDED"|"CANCELED"|"CANCELING",
+#'     Type = "EXPORT_TO_REPOSITORY",
+#'     CreationTime = as.POSIXct(
+#'       "2015-01-01"
+#'     ),
+#'     StartTime = as.POSIXct(
+#'       "2015-01-01"
+#'     ),
+#'     EndTime = as.POSIXct(
+#'       "2015-01-01"
+#'     ),
+#'     ResourceARN = "string",
+#'     Tags = list(
+#'       list(
+#'         Key = "string",
+#'         Value = "string"
+#'       )
+#'     ),
+#'     FileSystemId = "string",
+#'     Paths = list(
+#'       "string"
+#'     ),
+#'     FailureDetails = list(
+#'       Message = "string"
+#'     ),
+#'     Status = list(
+#'       TotalCount = 123,
+#'       SucceededCount = 123,
+#'       FailedCount = 123,
+#'       LastUpdatedTime = as.POSIXct(
+#'         "2015-01-01"
+#'       )
+#'     ),
+#'     Report = list(
+#'       Enabled = TRUE|FALSE,
+#'       Path = "string",
+#'       Format = "REPORT_CSV_20191124",
+#'       Scope = "FAILED_FILES_ONLY"
+#'     )
+#'   )
+#' )
+#' ```
 #'
 #' @section Request syntax:
 #' ```
@@ -324,11 +523,12 @@ fsx_create_data_repository_task <- function(Type, Paths = NULL, FileSystemId, Re
 #' Creates a new, empty Amazon FSx file system.
 #' 
 #' If a file system with the specified client request token exists and the
-#' parameters match, `CreateFileSystem` returns the description of the
-#' existing file system. If a file system specified client request token
-#' exists and the parameters don't match, this call returns
-#' `IncompatibleParameterError`. If a file system with the specified client
-#' request token doesn't exist, `CreateFileSystem` does the following:
+#' parameters match, [`create_file_system`][fsx_create_file_system] returns
+#' the description of the existing file system. If a file system specified
+#' client request token exists and the parameters don't match, this call
+#' returns `IncompatibleParameterError`. If a file system with the
+#' specified client request token doesn't exist,
+#' [`create_file_system`][fsx_create_file_system] does the following:
 #' 
 #' -   Creates a new, empty Amazon FSx file system with an assigned ID, and
 #'     an initial lifecycle state of `CREATING`.
@@ -339,18 +539,19 @@ fsx_create_data_repository_task <- function(Type, Paths = NULL, FileSystemId, Re
 #' Amazon FSx uses to ensure idempotent creation. This means that calling
 #' the operation multiple times with the same client request token has no
 #' effect. By using the idempotent operation, you can retry a
-#' `CreateFileSystem` operation without the risk of creating an extra file
-#' system. This approach can be useful when an initial call fails in a way
-#' that makes it unclear whether a file system was created. Examples are if
-#' a transport level timeout occurred, or your connection was reset. If you
-#' use the same client request token and the initial call created a file
-#' system, the client receives success as long as the parameters are the
-#' same.
+#' [`create_file_system`][fsx_create_file_system] operation without the
+#' risk of creating an extra file system. This approach can be useful when
+#' an initial call fails in a way that makes it unclear whether a file
+#' system was created. Examples are if a transport level timeout occurred,
+#' or your connection was reset. If you use the same client request token
+#' and the initial call created a file system, the client receives success
+#' as long as the parameters are the same.
 #' 
-#' The `CreateFileSystem` call returns while the file system's lifecycle
-#' state is still `CREATING`. You can check the file-system creation status
-#' by calling the DescribeFileSystems operation, which returns the file
-#' system state along with other information.
+#' The [`create_file_system`][fsx_create_file_system] call returns while
+#' the file system's lifecycle state is still `CREATING`. You can check the
+#' file-system creation status by calling the
+#' [`describe_file_systems`][fsx_describe_file_systems] operation, which
+#' returns the file system state along with other information.
 #'
 #' @usage
 #' fsx_create_file_system(ClientRequestToken, FileSystemType,
@@ -401,7 +602,7 @@ fsx_create_data_repository_task <- function(Type, Paths = NULL, FileSystemId, Re
 #' from. For Windows `MULTI_AZ_1` file system deployment types, provide
 #' exactly two subnet IDs, one for the preferred file server and one for
 #' the standby file server. You specify one of these subnets as the
-#' preferred subnet using the `WindowsConfiguration &gt; PreferredSubnetID`
+#' preferred subnet using the `WindowsConfiguration > PreferredSubnetID`
 #' property.
 #' 
 #' For Windows `SINGLE_AZ_1` and `SINGLE_AZ_2` file system deployment types
@@ -415,6 +616,107 @@ fsx_create_data_repository_task <- function(Type, Paths = NULL, FileSystemId, Re
 #' @param KmsKeyId 
 #' @param WindowsConfiguration The Microsoft Windows configuration for the file system being created.
 #' @param LustreConfiguration 
+#'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   FileSystem = list(
+#'     OwnerId = "string",
+#'     CreationTime = as.POSIXct(
+#'       "2015-01-01"
+#'     ),
+#'     FileSystemId = "string",
+#'     FileSystemType = "WINDOWS"|"LUSTRE",
+#'     Lifecycle = "AVAILABLE"|"CREATING"|"FAILED"|"DELETING"|"MISCONFIGURED"|"UPDATING",
+#'     FailureDetails = list(
+#'       Message = "string"
+#'     ),
+#'     StorageCapacity = 123,
+#'     StorageType = "SSD"|"HDD",
+#'     VpcId = "string",
+#'     SubnetIds = list(
+#'       "string"
+#'     ),
+#'     NetworkInterfaceIds = list(
+#'       "string"
+#'     ),
+#'     DNSName = "string",
+#'     KmsKeyId = "string",
+#'     ResourceARN = "string",
+#'     Tags = list(
+#'       list(
+#'         Key = "string",
+#'         Value = "string"
+#'       )
+#'     ),
+#'     WindowsConfiguration = list(
+#'       ActiveDirectoryId = "string",
+#'       SelfManagedActiveDirectoryConfiguration = list(
+#'         DomainName = "string",
+#'         OrganizationalUnitDistinguishedName = "string",
+#'         FileSystemAdministratorsGroup = "string",
+#'         UserName = "string",
+#'         DnsIps = list(
+#'           "string"
+#'         )
+#'       ),
+#'       DeploymentType = "MULTI_AZ_1"|"SINGLE_AZ_1"|"SINGLE_AZ_2",
+#'       RemoteAdministrationEndpoint = "string",
+#'       PreferredSubnetId = "string",
+#'       PreferredFileServerIp = "string",
+#'       ThroughputCapacity = 123,
+#'       MaintenanceOperationsInProgress = list(
+#'         "PATCHING"|"BACKING_UP"
+#'       ),
+#'       WeeklyMaintenanceStartTime = "string",
+#'       DailyAutomaticBackupStartTime = "string",
+#'       AutomaticBackupRetentionDays = 123,
+#'       CopyTagsToBackups = TRUE|FALSE,
+#'       Aliases = list(
+#'         list(
+#'           Name = "string",
+#'           Lifecycle = "AVAILABLE"|"CREATING"|"DELETING"|"CREATE_FAILED"|"DELETE_FAILED"
+#'         )
+#'       )
+#'     ),
+#'     LustreConfiguration = list(
+#'       WeeklyMaintenanceStartTime = "string",
+#'       DataRepositoryConfiguration = list(
+#'         Lifecycle = "CREATING"|"AVAILABLE"|"MISCONFIGURED"|"UPDATING"|"DELETING",
+#'         ImportPath = "string",
+#'         ExportPath = "string",
+#'         ImportedFileChunkSize = 123,
+#'         AutoImportPolicy = "NONE"|"NEW"|"NEW_CHANGED",
+#'         FailureDetails = list(
+#'           Message = "string"
+#'         )
+#'       ),
+#'       DeploymentType = "SCRATCH_1"|"SCRATCH_2"|"PERSISTENT_1",
+#'       PerUnitStorageThroughput = 123,
+#'       MountName = "string",
+#'       DailyAutomaticBackupStartTime = "string",
+#'       AutomaticBackupRetentionDays = 123,
+#'       CopyTagsToBackups = TRUE|FALSE,
+#'       DriveCacheType = "NONE"|"READ"
+#'     ),
+#'     AdministrativeActions = list(
+#'       list(
+#'         AdministrativeActionType = "FILE_SYSTEM_UPDATE"|"STORAGE_OPTIMIZATION"|"FILE_SYSTEM_ALIAS_ASSOCIATION"|"FILE_SYSTEM_ALIAS_DISASSOCIATION",
+#'         ProgressPercent = 123,
+#'         RequestTime = as.POSIXct(
+#'           "2015-01-01"
+#'         ),
+#'         Status = "FAILED"|"IN_PROGRESS"|"PENDING"|"COMPLETED"|"UPDATED_OPTIMIZING",
+#'         TargetFileSystemValues = list(),
+#'         FailureDetails = list(
+#'           Message = "string"
+#'         )
+#'       )
+#'     )
+#'   )
+#' )
+#' ```
 #'
 #' @section Request syntax:
 #' ```
@@ -553,17 +855,19 @@ fsx_create_file_system <- function(ClientRequestToken = NULL, FileSystemType, St
 #' settings.
 #' 
 #' By using the idempotent operation, you can retry a
-#' `CreateFileSystemFromBackup` call without the risk of creating an extra
-#' file system. This approach can be useful when an initial call fails in a
-#' way that makes it unclear whether a file system was created. Examples
-#' are if a transport level timeout occurred, or your connection was reset.
-#' If you use the same client request token and the initial call created a
-#' file system, the client receives success as long as the parameters are
-#' the same.
+#' [`create_file_system_from_backup`][fsx_create_file_system_from_backup]
+#' call without the risk of creating an extra file system. This approach
+#' can be useful when an initial call fails in a way that makes it unclear
+#' whether a file system was created. Examples are if a transport level
+#' timeout occurred, or your connection was reset. If you use the same
+#' client request token and the initial call created a file system, the
+#' client receives success as long as the parameters are the same.
 #' 
-#' The `CreateFileSystemFromBackup` call returns while the file system's
-#' lifecycle state is still `CREATING`. You can check the file-system
-#' creation status by calling the DescribeFileSystems operation, which
+#' The
+#' [`create_file_system_from_backup`][fsx_create_file_system_from_backup]
+#' call returns while the file system's lifecycle state is still
+#' `CREATING`. You can check the file-system creation status by calling the
+#' [`describe_file_systems`][fsx_describe_file_systems] operation, which
 #' returns the file system state along with other information.
 #'
 #' @usage
@@ -579,7 +883,7 @@ fsx_create_file_system <- function(ClientRequestToken = NULL, FileSystemType, St
 #' from. For Windows `MULTI_AZ_1` file system deployment types, provide
 #' exactly two subnet IDs, one for the preferred file server and one for
 #' the standby file server. You specify one of these subnets as the
-#' preferred subnet using the `WindowsConfiguration &gt; PreferredSubnetID`
+#' preferred subnet using the `WindowsConfiguration > PreferredSubnetID`
 #' property.
 #' 
 #' For Windows `SINGLE_AZ_1` and `SINGLE_AZ_2` deployment types and Lustre
@@ -611,6 +915,107 @@ fsx_create_file_system <- function(ClientRequestToken = NULL, FileSystemType, St
 #' HDD storage from a backup of a file system that used SSD storage only if
 #' the original SSD file system had a storage capacity of at least 2000
 #' GiB.
+#'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   FileSystem = list(
+#'     OwnerId = "string",
+#'     CreationTime = as.POSIXct(
+#'       "2015-01-01"
+#'     ),
+#'     FileSystemId = "string",
+#'     FileSystemType = "WINDOWS"|"LUSTRE",
+#'     Lifecycle = "AVAILABLE"|"CREATING"|"FAILED"|"DELETING"|"MISCONFIGURED"|"UPDATING",
+#'     FailureDetails = list(
+#'       Message = "string"
+#'     ),
+#'     StorageCapacity = 123,
+#'     StorageType = "SSD"|"HDD",
+#'     VpcId = "string",
+#'     SubnetIds = list(
+#'       "string"
+#'     ),
+#'     NetworkInterfaceIds = list(
+#'       "string"
+#'     ),
+#'     DNSName = "string",
+#'     KmsKeyId = "string",
+#'     ResourceARN = "string",
+#'     Tags = list(
+#'       list(
+#'         Key = "string",
+#'         Value = "string"
+#'       )
+#'     ),
+#'     WindowsConfiguration = list(
+#'       ActiveDirectoryId = "string",
+#'       SelfManagedActiveDirectoryConfiguration = list(
+#'         DomainName = "string",
+#'         OrganizationalUnitDistinguishedName = "string",
+#'         FileSystemAdministratorsGroup = "string",
+#'         UserName = "string",
+#'         DnsIps = list(
+#'           "string"
+#'         )
+#'       ),
+#'       DeploymentType = "MULTI_AZ_1"|"SINGLE_AZ_1"|"SINGLE_AZ_2",
+#'       RemoteAdministrationEndpoint = "string",
+#'       PreferredSubnetId = "string",
+#'       PreferredFileServerIp = "string",
+#'       ThroughputCapacity = 123,
+#'       MaintenanceOperationsInProgress = list(
+#'         "PATCHING"|"BACKING_UP"
+#'       ),
+#'       WeeklyMaintenanceStartTime = "string",
+#'       DailyAutomaticBackupStartTime = "string",
+#'       AutomaticBackupRetentionDays = 123,
+#'       CopyTagsToBackups = TRUE|FALSE,
+#'       Aliases = list(
+#'         list(
+#'           Name = "string",
+#'           Lifecycle = "AVAILABLE"|"CREATING"|"DELETING"|"CREATE_FAILED"|"DELETE_FAILED"
+#'         )
+#'       )
+#'     ),
+#'     LustreConfiguration = list(
+#'       WeeklyMaintenanceStartTime = "string",
+#'       DataRepositoryConfiguration = list(
+#'         Lifecycle = "CREATING"|"AVAILABLE"|"MISCONFIGURED"|"UPDATING"|"DELETING",
+#'         ImportPath = "string",
+#'         ExportPath = "string",
+#'         ImportedFileChunkSize = 123,
+#'         AutoImportPolicy = "NONE"|"NEW"|"NEW_CHANGED",
+#'         FailureDetails = list(
+#'           Message = "string"
+#'         )
+#'       ),
+#'       DeploymentType = "SCRATCH_1"|"SCRATCH_2"|"PERSISTENT_1",
+#'       PerUnitStorageThroughput = 123,
+#'       MountName = "string",
+#'       DailyAutomaticBackupStartTime = "string",
+#'       AutomaticBackupRetentionDays = 123,
+#'       CopyTagsToBackups = TRUE|FALSE,
+#'       DriveCacheType = "NONE"|"READ"
+#'     ),
+#'     AdministrativeActions = list(
+#'       list(
+#'         AdministrativeActionType = "FILE_SYSTEM_UPDATE"|"STORAGE_OPTIMIZATION"|"FILE_SYSTEM_ALIAS_ASSOCIATION"|"FILE_SYSTEM_ALIAS_DISASSOCIATION",
+#'         ProgressPercent = 123,
+#'         RequestTime = as.POSIXct(
+#'           "2015-01-01"
+#'         ),
+#'         Status = "FAILED"|"IN_PROGRESS"|"PENDING"|"COMPLETED"|"UPDATED_OPTIMIZING",
+#'         TargetFileSystemValues = list(),
+#'         FailureDetails = list(
+#'           Message = "string"
+#'         )
+#'       )
+#'     )
+#'   )
+#' )
+#' ```
 #'
 #' @section Request syntax:
 #' ```
@@ -719,8 +1124,9 @@ fsx_create_file_system_from_backup <- function(BackupId, ClientRequestToken = NU
 #' Deletes an Amazon FSx backup, deleting its contents. After deletion, the
 #' backup no longer exists, and its data is gone.
 #' 
-#' The `DeleteBackup` call returns instantly. The backup will not show up
-#' in later `DescribeBackups` calls.
+#' The [`delete_backup`][fsx_delete_backup] call returns instantly. The
+#' backup will not show up in later
+#' [`describe_backups`][fsx_describe_backups] calls.
 #' 
 #' The data in a deleted backup is also deleted and can't be recovered by
 #' any means.
@@ -732,6 +1138,15 @@ fsx_create_file_system_from_backup <- function(BackupId, ClientRequestToken = NU
 #' @param ClientRequestToken A string of up to 64 ASCII characters that Amazon FSx uses to ensure
 #' idempotent deletion. This is automatically filled on your behalf when
 #' using the AWS CLI or SDK.
+#'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   BackupId = "string",
+#'   Lifecycle = "AVAILABLE"|"CREATING"|"TRANSFERRING"|"DELETED"|"FAILED"|"PENDING"
+#' )
+#' ```
 #'
 #' @section Request syntax:
 #' ```
@@ -781,12 +1196,14 @@ fsx_delete_backup <- function(BackupId, ClientRequestToken = NULL) {
 #' not subject to the file system's retention policy, and must be manually
 #' deleted.
 #' 
-#' The `DeleteFileSystem` action returns while the file system has the
-#' `DELETING` status. You can check the file system deletion status by
-#' calling the DescribeFileSystems action, which returns a list of file
-#' systems in your account. If you pass the file system ID for a deleted
-#' file system, the DescribeFileSystems returns a `FileSystemNotFound`
-#' error.
+#' The [`delete_file_system`][fsx_delete_file_system] action returns while
+#' the file system has the `DELETING` status. You can check the file system
+#' deletion status by calling the
+#' [`describe_file_systems`][fsx_describe_file_systems] action, which
+#' returns a list of file systems in your account. If you pass the file
+#' system ID for a deleted file system, the
+#' [`describe_file_systems`][fsx_describe_file_systems] returns a
+#' `FileSystemNotFound` error.
 #' 
 #' Deleting an Amazon FSx for Lustre file system will fail with a 400
 #' BadRequest if a data repository task is in a `PENDING` or `EXECUTING`
@@ -805,6 +1222,33 @@ fsx_delete_backup <- function(BackupId, ClientRequestToken = NULL) {
 #' using the AWS CLI or SDK.
 #' @param WindowsConfiguration 
 #' @param LustreConfiguration 
+#'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   FileSystemId = "string",
+#'   Lifecycle = "AVAILABLE"|"CREATING"|"FAILED"|"DELETING"|"MISCONFIGURED"|"UPDATING",
+#'   WindowsResponse = list(
+#'     FinalBackupId = "string",
+#'     FinalBackupTags = list(
+#'       list(
+#'         Key = "string",
+#'         Value = "string"
+#'       )
+#'     )
+#'   ),
+#'   LustreResponse = list(
+#'     FinalBackupId = "string",
+#'     FinalBackupTags = list(
+#'       list(
+#'         Key = "string",
+#'         Value = "string"
+#'       )
+#'     )
+#'   )
+#' )
+#' ```
 #'
 #' @section Request syntax:
 #' ```
@@ -876,10 +1320,10 @@ fsx_delete_file_system <- function(FileSystemId, ClientRequestToken = NULL, Wind
 #' the value of `NextToken` from the last response.
 #' 
 #' This action is used in an iterative process to retrieve a list of your
-#' backups. `DescribeBackups` is called first without a `NextToken`value.
-#' Then the action continues to be called with the `NextToken` parameter
-#' set to the value of the last `NextToken` value until a response has no
-#' `NextToken`.
+#' backups. [`describe_backups`][fsx_describe_backups] is called first
+#' without a `NextToken`value. Then the action continues to be called with
+#' the `NextToken` parameter set to the value of the last `NextToken` value
+#' until a response has no `NextToken`.
 #' 
 #' When using this action, keep the following in mind:
 #' 
@@ -887,8 +1331,9 @@ fsx_delete_file_system <- function(FileSystemId, ClientRequestToken = NULL, Wind
 #'     descriptions while still including a `NextToken` value.
 #' 
 #' -   The order of backups returned in the response of one
-#'     `DescribeBackups` call and the order of backups returned across the
-#'     responses of a multi-call iteration is unspecified.
+#'     [`describe_backups`][fsx_describe_backups] call and the order of
+#'     backups returned across the responses of a multi-call iteration is
+#'     unspecified.
 #'
 #' @usage
 #' fsx_describe_backups(BackupIds, Filters, MaxResults, NextToken)
@@ -900,9 +1345,138 @@ fsx_delete_file_system <- function(FileSystemId, ClientRequestToken = NULL, Wind
 #' parameter value must be greater than 0. The number of items that Amazon
 #' FSx returns is the minimum of the `MaxResults` parameter specified in
 #' the request and the service's internal maximum number of items per page.
-#' @param NextToken Opaque pagination token returned from a previous `DescribeBackups`
-#' operation (String). If a token present, the action continues the list
-#' from where the returning call left off.
+#' @param NextToken Opaque pagination token returned from a previous
+#' [`describe_backups`][fsx_describe_backups] operation (String). If a
+#' token present, the action continues the list from where the returning
+#' call left off.
+#'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   Backups = list(
+#'     list(
+#'       BackupId = "string",
+#'       Lifecycle = "AVAILABLE"|"CREATING"|"TRANSFERRING"|"DELETED"|"FAILED"|"PENDING",
+#'       FailureDetails = list(
+#'         Message = "string"
+#'       ),
+#'       Type = "AUTOMATIC"|"USER_INITIATED"|"AWS_BACKUP",
+#'       ProgressPercent = 123,
+#'       CreationTime = as.POSIXct(
+#'         "2015-01-01"
+#'       ),
+#'       KmsKeyId = "string",
+#'       ResourceARN = "string",
+#'       Tags = list(
+#'         list(
+#'           Key = "string",
+#'           Value = "string"
+#'         )
+#'       ),
+#'       FileSystem = list(
+#'         OwnerId = "string",
+#'         CreationTime = as.POSIXct(
+#'           "2015-01-01"
+#'         ),
+#'         FileSystemId = "string",
+#'         FileSystemType = "WINDOWS"|"LUSTRE",
+#'         Lifecycle = "AVAILABLE"|"CREATING"|"FAILED"|"DELETING"|"MISCONFIGURED"|"UPDATING",
+#'         FailureDetails = list(
+#'           Message = "string"
+#'         ),
+#'         StorageCapacity = 123,
+#'         StorageType = "SSD"|"HDD",
+#'         VpcId = "string",
+#'         SubnetIds = list(
+#'           "string"
+#'         ),
+#'         NetworkInterfaceIds = list(
+#'           "string"
+#'         ),
+#'         DNSName = "string",
+#'         KmsKeyId = "string",
+#'         ResourceARN = "string",
+#'         Tags = list(
+#'           list(
+#'             Key = "string",
+#'             Value = "string"
+#'           )
+#'         ),
+#'         WindowsConfiguration = list(
+#'           ActiveDirectoryId = "string",
+#'           SelfManagedActiveDirectoryConfiguration = list(
+#'             DomainName = "string",
+#'             OrganizationalUnitDistinguishedName = "string",
+#'             FileSystemAdministratorsGroup = "string",
+#'             UserName = "string",
+#'             DnsIps = list(
+#'               "string"
+#'             )
+#'           ),
+#'           DeploymentType = "MULTI_AZ_1"|"SINGLE_AZ_1"|"SINGLE_AZ_2",
+#'           RemoteAdministrationEndpoint = "string",
+#'           PreferredSubnetId = "string",
+#'           PreferredFileServerIp = "string",
+#'           ThroughputCapacity = 123,
+#'           MaintenanceOperationsInProgress = list(
+#'             "PATCHING"|"BACKING_UP"
+#'           ),
+#'           WeeklyMaintenanceStartTime = "string",
+#'           DailyAutomaticBackupStartTime = "string",
+#'           AutomaticBackupRetentionDays = 123,
+#'           CopyTagsToBackups = TRUE|FALSE,
+#'           Aliases = list(
+#'             list(
+#'               Name = "string",
+#'               Lifecycle = "AVAILABLE"|"CREATING"|"DELETING"|"CREATE_FAILED"|"DELETE_FAILED"
+#'             )
+#'           )
+#'         ),
+#'         LustreConfiguration = list(
+#'           WeeklyMaintenanceStartTime = "string",
+#'           DataRepositoryConfiguration = list(
+#'             Lifecycle = "CREATING"|"AVAILABLE"|"MISCONFIGURED"|"UPDATING"|"DELETING",
+#'             ImportPath = "string",
+#'             ExportPath = "string",
+#'             ImportedFileChunkSize = 123,
+#'             AutoImportPolicy = "NONE"|"NEW"|"NEW_CHANGED",
+#'             FailureDetails = list(
+#'               Message = "string"
+#'             )
+#'           ),
+#'           DeploymentType = "SCRATCH_1"|"SCRATCH_2"|"PERSISTENT_1",
+#'           PerUnitStorageThroughput = 123,
+#'           MountName = "string",
+#'           DailyAutomaticBackupStartTime = "string",
+#'           AutomaticBackupRetentionDays = 123,
+#'           CopyTagsToBackups = TRUE|FALSE,
+#'           DriveCacheType = "NONE"|"READ"
+#'         ),
+#'         AdministrativeActions = list(
+#'           list(
+#'             AdministrativeActionType = "FILE_SYSTEM_UPDATE"|"STORAGE_OPTIMIZATION"|"FILE_SYSTEM_ALIAS_ASSOCIATION"|"FILE_SYSTEM_ALIAS_DISASSOCIATION",
+#'             ProgressPercent = 123,
+#'             RequestTime = as.POSIXct(
+#'               "2015-01-01"
+#'             ),
+#'             Status = "FAILED"|"IN_PROGRESS"|"PENDING"|"COMPLETED"|"UPDATED_OPTIMIZING",
+#'             TargetFileSystemValues = list(),
+#'             FailureDetails = list(
+#'               Message = "string"
+#'             )
+#'           )
+#'         )
+#'       ),
+#'       DirectoryInformation = list(
+#'         DomainName = "string",
+#'         ActiveDirectoryId = "string"
+#'       )
+#'     )
+#'   ),
+#'   NextToken = "string"
+#' )
+#' ```
 #'
 #' @section Request syntax:
 #' ```
@@ -976,10 +1550,63 @@ fsx_describe_backups <- function(BackupIds = NULL, Filters = NULL, MaxResults = 
 #' @param TaskIds (Optional) IDs of the tasks whose descriptions you want to retrieve
 #' (String).
 #' @param Filters (Optional) You can use filters to narrow the
-#' `DescribeDataRepositoryTasks` response to include just tasks for
-#' specific file systems, or tasks in a specific lifecycle state.
+#' [`describe_data_repository_tasks`][fsx_describe_data_repository_tasks]
+#' response to include just tasks for specific file systems, or tasks in a
+#' specific lifecycle state.
 #' @param MaxResults 
 #' @param NextToken 
+#'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   DataRepositoryTasks = list(
+#'     list(
+#'       TaskId = "string",
+#'       Lifecycle = "PENDING"|"EXECUTING"|"FAILED"|"SUCCEEDED"|"CANCELED"|"CANCELING",
+#'       Type = "EXPORT_TO_REPOSITORY",
+#'       CreationTime = as.POSIXct(
+#'         "2015-01-01"
+#'       ),
+#'       StartTime = as.POSIXct(
+#'         "2015-01-01"
+#'       ),
+#'       EndTime = as.POSIXct(
+#'         "2015-01-01"
+#'       ),
+#'       ResourceARN = "string",
+#'       Tags = list(
+#'         list(
+#'           Key = "string",
+#'           Value = "string"
+#'         )
+#'       ),
+#'       FileSystemId = "string",
+#'       Paths = list(
+#'         "string"
+#'       ),
+#'       FailureDetails = list(
+#'         Message = "string"
+#'       ),
+#'       Status = list(
+#'         TotalCount = 123,
+#'         SucceededCount = 123,
+#'         FailedCount = 123,
+#'         LastUpdatedTime = as.POSIXct(
+#'           "2015-01-01"
+#'         )
+#'       ),
+#'       Report = list(
+#'         Enabled = TRUE|FALSE,
+#'         Path = "string",
+#'         Format = "REPORT_CSV_20191124",
+#'         Scope = "FAILED_FILES_ONLY"
+#'       )
+#'     )
+#'   ),
+#'   NextToken = "string"
+#' )
+#' ```
 #'
 #' @section Request syntax:
 #' ```
@@ -1028,7 +1655,7 @@ fsx_describe_data_repository_tasks <- function(TaskIds = NULL, Filters = NULL, M
 #' FSx for Windows File Server file system. A history of all DNS aliases
 #' that have been associated with and disassociated from the file system is
 #' available in the list of AdministrativeAction provided in the
-#' DescribeFileSystems operation response.
+#' [`describe_file_systems`][fsx_describe_file_systems] operation response.
 #'
 #' @usage
 #' fsx_describe_file_system_aliases(ClientRequestToken, FileSystemId,
@@ -1042,9 +1669,23 @@ fsx_describe_data_repository_tasks <- function(TaskIds = NULL, Filters = NULL, M
 #' FSx returns is the minimum of the `MaxResults` parameter specified in
 #' the request and the service's internal maximum number of items per page.
 #' @param NextToken Opaque pagination token returned from a previous
-#' `DescribeFileSystemAliases` operation (String). If a token is included
-#' in the request, the action continues the list from where the previous
-#' returning call left off.
+#' [`describe_file_system_aliases`][fsx_describe_file_system_aliases]
+#' operation (String). If a token is included in the request, the action
+#' continues the list from where the previous returning call left off.
+#'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   Aliases = list(
+#'     list(
+#'       Name = "string",
+#'       Lifecycle = "AVAILABLE"|"CREATING"|"DELETING"|"CREATE_FAILED"|"DELETE_FAILED"
+#'     )
+#'   ),
+#'   NextToken = "string"
+#' )
+#' ```
 #'
 #' @section Request syntax:
 #' ```
@@ -1093,9 +1734,10 @@ fsx_describe_file_system_aliases <- function(ClientRequestToken = NULL, FileSyst
 #' from the last response.
 #' 
 #' This action is used in an iterative process to retrieve a list of your
-#' file system descriptions. `DescribeFileSystems` is called first without
-#' a `NextToken`value. Then the action continues to be called with the
-#' `NextToken` parameter set to the value of the last `NextToken` value
+#' file system descriptions.
+#' [`describe_file_systems`][fsx_describe_file_systems] is called first
+#' without a `NextToken`value. Then the action continues to be called with
+#' the `NextToken` parameter set to the value of the last `NextToken` value
 #' until a response has no `NextToken`.
 #' 
 #' When using this action, keep the following in mind:
@@ -1104,8 +1746,9 @@ fsx_describe_file_system_aliases <- function(ClientRequestToken = NULL, FileSyst
 #'     descriptions while still including a `NextToken` value.
 #' 
 #' -   The order of file systems returned in the response of one
-#'     `DescribeFileSystems` call and the order of file systems returned
-#'     across the responses of a multicall iteration is unspecified.
+#'     [`describe_file_systems`][fsx_describe_file_systems] call and the
+#'     order of file systems returned across the responses of a multicall
+#'     iteration is unspecified.
 #'
 #' @usage
 #' fsx_describe_file_systems(FileSystemIds, MaxResults, NextToken)
@@ -1116,9 +1759,114 @@ fsx_describe_file_system_aliases <- function(ClientRequestToken = NULL, FileSyst
 #' parameter value must be greater than 0. The number of items that Amazon
 #' FSx returns is the minimum of the `MaxResults` parameter specified in
 #' the request and the service's internal maximum number of items per page.
-#' @param NextToken Opaque pagination token returned from a previous `DescribeFileSystems`
-#' operation (String). If a token present, the action continues the list
-#' from where the returning call left off.
+#' @param NextToken Opaque pagination token returned from a previous
+#' [`describe_file_systems`][fsx_describe_file_systems] operation (String).
+#' If a token present, the action continues the list from where the
+#' returning call left off.
+#'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   FileSystems = list(
+#'     list(
+#'       OwnerId = "string",
+#'       CreationTime = as.POSIXct(
+#'         "2015-01-01"
+#'       ),
+#'       FileSystemId = "string",
+#'       FileSystemType = "WINDOWS"|"LUSTRE",
+#'       Lifecycle = "AVAILABLE"|"CREATING"|"FAILED"|"DELETING"|"MISCONFIGURED"|"UPDATING",
+#'       FailureDetails = list(
+#'         Message = "string"
+#'       ),
+#'       StorageCapacity = 123,
+#'       StorageType = "SSD"|"HDD",
+#'       VpcId = "string",
+#'       SubnetIds = list(
+#'         "string"
+#'       ),
+#'       NetworkInterfaceIds = list(
+#'         "string"
+#'       ),
+#'       DNSName = "string",
+#'       KmsKeyId = "string",
+#'       ResourceARN = "string",
+#'       Tags = list(
+#'         list(
+#'           Key = "string",
+#'           Value = "string"
+#'         )
+#'       ),
+#'       WindowsConfiguration = list(
+#'         ActiveDirectoryId = "string",
+#'         SelfManagedActiveDirectoryConfiguration = list(
+#'           DomainName = "string",
+#'           OrganizationalUnitDistinguishedName = "string",
+#'           FileSystemAdministratorsGroup = "string",
+#'           UserName = "string",
+#'           DnsIps = list(
+#'             "string"
+#'           )
+#'         ),
+#'         DeploymentType = "MULTI_AZ_1"|"SINGLE_AZ_1"|"SINGLE_AZ_2",
+#'         RemoteAdministrationEndpoint = "string",
+#'         PreferredSubnetId = "string",
+#'         PreferredFileServerIp = "string",
+#'         ThroughputCapacity = 123,
+#'         MaintenanceOperationsInProgress = list(
+#'           "PATCHING"|"BACKING_UP"
+#'         ),
+#'         WeeklyMaintenanceStartTime = "string",
+#'         DailyAutomaticBackupStartTime = "string",
+#'         AutomaticBackupRetentionDays = 123,
+#'         CopyTagsToBackups = TRUE|FALSE,
+#'         Aliases = list(
+#'           list(
+#'             Name = "string",
+#'             Lifecycle = "AVAILABLE"|"CREATING"|"DELETING"|"CREATE_FAILED"|"DELETE_FAILED"
+#'           )
+#'         )
+#'       ),
+#'       LustreConfiguration = list(
+#'         WeeklyMaintenanceStartTime = "string",
+#'         DataRepositoryConfiguration = list(
+#'           Lifecycle = "CREATING"|"AVAILABLE"|"MISCONFIGURED"|"UPDATING"|"DELETING",
+#'           ImportPath = "string",
+#'           ExportPath = "string",
+#'           ImportedFileChunkSize = 123,
+#'           AutoImportPolicy = "NONE"|"NEW"|"NEW_CHANGED",
+#'           FailureDetails = list(
+#'             Message = "string"
+#'           )
+#'         ),
+#'         DeploymentType = "SCRATCH_1"|"SCRATCH_2"|"PERSISTENT_1",
+#'         PerUnitStorageThroughput = 123,
+#'         MountName = "string",
+#'         DailyAutomaticBackupStartTime = "string",
+#'         AutomaticBackupRetentionDays = 123,
+#'         CopyTagsToBackups = TRUE|FALSE,
+#'         DriveCacheType = "NONE"|"READ"
+#'       ),
+#'       AdministrativeActions = list(
+#'         list(
+#'           AdministrativeActionType = "FILE_SYSTEM_UPDATE"|"STORAGE_OPTIMIZATION"|"FILE_SYSTEM_ALIAS_ASSOCIATION"|"FILE_SYSTEM_ALIAS_DISASSOCIATION",
+#'           ProgressPercent = 123,
+#'           RequestTime = as.POSIXct(
+#'             "2015-01-01"
+#'           ),
+#'           Status = "FAILED"|"IN_PROGRESS"|"PENDING"|"COMPLETED"|"UPDATED_OPTIMIZING",
+#'           TargetFileSystemValues = list(),
+#'           FailureDetails = list(
+#'             Message = "string"
+#'           )
+#'         )
+#'       )
+#'     )
+#'   ),
+#'   NextToken = "string"
+#' )
+#' ```
 #'
 #' @section Request syntax:
 #' ```
@@ -1184,6 +1932,19 @@ fsx_describe_file_systems <- function(FileSystemIds = NULL, MaxResults = NULL, N
 #' @param Aliases &#91;required&#93; An array of one or more DNS alias names to disassociate, or remove, from
 #' the file system.
 #'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   Aliases = list(
+#'     list(
+#'       Name = "string",
+#'       Lifecycle = "AVAILABLE"|"CREATING"|"DELETING"|"CREATE_FAILED"|"DELETE_FAILED"
+#'     )
+#'   )
+#' )
+#' ```
+#'
 #' @section Request syntax:
 #' ```
 #' svc$disassociate_file_system_aliases(
@@ -1229,10 +1990,10 @@ fsx_disassociate_file_system_aliases <- function(ClientRequestToken = NULL, File
 #' the value of `NextToken` from the last response.
 #' 
 #' This action is used in an iterative process to retrieve a list of your
-#' tags. `ListTagsForResource` is called first without a `NextToken`value.
-#' Then the action continues to be called with the `NextToken` parameter
-#' set to the value of the last `NextToken` value until a response has no
-#' `NextToken`.
+#' tags. [`list_tags_for_resource`][fsx_list_tags_for_resource] is called
+#' first without a `NextToken`value. Then the action continues to be called
+#' with the `NextToken` parameter set to the value of the last `NextToken`
+#' value until a response has no `NextToken`.
 #' 
 #' When using this action, keep the following in mind:
 #' 
@@ -1240,8 +2001,9 @@ fsx_disassociate_file_system_aliases <- function(ClientRequestToken = NULL, File
 #'     descriptions while still including a `NextToken` value.
 #' 
 #' -   The order of tags returned in the response of one
-#'     `ListTagsForResource` call and the order of tags returned across the
-#'     responses of a multi-call iteration is unspecified.
+#'     [`list_tags_for_resource`][fsx_list_tags_for_resource] call and the
+#'     order of tags returned across the responses of a multi-call
+#'     iteration is unspecified.
 #'
 #' @usage
 #' fsx_list_tags_for_resource(ResourceARN, MaxResults, NextToken)
@@ -1251,9 +2013,24 @@ fsx_disassociate_file_system_aliases <- function(ClientRequestToken = NULL, File
 #' parameter value must be greater than 0. The number of items that Amazon
 #' FSx returns is the minimum of the `MaxResults` parameter specified in
 #' the request and the service's internal maximum number of items per page.
-#' @param NextToken Opaque pagination token returned from a previous `ListTagsForResource`
-#' operation (String). If a token present, the action continues the list
-#' from where the returning call left off.
+#' @param NextToken Opaque pagination token returned from a previous
+#' [`list_tags_for_resource`][fsx_list_tags_for_resource] operation
+#' (String). If a token present, the action continues the list from where
+#' the returning call left off.
+#'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   Tags = list(
+#'     list(
+#'       Key = "string",
+#'       Value = "string"
+#'     )
+#'   ),
+#'   NextToken = "string"
+#' )
+#' ```
 #'
 #' @section Request syntax:
 #' ```
@@ -1304,6 +2081,9 @@ fsx_list_tags_for_resource <- function(ResourceARN, MaxResults = NULL, NextToken
 #' to tag.
 #' @param Tags &#91;required&#93; A list of tags for the resource. If a tag with a given key already
 #' exists, the value is replaced by the one specified in this parameter.
+#'
+#' @return
+#' An empty list.
 #'
 #' @section Request syntax:
 #' ```
@@ -1363,6 +2143,9 @@ fsx_tag_resource <- function(ResourceARN, Tags) {
 #' @param ResourceARN &#91;required&#93; The ARN of the Amazon FSx resource to untag.
 #' @param TagKeys &#91;required&#93; A list of keys of tags on the resource to untag. In case the tag key
 #' doesn't exist, the call will still succeed to be idempotent.
+#'
+#' @return
+#' An empty list.
 #'
 #' @section Request syntax:
 #' ```
@@ -1483,6 +2266,107 @@ fsx_untag_resource <- function(ResourceARN, TagKeys) {
 #' @param WindowsConfiguration The configuration updates for an Amazon FSx for Windows File Server file
 #' system.
 #' @param LustreConfiguration 
+#'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   FileSystem = list(
+#'     OwnerId = "string",
+#'     CreationTime = as.POSIXct(
+#'       "2015-01-01"
+#'     ),
+#'     FileSystemId = "string",
+#'     FileSystemType = "WINDOWS"|"LUSTRE",
+#'     Lifecycle = "AVAILABLE"|"CREATING"|"FAILED"|"DELETING"|"MISCONFIGURED"|"UPDATING",
+#'     FailureDetails = list(
+#'       Message = "string"
+#'     ),
+#'     StorageCapacity = 123,
+#'     StorageType = "SSD"|"HDD",
+#'     VpcId = "string",
+#'     SubnetIds = list(
+#'       "string"
+#'     ),
+#'     NetworkInterfaceIds = list(
+#'       "string"
+#'     ),
+#'     DNSName = "string",
+#'     KmsKeyId = "string",
+#'     ResourceARN = "string",
+#'     Tags = list(
+#'       list(
+#'         Key = "string",
+#'         Value = "string"
+#'       )
+#'     ),
+#'     WindowsConfiguration = list(
+#'       ActiveDirectoryId = "string",
+#'       SelfManagedActiveDirectoryConfiguration = list(
+#'         DomainName = "string",
+#'         OrganizationalUnitDistinguishedName = "string",
+#'         FileSystemAdministratorsGroup = "string",
+#'         UserName = "string",
+#'         DnsIps = list(
+#'           "string"
+#'         )
+#'       ),
+#'       DeploymentType = "MULTI_AZ_1"|"SINGLE_AZ_1"|"SINGLE_AZ_2",
+#'       RemoteAdministrationEndpoint = "string",
+#'       PreferredSubnetId = "string",
+#'       PreferredFileServerIp = "string",
+#'       ThroughputCapacity = 123,
+#'       MaintenanceOperationsInProgress = list(
+#'         "PATCHING"|"BACKING_UP"
+#'       ),
+#'       WeeklyMaintenanceStartTime = "string",
+#'       DailyAutomaticBackupStartTime = "string",
+#'       AutomaticBackupRetentionDays = 123,
+#'       CopyTagsToBackups = TRUE|FALSE,
+#'       Aliases = list(
+#'         list(
+#'           Name = "string",
+#'           Lifecycle = "AVAILABLE"|"CREATING"|"DELETING"|"CREATE_FAILED"|"DELETE_FAILED"
+#'         )
+#'       )
+#'     ),
+#'     LustreConfiguration = list(
+#'       WeeklyMaintenanceStartTime = "string",
+#'       DataRepositoryConfiguration = list(
+#'         Lifecycle = "CREATING"|"AVAILABLE"|"MISCONFIGURED"|"UPDATING"|"DELETING",
+#'         ImportPath = "string",
+#'         ExportPath = "string",
+#'         ImportedFileChunkSize = 123,
+#'         AutoImportPolicy = "NONE"|"NEW"|"NEW_CHANGED",
+#'         FailureDetails = list(
+#'           Message = "string"
+#'         )
+#'       ),
+#'       DeploymentType = "SCRATCH_1"|"SCRATCH_2"|"PERSISTENT_1",
+#'       PerUnitStorageThroughput = 123,
+#'       MountName = "string",
+#'       DailyAutomaticBackupStartTime = "string",
+#'       AutomaticBackupRetentionDays = 123,
+#'       CopyTagsToBackups = TRUE|FALSE,
+#'       DriveCacheType = "NONE"|"READ"
+#'     ),
+#'     AdministrativeActions = list(
+#'       list(
+#'         AdministrativeActionType = "FILE_SYSTEM_UPDATE"|"STORAGE_OPTIMIZATION"|"FILE_SYSTEM_ALIAS_ASSOCIATION"|"FILE_SYSTEM_ALIAS_DISASSOCIATION",
+#'         ProgressPercent = 123,
+#'         RequestTime = as.POSIXct(
+#'           "2015-01-01"
+#'         ),
+#'         Status = "FAILED"|"IN_PROGRESS"|"PENDING"|"COMPLETED"|"UPDATED_OPTIMIZING",
+#'         TargetFileSystemValues = list(),
+#'         FailureDetails = list(
+#'           Message = "string"
+#'         )
+#'       )
+#'     )
+#'   )
+#' )
+#' ```
 #'
 #' @section Request syntax:
 #' ```

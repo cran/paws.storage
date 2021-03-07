@@ -21,7 +21,7 @@ format of the ARN depends on the resource type.}
 example, \verb{arn:aws:iam::123456789012:role/S3Access}.}
 
 \item{IdempotencyToken}{A customer chosen string that can be used to distinguish between calls
-to \code{StartBackupJob}.}
+to \code{\link[=backup_start_backup_job]{start_backup_job}}.}
 
 \item{StartWindowMinutes}{A value in minutes after a backup is scheduled before a job will be
 canceled if it doesn't start successfully. This value is optional.}
@@ -50,6 +50,16 @@ Valid values: Set to \code{"WindowsVSS”:“enabled"} to enable WindowsVSS
 backup option and create a VSS Windows backup. Set to
 “WindowsVSS”:”disabled” to create a regular backup. The WindowsVSS
 option is not enabled by default.}
+}
+\value{
+A list with the following syntax:\preformatted{list(
+  BackupJobId = "string",
+  RecoveryPointArn = "string",
+  CreationDate = as.POSIXct(
+    "2015-01-01"
+  )
+)
+}
 }
 \description{
 Starts an on-demand backup job for the specified resource.

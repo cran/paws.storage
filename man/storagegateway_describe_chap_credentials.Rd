@@ -10,8 +10,21 @@ storagegateway_describe_chap_credentials(TargetARN)
 }
 \arguments{
 \item{TargetARN}{[required] The Amazon Resource Name (ARN) of the iSCSI volume target. Use the
-DescribeStorediSCSIVolumes operation to return to retrieve the TargetARN
-for specified VolumeARN.}
+\code{\link[=storagegateway_describe_storedi_scsi_volumes]{describe_storedi_scsi_volumes}}
+operation to return to retrieve the TargetARN for specified VolumeARN.}
+}
+\value{
+A list with the following syntax:\preformatted{list(
+  ChapCredentials = list(
+    list(
+      TargetARN = "string",
+      SecretToAuthenticateInitiator = "string",
+      InitiatorName = "string",
+      SecretToAuthenticateTarget = "string"
+    )
+  )
+)
+}
 }
 \description{
 Returns an array of Challenge-Handshake Authentication Protocol (CHAP)
@@ -32,7 +45,7 @@ tape gateway types.
 # credentials information for a specified iSCSI target, one for each
 # target-initiator pair.
 svc$describe_chap_credentials(
-  TargetARN = "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B/target/iqn..."
+  TargetARN = "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12..."
 )
 }
 

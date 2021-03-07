@@ -11,11 +11,15 @@ efs_modify_mount_target_security_groups(MountTargetId, SecurityGroups)
 
 \item{SecurityGroups}{An array of up to five VPC security group IDs.}
 }
+\value{
+An empty list.
+}
 \description{
 Modifies the set of security groups in effect for a mount target.
 
 When you create a mount target, Amazon EFS also creates a new network
-interface. For more information, see CreateMountTarget. This operation
+interface. For more information, see
+\code{\link[=efs_create_mount_target]{create_mount_target}}. This operation
 replaces the security groups in effect for the network interface
 associated with a mount target, with the \code{SecurityGroups} provided in
 the request. This operation requires that the network interface of the

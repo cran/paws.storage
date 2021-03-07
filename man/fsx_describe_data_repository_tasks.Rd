@@ -14,12 +14,63 @@ fsx_describe_data_repository_tasks(TaskIds, Filters, MaxResults,
 (String).}
 
 \item{Filters}{(Optional) You can use filters to narrow the
-\code{DescribeDataRepositoryTasks} response to include just tasks for
-specific file systems, or tasks in a specific lifecycle state.}
+\code{\link[=fsx_describe_data_repository_tasks]{describe_data_repository_tasks}}
+response to include just tasks for specific file systems, or tasks in a
+specific lifecycle state.}
 
 \item{MaxResults}{}
 
 \item{NextToken}{}
+}
+\value{
+A list with the following syntax:\preformatted{list(
+  DataRepositoryTasks = list(
+    list(
+      TaskId = "string",
+      Lifecycle = "PENDING"|"EXECUTING"|"FAILED"|"SUCCEEDED"|"CANCELED"|"CANCELING",
+      Type = "EXPORT_TO_REPOSITORY",
+      CreationTime = as.POSIXct(
+        "2015-01-01"
+      ),
+      StartTime = as.POSIXct(
+        "2015-01-01"
+      ),
+      EndTime = as.POSIXct(
+        "2015-01-01"
+      ),
+      ResourceARN = "string",
+      Tags = list(
+        list(
+          Key = "string",
+          Value = "string"
+        )
+      ),
+      FileSystemId = "string",
+      Paths = list(
+        "string"
+      ),
+      FailureDetails = list(
+        Message = "string"
+      ),
+      Status = list(
+        TotalCount = 123,
+        SucceededCount = 123,
+        FailedCount = 123,
+        LastUpdatedTime = as.POSIXct(
+          "2015-01-01"
+        )
+      ),
+      Report = list(
+        Enabled = TRUE|FALSE,
+        Path = "string",
+        Format = "REPORT_CSV_20191124",
+        Scope = "FAILED_FILES_ONLY"
+      )
+    )
+  ),
+  NextToken = "string"
+)
+}
 }
 \description{
 Returns the description of specific Amazon FSx for Lustre data

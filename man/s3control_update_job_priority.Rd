@@ -13,17 +13,24 @@ s3control_update_job_priority(AccountId, JobId, Priority)
 
 \item{Priority}{[required] The priority you want to assign to this job.}
 }
+\value{
+A list with the following syntax:\preformatted{list(
+  JobId = "string",
+  Priority = 123
+)
+}
+}
 \description{
 Updates an existing S3 Batch Operations job's priority. For more
-information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/batch-ops-basics.html}{S3 Batch Operations}
+information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/batch-ops-basics.html}{S3 Batch Operations}
 in the \emph{Amazon Simple Storage Service Developer Guide}.
 
 Related actions include:
 \itemize{
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_CreateJob.html}{CreateJob}
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_ListJobs.html}{ListJobs}
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_DescribeJob.html}{DescribeJob}
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_UpdateJobStatus.html}{UpdateJobStatus}
+\item \code{\link[=s3control_create_job]{create_job}}
+\item \code{\link[=s3control_list_jobs]{list_jobs}}
+\item \code{\link[=s3control_describe_job]{describe_job}}
+\item \code{\link[=s3control_update_job_status]{update_job_status}}
 }
 }
 \section{Request syntax}{

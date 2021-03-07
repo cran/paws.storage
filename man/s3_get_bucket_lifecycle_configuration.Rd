@@ -15,6 +15,62 @@ s3_get_bucket_lifecycle_configuration(Bucket, ExpectedBucketOwner)
 different account, the request will fail with an HTTP
 \verb{403 (Access Denied)} error.}
 }
+\value{
+A list with the following syntax:\preformatted{list(
+  Rules = list(
+    list(
+      Expiration = list(
+        Date = as.POSIXct(
+          "2015-01-01"
+        ),
+        Days = 123,
+        ExpiredObjectDeleteMarker = TRUE|FALSE
+      ),
+      ID = "string",
+      Prefix = "string",
+      Filter = list(
+        Prefix = "string",
+        Tag = list(
+          Key = "string",
+          Value = "string"
+        ),
+        And = list(
+          Prefix = "string",
+          Tags = list(
+            list(
+              Key = "string",
+              Value = "string"
+            )
+          )
+        )
+      ),
+      Status = "Enabled"|"Disabled",
+      Transitions = list(
+        list(
+          Date = as.POSIXct(
+            "2015-01-01"
+          ),
+          Days = 123,
+          StorageClass = "GLACIER"|"STANDARD_IA"|"ONEZONE_IA"|"INTELLIGENT_TIERING"|"DEEP_ARCHIVE"
+        )
+      ),
+      NoncurrentVersionTransitions = list(
+        list(
+          NoncurrentDays = 123,
+          StorageClass = "GLACIER"|"STANDARD_IA"|"ONEZONE_IA"|"INTELLIGENT_TIERING"|"DEEP_ARCHIVE"
+        )
+      ),
+      NoncurrentVersionExpiration = list(
+        NoncurrentDays = 123
+      ),
+      AbortIncompleteMultipartUpload = list(
+        DaysAfterInitiation = 123
+      )
+    )
+  )
+)
+}
+}
 \description{
 Bucket lifecycle configuration now supports specifying a lifecycle rule
 using an object key name prefix, one or more object tags, or a
@@ -23,18 +79,19 @@ The response describes the new filter element that you can use to
 specify a filter to select a subset of objects to which the rule
 applies. If you are using a previous version of the lifecycle
 configuration, it still works. For the earlier API description, see
-\href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLifecycle.html}{GetBucketLifecycle}.
+\code{\link[=s3_get_bucket_lifecycle]{get_bucket_lifecycle}}.
 
 Returns the lifecycle configuration information set on the bucket. For
-information about lifecycle configuration, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/object-lifecycle-mgmt.html}{Object Lifecycle Management}.
+information about lifecycle configuration, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lifecycle-mgmt.html}{Object Lifecycle Management}.
 
 To use this operation, you must have permission to perform the
 \code{s3:GetLifecycleConfiguration} action. The bucket owner has this
 permission, by default. The bucket owner can grant this permission to
-others. For more information about permissions, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/using-with-s3-actions.html#using-with-s3-actions-related-to-bucket-subresources}{Permissions Related to Bucket Subresource Operations}
-and \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/s3-access-control.html}{Managing Access Permissions to Your Amazon S3 Resources}.
+others. For more information about permissions, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-with-s3-actions.html#using-with-s3-actions-related-to-bucket-subresources}{Permissions Related to Bucket Subresource Operations}
+and \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-access-control.html}{Managing Access Permissions to Your Amazon S3 Resources}.
 
-\code{GetBucketLifecycleConfiguration} has the following special error:
+\code{\link[=s3_get_bucket_lifecycle_configuration]{get_bucket_lifecycle_configuration}}
+has the following special error:
 \itemize{
 \item Error code: \code{NoSuchLifecycleConfiguration}
 \itemize{
@@ -45,11 +102,11 @@ and \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/s3-access-control.html
 }
 
 The following operations are related to
-\code{GetBucketLifecycleConfiguration}:
+\code{\link[=s3_get_bucket_lifecycle_configuration]{get_bucket_lifecycle_configuration}}:
 \itemize{
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLifecycle.html}{GetBucketLifecycle}
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketLifecycle.html}{PutBucketLifecycle}
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketLifecycle.html}{DeleteBucketLifecycle}
+\item \code{\link[=s3_get_bucket_lifecycle]{get_bucket_lifecycle}}
+\item \code{\link[=s3_put_bucket_lifecycle]{put_bucket_lifecycle}}
+\item \code{\link[=s3_delete_bucket_lifecycle]{delete_bucket_lifecycle}}
 }
 }
 \section{Request syntax}{

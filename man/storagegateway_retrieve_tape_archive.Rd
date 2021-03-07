@@ -12,11 +12,17 @@ storagegateway_retrieve_tape_archive(TapeARN, GatewayARN)
 from the virtual tape shelf (VTS).}
 
 \item{GatewayARN}{[required] The Amazon Resource Name (ARN) of the gateway you want to retrieve the
-virtual tape to. Use the ListGateways operation to return a list of
-gateways for your account and AWS Region.
+virtual tape to. Use the \code{\link[=storagegateway_list_gateways]{list_gateways}}
+operation to return a list of gateways for your account and AWS Region.
 
 You retrieve archived virtual tapes to only one gateway and the gateway
 must be a tape gateway.}
+}
+\value{
+A list with the following syntax:\preformatted{list(
+  TapeARN = "string"
+)
+}
 }
 \description{
 Retrieves an archived virtual tape from the virtual tape shelf (VTS) to

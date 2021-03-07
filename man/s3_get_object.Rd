@@ -19,7 +19,7 @@ the access point hostname. The access point hostname takes the form
 \emph{AccessPointName}-\emph{AccountId}.s3-accesspoint.\emph{Region}.amazonaws.com.
 When using this operation with an access point through the AWS SDKs, you
 provide the access point ARN in place of the bucket name. For more
-information about access point ARNs, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/using-access-points.html}{Using Access Points}
+information about access point ARNs, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-access-points.html}{Using Access Points}
 in the \emph{Amazon Simple Storage Service Developer Guide}.
 
 When using this API with Amazon S3 on Outposts, you must direct requests
@@ -28,7 +28,7 @@ form
 \emph{AccessPointName}-\emph{AccountId}.\emph{outpostID}.s3-outposts.\emph{Region}.amazonaws.com.
 When using this operation using S3 on Outposts through the AWS SDKs, you
 provide the Outposts bucket ARN in place of the bucket name. For more
-information about S3 on Outposts ARNs, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/S3onOutposts.html}{Using S3 on Outposts}
+information about S3 on Outposts ARNs, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/S3onOutposts.html}{Using S3 on Outposts}
 in the \emph{Amazon Simple Storage Service Developer Guide}.}
 
 \item{IfMatch}{Return the object only if its entity tag (ETag) is the same as the one
@@ -89,6 +89,51 @@ specified. Useful for downloading just a part of an object.}
 different account, the request will fail with an HTTP
 \verb{403 (Access Denied)} error.}
 }
+\value{
+A list with the following syntax:\preformatted{list(
+  Body = raw,
+  DeleteMarker = TRUE|FALSE,
+  AcceptRanges = "string",
+  Expiration = "string",
+  Restore = "string",
+  LastModified = as.POSIXct(
+    "2015-01-01"
+  ),
+  ContentLength = 123,
+  ETag = "string",
+  MissingMeta = 123,
+  VersionId = "string",
+  CacheControl = "string",
+  ContentDisposition = "string",
+  ContentEncoding = "string",
+  ContentLanguage = "string",
+  ContentRange = "string",
+  ContentType = "string",
+  Expires = as.POSIXct(
+    "2015-01-01"
+  ),
+  WebsiteRedirectLocation = "string",
+  ServerSideEncryption = "AES256"|"aws:kms",
+  Metadata = list(
+    "string"
+  ),
+  SSECustomerAlgorithm = "string",
+  SSECustomerKeyMD5 = "string",
+  SSEKMSKeyId = "string",
+  BucketKeyEnabled = TRUE|FALSE,
+  StorageClass = "STANDARD"|"REDUCED_REDUNDANCY"|"STANDARD_IA"|"ONEZONE_IA"|"INTELLIGENT_TIERING"|"GLACIER"|"DEEP_ARCHIVE"|"OUTPOSTS",
+  RequestCharged = "requester",
+  ReplicationStatus = "COMPLETE"|"PENDING"|"FAILED"|"REPLICA",
+  PartsCount = 123,
+  TagCount = 123,
+  ObjectLockMode = "GOVERNANCE"|"COMPLIANCE",
+  ObjectLockRetainUntilDate = as.POSIXct(
+    "2015-01-01"
+  ),
+  ObjectLockLegalHoldStatus = "ON"|"OFF"
+)
+}
+}
 \description{
 Retrieves objects from Amazon S3. To use \code{GET}, you must have \code{READ}
 access to the object. If you grant \code{READ} access to the anonymous user,
@@ -108,20 +153,20 @@ request example, if you have the object
 you have the object \code{photos/2006/February/sample.jpg} in the bucket
 named \code{examplebucket}, specify the resource as
 \verb{/examplebucket/photos/2006/February/sample.jpg}. For more information
-about request types, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/VirtualHosting.html#VirtualHostingSpecifyBucket}{HTTP Host Header Bucket Specification}.
+about request types, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/VirtualHosting.html#VirtualHostingSpecifyBucket}{HTTP Host Header Bucket Specification}.
 
 To distribute large files to many people, you can save bandwidth costs
-by using BitTorrent. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/S3Torrent.html}{Amazon S3 Torrent}.
+by using BitTorrent. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/S3Torrent.html}{Amazon S3 Torrent}.
 For more information about returning the ACL of an object, see
-\href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectAcl.html}{GetObjectAcl}.
+\code{\link[=s3_get_object_acl]{get_object_acl}}.
 
 If the object you are retrieving is stored in the S3 Glacier or S3
 Glacier Deep Archive storage class, or S3 Intelligent-Tiering Archive or
 S3 Intelligent-Tiering Deep Archive tiers, before you can retrieve the
 object you must first restore a copy using
-\href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_RestoreObject.html}{RestoreObject}.
-Otherwise, this operation returns an \code{InvalidObjectStateError} error.
-For information about restoring archived objects, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/restoring-objects.html}{Restoring Archived Objects}.
+\code{\link[=s3_restore_object]{restore_object}}. Otherwise, this operation returns
+an \code{InvalidObjectStateError} error. For information about restoring
+archived objects, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/restoring-objects.html}{Restoring Archived Objects}.
 
 Encryption request headers, like \code{x-amz-server-side-encryption}, should
 not be sent for GET requests if your object uses server-side encryption
@@ -139,19 +184,19 @@ headers:
 \item x-amz-server-side-encryption-customer-key-MD5
 }
 
-For more information about SSE-C, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerSideEncryptionCustomerKeys.html}{Server-Side Encryption (Using Customer-Provided Encryption Keys)}.
+For more information about SSE-C, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/ServerSideEncryptionCustomerKeys.html}{Server-Side Encryption (Using Customer-Provided Encryption Keys)}.
 
 Assuming you have permission to read object tags (permission for the
 \code{s3:GetObjectVersionTagging} action), the response also returns the
 \code{x-amz-tagging-count} header that provides the count of number of tags
 associated with the object. You can use
-\href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectTagging.html}{GetObjectTagging}
-to retrieve the tag set associated with an object.
+\code{\link[=s3_get_object_tagging]{get_object_tagging}} to retrieve the tag set
+associated with an object.
 
 \strong{Permissions}
 
 You need the \code{s3:GetObject} permission for this operation. For more
-information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/using-with-s3-actions.html}{Specifying Permissions in a Policy}.
+information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-with-s3-actions.html}{Specifying Permissions in a Policy}.
 If the object you request does not exist, the error Amazon S3 returns
 depends on whether you also have the \code{s3:ListBucket} permission.
 \itemize{
@@ -171,7 +216,7 @@ behaves as if the object was deleted and includes
 \code{x-amz-delete-marker: true} in the response.
 
 For more information about versioning, see
-\href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketVersioning.html}{PutBucketVersioning}.
+\code{\link[=s3_put_bucket_versioning]{put_bucket_versioning}}.
 
 \strong{Overriding Response Header Values}
 
@@ -215,10 +260,10 @@ then, S3 returns 304 Not Modified response code.
 
 For more information about conditional requests, see \href{https://tools.ietf.org/html/rfc7232}{RFC 7232}.
 
-The following operations are related to \code{GetObject}:
+The following operations are related to \code{\link[=s3_get_object]{get_object}}:
 \itemize{
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListBuckets.html}{ListBuckets}
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectAcl.html}{GetObjectAcl}
+\item \code{\link[=s3_list_buckets]{list_buckets}}
+\item \code{\link[=s3_get_object_acl]{get_object_acl}}
 }
 }
 \section{Request syntax}{

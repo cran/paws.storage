@@ -29,6 +29,53 @@ files that Amazon FSx processed that meet the criteria specified by the
 
 \item{Tags}{}
 }
+\value{
+A list with the following syntax:\preformatted{list(
+  DataRepositoryTask = list(
+    TaskId = "string",
+    Lifecycle = "PENDING"|"EXECUTING"|"FAILED"|"SUCCEEDED"|"CANCELED"|"CANCELING",
+    Type = "EXPORT_TO_REPOSITORY",
+    CreationTime = as.POSIXct(
+      "2015-01-01"
+    ),
+    StartTime = as.POSIXct(
+      "2015-01-01"
+    ),
+    EndTime = as.POSIXct(
+      "2015-01-01"
+    ),
+    ResourceARN = "string",
+    Tags = list(
+      list(
+        Key = "string",
+        Value = "string"
+      )
+    ),
+    FileSystemId = "string",
+    Paths = list(
+      "string"
+    ),
+    FailureDetails = list(
+      Message = "string"
+    ),
+    Status = list(
+      TotalCount = 123,
+      SucceededCount = 123,
+      FailedCount = 123,
+      LastUpdatedTime = as.POSIXct(
+        "2015-01-01"
+      )
+    ),
+    Report = list(
+      Enabled = TRUE|FALSE,
+      Path = "string",
+      Format = "REPORT_CSV_20191124",
+      Scope = "FAILED_FILES_ONLY"
+    )
+  )
+)
+}
+}
 \description{
 Creates an Amazon FSx for Lustre data repository task. You use data
 repository tasks to perform bulk operations between your Amazon FSx file
@@ -36,9 +83,9 @@ system and its linked data repository. An example of a data repository
 task is exporting any data and metadata changes, including POSIX
 metadata, to files, directories, and symbolic links (symlinks) from your
 FSx file system to its linked data repository. A
-\code{CreateDataRepositoryTask} operation will fail if a data repository is
-not linked to the FSx file system. To learn more about data repository
-tasks, see \href{https://docs.aws.amazon.com/fsx/latest/LustreGuide/data-repository-tasks.html}{Data Repository Tasks}.
+\code{\link[=fsx_create_data_repository_task]{create_data_repository_task}}
+operation will fail if a data repository is not linked to the FSx file
+system. To learn more about data repository tasks, see \href{https://docs.aws.amazon.com/fsx/latest/LustreGuide/data-repository-tasks.html}{Data Repository Tasks}.
 To learn more about linking a data repository to your file system, see
 \href{https://docs.aws.amazon.com/fsx/latest/LustreGuide/create-fs-linked-data-repo.html}{Linking your file system to an S3 bucket}.
 }

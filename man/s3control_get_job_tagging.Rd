@@ -11,17 +11,28 @@ s3control_get_job_tagging(AccountId, JobId)
 
 \item{JobId}{[required] The ID for the S3 Batch Operations job whose tags you want to retrieve.}
 }
+\value{
+A list with the following syntax:\preformatted{list(
+  Tags = list(
+    list(
+      Key = "string",
+      Value = "string"
+    )
+  )
+)
+}
+}
 \description{
 Returns the tags on an S3 Batch Operations job. To use this operation,
 you must have permission to perform the \code{s3:GetJobTagging} action. For
-more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/batch-ops-managing-jobs.html#batch-ops-job-tags}{Controlling access and labeling jobs using tags}
+more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/batch-ops-managing-jobs.html#batch-ops-job-tags}{Controlling access and labeling jobs using tags}
 in the \emph{Amazon Simple Storage Service Developer Guide}.
 
 Related actions include:
 \itemize{
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_CreateJob.html}{CreateJob}
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_PutJobTagging.html}{PutJobTagging}
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_DeleteJobTagging.html}{DeleteJobTagging}
+\item \code{\link[=s3control_create_job]{create_job}}
+\item \code{\link[=s3control_put_job_tagging]{put_job_tagging}}
+\item \code{\link[=s3control_delete_job_tagging]{delete_job_tagging}}
 }
 }
 \section{Request syntax}{

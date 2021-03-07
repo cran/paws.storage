@@ -18,7 +18,7 @@ you must specify the name and the x-amz-outpost-id as well.
 
 For using this parameter with S3 on Outposts with the AWS SDK and CLI,
 you must specify the ARN of the access point accessed in the format
-\verb{arn:aws:s3-outposts:&lt;Region&gt;:&lt;account-id&gt;:outpost/&lt;outpost-id&gt;/accesspoint/&lt;my-accesspoint-name&gt;}.
+\verb{arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/accesspoint/<my-accesspoint-name>}.
 For example, to access the access point \code{reports-ap} through outpost
 \code{my-outpost} owned by account \code{123456789012} in Region \code{us-west-2}, use
 the URL encoding of
@@ -26,8 +26,11 @@ the URL encoding of
 The value must be URL encoded.}
 
 \item{Policy}{[required] The policy that you want to apply to the specified access point. For
-more information about access point policies, see \href{https://docs.aws.amazon.com/AmazonS3/latest/dev/access-points.html}{Managing data access with Amazon S3 Access Points}
+more information about access point policies, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points.html}{Managing data access with Amazon S3 Access Points}
 in the \emph{Amazon Simple Storage Service Developer Guide}.}
+}
+\value{
+An empty list.
 }
 \description{
 Associates an access policy with the specified access point. Each access
@@ -43,10 +46,11 @@ derived using the access point ARN, see the
 \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_PutAccessPointPolicy.html#API_control_PutAccessPointPolicy_Examples}{Examples}
 section.
 
-The following actions are related to \code{PutAccessPointPolicy}:
+The following actions are related to
+\code{\link[=s3control_put_access_point_policy]{put_access_point_policy}}:
 \itemize{
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_GetAccessPointPolicy.html}{GetAccessPointPolicy}
-\item \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_DeleteAccessPointPolicy.html}{DeleteAccessPointPolicy}
+\item \code{\link[=s3control_get_access_point_policy]{get_access_point_policy}}
+\item \code{\link[=s3control_delete_access_point_policy]{delete_access_point_policy}}
 }
 }
 \section{Request syntax}{

@@ -9,8 +9,9 @@ storagegateway_delete_tape(GatewayARN, TapeARN,
 }
 \arguments{
 \item{GatewayARN}{[required] The unique Amazon Resource Name (ARN) of the gateway that the virtual
-tape to delete is associated with. Use the ListGateways operation to
-return a list of gateways for your account and AWS Region.}
+tape to delete is associated with. Use the
+\code{\link[=storagegateway_list_gateways]{list_gateways}} operation to return a
+list of gateways for your account and AWS Region.}
 
 \item{TapeARN}{[required] The Amazon Resource Name (ARN) of the virtual tape to delete.}
 
@@ -18,6 +19,12 @@ return a list of gateways for your account and AWS Region.}
 with tape retention lock. Only archived tapes with tape retention lock
 set to \code{governance} can be deleted. Archived tapes with tape retention
 lock set to \code{compliance} can't be deleted.}
+}
+\value{
+A list with the following syntax:\preformatted{list(
+  TapeARN = "string"
+)
+}
 }
 \description{
 Deletes the specified virtual tape. This operation is only supported in
