@@ -15,7 +15,9 @@ s3_put_bucket_metrics_configuration(
 \arguments{
 \item{Bucket}{[required] The name of the bucket for which the metrics configuration is set.}
 
-\item{Id}{[required] The ID used to identify the metrics configuration.}
+\item{Id}{[required] The ID used to identify the metrics configuration. The ID has a 64
+character limit and can only contain letters, numbers, periods, dashes,
+and underscores.}
 
 \item{MetricsConfiguration}{[required] Specifies the metrics configuration.}
 
@@ -26,6 +28,6 @@ different account, the request fails with the HTTP status code
 \description{
 Sets a metrics configuration (specified by the metrics configuration ID) for the bucket. You can have up to 1,000 metrics configurations per bucket. If you're updating an existing metrics configuration, note that this is a full replacement of the existing metrics configuration. If you don't include the elements you want to keep, they are erased.
 
-See \url{https://paws-r.github.io/docs/s3/put_bucket_metrics_configuration.html} for full documentation.
+See \url{https://www.paws-r-sdk.com/docs/s3_put_bucket_metrics_configuration/} for full documentation.
 }
 \keyword{internal}

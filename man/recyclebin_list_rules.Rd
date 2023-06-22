@@ -8,7 +8,8 @@ recyclebin_list_rules(
   MaxResults = NULL,
   NextToken = NULL,
   ResourceType,
-  ResourceTags = NULL
+  ResourceTags = NULL,
+  LockState = NULL
 )
 }
 \arguments{
@@ -26,10 +27,13 @@ retention rules that retain EBS-backed AMIs, specify \code{EC2_IMAGE}.}
 
 \item{ResourceTags}{Information about the resource tags used to identify resources that are
 retained by the retention rule.}
+
+\item{LockState}{The lock state of the retention rules to list. Only retention rules with
+the specified lock state are returned.}
 }
 \description{
 Lists the Recycle Bin retention rules in the Region.
 
-See \url{https://paws-r.github.io/docs/recyclebin/list_rules.html} for full documentation.
+See \url{https://www.paws-r-sdk.com/docs/recyclebin_list_rules/} for full documentation.
 }
 \keyword{internal}

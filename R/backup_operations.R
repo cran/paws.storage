@@ -3,12 +3,45 @@
 #' @include backup_service.R
 NULL
 
+#' This action removes the specified legal hold on a recovery point
+#'
+#' @description
+#' This action removes the specified legal hold on a recovery point. This action can only be performed by a user with sufficient permissions.
+#'
+#' See [https://www.paws-r-sdk.com/docs/backup_cancel_legal_hold/](https://www.paws-r-sdk.com/docs/backup_cancel_legal_hold/) for full documentation.
+#'
+#' @param LegalHoldId &#91;required&#93; Legal hold ID required to remove the specified legal hold on a recovery
+#' point.
+#' @param CancelDescription &#91;required&#93; String describing the reason for removing the legal hold.
+#' @param RetainRecordInDays The integer amount in days specifying amount of days after this API
+#' operation to remove legal hold.
+#'
+#' @keywords internal
+#'
+#' @rdname backup_cancel_legal_hold
+backup_cancel_legal_hold <- function(LegalHoldId, CancelDescription, RetainRecordInDays = NULL) {
+  op <- new_operation(
+    name = "CancelLegalHold",
+    http_method = "DELETE",
+    http_path = "/legal-holds/{legalHoldId}",
+    paginator = list()
+  )
+  input <- .backup$cancel_legal_hold_input(LegalHoldId = LegalHoldId, CancelDescription = CancelDescription, RetainRecordInDays = RetainRecordInDays)
+  output <- .backup$cancel_legal_hold_output()
+  config <- get_config()
+  svc <- .backup$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.backup$operations$cancel_legal_hold <- backup_cancel_legal_hold
+
 #' Creates a backup plan using a backup plan name and backup rules
 #'
 #' @description
 #' Creates a backup plan using a backup plan name and backup rules. A backup plan is a document that contains information that Backup uses to schedule tasks that create recovery points for resources.
 #'
-#' See [https://paws-r.github.io/docs/backup/create_backup_plan.html](https://paws-r.github.io/docs/backup/create_backup_plan.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_create_backup_plan/](https://www.paws-r-sdk.com/docs/backup_create_backup_plan/) for full documentation.
 #'
 #' @param BackupPlan &#91;required&#93; Specifies the body of a backup plan. Includes a `BackupPlanName` and one
 #' or more sets of `Rules`.
@@ -49,7 +82,7 @@ backup_create_backup_plan <- function(BackupPlan, BackupPlanTags = NULL, Creator
 #' @description
 #' Creates a JSON document that specifies a set of resources to assign to a backup plan. For examples, see [Assigning resources programmatically](https://docs.aws.amazon.com/aws-backup/latest/devguide/assigning-resources.html#assigning-resources-json).
 #'
-#' See [https://paws-r.github.io/docs/backup/create_backup_selection.html](https://paws-r.github.io/docs/backup/create_backup_selection.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_create_backup_selection/](https://www.paws-r-sdk.com/docs/backup_create_backup_selection/) for full documentation.
 #'
 #' @param BackupPlanId &#91;required&#93; Uniquely identifies the backup plan to be associated with the selection
 #' of resources.
@@ -87,7 +120,7 @@ backup_create_backup_selection <- function(BackupPlanId, BackupSelection, Creato
 #' @description
 #' Creates a logical container where backups are stored. A [`create_backup_vault`][backup_create_backup_vault] request includes a name, optionally one or more resource tags, an encryption key, and a request ID.
 #'
-#' See [https://paws-r.github.io/docs/backup/create_backup_vault.html](https://paws-r.github.io/docs/backup/create_backup_vault.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_create_backup_vault/](https://www.paws-r-sdk.com/docs/backup_create_backup_vault/) for full documentation.
 #'
 #' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults
 #' are identified by names that are unique to the account used to create
@@ -130,7 +163,7 @@ backup_create_backup_vault <- function(BackupVaultName, BackupVaultTags = NULL, 
 #' @description
 #' Creates a framework with one or more controls. A framework is a collection of controls that you can use to evaluate your backup practices. By using pre-built customizable controls to define your policies, you can evaluate whether your backup practices comply with your policies and which resources are not yet in compliance.
 #'
-#' See [https://paws-r.github.io/docs/backup/create_framework.html](https://paws-r.github.io/docs/backup/create_framework.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_create_framework/](https://www.paws-r-sdk.com/docs/backup_create_framework/) for full documentation.
 #'
 #' @param FrameworkName &#91;required&#93; The unique name of the framework. The name must be between 1 and 256
 #' characters, starting with a letter, and consisting of letters (a-z,
@@ -166,12 +199,51 @@ backup_create_framework <- function(FrameworkName, FrameworkDescription = NULL, 
 }
 .backup$operations$create_framework <- backup_create_framework
 
+#' This action creates a legal hold on a recovery point (backup)
+#'
+#' @description
+#' This action creates a legal hold on a recovery point (backup). A legal hold is a restraint on altering or deleting a backup until an authorized user cancels the legal hold. Any actions to delete or disassociate a recovery point will fail with an error if one or more active legal holds are on the recovery point.
+#'
+#' See [https://www.paws-r-sdk.com/docs/backup_create_legal_hold/](https://www.paws-r-sdk.com/docs/backup_create_legal_hold/) for full documentation.
+#'
+#' @param Title &#91;required&#93; This is the string title of the legal hold.
+#' @param Description &#91;required&#93; This is the string description of the legal hold.
+#' @param IdempotencyToken This is a user-chosen string used to distinguish between otherwise
+#' identical calls. Retrying a successful request with the same idempotency
+#' token results in a success message with no action taken.
+#' @param RecoveryPointSelection This specifies criteria to assign a set of resources, such as resource
+#' types or backup vaults.
+#' @param Tags Optional tags to include. A tag is a key-value pair you can use to
+#' manage, filter, and search for your resources. Allowed characters
+#' include UTF-8 letters, numbers, spaces, and the following
+#' characters: + - = . _ : /.
+#'
+#' @keywords internal
+#'
+#' @rdname backup_create_legal_hold
+backup_create_legal_hold <- function(Title, Description, IdempotencyToken = NULL, RecoveryPointSelection = NULL, Tags = NULL) {
+  op <- new_operation(
+    name = "CreateLegalHold",
+    http_method = "POST",
+    http_path = "/legal-holds/",
+    paginator = list()
+  )
+  input <- .backup$create_legal_hold_input(Title = Title, Description = Description, IdempotencyToken = IdempotencyToken, RecoveryPointSelection = RecoveryPointSelection, Tags = Tags)
+  output <- .backup$create_legal_hold_output()
+  config <- get_config()
+  svc <- .backup$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.backup$operations$create_legal_hold <- backup_create_legal_hold
+
 #' Creates a report plan
 #'
 #' @description
 #' Creates a report plan. A report plan is a document that contains information about the contents of the report and where Backup will deliver it.
 #'
-#' See [https://paws-r.github.io/docs/backup/create_report_plan.html](https://paws-r.github.io/docs/backup/create_report_plan.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_create_report_plan/](https://www.paws-r-sdk.com/docs/backup_create_report_plan/) for full documentation.
 #'
 #' @param ReportPlanName &#91;required&#93; The unique name of the report plan. The name must be between 1 and 256
 #' characters, starting with a letter, and consisting of letters (a-z,
@@ -221,7 +293,7 @@ backup_create_report_plan <- function(ReportPlanName, ReportPlanDescription = NU
 #' @description
 #' Deletes a backup plan. A backup plan can only be deleted after all associated selections of resources have been deleted. Deleting a backup plan deletes the current version of a backup plan. Previous versions, if any, will still exist.
 #'
-#' See [https://paws-r.github.io/docs/backup/delete_backup_plan.html](https://paws-r.github.io/docs/backup/delete_backup_plan.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_delete_backup_plan/](https://www.paws-r-sdk.com/docs/backup_delete_backup_plan/) for full documentation.
 #'
 #' @param BackupPlanId &#91;required&#93; Uniquely identifies a backup plan.
 #'
@@ -251,7 +323,7 @@ backup_delete_backup_plan <- function(BackupPlanId) {
 #' @description
 #' Deletes the resource selection associated with a backup plan that is specified by the `SelectionId`.
 #'
-#' See [https://paws-r.github.io/docs/backup/delete_backup_selection.html](https://paws-r.github.io/docs/backup/delete_backup_selection.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_delete_backup_selection/](https://www.paws-r-sdk.com/docs/backup_delete_backup_selection/) for full documentation.
 #'
 #' @param BackupPlanId &#91;required&#93; Uniquely identifies a backup plan.
 #' @param SelectionId &#91;required&#93; Uniquely identifies the body of a request to assign a set of resources
@@ -282,7 +354,7 @@ backup_delete_backup_selection <- function(BackupPlanId, SelectionId) {
 #' @description
 #' Deletes the backup vault identified by its name. A vault can be deleted only if it is empty.
 #'
-#' See [https://paws-r.github.io/docs/backup/delete_backup_vault.html](https://paws-r.github.io/docs/backup/delete_backup_vault.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_delete_backup_vault/](https://www.paws-r-sdk.com/docs/backup_delete_backup_vault/) for full documentation.
 #'
 #' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults
 #' are identified by names that are unique to the account used to create
@@ -314,7 +386,7 @@ backup_delete_backup_vault <- function(BackupVaultName) {
 #' @description
 #' Deletes the policy document that manages permissions on a backup vault.
 #'
-#' See [https://paws-r.github.io/docs/backup/delete_backup_vault_access_policy.html](https://paws-r.github.io/docs/backup/delete_backup_vault_access_policy.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_delete_backup_vault_access_policy/](https://www.paws-r-sdk.com/docs/backup_delete_backup_vault_access_policy/) for full documentation.
 #'
 #' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults
 #' are identified by names that are unique to the account used to create
@@ -347,7 +419,7 @@ backup_delete_backup_vault_access_policy <- function(BackupVaultName) {
 #' @description
 #' Deletes Backup Vault Lock from a backup vault specified by a backup vault name.
 #'
-#' See [https://paws-r.github.io/docs/backup/delete_backup_vault_lock_configuration.html](https://paws-r.github.io/docs/backup/delete_backup_vault_lock_configuration.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_delete_backup_vault_lock_configuration/](https://www.paws-r-sdk.com/docs/backup_delete_backup_vault_lock_configuration/) for full documentation.
 #'
 #' @param BackupVaultName &#91;required&#93; The name of the backup vault from which to delete Backup Vault Lock.
 #'
@@ -376,7 +448,7 @@ backup_delete_backup_vault_lock_configuration <- function(BackupVaultName) {
 #' @description
 #' Deletes event notifications for the specified backup vault.
 #'
-#' See [https://paws-r.github.io/docs/backup/delete_backup_vault_notifications.html](https://paws-r.github.io/docs/backup/delete_backup_vault_notifications.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_delete_backup_vault_notifications/](https://www.paws-r-sdk.com/docs/backup_delete_backup_vault_notifications/) for full documentation.
 #'
 #' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults
 #' are identified by names that are unique to the account used to create
@@ -408,7 +480,7 @@ backup_delete_backup_vault_notifications <- function(BackupVaultName) {
 #' @description
 #' Deletes the framework specified by a framework name.
 #'
-#' See [https://paws-r.github.io/docs/backup/delete_framework.html](https://paws-r.github.io/docs/backup/delete_framework.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_delete_framework/](https://www.paws-r-sdk.com/docs/backup_delete_framework/) for full documentation.
 #'
 #' @param FrameworkName &#91;required&#93; The unique name of a framework.
 #'
@@ -437,7 +509,7 @@ backup_delete_framework <- function(FrameworkName) {
 #' @description
 #' Deletes the recovery point specified by a recovery point ID.
 #'
-#' See [https://paws-r.github.io/docs/backup/delete_recovery_point.html](https://paws-r.github.io/docs/backup/delete_recovery_point.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_delete_recovery_point/](https://www.paws-r-sdk.com/docs/backup_delete_recovery_point/) for full documentation.
 #'
 #' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults
 #' are identified by names that are unique to the account used to create
@@ -472,7 +544,7 @@ backup_delete_recovery_point <- function(BackupVaultName, RecoveryPointArn) {
 #' @description
 #' Deletes the report plan specified by a report plan name.
 #'
-#' See [https://paws-r.github.io/docs/backup/delete_report_plan.html](https://paws-r.github.io/docs/backup/delete_report_plan.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_delete_report_plan/](https://www.paws-r-sdk.com/docs/backup_delete_report_plan/) for full documentation.
 #'
 #' @param ReportPlanName &#91;required&#93; The unique name of a report plan.
 #'
@@ -501,7 +573,7 @@ backup_delete_report_plan <- function(ReportPlanName) {
 #' @description
 #' Returns backup job details for the specified `BackupJobId`.
 #'
-#' See [https://paws-r.github.io/docs/backup/describe_backup_job.html](https://paws-r.github.io/docs/backup/describe_backup_job.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_describe_backup_job/](https://www.paws-r-sdk.com/docs/backup_describe_backup_job/) for full documentation.
 #'
 #' @param BackupJobId &#91;required&#93; Uniquely identifies a request to Backup to back up a resource.
 #'
@@ -530,7 +602,7 @@ backup_describe_backup_job <- function(BackupJobId) {
 #' @description
 #' Returns metadata about a backup vault specified by its name.
 #'
-#' See [https://paws-r.github.io/docs/backup/describe_backup_vault.html](https://paws-r.github.io/docs/backup/describe_backup_vault.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_describe_backup_vault/](https://www.paws-r-sdk.com/docs/backup_describe_backup_vault/) for full documentation.
 #'
 #' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults
 #' are identified by names that are unique to the account used to create
@@ -562,7 +634,7 @@ backup_describe_backup_vault <- function(BackupVaultName) {
 #' @description
 #' Returns metadata associated with creating a copy of a resource.
 #'
-#' See [https://paws-r.github.io/docs/backup/describe_copy_job.html](https://paws-r.github.io/docs/backup/describe_copy_job.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_describe_copy_job/](https://www.paws-r-sdk.com/docs/backup_describe_copy_job/) for full documentation.
 #'
 #' @param CopyJobId &#91;required&#93; Uniquely identifies a copy job.
 #'
@@ -591,7 +663,7 @@ backup_describe_copy_job <- function(CopyJobId) {
 #' @description
 #' Returns the framework details for the specified `FrameworkName`.
 #'
-#' See [https://paws-r.github.io/docs/backup/describe_framework.html](https://paws-r.github.io/docs/backup/describe_framework.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_describe_framework/](https://www.paws-r-sdk.com/docs/backup_describe_framework/) for full documentation.
 #'
 #' @param FrameworkName &#91;required&#93; The unique name of a framework.
 #'
@@ -621,7 +693,7 @@ backup_describe_framework <- function(FrameworkName) {
 #' @description
 #' Describes whether the Amazon Web Services account is opted in to cross-account backup. Returns an error if the account is not a member of an Organizations organization. Example: `describe-global-settings --region us-west-2`
 #'
-#' See [https://paws-r.github.io/docs/backup/describe_global_settings.html](https://paws-r.github.io/docs/backup/describe_global_settings.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_describe_global_settings/](https://www.paws-r-sdk.com/docs/backup_describe_global_settings/) for full documentation.
 #'
 #' @keywords internal
 #'
@@ -650,7 +722,7 @@ backup_describe_global_settings <- function() {
 #' @description
 #' Returns information about a saved resource, including the last time it was backed up, its Amazon Resource Name (ARN), and the Amazon Web Services service type of the saved resource.
 #'
-#' See [https://paws-r.github.io/docs/backup/describe_protected_resource.html](https://paws-r.github.io/docs/backup/describe_protected_resource.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_describe_protected_resource/](https://www.paws-r-sdk.com/docs/backup_describe_protected_resource/) for full documentation.
 #'
 #' @param ResourceArn &#91;required&#93; An Amazon Resource Name (ARN) that uniquely identifies a resource. The
 #' format of the ARN depends on the resource type.
@@ -681,7 +753,7 @@ backup_describe_protected_resource <- function(ResourceArn) {
 #' @description
 #' Returns metadata associated with a recovery point, including ID, status, encryption, and lifecycle.
 #'
-#' See [https://paws-r.github.io/docs/backup/describe_recovery_point.html](https://paws-r.github.io/docs/backup/describe_recovery_point.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_describe_recovery_point/](https://www.paws-r-sdk.com/docs/backup_describe_recovery_point/) for full documentation.
 #'
 #' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults
 #' are identified by names that are unique to the account used to create
@@ -716,7 +788,7 @@ backup_describe_recovery_point <- function(BackupVaultName, RecoveryPointArn) {
 #' @description
 #' Returns the current service opt-in settings for the Region. If service opt-in is enabled for a service, Backup tries to protect that service's resources in this Region, when the resource is included in an on-demand backup or scheduled backup plan. Otherwise, Backup does not try to protect that service's resources in this Region.
 #'
-#' See [https://paws-r.github.io/docs/backup/describe_region_settings.html](https://paws-r.github.io/docs/backup/describe_region_settings.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_describe_region_settings/](https://www.paws-r-sdk.com/docs/backup_describe_region_settings/) for full documentation.
 #'
 #' @keywords internal
 #'
@@ -744,7 +816,7 @@ backup_describe_region_settings <- function() {
 #' @description
 #' Returns the details associated with creating a report as specified by its `ReportJobId`.
 #'
-#' See [https://paws-r.github.io/docs/backup/describe_report_job.html](https://paws-r.github.io/docs/backup/describe_report_job.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_describe_report_job/](https://www.paws-r-sdk.com/docs/backup_describe_report_job/) for full documentation.
 #'
 #' @param ReportJobId &#91;required&#93; The identifier of the report job. A unique, randomly generated, Unicode,
 #' UTF-8 encoded string that is at most 1,024 bytes long. The report job ID
@@ -776,7 +848,7 @@ backup_describe_report_job <- function(ReportJobId) {
 #' @description
 #' Returns a list of all report plans for an Amazon Web Services account and Amazon Web Services Region.
 #'
-#' See [https://paws-r.github.io/docs/backup/describe_report_plan.html](https://paws-r.github.io/docs/backup/describe_report_plan.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_describe_report_plan/](https://www.paws-r-sdk.com/docs/backup_describe_report_plan/) for full documentation.
 #'
 #' @param ReportPlanName &#91;required&#93; The unique name of a report plan.
 #'
@@ -806,7 +878,7 @@ backup_describe_report_plan <- function(ReportPlanName) {
 #' @description
 #' Returns metadata associated with a restore job that is specified by a job ID.
 #'
-#' See [https://paws-r.github.io/docs/backup/describe_restore_job.html](https://paws-r.github.io/docs/backup/describe_restore_job.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_describe_restore_job/](https://www.paws-r-sdk.com/docs/backup_describe_restore_job/) for full documentation.
 #'
 #' @param RestoreJobId &#91;required&#93; Uniquely identifies the job that restores a recovery point.
 #'
@@ -837,7 +909,7 @@ backup_describe_restore_job <- function(RestoreJobId) {
 #' @description
 #' Deletes the specified continuous backup recovery point from Backup and releases control of that continuous backup to the source service, such as Amazon RDS. The source service will continue to create and retain continuous backups using the lifecycle that you specified in your original backup plan.
 #'
-#' See [https://paws-r.github.io/docs/backup/disassociate_recovery_point.html](https://paws-r.github.io/docs/backup/disassociate_recovery_point.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_disassociate_recovery_point/](https://www.paws-r-sdk.com/docs/backup_disassociate_recovery_point/) for full documentation.
 #'
 #' @param BackupVaultName &#91;required&#93; The unique name of an Backup vault.
 #' @param RecoveryPointArn &#91;required&#93; An Amazon Resource Name (ARN) that uniquely identifies an Backup
@@ -863,13 +935,51 @@ backup_disassociate_recovery_point <- function(BackupVaultName, RecoveryPointArn
 }
 .backup$operations$disassociate_recovery_point <- backup_disassociate_recovery_point
 
+#' This action to a specific child (nested) recovery point removes the
+#' relationship between the specified recovery point and its parent
+#' (composite) recovery point
+#'
+#' @description
+#' This action to a specific child (nested) recovery point removes the relationship between the specified recovery point and its parent (composite) recovery point.
+#'
+#' See [https://www.paws-r-sdk.com/docs/backup_disassociate_recovery_point_from_parent/](https://www.paws-r-sdk.com/docs/backup_disassociate_recovery_point_from_parent/) for full documentation.
+#'
+#' @param BackupVaultName &#91;required&#93; This is the name of a logical container where the child (nested)
+#' recovery point is stored. Backup vaults are identified by names that are
+#' unique to the account used to create them and the Amazon Web Services
+#' Region where they are created. They consist of lowercase letters,
+#' numbers, and hyphens.
+#' @param RecoveryPointArn &#91;required&#93; This is the Amazon Resource Name (ARN) that uniquely identifies the
+#' child (nested) recovery point; for example,
+#' `arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45.`
+#'
+#' @keywords internal
+#'
+#' @rdname backup_disassociate_recovery_point_from_parent
+backup_disassociate_recovery_point_from_parent <- function(BackupVaultName, RecoveryPointArn) {
+  op <- new_operation(
+    name = "DisassociateRecoveryPointFromParent",
+    http_method = "DELETE",
+    http_path = "/backup-vaults/{backupVaultName}/recovery-points/{recoveryPointArn}/parentAssociation",
+    paginator = list()
+  )
+  input <- .backup$disassociate_recovery_point_from_parent_input(BackupVaultName = BackupVaultName, RecoveryPointArn = RecoveryPointArn)
+  output <- .backup$disassociate_recovery_point_from_parent_output()
+  config <- get_config()
+  svc <- .backup$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.backup$operations$disassociate_recovery_point_from_parent <- backup_disassociate_recovery_point_from_parent
+
 #' Returns the backup plan that is specified by the plan ID as a backup
 #' template
 #'
 #' @description
 #' Returns the backup plan that is specified by the plan ID as a backup template.
 #'
-#' See [https://paws-r.github.io/docs/backup/export_backup_plan_template.html](https://paws-r.github.io/docs/backup/export_backup_plan_template.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_export_backup_plan_template/](https://www.paws-r-sdk.com/docs/backup_export_backup_plan_template/) for full documentation.
 #'
 #' @param BackupPlanId &#91;required&#93; Uniquely identifies a backup plan.
 #'
@@ -898,7 +1008,7 @@ backup_export_backup_plan_template <- function(BackupPlanId) {
 #' @description
 #' Returns `BackupPlan` details for the specified `BackupPlanId`. The details are the body of a backup plan in JSON format, in addition to plan metadata.
 #'
-#' See [https://paws-r.github.io/docs/backup/get_backup_plan.html](https://paws-r.github.io/docs/backup/get_backup_plan.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_get_backup_plan/](https://www.paws-r-sdk.com/docs/backup_get_backup_plan/) for full documentation.
 #'
 #' @param BackupPlanId &#91;required&#93; Uniquely identifies a backup plan.
 #' @param VersionId Unique, randomly generated, Unicode, UTF-8 encoded strings that are at
@@ -929,7 +1039,7 @@ backup_get_backup_plan <- function(BackupPlanId, VersionId = NULL) {
 #' @description
 #' Returns a valid JSON document specifying a backup plan or an error.
 #'
-#' See [https://paws-r.github.io/docs/backup/get_backup_plan_from_json.html](https://paws-r.github.io/docs/backup/get_backup_plan_from_json.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_get_backup_plan_from_json/](https://www.paws-r-sdk.com/docs/backup_get_backup_plan_from_json/) for full documentation.
 #'
 #' @param BackupPlanTemplateJson &#91;required&#93; A customer-supplied backup plan document in JSON format.
 #'
@@ -958,7 +1068,7 @@ backup_get_backup_plan_from_json <- function(BackupPlanTemplateJson) {
 #' @description
 #' Returns the template specified by its `templateId` as a backup plan.
 #'
-#' See [https://paws-r.github.io/docs/backup/get_backup_plan_from_template.html](https://paws-r.github.io/docs/backup/get_backup_plan_from_template.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_get_backup_plan_from_template/](https://www.paws-r-sdk.com/docs/backup_get_backup_plan_from_template/) for full documentation.
 #'
 #' @param BackupPlanTemplateId &#91;required&#93; Uniquely identifies a stored backup plan template.
 #'
@@ -988,7 +1098,7 @@ backup_get_backup_plan_from_template <- function(BackupPlanTemplateId) {
 #' @description
 #' Returns selection metadata and a document in JSON format that specifies a list of resources that are associated with a backup plan.
 #'
-#' See [https://paws-r.github.io/docs/backup/get_backup_selection.html](https://paws-r.github.io/docs/backup/get_backup_selection.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_get_backup_selection/](https://www.paws-r-sdk.com/docs/backup_get_backup_selection/) for full documentation.
 #'
 #' @param BackupPlanId &#91;required&#93; Uniquely identifies a backup plan.
 #' @param SelectionId &#91;required&#93; Uniquely identifies the body of a request to assign a set of resources
@@ -1020,7 +1130,7 @@ backup_get_backup_selection <- function(BackupPlanId, SelectionId) {
 #' @description
 #' Returns the access policy document that is associated with the named backup vault.
 #'
-#' See [https://paws-r.github.io/docs/backup/get_backup_vault_access_policy.html](https://paws-r.github.io/docs/backup/get_backup_vault_access_policy.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_get_backup_vault_access_policy/](https://www.paws-r-sdk.com/docs/backup_get_backup_vault_access_policy/) for full documentation.
 #'
 #' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults
 #' are identified by names that are unique to the account used to create
@@ -1052,7 +1162,7 @@ backup_get_backup_vault_access_policy <- function(BackupVaultName) {
 #' @description
 #' Returns event notifications for the specified backup vault.
 #'
-#' See [https://paws-r.github.io/docs/backup/get_backup_vault_notifications.html](https://paws-r.github.io/docs/backup/get_backup_vault_notifications.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_get_backup_vault_notifications/](https://www.paws-r-sdk.com/docs/backup_get_backup_vault_notifications/) for full documentation.
 #'
 #' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults
 #' are identified by names that are unique to the account used to create
@@ -1079,13 +1189,44 @@ backup_get_backup_vault_notifications <- function(BackupVaultName) {
 }
 .backup$operations$get_backup_vault_notifications <- backup_get_backup_vault_notifications
 
+#' This action returns details for a specified legal hold
+#'
+#' @description
+#' This action returns details for a specified legal hold. The details are the body of a legal hold in JSON format, in addition to metadata.
+#'
+#' See [https://www.paws-r-sdk.com/docs/backup_get_legal_hold/](https://www.paws-r-sdk.com/docs/backup_get_legal_hold/) for full documentation.
+#'
+#' @param LegalHoldId &#91;required&#93; This is the ID required to use
+#' [`get_legal_hold`][backup_get_legal_hold]. This unique ID is associated
+#' with a specific legal hold.
+#'
+#' @keywords internal
+#'
+#' @rdname backup_get_legal_hold
+backup_get_legal_hold <- function(LegalHoldId) {
+  op <- new_operation(
+    name = "GetLegalHold",
+    http_method = "GET",
+    http_path = "/legal-holds/{legalHoldId}/",
+    paginator = list()
+  )
+  input <- .backup$get_legal_hold_input(LegalHoldId = LegalHoldId)
+  output <- .backup$get_legal_hold_output()
+  config <- get_config()
+  svc <- .backup$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.backup$operations$get_legal_hold <- backup_get_legal_hold
+
 #' Returns a set of metadata key-value pairs that were used to create the
 #' backup
 #'
 #' @description
 #' Returns a set of metadata key-value pairs that were used to create the backup.
 #'
-#' See [https://paws-r.github.io/docs/backup/get_recovery_point_restore_metadata.html](https://paws-r.github.io/docs/backup/get_recovery_point_restore_metadata.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_get_recovery_point_restore_metadata/](https://www.paws-r-sdk.com/docs/backup_get_recovery_point_restore_metadata/) for full documentation.
 #'
 #' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults
 #' are identified by names that are unique to the account used to create
@@ -1120,7 +1261,7 @@ backup_get_recovery_point_restore_metadata <- function(BackupVaultName, Recovery
 #' @description
 #' Returns the Amazon Web Services resource types supported by Backup.
 #'
-#' See [https://paws-r.github.io/docs/backup/get_supported_resource_types.html](https://paws-r.github.io/docs/backup/get_supported_resource_types.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_get_supported_resource_types/](https://www.paws-r-sdk.com/docs/backup_get_supported_resource_types/) for full documentation.
 #'
 
 #'
@@ -1150,7 +1291,7 @@ backup_get_supported_resource_types <- function() {
 #' @description
 #' Returns a list of existing backup jobs for an authenticated account for the last 30 days. For a longer period of time, consider using these [monitoring tools](https://docs.aws.amazon.com/aws-backup/latest/devguide/monitoring.html).
 #'
-#' See [https://paws-r.github.io/docs/backup/list_backup_jobs.html](https://paws-r.github.io/docs/backup/list_backup_jobs.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_list_backup_jobs/](https://www.paws-r-sdk.com/docs/backup_list_backup_jobs/) for full documentation.
 #'
 #' @param NextToken The next item following a partial list of returned items. For example,
 #' if a request is made to return `maxResults` number of items, `NextToken`
@@ -1201,18 +1342,19 @@ backup_get_supported_resource_types <- function() {
 #' and Coordinated Universal Time (UTC).
 #' @param ByCompleteBefore Returns only backup jobs completed before a date expressed in Unix
 #' format and Coordinated Universal Time (UTC).
+#' @param ByParentJobId This is a filter to list child (nested) jobs based on parent job ID.
 #'
 #' @keywords internal
 #'
 #' @rdname backup_list_backup_jobs
-backup_list_backup_jobs <- function(NextToken = NULL, MaxResults = NULL, ByResourceArn = NULL, ByState = NULL, ByBackupVaultName = NULL, ByCreatedBefore = NULL, ByCreatedAfter = NULL, ByResourceType = NULL, ByAccountId = NULL, ByCompleteAfter = NULL, ByCompleteBefore = NULL) {
+backup_list_backup_jobs <- function(NextToken = NULL, MaxResults = NULL, ByResourceArn = NULL, ByState = NULL, ByBackupVaultName = NULL, ByCreatedBefore = NULL, ByCreatedAfter = NULL, ByResourceType = NULL, ByAccountId = NULL, ByCompleteAfter = NULL, ByCompleteBefore = NULL, ByParentJobId = NULL) {
   op <- new_operation(
     name = "ListBackupJobs",
     http_method = "GET",
     http_path = "/backup-jobs/",
     paginator = list()
   )
-  input <- .backup$list_backup_jobs_input(NextToken = NextToken, MaxResults = MaxResults, ByResourceArn = ByResourceArn, ByState = ByState, ByBackupVaultName = ByBackupVaultName, ByCreatedBefore = ByCreatedBefore, ByCreatedAfter = ByCreatedAfter, ByResourceType = ByResourceType, ByAccountId = ByAccountId, ByCompleteAfter = ByCompleteAfter, ByCompleteBefore = ByCompleteBefore)
+  input <- .backup$list_backup_jobs_input(NextToken = NextToken, MaxResults = MaxResults, ByResourceArn = ByResourceArn, ByState = ByState, ByBackupVaultName = ByBackupVaultName, ByCreatedBefore = ByCreatedBefore, ByCreatedAfter = ByCreatedAfter, ByResourceType = ByResourceType, ByAccountId = ByAccountId, ByCompleteAfter = ByCompleteAfter, ByCompleteBefore = ByCompleteBefore, ByParentJobId = ByParentJobId)
   output <- .backup$list_backup_jobs_output()
   config <- get_config()
   svc <- .backup$service(config)
@@ -1228,7 +1370,7 @@ backup_list_backup_jobs <- function(NextToken = NULL, MaxResults = NULL, ByResou
 #' @description
 #' Returns metadata of your saved backup plan templates, including the template ID, name, and the creation and deletion dates.
 #'
-#' See [https://paws-r.github.io/docs/backup/list_backup_plan_templates.html](https://paws-r.github.io/docs/backup/list_backup_plan_templates.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_list_backup_plan_templates/](https://www.paws-r-sdk.com/docs/backup_list_backup_plan_templates/) for full documentation.
 #'
 #' @param NextToken The next item following a partial list of returned items. For example,
 #' if a request is made to return `maxResults` number of items, `NextToken`
@@ -1263,7 +1405,7 @@ backup_list_backup_plan_templates <- function(NextToken = NULL, MaxResults = NUL
 #' @description
 #' Returns version metadata of your backup plans, including Amazon Resource Names (ARNs), backup plan IDs, creation and deletion dates, plan names, and version IDs.
 #'
-#' See [https://paws-r.github.io/docs/backup/list_backup_plan_versions.html](https://paws-r.github.io/docs/backup/list_backup_plan_versions.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_list_backup_plan_versions/](https://www.paws-r-sdk.com/docs/backup_list_backup_plan_versions/) for full documentation.
 #'
 #' @param BackupPlanId &#91;required&#93; Uniquely identifies a backup plan.
 #' @param NextToken The next item following a partial list of returned items. For example,
@@ -1297,7 +1439,7 @@ backup_list_backup_plan_versions <- function(BackupPlanId, NextToken = NULL, Max
 #' @description
 #' Returns a list of all active backup plans for an authenticated account. The list contains information such as Amazon Resource Names (ARNs), plan IDs, creation and deletion dates, version IDs, plan names, and creator request IDs.
 #'
-#' See [https://paws-r.github.io/docs/backup/list_backup_plans.html](https://paws-r.github.io/docs/backup/list_backup_plans.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_list_backup_plans/](https://www.paws-r-sdk.com/docs/backup_list_backup_plans/) for full documentation.
 #'
 #' @param NextToken The next item following a partial list of returned items. For example,
 #' if a request is made to return `maxResults` number of items, `NextToken`
@@ -1333,7 +1475,7 @@ backup_list_backup_plans <- function(NextToken = NULL, MaxResults = NULL, Includ
 #' @description
 #' Returns an array containing metadata of the resources associated with the target backup plan.
 #'
-#' See [https://paws-r.github.io/docs/backup/list_backup_selections.html](https://paws-r.github.io/docs/backup/list_backup_selections.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_list_backup_selections/](https://www.paws-r-sdk.com/docs/backup_list_backup_selections/) for full documentation.
 #'
 #' @param BackupPlanId &#91;required&#93; Uniquely identifies a backup plan.
 #' @param NextToken The next item following a partial list of returned items. For example,
@@ -1368,7 +1510,7 @@ backup_list_backup_selections <- function(BackupPlanId, NextToken = NULL, MaxRes
 #' @description
 #' Returns a list of recovery point storage containers along with information about them.
 #'
-#' See [https://paws-r.github.io/docs/backup/list_backup_vaults.html](https://paws-r.github.io/docs/backup/list_backup_vaults.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_list_backup_vaults/](https://www.paws-r-sdk.com/docs/backup_list_backup_vaults/) for full documentation.
 #'
 #' @param NextToken The next item following a partial list of returned items. For example,
 #' if a request is made to return `maxResults` number of items, `NextToken`
@@ -1401,7 +1543,7 @@ backup_list_backup_vaults <- function(NextToken = NULL, MaxResults = NULL) {
 #' @description
 #' Returns metadata about your copy jobs.
 #'
-#' See [https://paws-r.github.io/docs/backup/list_copy_jobs.html](https://paws-r.github.io/docs/backup/list_copy_jobs.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_list_copy_jobs/](https://www.paws-r-sdk.com/docs/backup_list_copy_jobs/) for full documentation.
 #'
 #' @param NextToken The next item following a partial list of returned items. For example,
 #' if a request is made to return maxResults number of items, NextToken
@@ -1447,18 +1589,19 @@ backup_list_backup_vaults <- function(NextToken = NULL, MaxResults = NULL) {
 #' and Coordinated Universal Time (UTC).
 #' @param ByCompleteAfter Returns only copy jobs completed after a date expressed in Unix format
 #' and Coordinated Universal Time (UTC).
+#' @param ByParentJobId This is a filter to list child (nested) jobs based on parent job ID.
 #'
 #' @keywords internal
 #'
 #' @rdname backup_list_copy_jobs
-backup_list_copy_jobs <- function(NextToken = NULL, MaxResults = NULL, ByResourceArn = NULL, ByState = NULL, ByCreatedBefore = NULL, ByCreatedAfter = NULL, ByResourceType = NULL, ByDestinationVaultArn = NULL, ByAccountId = NULL, ByCompleteBefore = NULL, ByCompleteAfter = NULL) {
+backup_list_copy_jobs <- function(NextToken = NULL, MaxResults = NULL, ByResourceArn = NULL, ByState = NULL, ByCreatedBefore = NULL, ByCreatedAfter = NULL, ByResourceType = NULL, ByDestinationVaultArn = NULL, ByAccountId = NULL, ByCompleteBefore = NULL, ByCompleteAfter = NULL, ByParentJobId = NULL) {
   op <- new_operation(
     name = "ListCopyJobs",
     http_method = "GET",
     http_path = "/copy-jobs/",
     paginator = list()
   )
-  input <- .backup$list_copy_jobs_input(NextToken = NextToken, MaxResults = MaxResults, ByResourceArn = ByResourceArn, ByState = ByState, ByCreatedBefore = ByCreatedBefore, ByCreatedAfter = ByCreatedAfter, ByResourceType = ByResourceType, ByDestinationVaultArn = ByDestinationVaultArn, ByAccountId = ByAccountId, ByCompleteBefore = ByCompleteBefore, ByCompleteAfter = ByCompleteAfter)
+  input <- .backup$list_copy_jobs_input(NextToken = NextToken, MaxResults = MaxResults, ByResourceArn = ByResourceArn, ByState = ByState, ByCreatedBefore = ByCreatedBefore, ByCreatedAfter = ByCreatedAfter, ByResourceType = ByResourceType, ByDestinationVaultArn = ByDestinationVaultArn, ByAccountId = ByAccountId, ByCompleteBefore = ByCompleteBefore, ByCompleteAfter = ByCompleteAfter, ByParentJobId = ByParentJobId)
   output <- .backup$list_copy_jobs_output()
   config <- get_config()
   svc <- .backup$service(config)
@@ -1474,7 +1617,7 @@ backup_list_copy_jobs <- function(NextToken = NULL, MaxResults = NULL, ByResourc
 #' @description
 #' Returns a list of all frameworks for an Amazon Web Services account and Amazon Web Services Region.
 #'
-#' See [https://paws-r.github.io/docs/backup/list_frameworks.html](https://paws-r.github.io/docs/backup/list_frameworks.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_list_frameworks/](https://www.paws-r-sdk.com/docs/backup_list_frameworks/) for full documentation.
 #'
 #' @param MaxResults The number of desired results from 1 to 1000. Optional. If unspecified,
 #' the query will return 1 MB of data.
@@ -1502,6 +1645,39 @@ backup_list_frameworks <- function(MaxResults = NULL, NextToken = NULL) {
 }
 .backup$operations$list_frameworks <- backup_list_frameworks
 
+#' This action returns metadata about active and previous legal holds
+#'
+#' @description
+#' This action returns metadata about active and previous legal holds.
+#'
+#' See [https://www.paws-r-sdk.com/docs/backup_list_legal_holds/](https://www.paws-r-sdk.com/docs/backup_list_legal_holds/) for full documentation.
+#'
+#' @param NextToken The next item following a partial list of returned resources. For
+#' example, if a request is made to return `maxResults` number of
+#' resources, `NextToken` allows you to return more items in your list
+#' starting at the location pointed to by the next token.
+#' @param MaxResults The maximum number of resource list items to be returned.
+#'
+#' @keywords internal
+#'
+#' @rdname backup_list_legal_holds
+backup_list_legal_holds <- function(NextToken = NULL, MaxResults = NULL) {
+  op <- new_operation(
+    name = "ListLegalHolds",
+    http_method = "GET",
+    http_path = "/legal-holds/",
+    paginator = list()
+  )
+  input <- .backup$list_legal_holds_input(NextToken = NextToken, MaxResults = MaxResults)
+  output <- .backup$list_legal_holds_output()
+  config <- get_config()
+  svc <- .backup$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.backup$operations$list_legal_holds <- backup_list_legal_holds
+
 #' Returns an array of resources successfully backed up by Backup,
 #' including the time the resource was saved, an Amazon Resource Name (ARN)
 #' of the resource, and a resource type
@@ -1509,7 +1685,7 @@ backup_list_frameworks <- function(MaxResults = NULL, NextToken = NULL) {
 #' @description
 #' Returns an array of resources successfully backed up by Backup, including the time the resource was saved, an Amazon Resource Name (ARN) of the resource, and a resource type.
 #'
-#' See [https://paws-r.github.io/docs/backup/list_protected_resources.html](https://paws-r.github.io/docs/backup/list_protected_resources.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_list_protected_resources/](https://www.paws-r-sdk.com/docs/backup_list_protected_resources/) for full documentation.
 #'
 #' @param NextToken The next item following a partial list of returned items. For example,
 #' if a request is made to return `maxResults` number of items, `NextToken`
@@ -1543,7 +1719,7 @@ backup_list_protected_resources <- function(NextToken = NULL, MaxResults = NULL)
 #' @description
 #' Returns detailed information about the recovery points stored in a backup vault.
 #'
-#' See [https://paws-r.github.io/docs/backup/list_recovery_points_by_backup_vault.html](https://paws-r.github.io/docs/backup/list_recovery_points_by_backup_vault.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_list_recovery_points_by_backup_vault/](https://www.paws-r-sdk.com/docs/backup_list_recovery_points_by_backup_vault/) for full documentation.
 #'
 #' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults
 #' are identified by names that are unique to the account used to create
@@ -1565,18 +1741,20 @@ backup_list_protected_resources <- function(NextToken = NULL, MaxResults = NULL)
 #' timestamp.
 #' @param ByCreatedAfter Returns only recovery points that were created after the specified
 #' timestamp.
+#' @param ByParentRecoveryPointArn This returns only recovery points that match the specified parent
+#' (composite) recovery point Amazon Resource Name (ARN).
 #'
 #' @keywords internal
 #'
 #' @rdname backup_list_recovery_points_by_backup_vault
-backup_list_recovery_points_by_backup_vault <- function(BackupVaultName, NextToken = NULL, MaxResults = NULL, ByResourceArn = NULL, ByResourceType = NULL, ByBackupPlanId = NULL, ByCreatedBefore = NULL, ByCreatedAfter = NULL) {
+backup_list_recovery_points_by_backup_vault <- function(BackupVaultName, NextToken = NULL, MaxResults = NULL, ByResourceArn = NULL, ByResourceType = NULL, ByBackupPlanId = NULL, ByCreatedBefore = NULL, ByCreatedAfter = NULL, ByParentRecoveryPointArn = NULL) {
   op <- new_operation(
     name = "ListRecoveryPointsByBackupVault",
     http_method = "GET",
     http_path = "/backup-vaults/{backupVaultName}/recovery-points/",
     paginator = list()
   )
-  input <- .backup$list_recovery_points_by_backup_vault_input(BackupVaultName = BackupVaultName, NextToken = NextToken, MaxResults = MaxResults, ByResourceArn = ByResourceArn, ByResourceType = ByResourceType, ByBackupPlanId = ByBackupPlanId, ByCreatedBefore = ByCreatedBefore, ByCreatedAfter = ByCreatedAfter)
+  input <- .backup$list_recovery_points_by_backup_vault_input(BackupVaultName = BackupVaultName, NextToken = NextToken, MaxResults = MaxResults, ByResourceArn = ByResourceArn, ByResourceType = ByResourceType, ByBackupPlanId = ByBackupPlanId, ByCreatedBefore = ByCreatedBefore, ByCreatedAfter = ByCreatedAfter, ByParentRecoveryPointArn = ByParentRecoveryPointArn)
   output <- .backup$list_recovery_points_by_backup_vault_output()
   config <- get_config()
   svc <- .backup$service(config)
@@ -1586,13 +1764,48 @@ backup_list_recovery_points_by_backup_vault <- function(BackupVaultName, NextTok
 }
 .backup$operations$list_recovery_points_by_backup_vault <- backup_list_recovery_points_by_backup_vault
 
+#' This action returns recovery point ARNs (Amazon Resource Names) of the
+#' specified legal hold
+#'
+#' @description
+#' This action returns recovery point ARNs (Amazon Resource Names) of the specified legal hold.
+#'
+#' See [https://www.paws-r-sdk.com/docs/backup_list_recovery_points_by_legal_hold/](https://www.paws-r-sdk.com/docs/backup_list_recovery_points_by_legal_hold/) for full documentation.
+#'
+#' @param LegalHoldId &#91;required&#93; This is the ID of the legal hold.
+#' @param NextToken This is the next item following a partial list of returned resources.
+#' For example, if a request is made to return `maxResults` number of
+#' resources, `NextToken` allows you to return more items in your list
+#' starting at the location pointed to by the next token.
+#' @param MaxResults This is the maximum number of resource list items to be returned.
+#'
+#' @keywords internal
+#'
+#' @rdname backup_list_recovery_points_by_legal_hold
+backup_list_recovery_points_by_legal_hold <- function(LegalHoldId, NextToken = NULL, MaxResults = NULL) {
+  op <- new_operation(
+    name = "ListRecoveryPointsByLegalHold",
+    http_method = "GET",
+    http_path = "/legal-holds/{legalHoldId}/recovery-points",
+    paginator = list()
+  )
+  input <- .backup$list_recovery_points_by_legal_hold_input(LegalHoldId = LegalHoldId, NextToken = NextToken, MaxResults = MaxResults)
+  output <- .backup$list_recovery_points_by_legal_hold_output()
+  config <- get_config()
+  svc <- .backup$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.backup$operations$list_recovery_points_by_legal_hold <- backup_list_recovery_points_by_legal_hold
+
 #' Returns detailed information about all the recovery points of the type
 #' specified by a resource Amazon Resource Name (ARN)
 #'
 #' @description
 #' Returns detailed information about all the recovery points of the type specified by a resource Amazon Resource Name (ARN).
 #'
-#' See [https://paws-r.github.io/docs/backup/list_recovery_points_by_resource.html](https://paws-r.github.io/docs/backup/list_recovery_points_by_resource.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_list_recovery_points_by_resource/](https://www.paws-r-sdk.com/docs/backup_list_recovery_points_by_resource/) for full documentation.
 #'
 #' @param ResourceArn &#91;required&#93; An ARN that uniquely identifies a resource. The format of the ARN
 #' depends on the resource type.
@@ -1629,7 +1842,7 @@ backup_list_recovery_points_by_resource <- function(ResourceArn, NextToken = NUL
 #' @description
 #' Returns details about your report jobs.
 #'
-#' See [https://paws-r.github.io/docs/backup/list_report_jobs.html](https://paws-r.github.io/docs/backup/list_report_jobs.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_list_report_jobs/](https://www.paws-r-sdk.com/docs/backup_list_report_jobs/) for full documentation.
 #'
 #' @param ByReportPlanName Returns only report jobs with the specified report plan name.
 #' @param ByCreationBefore Returns only report jobs that were created before the date and time
@@ -1675,7 +1888,7 @@ backup_list_report_jobs <- function(ByReportPlanName = NULL, ByCreationBefore = 
 #' @description
 #' Returns a list of your report plans. For detailed information about a single report plan, use [`describe_report_plan`][backup_describe_report_plan].
 #'
-#' See [https://paws-r.github.io/docs/backup/list_report_plans.html](https://paws-r.github.io/docs/backup/list_report_plans.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_list_report_plans/](https://www.paws-r-sdk.com/docs/backup_list_report_plans/) for full documentation.
 #'
 #' @param MaxResults The number of desired results from 1 to 1000. Optional. If unspecified,
 #' the query will return 1 MB of data.
@@ -1709,7 +1922,7 @@ backup_list_report_plans <- function(MaxResults = NULL, NextToken = NULL) {
 #' @description
 #' Returns a list of jobs that Backup initiated to restore a saved resource, including details about the recovery process.
 #'
-#' See [https://paws-r.github.io/docs/backup/list_restore_jobs.html](https://paws-r.github.io/docs/backup/list_restore_jobs.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_list_restore_jobs/](https://www.paws-r-sdk.com/docs/backup_list_restore_jobs/) for full documentation.
 #'
 #' @param NextToken The next item following a partial list of returned items. For example,
 #' if a request is made to return `maxResults` number of items, `NextToken`
@@ -1752,7 +1965,7 @@ backup_list_restore_jobs <- function(NextToken = NULL, MaxResults = NULL, ByAcco
 #' @description
 #' Returns a list of key-value pairs assigned to a target recovery point, backup plan, or backup vault.
 #'
-#' See [https://paws-r.github.io/docs/backup/list_tags.html](https://paws-r.github.io/docs/backup/list_tags.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_list_tags/](https://www.paws-r-sdk.com/docs/backup_list_tags/) for full documentation.
 #'
 #' @param ResourceArn &#91;required&#93; An Amazon Resource Name (ARN) that uniquely identifies a resource. The
 #' format of the ARN depends on the type of resource. Valid targets for
@@ -1790,7 +2003,7 @@ backup_list_tags <- function(ResourceArn, NextToken = NULL, MaxResults = NULL) {
 #' @description
 #' Sets a resource-based policy that is used to manage access permissions on the target backup vault. Requires a backup vault name and an access policy document in JSON format.
 #'
-#' See [https://paws-r.github.io/docs/backup/put_backup_vault_access_policy.html](https://paws-r.github.io/docs/backup/put_backup_vault_access_policy.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_put_backup_vault_access_policy/](https://www.paws-r-sdk.com/docs/backup_put_backup_vault_access_policy/) for full documentation.
 #'
 #' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults
 #' are identified by names that are unique to the account used to create
@@ -1824,7 +2037,7 @@ backup_put_backup_vault_access_policy <- function(BackupVaultName, Policy = NULL
 #' @description
 #' Applies Backup Vault Lock to a backup vault, preventing attempts to delete any recovery point stored in or created in a backup vault. Vault Lock also prevents attempts to update the lifecycle policy that controls the retention period of any recovery point currently stored in a backup vault. If specified, Vault Lock enforces a minimum and maximum retention period for future backup and copy jobs that target a backup vault.
 #'
-#' See [https://paws-r.github.io/docs/backup/put_backup_vault_lock_configuration.html](https://paws-r.github.io/docs/backup/put_backup_vault_lock_configuration.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_put_backup_vault_lock_configuration/](https://www.paws-r-sdk.com/docs/backup_put_backup_vault_lock_configuration/) for full documentation.
 #'
 #' @param BackupVaultName &#91;required&#93; The Backup Vault Lock configuration that specifies the name of the
 #' backup vault it protects.
@@ -1911,7 +2124,7 @@ backup_put_backup_vault_lock_configuration <- function(BackupVaultName, MinReten
 #' @description
 #' Turns on notifications on a backup vault for the specified topic and events.
 #'
-#' See [https://paws-r.github.io/docs/backup/put_backup_vault_notifications.html](https://paws-r.github.io/docs/backup/put_backup_vault_notifications.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_put_backup_vault_notifications/](https://www.paws-r-sdk.com/docs/backup_put_backup_vault_notifications/) for full documentation.
 #'
 #' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults
 #' are identified by names that are unique to the account used to create
@@ -1924,8 +2137,7 @@ backup_put_backup_vault_lock_configuration <- function(BackupVaultName, MinReten
 #' to the backup vault.
 #' 
 #' For common use cases and code samples, see [Using Amazon SNS to track
-#' Backup
-#' events](https://docs.aws.amazon.com/aws-backup/latest/devguide/sns-notifications.html).
+#' Backup events](https://docs.aws.amazon.com/aws-backup/latest/devguide/).
 #' 
 #' The following events are supported:
 #' 
@@ -1938,8 +2150,10 @@ backup_put_backup_vault_lock_configuration <- function(BackupVaultName, MinReten
 #' 
 #' -   `S3_BACKUP_OBJECT_FAILED` | `S3_RESTORE_OBJECT_FAILED`
 #' 
-#' Ignore the list below because it includes deprecated events. Refer to
-#' the list above.
+#' The list below shows items that are deprecated events (for reference)
+#' and are no longer in use. They are no longer supported and will not
+#' return statuses or notifications. Refer to the list above for current
+#' supported events.
 #'
 #' @keywords internal
 #'
@@ -1966,7 +2180,7 @@ backup_put_backup_vault_notifications <- function(BackupVaultName, SNSTopicArn, 
 #' @description
 #' Starts an on-demand backup job for the specified resource.
 #'
-#' See [https://paws-r.github.io/docs/backup/start_backup_job.html](https://paws-r.github.io/docs/backup/start_backup_job.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_start_backup_job/](https://www.paws-r-sdk.com/docs/backup_start_backup_job/) for full documentation.
 #'
 #' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults
 #' are identified by names that are unique to the account used to create
@@ -1983,7 +2197,17 @@ backup_put_backup_vault_notifications <- function(BackupVaultName, SNSTopicArn, 
 #' with no action taken.
 #' @param StartWindowMinutes A value in minutes after a backup is scheduled before a job will be
 #' canceled if it doesn't start successfully. This value is optional, and
-#' the default is 8 hours.
+#' the default is 8 hours. If this value is included, it must be at least
+#' 60 minutes to avoid errors.
+#' 
+#' During the start window, the backup job status remains in `CREATED`
+#' status until it has successfully begun or until the start window time
+#' has run out. If within the start window time Backup receives an error
+#' that allows the job to be retried, Backup will automatically retry to
+#' begin the job at least every 10 minutes until the backup successfully
+#' begins (the job status changes to `RUNNING`) or until the job status
+#' changes to `EXPIRED` (which is expected to occur when the start window
+#' time is over).
 #' @param CompleteWindowMinutes A value in minutes during which a successfully started backup must
 #' complete, or else Backup will cancel the job. This value is optional.
 #' This value begins counting down from when the backup was scheduled. It
@@ -2039,7 +2263,7 @@ backup_start_backup_job <- function(BackupVaultName, ResourceArn, IamRoleArn, Id
 #' @description
 #' Starts a job to create a one-time copy of the specified resource.
 #'
-#' See [https://paws-r.github.io/docs/backup/start_copy_job.html](https://paws-r.github.io/docs/backup/start_copy_job.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_start_copy_job/](https://www.paws-r-sdk.com/docs/backup_start_copy_job/) for full documentation.
 #'
 #' @param RecoveryPointArn &#91;required&#93; An ARN that uniquely identifies a recovery point to use for the copy
 #' job; for example,
@@ -2084,7 +2308,7 @@ backup_start_copy_job <- function(RecoveryPointArn, SourceBackupVaultName, Desti
 #' @description
 #' Starts an on-demand report job for the specified report plan.
 #'
-#' See [https://paws-r.github.io/docs/backup/start_report_job.html](https://paws-r.github.io/docs/backup/start_report_job.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_start_report_job/](https://www.paws-r-sdk.com/docs/backup_start_report_job/) for full documentation.
 #'
 #' @param ReportPlanName &#91;required&#93; The unique name of a report plan.
 #' @param IdempotencyToken A customer-chosen string that you can use to distinguish between
@@ -2117,7 +2341,7 @@ backup_start_report_job <- function(ReportPlanName, IdempotencyToken = NULL) {
 #' @description
 #' Recovers the saved resource identified by an Amazon Resource Name (ARN).
 #'
-#' See [https://paws-r.github.io/docs/backup/start_restore_job.html](https://paws-r.github.io/docs/backup/start_restore_job.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_start_restore_job/](https://www.paws-r-sdk.com/docs/backup_start_restore_job/) for full documentation.
 #'
 #' @param RecoveryPointArn &#91;required&#93; An ARN that uniquely identifies a recovery point; for example,
 #' `arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45`.
@@ -2161,7 +2385,7 @@ backup_start_report_job <- function(ReportPlanName, IdempotencyToken = NULL) {
 #'     directories rather than the entire file system. This parameter is
 #'     optional. For example, `"itemsToRestore":"[\"/my.test\"]"`.
 #' @param IamRoleArn The Amazon Resource Name (ARN) of the IAM role that Backup uses to
-#' create the target recovery point; for example,
+#' create the target resource; for example:
 #' `arn:aws:iam::123456789012:role/S3Access`.
 #' @param IdempotencyToken A customer-chosen string that you can use to distinguish between
 #' otherwise identical calls to
@@ -2174,6 +2398,8 @@ backup_start_report_job <- function(ReportPlanName, IdempotencyToken = NULL) {
 #' -   `Aurora` for Amazon Aurora
 #' 
 #' -   `DocumentDB` for Amazon DocumentDB (with MongoDB compatibility)
+#' 
+#' -   `CloudFormation` for CloudFormation
 #' 
 #' -   `DynamoDB` for Amazon DynamoDB
 #' 
@@ -2189,23 +2415,31 @@ backup_start_report_job <- function(ReportPlanName, IdempotencyToken = NULL) {
 #' 
 #' -   `RDS` for Amazon Relational Database Service
 #' 
+#' -   `Redshift` for Amazon Redshift
+#' 
 #' -   `Storage Gateway` for Storage Gateway
 #' 
 #' -   `S3` for Amazon S3
 #' 
+#' -   `Timestream` for Amazon Timestream
+#' 
 #' -   `VirtualMachine` for virtual machines
+#' @param CopySourceTagsToRestoredResource This is an optional parameter. If this equals `True`, tags included in
+#' the backup will be copied to the restored resource.
+#' 
+#' This can only be applied to backups created through Backup.
 #'
 #' @keywords internal
 #'
 #' @rdname backup_start_restore_job
-backup_start_restore_job <- function(RecoveryPointArn, Metadata, IamRoleArn = NULL, IdempotencyToken = NULL, ResourceType = NULL) {
+backup_start_restore_job <- function(RecoveryPointArn, Metadata, IamRoleArn = NULL, IdempotencyToken = NULL, ResourceType = NULL, CopySourceTagsToRestoredResource = NULL) {
   op <- new_operation(
     name = "StartRestoreJob",
     http_method = "PUT",
     http_path = "/restore-jobs",
     paginator = list()
   )
-  input <- .backup$start_restore_job_input(RecoveryPointArn = RecoveryPointArn, Metadata = Metadata, IamRoleArn = IamRoleArn, IdempotencyToken = IdempotencyToken, ResourceType = ResourceType)
+  input <- .backup$start_restore_job_input(RecoveryPointArn = RecoveryPointArn, Metadata = Metadata, IamRoleArn = IamRoleArn, IdempotencyToken = IdempotencyToken, ResourceType = ResourceType, CopySourceTagsToRestoredResource = CopySourceTagsToRestoredResource)
   output <- .backup$start_restore_job_output()
   config <- get_config()
   svc <- .backup$service(config)
@@ -2220,7 +2454,7 @@ backup_start_restore_job <- function(RecoveryPointArn, Metadata, IamRoleArn = NU
 #' @description
 #' Attempts to cancel a job to create a one-time backup of a resource.
 #'
-#' See [https://paws-r.github.io/docs/backup/stop_backup_job.html](https://paws-r.github.io/docs/backup/stop_backup_job.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_stop_backup_job/](https://www.paws-r-sdk.com/docs/backup_stop_backup_job/) for full documentation.
 #'
 #' @param BackupJobId &#91;required&#93; Uniquely identifies a request to Backup to back up a resource.
 #'
@@ -2250,7 +2484,7 @@ backup_stop_backup_job <- function(BackupJobId) {
 #' @description
 #' Assigns a set of key-value pairs to a recovery point, backup plan, or backup vault identified by an Amazon Resource Name (ARN).
 #'
-#' See [https://paws-r.github.io/docs/backup/tag_resource.html](https://paws-r.github.io/docs/backup/tag_resource.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_tag_resource/](https://www.paws-r-sdk.com/docs/backup_tag_resource/) for full documentation.
 #'
 #' @param ResourceArn &#91;required&#93; An ARN that uniquely identifies a resource. The format of the ARN
 #' depends on the type of the tagged resource.
@@ -2284,7 +2518,7 @@ backup_tag_resource <- function(ResourceArn, Tags) {
 #' @description
 #' Removes a set of key-value pairs from a recovery point, backup plan, or backup vault identified by an Amazon Resource Name (ARN)
 #'
-#' See [https://paws-r.github.io/docs/backup/untag_resource.html](https://paws-r.github.io/docs/backup/untag_resource.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_untag_resource/](https://www.paws-r-sdk.com/docs/backup_untag_resource/) for full documentation.
 #'
 #' @param ResourceArn &#91;required&#93; An ARN that uniquely identifies a resource. The format of the ARN
 #' depends on the type of the tagged resource.
@@ -2317,7 +2551,7 @@ backup_untag_resource <- function(ResourceArn, TagKeyList) {
 #' @description
 #' Updates an existing backup plan identified by its `backupPlanId` with the input document in JSON format. The new version is uniquely identified by a `VersionId`.
 #'
-#' See [https://paws-r.github.io/docs/backup/update_backup_plan.html](https://paws-r.github.io/docs/backup/update_backup_plan.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_update_backup_plan/](https://www.paws-r-sdk.com/docs/backup_update_backup_plan/) for full documentation.
 #'
 #' @param BackupPlanId &#91;required&#93; Uniquely identifies a backup plan.
 #' @param BackupPlan &#91;required&#93; Specifies the body of a backup plan. Includes a `BackupPlanName` and one
@@ -2349,7 +2583,7 @@ backup_update_backup_plan <- function(BackupPlanId, BackupPlan) {
 #' @description
 #' Updates an existing framework identified by its `FrameworkName` with the input document in JSON format.
 #'
-#' See [https://paws-r.github.io/docs/backup/update_framework.html](https://paws-r.github.io/docs/backup/update_framework.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_update_framework/](https://www.paws-r-sdk.com/docs/backup_update_framework/) for full documentation.
 #'
 #' @param FrameworkName &#91;required&#93; The unique name of a framework. This name is between 1 and 256
 #' characters, starting with a letter, and consisting of letters (a-z,
@@ -2389,7 +2623,7 @@ backup_update_framework <- function(FrameworkName, FrameworkDescription = NULL, 
 #' @description
 #' Updates whether the Amazon Web Services account is opted in to cross-account backup. Returns an error if the account is not an Organizations management account. Use the [`describe_global_settings`][backup_describe_global_settings] API to determine the current settings.
 #'
-#' See [https://paws-r.github.io/docs/backup/update_global_settings.html](https://paws-r.github.io/docs/backup/update_global_settings.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_update_global_settings/](https://www.paws-r-sdk.com/docs/backup_update_global_settings/) for full documentation.
 #'
 #' @param GlobalSettings A value for `isCrossAccountBackupEnabled` and a Region. Example:
 #' `update-global-settings --global-settings isCrossAccountBackupEnabled=false --region us-west-2`.
@@ -2419,7 +2653,7 @@ backup_update_global_settings <- function(GlobalSettings = NULL) {
 #' @description
 #' Sets the transition lifecycle of a recovery point.
 #'
-#' See [https://paws-r.github.io/docs/backup/update_recovery_point_lifecycle.html](https://paws-r.github.io/docs/backup/update_recovery_point_lifecycle.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_update_recovery_point_lifecycle/](https://www.paws-r-sdk.com/docs/backup_update_recovery_point_lifecycle/) for full documentation.
 #'
 #' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults
 #' are identified by names that are unique to the account used to create
@@ -2463,7 +2697,7 @@ backup_update_recovery_point_lifecycle <- function(BackupVaultName, RecoveryPoin
 #' @description
 #' Updates the current service opt-in settings for the Region. If service-opt-in is enabled for a service, Backup tries to protect that service's resources in this Region, when the resource is included in an on-demand backup or scheduled backup plan. Otherwise, Backup does not try to protect that service's resources in this Region. Use the [`describe_region_settings`][backup_describe_region_settings] API to determine the resource types that are supported.
 #'
-#' See [https://paws-r.github.io/docs/backup/update_region_settings.html](https://paws-r.github.io/docs/backup/update_region_settings.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_update_region_settings/](https://www.paws-r-sdk.com/docs/backup_update_region_settings/) for full documentation.
 #'
 #' @param ResourceTypeOptInPreference Updates the list of services along with the opt-in preferences for the
 #' Region.
@@ -2500,7 +2734,7 @@ backup_update_region_settings <- function(ResourceTypeOptInPreference = NULL, Re
 #' @description
 #' Updates an existing report plan identified by its `ReportPlanName` with the input document in JSON format.
 #'
-#' See [https://paws-r.github.io/docs/backup/update_report_plan.html](https://paws-r.github.io/docs/backup/update_report_plan.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/backup_update_report_plan/](https://www.paws-r-sdk.com/docs/backup_update_report_plan/) for full documentation.
 #'
 #' @param ReportPlanName &#91;required&#93; The unique name of the report plan. This name is between 1 and 256
 #' characters, starting with a letter, and consisting of letters (a-z,

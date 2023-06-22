@@ -31,13 +31,13 @@ Services SDKs, you provide the access point ARN in place of the bucket
 name. For more information about access point ARNs, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-access-points.html}{Using access points}
 in the \emph{Amazon S3 User Guide}.
 
-When using this action with Amazon S3 on Outposts, you must direct
+When you use this action with Amazon S3 on Outposts, you must direct
 requests to the S3 on Outposts hostname. The S3 on Outposts hostname
 takes the form
 \code{ AccessPointName-AccountId.outpostID.s3-outposts.Region.amazonaws.com}.
-When using this action with S3 on Outposts through the Amazon Web
-Services SDKs, you provide the Outposts bucket ARN in place of the
-bucket name. For more information about S3 on Outposts ARNs, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/S3onOutposts.html}{Using Amazon S3 on Outposts}
+When you use this action with S3 on Outposts through the Amazon Web
+Services SDKs, you provide the Outposts access point ARN in place of the
+bucket name. For more information about S3 on Outposts ARNs, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/S3onOutposts.html}{What is S3 on Outposts}
 in the \emph{Amazon S3 User Guide}.}
 
 \item{Key}{[required] Object key for which the multipart upload was initiated.}
@@ -94,6 +94,6 @@ in the \emph{Amazon S3 User Guide}.}
 \description{
 Completes a multipart upload by assembling previously uploaded parts.
 
-See \url{https://paws-r.github.io/docs/s3/complete_multipart_upload.html} for full documentation.
+See \url{https://www.paws-r-sdk.com/docs/s3_complete_multipart_upload/} for full documentation.
 }
 \keyword{internal}

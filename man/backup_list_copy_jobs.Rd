@@ -15,7 +15,8 @@ backup_list_copy_jobs(
   ByDestinationVaultArn = NULL,
   ByAccountId = NULL,
   ByCompleteBefore = NULL,
-  ByCompleteAfter = NULL
+  ByCompleteAfter = NULL,
+  ByParentJobId = NULL
 )
 }
 \arguments{
@@ -63,10 +64,12 @@ and Coordinated Universal Time (UTC).}
 
 \item{ByCompleteAfter}{Returns only copy jobs completed after a date expressed in Unix format
 and Coordinated Universal Time (UTC).}
+
+\item{ByParentJobId}{This is a filter to list child (nested) jobs based on parent job ID.}
 }
 \description{
 Returns metadata about your copy jobs.
 
-See \url{https://paws-r.github.io/docs/backup/list_copy_jobs.html} for full documentation.
+See \url{https://www.paws-r-sdk.com/docs/backup_list_copy_jobs/} for full documentation.
 }
 \keyword{internal}

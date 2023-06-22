@@ -19,7 +19,7 @@ For using this parameter with S3 on Outposts with the Amazon Web
 Services SDK and CLI, you must specify the ARN of the bucket accessed in
 the format
 \verb{arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>}.
-For example, to access the bucket \code{reports} through outpost \code{my-outpost}
+For example, to access the bucket \code{reports} through Outpost \code{my-outpost}
 owned by account \code{123456789012} in Region \code{us-west-2}, use the URL
 encoding of
 \code{arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/bucket/reports}.
@@ -28,6 +28,6 @@ The value must be URL encoded.}
 \description{
 This action gets an Amazon S3 on Outposts bucket's lifecycle configuration. To get an S3 bucket's lifecycle configuration, see \code{\link[=s3control_get_bucket_lifecycle_configuration]{get_bucket_lifecycle_configuration}} in the \emph{Amazon S3 API Reference}.
 
-See \url{https://paws-r.github.io/docs/s3control/get_bucket_lifecycle_configuration.html} for full documentation.
+See \url{https://www.paws-r-sdk.com/docs/s3control_get_bucket_lifecycle_configuration/} for full documentation.
 }
 \keyword{internal}

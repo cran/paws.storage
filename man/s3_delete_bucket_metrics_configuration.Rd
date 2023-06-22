@@ -10,7 +10,9 @@ s3_delete_bucket_metrics_configuration(Bucket, Id, ExpectedBucketOwner = NULL)
 \arguments{
 \item{Bucket}{[required] The name of the bucket containing the metrics configuration to delete.}
 
-\item{Id}{[required] The ID used to identify the metrics configuration.}
+\item{Id}{[required] The ID used to identify the metrics configuration. The ID has a 64
+character limit and can only contain letters, numbers, periods, dashes,
+and underscores.}
 
 \item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the bucket is owned by a
 different account, the request fails with the HTTP status code
@@ -19,6 +21,6 @@ different account, the request fails with the HTTP status code
 \description{
 Deletes a metrics configuration for the Amazon CloudWatch request metrics (specified by the metrics configuration ID) from the bucket. Note that this doesn't include the daily storage metrics.
 
-See \url{https://paws-r.github.io/docs/s3/delete_bucket_metrics_configuration.html} for full documentation.
+See \url{https://www.paws-r-sdk.com/docs/s3_delete_bucket_metrics_configuration/} for full documentation.
 }
 \keyword{internal}

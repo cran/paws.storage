@@ -42,13 +42,13 @@ in the \emph{Amazon S3 User Guide}.
 When using an Object Lambda access point the hostname takes the form
 \emph{AccessPointName}-\emph{AccountId}.s3-object-lambda.\emph{Region}.amazonaws.com.
 
-When using this action with Amazon S3 on Outposts, you must direct
+When you use this action with Amazon S3 on Outposts, you must direct
 requests to the S3 on Outposts hostname. The S3 on Outposts hostname
 takes the form
 \code{ AccessPointName-AccountId.outpostID.s3-outposts.Region.amazonaws.com}.
-When using this action with S3 on Outposts through the Amazon Web
-Services SDKs, you provide the Outposts bucket ARN in place of the
-bucket name. For more information about S3 on Outposts ARNs, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/S3onOutposts.html}{Using Amazon S3 on Outposts}
+When you use this action with S3 on Outposts through the Amazon Web
+Services SDKs, you provide the Outposts access point ARN in place of the
+bucket name. For more information about S3 on Outposts ARNs, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/S3onOutposts.html}{What is S3 on Outposts}
 in the \emph{Amazon S3 User Guide}.}
 
 \item{IfMatch}{Return the object only if its entity tag (ETag) is the same as the one
@@ -67,7 +67,7 @@ time; otherwise, return a 412 (precondition failed) error.}
 
 \item{Range}{Downloads the specified range bytes of an object. For more information
 about the HTTP Range header, see
-\url{https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.35}.
+\url{https://www.rfc-editor.org/rfc/rfc9110.html#name-range}.
 
 Amazon S3 doesn't support retrieving multiple ranges of data per \code{GET}
 request.}
@@ -114,6 +114,6 @@ different account, the request fails with the HTTP status code
 \description{
 Retrieves objects from Amazon S3. To use \code{GET}, you must have \code{READ} access to the object. If you grant \code{READ} access to the anonymous user, you can return the object without using an authorization header.
 
-See \url{https://paws-r.github.io/docs/s3/get_object.html} for full documentation.
+See \url{https://www.paws-r-sdk.com/docs/s3_get_object/} for full documentation.
 }
 \keyword{internal}

@@ -2,8 +2,8 @@
 % Please edit documentation in R/efs_operations.R
 \name{efs_put_lifecycle_configuration}
 \alias{efs_put_lifecycle_configuration}
-\title{Use this action to manage EFS lifecycle management and intelligent
-tiering}
+\title{Use this action to manage EFS lifecycle management and EFS
+Intelligent-Tiering}
 \usage{
 efs_put_lifecycle_configuration(FileSystemId, LifecyclePolicies)
 }
@@ -31,8 +31,8 @@ objects, one object for each transition, \code{TransitionToIA},
 following section for more information.}
 }
 \description{
-Use this action to manage EFS lifecycle management and intelligent tiering. A \code{LifecycleConfiguration} consists of one or more \code{LifecyclePolicy} objects that define the following:
+Use this action to manage EFS lifecycle management and EFS Intelligent-Tiering. A \code{LifecycleConfiguration} consists of one or more \code{LifecyclePolicy} objects that define the following:
 
-See \url{https://paws-r.github.io/docs/efs/put_lifecycle_configuration.html} for full documentation.
+See \url{https://www.paws-r-sdk.com/docs/efs_put_lifecycle_configuration/} for full documentation.
 }
 \keyword{internal}

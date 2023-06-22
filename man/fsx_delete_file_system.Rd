@@ -15,7 +15,7 @@ fsx_delete_file_system(
 \arguments{
 \item{FileSystemId}{[required] The ID of the file system that you want to delete.}
 
-\item{ClientRequestToken}{A string of up to 64 ASCII characters that Amazon FSx uses to ensure
+\item{ClientRequestToken}{A string of up to 63 ASCII characters that Amazon FSx uses to ensure
 idempotent deletion. This token is automatically filled on your behalf
 when using the Command Line Interface (CLI) or an Amazon Web Services
 SDK.}
@@ -30,6 +30,6 @@ SDK.}
 \description{
 Deletes a file system. After deletion, the file system no longer exists, and its data is gone. Any existing automatic backups and snapshots are also deleted.
 
-See \url{https://paws-r.github.io/docs/fsx/delete_file_system.html} for full documentation.
+See \url{https://www.paws-r-sdk.com/docs/fsx_delete_file_system/} for full documentation.
 }
 \keyword{internal}

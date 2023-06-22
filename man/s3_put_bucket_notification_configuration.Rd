@@ -24,8 +24,8 @@ different account, the request fails with the HTTP status code
 True or false value.}
 }
 \description{
-Enables notifications of specified events for a bucket. For more information about event notifications, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/NotificationHowTo.html}{Configuring Event Notifications}.
+Enables notifications of specified events for a bucket. For more information about event notifications, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/EventNotifications.html}{Configuring Event Notifications}.
 
-See \url{https://paws-r.github.io/docs/s3/put_bucket_notification_configuration.html} for full documentation.
+See \url{https://www.paws-r-sdk.com/docs/s3_put_bucket_notification_configuration/} for full documentation.
 }
 \keyword{internal}

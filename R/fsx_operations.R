@@ -9,7 +9,7 @@ NULL
 #' @description
 #' Use this action to associate one or more Domain Name Server (DNS) aliases with an existing Amazon FSx for Windows File Server file system. A file system can have a maximum of 50 DNS aliases associated with it at any one time. If you try to associate a DNS alias that is already associated with the file system, FSx takes no action on that alias in the request. For more information, see [Working with DNS Aliases](https://docs.aws.amazon.com/fsx/latest/WindowsGuide/managing-dns-aliases.html) and [Walkthrough 5: Using DNS aliases to access your file system](https://docs.aws.amazon.com/fsx/latest/WindowsGuide/walkthrough05-file-system-custom-CNAME.html), including additional steps you must take to be able to access your file system using a DNS alias.
 #'
-#' See [https://paws-r.github.io/docs/fsx/associate_file_system_aliases.html](https://paws-r.github.io/docs/fsx/associate_file_system_aliases.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/fsx_associate_file_system_aliases/](https://www.paws-r-sdk.com/docs/fsx_associate_file_system_aliases/) for full documentation.
 #'
 #' @param ClientRequestToken 
 #' @param FileSystemId &#91;required&#93; Specifies the file system with which you want to associate one or more
@@ -58,7 +58,7 @@ fsx_associate_file_system_aliases <- function(ClientRequestToken = NULL, FileSys
 #' @description
 #' Cancels an existing Amazon FSx for Lustre data repository task if that task is in either the `PENDING` or `EXECUTING` state. When you cancel a task, Amazon FSx does the following.
 #'
-#' See [https://paws-r.github.io/docs/fsx/cancel_data_repository_task.html](https://paws-r.github.io/docs/fsx/cancel_data_repository_task.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/fsx_cancel_data_repository_task/](https://www.paws-r-sdk.com/docs/fsx_cancel_data_repository_task/) for full documentation.
 #'
 #' @param TaskId &#91;required&#93; Specifies the data repository task to cancel.
 #'
@@ -89,7 +89,7 @@ fsx_cancel_data_repository_task <- function(TaskId) {
 #' @description
 #' Copies an existing backup within the same Amazon Web Services account to another Amazon Web Services Region (cross-Region copy) or within the same Amazon Web Services Region (in-Region copy). You can have up to five backup copy requests in progress to a single destination Region per account.
 #'
-#' See [https://paws-r.github.io/docs/fsx/copy_backup.html](https://paws-r.github.io/docs/fsx/copy_backup.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/fsx_copy_backup/](https://www.paws-r-sdk.com/docs/fsx_copy_backup/) for full documentation.
 #'
 #' @param ClientRequestToken 
 #' @param SourceBackupId &#91;required&#93; The ID of the source backup. Specifies the ID of the backup that's being
@@ -138,10 +138,10 @@ fsx_copy_backup <- function(ClientRequestToken = NULL, SourceBackupId, SourceReg
 #' @description
 #' Creates a backup of an existing Amazon FSx for Windows File Server file system, Amazon FSx for Lustre file system, Amazon FSx for NetApp ONTAP volume, or Amazon FSx for OpenZFS file system. We recommend creating regular backups so that you can restore a file system or volume from a backup if an issue arises with the original file system or volume.
 #'
-#' See [https://paws-r.github.io/docs/fsx/create_backup.html](https://paws-r.github.io/docs/fsx/create_backup.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/fsx_create_backup/](https://www.paws-r-sdk.com/docs/fsx_create_backup/) for full documentation.
 #'
 #' @param FileSystemId The ID of the file system to back up.
-#' @param ClientRequestToken (Optional) A string of up to 64 ASCII characters that Amazon FSx uses to
+#' @param ClientRequestToken (Optional) A string of up to 63 ASCII characters that Amazon FSx uses to
 #' ensure idempotent creation. This string is automatically filled on your
 #' behalf when you use the Command Line Interface (CLI) or an Amazon Web
 #' Services SDK.
@@ -175,12 +175,12 @@ fsx_create_backup <- function(FileSystemId = NULL, ClientRequestToken = NULL, Ta
 #' Creates an Amazon FSx for Lustre data repository association (DRA)
 #'
 #' @description
-#' Creates an Amazon FSx for Lustre data repository association (DRA). A data repository association is a link between a directory on the file system and an Amazon S3 bucket or prefix. You can have a maximum of 8 data repository associations on a file system. Data repository associations are supported only for file systems with the `Persistent_2` deployment type.
+#' Creates an Amazon FSx for Lustre data repository association (DRA). A data repository association is a link between a directory on the file system and an Amazon S3 bucket or prefix. You can have a maximum of 8 data repository associations on a file system. Data repository associations are supported on all FSx for Lustre 2.12 and newer file systems, excluding `scratch_1` deployment type.
 #'
-#' See [https://paws-r.github.io/docs/fsx/create_data_repository_association.html](https://paws-r.github.io/docs/fsx/create_data_repository_association.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/fsx_create_data_repository_association/](https://www.paws-r-sdk.com/docs/fsx_create_data_repository_association/) for full documentation.
 #'
 #' @param FileSystemId &#91;required&#93; 
-#' @param FileSystemPath &#91;required&#93; A path on the file system that points to a high-level directory (such as
+#' @param FileSystemPath A path on the file system that points to a high-level directory (such as
 #' `/ns1/`) or subdirectory (such as `/ns1/subdir/`) that will be mapped
 #' 1-1 with `DataRepositoryPath`. The leading forward slash in the name is
 #' required. Two data repository associations cannot have overlapping file
@@ -194,9 +194,9 @@ fsx_create_backup <- function(FileSystemId = NULL, ClientRequestToken = NULL, Ta
 #' directory.
 #' 
 #' If you specify only a forward slash (`/`) as the file system path, you
-#' can link only 1 data repository to the file system. You can only specify
-#' "/" as the file system path for the first data repository associated
-#' with a file system.
+#' can link only one data repository to the file system. You can only
+#' specify "/" as the file system path for the first data repository
+#' associated with a file system.
 #' @param DataRepositoryPath &#91;required&#93; The path to the Amazon S3 data repository that will be linked to the
 #' file system. The path can be an S3 bucket or prefix in the format
 #' `s3://myBucket/myPrefix/`. This path specifies where in the S3 data
@@ -224,7 +224,7 @@ fsx_create_backup <- function(FileSystemId = NULL, ClientRequestToken = NULL, Ta
 #' @keywords internal
 #'
 #' @rdname fsx_create_data_repository_association
-fsx_create_data_repository_association <- function(FileSystemId, FileSystemPath, DataRepositoryPath, BatchImportMetaDataOnCreate = NULL, ImportedFileChunkSize = NULL, S3 = NULL, ClientRequestToken = NULL, Tags = NULL) {
+fsx_create_data_repository_association <- function(FileSystemId, FileSystemPath = NULL, DataRepositoryPath, BatchImportMetaDataOnCreate = NULL, ImportedFileChunkSize = NULL, S3 = NULL, ClientRequestToken = NULL, Tags = NULL) {
   op <- new_operation(
     name = "CreateDataRepositoryAssociation",
     http_method = "POST",
@@ -246,7 +246,7 @@ fsx_create_data_repository_association <- function(FileSystemId, FileSystemPath,
 #' @description
 #' Creates an Amazon FSx for Lustre data repository task. You use data repository tasks to perform bulk operations between your Amazon FSx file system and its linked data repositories. An example of a data repository task is exporting any data and metadata changes, including POSIX metadata, to files, directories, and symbolic links (symlinks) from your FSx file system to a linked data repository. A [`create_data_repository_task`][fsx_create_data_repository_task] operation will fail if a data repository is not linked to the FSx file system. To learn more about data repository tasks, see [Data Repository Tasks](https://docs.aws.amazon.com/fsx/latest/LustreGuide/data-repository-tasks.html). To learn more about linking a data repository to your file system, see [Linking your file system to an S3 bucket](https://docs.aws.amazon.com/fsx/latest/LustreGuide/create-dra-linked-data-repo.html).
 #'
-#' See [https://paws-r.github.io/docs/fsx/create_data_repository_task.html](https://paws-r.github.io/docs/fsx/create_data_repository_task.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/fsx_create_data_repository_task/](https://www.paws-r-sdk.com/docs/fsx_create_data_repository_task/) for full documentation.
 #'
 #' @param Type &#91;required&#93; Specifies the type of data repository task to create.
 #' @param Paths A list of paths for the data repository task to use when the task is
@@ -273,18 +273,21 @@ fsx_create_data_repository_association <- function(FileSystemId, FileSystemPath,
 #' Reports](https://docs.aws.amazon.com/fsx/latest/LustreGuide/task-completion-report.html).
 #' @param ClientRequestToken 
 #' @param Tags 
+#' @param CapacityToRelease Specifies the amount of data to release, in GiB, by an Amazon File Cache
+#' `AUTO_RELEASE_DATA` task that automatically releases files from the
+#' cache.
 #'
 #' @keywords internal
 #'
 #' @rdname fsx_create_data_repository_task
-fsx_create_data_repository_task <- function(Type, Paths = NULL, FileSystemId, Report, ClientRequestToken = NULL, Tags = NULL) {
+fsx_create_data_repository_task <- function(Type, Paths = NULL, FileSystemId, Report, ClientRequestToken = NULL, Tags = NULL, CapacityToRelease = NULL) {
   op <- new_operation(
     name = "CreateDataRepositoryTask",
     http_method = "POST",
     http_path = "/",
     paginator = list()
   )
-  input <- .fsx$create_data_repository_task_input(Type = Type, Paths = Paths, FileSystemId = FileSystemId, Report = Report, ClientRequestToken = ClientRequestToken, Tags = Tags)
+  input <- .fsx$create_data_repository_task_input(Type = Type, Paths = Paths, FileSystemId = FileSystemId, Report = Report, ClientRequestToken = ClientRequestToken, Tags = Tags, CapacityToRelease = CapacityToRelease)
   output <- .fsx$create_data_repository_task_output()
   config <- get_config()
   svc <- .fsx$service(config)
@@ -294,14 +297,88 @@ fsx_create_data_repository_task <- function(Type, Paths = NULL, FileSystemId, Re
 }
 .fsx$operations$create_data_repository_task <- fsx_create_data_repository_task
 
+#' Creates a new Amazon File Cache resource
+#'
+#' @description
+#' Creates a new Amazon File Cache resource.
+#'
+#' See [https://www.paws-r-sdk.com/docs/fsx_create_file_cache/](https://www.paws-r-sdk.com/docs/fsx_create_file_cache/) for full documentation.
+#'
+#' @param ClientRequestToken An idempotency token for resource creation, in a string of up to 63
+#' ASCII characters. This token is automatically filled on your behalf when
+#' you use the Command Line Interface (CLI) or an Amazon Web Services SDK.
+#' 
+#' By using the idempotent operation, you can retry a
+#' [`create_file_cache`][fsx_create_file_cache] operation without the risk
+#' of creating an extra cache. This approach can be useful when an initial
+#' call fails in a way that makes it unclear whether a cache was created.
+#' Examples are if a transport level timeout occurred, or your connection
+#' was reset. If you use the same client request token and the initial call
+#' created a cache, the client receives success as long as the parameters
+#' are the same.
+#' @param FileCacheType &#91;required&#93; The type of cache that you're creating, which must be `LUSTRE`.
+#' @param FileCacheTypeVersion &#91;required&#93; Sets the Lustre version for the cache that you're creating, which must
+#' be `2.12`.
+#' @param StorageCapacity &#91;required&#93; The storage capacity of the cache in gibibytes (GiB). Valid values are
+#' 1200 GiB, 2400 GiB, and increments of 2400 GiB.
+#' @param SubnetIds &#91;required&#93; 
+#' @param SecurityGroupIds A list of IDs specifying the security groups to apply to all network
+#' interfaces created for Amazon File Cache access. This list isn't
+#' returned in later requests to describe the cache.
+#' @param Tags 
+#' @param CopyTagsToDataRepositoryAssociations A boolean flag indicating whether tags for the cache should be copied to
+#' data repository associations. This value defaults to false.
+#' @param KmsKeyId Specifies the ID of the Key Management Service (KMS) key to use for
+#' encrypting data on an Amazon File Cache. If a `KmsKeyId` isn't
+#' specified, the Amazon FSx-managed KMS key for your account is used. For
+#' more information, see
+#' [Encrypt](https://docs.aws.amazon.com/kms/latest/APIReference/API_Encrypt.html)
+#' in the *Key Management Service API Reference*.
+#' @param LustreConfiguration The configuration for the Amazon File Cache resource being created.
+#' @param DataRepositoryAssociations A list of up to 8 configurations for data repository associations (DRAs)
+#' to be created during the cache creation. The DRAs link the cache to
+#' either an Amazon S3 data repository or a Network File System (NFS) data
+#' repository that supports the NFSv3 protocol.
+#' 
+#' The DRA configurations must meet the following requirements:
+#' 
+#' -   All configurations on the list must be of the same data repository
+#'     type, either all S3 or all NFS. A cache can't link to different data
+#'     repository types at the same time.
+#' 
+#' -   An NFS DRA must link to an NFS file system that supports the NFSv3
+#'     protocol.
+#' 
+#' DRA automatic import and automatic export is not supported.
+#'
+#' @keywords internal
+#'
+#' @rdname fsx_create_file_cache
+fsx_create_file_cache <- function(ClientRequestToken = NULL, FileCacheType, FileCacheTypeVersion, StorageCapacity, SubnetIds, SecurityGroupIds = NULL, Tags = NULL, CopyTagsToDataRepositoryAssociations = NULL, KmsKeyId = NULL, LustreConfiguration = NULL, DataRepositoryAssociations = NULL) {
+  op <- new_operation(
+    name = "CreateFileCache",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .fsx$create_file_cache_input(ClientRequestToken = ClientRequestToken, FileCacheType = FileCacheType, FileCacheTypeVersion = FileCacheTypeVersion, StorageCapacity = StorageCapacity, SubnetIds = SubnetIds, SecurityGroupIds = SecurityGroupIds, Tags = Tags, CopyTagsToDataRepositoryAssociations = CopyTagsToDataRepositoryAssociations, KmsKeyId = KmsKeyId, LustreConfiguration = LustreConfiguration, DataRepositoryAssociations = DataRepositoryAssociations)
+  output <- .fsx$create_file_cache_output()
+  config <- get_config()
+  svc <- .fsx$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.fsx$operations$create_file_cache <- fsx_create_file_cache
+
 #' Creates a new, empty Amazon FSx file system
 #'
 #' @description
 #' Creates a new, empty Amazon FSx file system. You can create the following supported Amazon FSx file systems using the [`create_file_system`][fsx_create_file_system] API operation:
 #'
-#' See [https://paws-r.github.io/docs/fsx/create_file_system.html](https://paws-r.github.io/docs/fsx/create_file_system.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/fsx_create_file_system/](https://www.paws-r-sdk.com/docs/fsx_create_file_system/) for full documentation.
 #'
-#' @param ClientRequestToken A string of up to 64 ASCII characters that Amazon FSx uses to ensure
+#' @param ClientRequestToken A string of up to 63 ASCII characters that Amazon FSx uses to ensure
 #' idempotent creation. This string is automatically filled on your behalf
 #' when you use the Command Line Interface (CLI) or an Amazon Web Services
 #' SDK.
@@ -423,10 +500,10 @@ fsx_create_file_system <- function(ClientRequestToken = NULL, FileSystemType, St
 #' @description
 #' Creates a new Amazon FSx for Lustre, Amazon FSx for Windows File Server, or Amazon FSx for OpenZFS file system from an existing Amazon FSx backup.
 #'
-#' See [https://paws-r.github.io/docs/fsx/create_file_system_from_backup.html](https://paws-r.github.io/docs/fsx/create_file_system_from_backup.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/fsx_create_file_system_from_backup/](https://www.paws-r-sdk.com/docs/fsx_create_file_system_from_backup/) for full documentation.
 #'
 #' @param BackupId &#91;required&#93; 
-#' @param ClientRequestToken A string of up to 64 ASCII characters that Amazon FSx uses to ensure
+#' @param ClientRequestToken A string of up to 63 ASCII characters that Amazon FSx uses to ensure
 #' idempotent creation. This string is automatically filled on your behalf
 #' when you use the Command Line Interface (CLI) or an Amazon Web Services
 #' SDK.
@@ -475,18 +552,28 @@ fsx_create_file_system <- function(ClientRequestToken = NULL, FileSystemType, St
 #' choose to specify `FileSystemTypeVersion` when creating from backup, the
 #' value must match the backup's `FileSystemTypeVersion` setting.
 #' @param OpenZFSConfiguration The OpenZFS configuration for the file system that's being created.
+#' @param StorageCapacity Sets the storage capacity of the OpenZFS file system that you're
+#' creating from a backup, in gibibytes (GiB). Valid values are from 64 GiB
+#' up to 524,288 GiB (512 TiB). However, the value that you specify must be
+#' equal to or greater than the backup's storage capacity value. If you
+#' don't use the `StorageCapacity` parameter, the default is the backup's
+#' `StorageCapacity` value.
+#' 
+#' If used to create a file system other than OpenZFS, you must provide a
+#' value that matches the backup's `StorageCapacity` value. If you provide
+#' any other value, Amazon FSx responds with a 400 Bad Request.
 #'
 #' @keywords internal
 #'
 #' @rdname fsx_create_file_system_from_backup
-fsx_create_file_system_from_backup <- function(BackupId, ClientRequestToken = NULL, SubnetIds, SecurityGroupIds = NULL, Tags = NULL, WindowsConfiguration = NULL, LustreConfiguration = NULL, StorageType = NULL, KmsKeyId = NULL, FileSystemTypeVersion = NULL, OpenZFSConfiguration = NULL) {
+fsx_create_file_system_from_backup <- function(BackupId, ClientRequestToken = NULL, SubnetIds, SecurityGroupIds = NULL, Tags = NULL, WindowsConfiguration = NULL, LustreConfiguration = NULL, StorageType = NULL, KmsKeyId = NULL, FileSystemTypeVersion = NULL, OpenZFSConfiguration = NULL, StorageCapacity = NULL) {
   op <- new_operation(
     name = "CreateFileSystemFromBackup",
     http_method = "POST",
     http_path = "/",
     paginator = list()
   )
-  input <- .fsx$create_file_system_from_backup_input(BackupId = BackupId, ClientRequestToken = ClientRequestToken, SubnetIds = SubnetIds, SecurityGroupIds = SecurityGroupIds, Tags = Tags, WindowsConfiguration = WindowsConfiguration, LustreConfiguration = LustreConfiguration, StorageType = StorageType, KmsKeyId = KmsKeyId, FileSystemTypeVersion = FileSystemTypeVersion, OpenZFSConfiguration = OpenZFSConfiguration)
+  input <- .fsx$create_file_system_from_backup_input(BackupId = BackupId, ClientRequestToken = ClientRequestToken, SubnetIds = SubnetIds, SecurityGroupIds = SecurityGroupIds, Tags = Tags, WindowsConfiguration = WindowsConfiguration, LustreConfiguration = LustreConfiguration, StorageType = StorageType, KmsKeyId = KmsKeyId, FileSystemTypeVersion = FileSystemTypeVersion, OpenZFSConfiguration = OpenZFSConfiguration, StorageCapacity = StorageCapacity)
   output <- .fsx$create_file_system_from_backup_output()
   config <- get_config()
   svc <- .fsx$service(config)
@@ -501,7 +588,7 @@ fsx_create_file_system_from_backup <- function(BackupId, ClientRequestToken = NU
 #' @description
 #' Creates a snapshot of an existing Amazon FSx for OpenZFS volume. With snapshots, you can easily undo file changes and compare file versions by restoring the volume to a previous version.
 #'
-#' See [https://paws-r.github.io/docs/fsx/create_snapshot.html](https://paws-r.github.io/docs/fsx/create_snapshot.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/fsx_create_snapshot/](https://www.paws-r-sdk.com/docs/fsx_create_snapshot/) for full documentation.
 #'
 #' @param ClientRequestToken 
 #' @param Name &#91;required&#93; The name of the snapshot.
@@ -534,7 +621,7 @@ fsx_create_snapshot <- function(ClientRequestToken = NULL, Name, VolumeId, Tags 
 #' @description
 #' Creates a storage virtual machine (SVM) for an Amazon FSx for ONTAP file system.
 #'
-#' See [https://paws-r.github.io/docs/fsx/create_storage_virtual_machine.html](https://paws-r.github.io/docs/fsx/create_storage_virtual_machine.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/fsx_create_storage_virtual_machine/](https://www.paws-r-sdk.com/docs/fsx_create_storage_virtual_machine/) for full documentation.
 #'
 #' @param ActiveDirectoryConfiguration Describes the self-managed Microsoft Active Directory to which you want
 #' to join the SVM. Joining an Active Directory provides user
@@ -586,7 +673,7 @@ fsx_create_storage_virtual_machine <- function(ActiveDirectoryConfiguration = NU
 #' @description
 #' Creates an FSx for ONTAP or Amazon FSx for OpenZFS storage volume.
 #'
-#' See [https://paws-r.github.io/docs/fsx/create_volume.html](https://paws-r.github.io/docs/fsx/create_volume.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/fsx_create_volume/](https://www.paws-r-sdk.com/docs/fsx_create_volume/) for full documentation.
 #'
 #' @param ClientRequestToken 
 #' @param VolumeType &#91;required&#93; Specifies the type of volume to create; `ONTAP` and `OPENZFS` are the
@@ -622,7 +709,7 @@ fsx_create_volume <- function(ClientRequestToken = NULL, VolumeType, Name, Ontap
 #' @description
 #' Creates a new Amazon FSx for NetApp ONTAP volume from an existing Amazon FSx volume backup.
 #'
-#' See [https://paws-r.github.io/docs/fsx/create_volume_from_backup.html](https://paws-r.github.io/docs/fsx/create_volume_from_backup.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/fsx_create_volume_from_backup/](https://www.paws-r-sdk.com/docs/fsx_create_volume_from_backup/) for full documentation.
 #'
 #' @param BackupId &#91;required&#93; 
 #' @param ClientRequestToken 
@@ -655,10 +742,10 @@ fsx_create_volume_from_backup <- function(BackupId, ClientRequestToken = NULL, N
 #' @description
 #' Deletes an Amazon FSx backup. After deletion, the backup no longer exists, and its data is gone.
 #'
-#' See [https://paws-r.github.io/docs/fsx/delete_backup.html](https://paws-r.github.io/docs/fsx/delete_backup.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/fsx_delete_backup/](https://www.paws-r-sdk.com/docs/fsx_delete_backup/) for full documentation.
 #'
 #' @param BackupId &#91;required&#93; The ID of the backup that you want to delete.
-#' @param ClientRequestToken A string of up to 64 ASCII characters that Amazon FSx uses to ensure
+#' @param ClientRequestToken A string of up to 63 ASCII characters that Amazon FSx uses to ensure
 #' idempotent deletion. This parameter is automatically filled on your
 #' behalf when using the CLI or SDK.
 #'
@@ -686,19 +773,19 @@ fsx_delete_backup <- function(BackupId, ClientRequestToken = NULL) {
 #' system
 #'
 #' @description
-#' Deletes a data repository association on an Amazon FSx for Lustre file system. Deleting the data repository association unlinks the file system from the Amazon S3 bucket. When deleting a data repository association, you have the option of deleting the data in the file system that corresponds to the data repository association. Data repository associations are supported only for file systems with the `Persistent_2` deployment type.
+#' Deletes a data repository association on an Amazon FSx for Lustre file system. Deleting the data repository association unlinks the file system from the Amazon S3 bucket. When deleting a data repository association, you have the option of deleting the data in the file system that corresponds to the data repository association. Data repository associations are supported on all FSx for Lustre 2.12 and newer file systems, excluding `scratch_1` deployment type.
 #'
-#' See [https://paws-r.github.io/docs/fsx/delete_data_repository_association.html](https://paws-r.github.io/docs/fsx/delete_data_repository_association.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/fsx_delete_data_repository_association/](https://www.paws-r-sdk.com/docs/fsx_delete_data_repository_association/) for full documentation.
 #'
 #' @param AssociationId &#91;required&#93; The ID of the data repository association that you want to delete.
 #' @param ClientRequestToken 
-#' @param DeleteDataInFileSystem &#91;required&#93; Set to `true` to delete the data in the file system that corresponds to
+#' @param DeleteDataInFileSystem Set to `true` to delete the data in the file system that corresponds to
 #' the data repository association.
 #'
 #' @keywords internal
 #'
 #' @rdname fsx_delete_data_repository_association
-fsx_delete_data_repository_association <- function(AssociationId, ClientRequestToken = NULL, DeleteDataInFileSystem) {
+fsx_delete_data_repository_association <- function(AssociationId, ClientRequestToken = NULL, DeleteDataInFileSystem = NULL) {
   op <- new_operation(
     name = "DeleteDataRepositoryAssociation",
     http_method = "POST",
@@ -715,15 +802,45 @@ fsx_delete_data_repository_association <- function(AssociationId, ClientRequestT
 }
 .fsx$operations$delete_data_repository_association <- fsx_delete_data_repository_association
 
+#' Deletes an Amazon File Cache resource
+#'
+#' @description
+#' Deletes an Amazon File Cache resource. After deletion, the cache no longer exists, and its data is gone.
+#'
+#' See [https://www.paws-r-sdk.com/docs/fsx_delete_file_cache/](https://www.paws-r-sdk.com/docs/fsx_delete_file_cache/) for full documentation.
+#'
+#' @param FileCacheId &#91;required&#93; The ID of the cache that's being deleted.
+#' @param ClientRequestToken 
+#'
+#' @keywords internal
+#'
+#' @rdname fsx_delete_file_cache
+fsx_delete_file_cache <- function(FileCacheId, ClientRequestToken = NULL) {
+  op <- new_operation(
+    name = "DeleteFileCache",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .fsx$delete_file_cache_input(FileCacheId = FileCacheId, ClientRequestToken = ClientRequestToken)
+  output <- .fsx$delete_file_cache_output()
+  config <- get_config()
+  svc <- .fsx$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.fsx$operations$delete_file_cache <- fsx_delete_file_cache
+
 #' Deletes a file system
 #'
 #' @description
 #' Deletes a file system. After deletion, the file system no longer exists, and its data is gone. Any existing automatic backups and snapshots are also deleted.
 #'
-#' See [https://paws-r.github.io/docs/fsx/delete_file_system.html](https://paws-r.github.io/docs/fsx/delete_file_system.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/fsx_delete_file_system/](https://www.paws-r-sdk.com/docs/fsx_delete_file_system/) for full documentation.
 #'
 #' @param FileSystemId &#91;required&#93; The ID of the file system that you want to delete.
-#' @param ClientRequestToken A string of up to 64 ASCII characters that Amazon FSx uses to ensure
+#' @param ClientRequestToken A string of up to 63 ASCII characters that Amazon FSx uses to ensure
 #' idempotent deletion. This token is automatically filled on your behalf
 #' when using the Command Line Interface (CLI) or an Amazon Web Services
 #' SDK.
@@ -757,7 +874,7 @@ fsx_delete_file_system <- function(FileSystemId, ClientRequestToken = NULL, Wind
 #' @description
 #' Deletes an Amazon FSx for OpenZFS snapshot. After deletion, the snapshot no longer exists, and its data is gone. Deleting a snapshot doesn't affect snapshots stored in a file system backup.
 #'
-#' See [https://paws-r.github.io/docs/fsx/delete_snapshot.html](https://paws-r.github.io/docs/fsx/delete_snapshot.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/fsx_delete_snapshot/](https://www.paws-r-sdk.com/docs/fsx_delete_snapshot/) for full documentation.
 #'
 #' @param ClientRequestToken 
 #' @param SnapshotId &#91;required&#93; The ID of the snapshot that you want to delete.
@@ -787,7 +904,7 @@ fsx_delete_snapshot <- function(ClientRequestToken = NULL, SnapshotId) {
 #' @description
 #' Deletes an existing Amazon FSx for ONTAP storage virtual machine (SVM). Prior to deleting an SVM, you must delete all non-root volumes in the SVM, otherwise the operation will fail.
 #'
-#' See [https://paws-r.github.io/docs/fsx/delete_storage_virtual_machine.html](https://paws-r.github.io/docs/fsx/delete_storage_virtual_machine.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/fsx_delete_storage_virtual_machine/](https://www.paws-r-sdk.com/docs/fsx_delete_storage_virtual_machine/) for full documentation.
 #'
 #' @param ClientRequestToken 
 #' @param StorageVirtualMachineId &#91;required&#93; The ID of the SVM that you want to delete.
@@ -817,7 +934,7 @@ fsx_delete_storage_virtual_machine <- function(ClientRequestToken = NULL, Storag
 #' @description
 #' Deletes an Amazon FSx for NetApp ONTAP or Amazon FSx for OpenZFS volume.
 #'
-#' See [https://paws-r.github.io/docs/fsx/delete_volume.html](https://paws-r.github.io/docs/fsx/delete_volume.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/fsx_delete_volume/](https://www.paws-r-sdk.com/docs/fsx_delete_volume/) for full documentation.
 #'
 #' @param ClientRequestToken 
 #' @param VolumeId &#91;required&#93; The ID of the volume that you are deleting.
@@ -853,7 +970,7 @@ fsx_delete_volume <- function(ClientRequestToken = NULL, VolumeId, OntapConfigur
 #' @description
 #' Returns the description of a specific Amazon FSx backup, if a `BackupIds` value is provided for that backup. Otherwise, it returns all backups owned by your Amazon Web Services account in the Amazon Web Services Region of the endpoint that you're calling.
 #'
-#' See [https://paws-r.github.io/docs/fsx/describe_backups.html](https://paws-r.github.io/docs/fsx/describe_backups.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/fsx_describe_backups/](https://www.paws-r-sdk.com/docs/fsx_describe_backups/) for full documentation.
 #'
 #' @param BackupIds The IDs of the backups that you want to retrieve. This parameter value
 #' overrides any filters. If any IDs aren't found, a `BackupNotFound` error
@@ -889,14 +1006,14 @@ fsx_describe_backups <- function(BackupIds = NULL, Filters = NULL, MaxResults = 
 }
 .fsx$operations$describe_backups <- fsx_describe_backups
 
-#' Returns the description of specific Amazon FSx for Lustre data
-#' repository associations, if one or more AssociationIds values are
-#' provided in the request, or if filters are used in the request
+#' Returns the description of specific Amazon FSx for Lustre or Amazon File
+#' Cache data repository associations, if one or more AssociationIds values
+#' are provided in the request, or if filters are used in the request
 #'
 #' @description
-#' Returns the description of specific Amazon FSx for Lustre data repository associations, if one or more `AssociationIds` values are provided in the request, or if filters are used in the request. Data repository associations are supported only for file systems with the `Persistent_2` deployment type.
+#' Returns the description of specific Amazon FSx for Lustre or Amazon File Cache data repository associations, if one or more `AssociationIds` values are provided in the request, or if filters are used in the request. Data repository associations are supported on Amazon File Cache resources and all FSx for Lustre 2.12 and newer file systems, excluding `scratch_1` deployment type.
 #'
-#' See [https://paws-r.github.io/docs/fsx/describe_data_repository_associations.html](https://paws-r.github.io/docs/fsx/describe_data_repository_associations.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/fsx_describe_data_repository_associations/](https://www.paws-r-sdk.com/docs/fsx_describe_data_repository_associations/) for full documentation.
 #'
 #' @param AssociationIds IDs of the data repository associations whose descriptions you want to
 #' retrieve (String).
@@ -925,14 +1042,14 @@ fsx_describe_data_repository_associations <- function(AssociationIds = NULL, Fil
 }
 .fsx$operations$describe_data_repository_associations <- fsx_describe_data_repository_associations
 
-#' Returns the description of specific Amazon FSx for Lustre data
-#' repository tasks, if one or more TaskIds values are provided in the
-#' request, or if filters are used in the request
+#' Returns the description of specific Amazon FSx for Lustre or Amazon File
+#' Cache data repository tasks, if one or more TaskIds values are provided
+#' in the request, or if filters are used in the request
 #'
 #' @description
-#' Returns the description of specific Amazon FSx for Lustre data repository tasks, if one or more `TaskIds` values are provided in the request, or if filters are used in the request. You can use filters to narrow the response to include just tasks for specific file systems, or tasks in a specific lifecycle state. Otherwise, it returns all data repository tasks owned by your Amazon Web Services account in the Amazon Web Services Region of the endpoint that you're calling.
+#' Returns the description of specific Amazon FSx for Lustre or Amazon File Cache data repository tasks, if one or more `TaskIds` values are provided in the request, or if filters are used in the request. You can use filters to narrow the response to include just tasks for specific file systems or caches, or tasks in a specific lifecycle state. Otherwise, it returns all data repository tasks owned by your Amazon Web Services account in the Amazon Web Services Region of the endpoint that you're calling.
 #'
-#' See [https://paws-r.github.io/docs/fsx/describe_data_repository_tasks.html](https://paws-r.github.io/docs/fsx/describe_data_repository_tasks.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/fsx_describe_data_repository_tasks/](https://www.paws-r-sdk.com/docs/fsx_describe_data_repository_tasks/) for full documentation.
 #'
 #' @param TaskIds (Optional) IDs of the tasks whose descriptions you want to retrieve
 #' (String).
@@ -963,13 +1080,45 @@ fsx_describe_data_repository_tasks <- function(TaskIds = NULL, Filters = NULL, M
 }
 .fsx$operations$describe_data_repository_tasks <- fsx_describe_data_repository_tasks
 
+#' Returns the description of a specific Amazon File Cache resource, if a
+#' FileCacheIds value is provided for that cache
+#'
+#' @description
+#' Returns the description of a specific Amazon File Cache resource, if a `FileCacheIds` value is provided for that cache. Otherwise, it returns descriptions of all caches owned by your Amazon Web Services account in the Amazon Web Services Region of the endpoint that you're calling.
+#'
+#' See [https://www.paws-r-sdk.com/docs/fsx_describe_file_caches/](https://www.paws-r-sdk.com/docs/fsx_describe_file_caches/) for full documentation.
+#'
+#' @param FileCacheIds IDs of the caches whose descriptions you want to retrieve (String).
+#' @param MaxResults 
+#' @param NextToken 
+#'
+#' @keywords internal
+#'
+#' @rdname fsx_describe_file_caches
+fsx_describe_file_caches <- function(FileCacheIds = NULL, MaxResults = NULL, NextToken = NULL) {
+  op <- new_operation(
+    name = "DescribeFileCaches",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .fsx$describe_file_caches_input(FileCacheIds = FileCacheIds, MaxResults = MaxResults, NextToken = NextToken)
+  output <- .fsx$describe_file_caches_output()
+  config <- get_config()
+  svc <- .fsx$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.fsx$operations$describe_file_caches <- fsx_describe_file_caches
+
 #' Returns the DNS aliases that are associated with the specified Amazon
 #' FSx for Windows File Server file system
 #'
 #' @description
 #' Returns the DNS aliases that are associated with the specified Amazon FSx for Windows File Server file system. A history of all DNS aliases that have been associated with and disassociated from the file system is available in the list of AdministrativeAction provided in the [`describe_file_systems`][fsx_describe_file_systems] operation response.
 #'
-#' See [https://paws-r.github.io/docs/fsx/describe_file_system_aliases.html](https://paws-r.github.io/docs/fsx/describe_file_system_aliases.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/fsx_describe_file_system_aliases/](https://www.paws-r-sdk.com/docs/fsx_describe_file_system_aliases/) for full documentation.
 #'
 #' @param ClientRequestToken 
 #' @param FileSystemId &#91;required&#93; The ID of the file system to return the associated DNS aliases for
@@ -1009,7 +1158,7 @@ fsx_describe_file_system_aliases <- function(ClientRequestToken = NULL, FileSyst
 #' @description
 #' Returns the description of specific Amazon FSx file systems, if a `FileSystemIds` value is provided for that file system. Otherwise, it returns descriptions of all file systems owned by your Amazon Web Services account in the Amazon Web Services Region of the endpoint that you're calling.
 #'
-#' See [https://paws-r.github.io/docs/fsx/describe_file_systems.html](https://paws-r.github.io/docs/fsx/describe_file_systems.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/fsx_describe_file_systems/](https://www.paws-r-sdk.com/docs/fsx_describe_file_systems/) for full documentation.
 #'
 #' @param FileSystemIds IDs of the file systems whose descriptions you want to retrieve
 #' (String).
@@ -1048,7 +1197,7 @@ fsx_describe_file_systems <- function(FileSystemIds = NULL, MaxResults = NULL, N
 #' @description
 #' Returns the description of specific Amazon FSx for OpenZFS snapshots, if a `SnapshotIds` value is provided. Otherwise, this operation returns all snapshots owned by your Amazon Web Services account in the Amazon Web Services Region of the endpoint that you're calling.
 #'
-#' See [https://paws-r.github.io/docs/fsx/describe_snapshots.html](https://paws-r.github.io/docs/fsx/describe_snapshots.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/fsx_describe_snapshots/](https://www.paws-r-sdk.com/docs/fsx_describe_snapshots/) for full documentation.
 #'
 #' @param SnapshotIds The IDs of the snapshots that you want to retrieve. This parameter value
 #' overrides any filters. If any IDs aren't found, a `SnapshotNotFound`
@@ -1084,7 +1233,7 @@ fsx_describe_snapshots <- function(SnapshotIds = NULL, Filters = NULL, MaxResult
 #' @description
 #' Describes one or more Amazon FSx for NetApp ONTAP storage virtual machines (SVMs).
 #'
-#' See [https://paws-r.github.io/docs/fsx/describe_storage_virtual_machines.html](https://paws-r.github.io/docs/fsx/describe_storage_virtual_machines.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/fsx_describe_storage_virtual_machines/](https://www.paws-r-sdk.com/docs/fsx_describe_storage_virtual_machines/) for full documentation.
 #'
 #' @param StorageVirtualMachineIds Enter the ID of one or more SVMs that you want to view.
 #' @param Filters Enter a filter name:value pair to view a select set of SVMs.
@@ -1117,7 +1266,7 @@ fsx_describe_storage_virtual_machines <- function(StorageVirtualMachineIds = NUL
 #' @description
 #' Describes one or more Amazon FSx for NetApp ONTAP or Amazon FSx for OpenZFS volumes.
 #'
-#' See [https://paws-r.github.io/docs/fsx/describe_volumes.html](https://paws-r.github.io/docs/fsx/describe_volumes.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/fsx_describe_volumes/](https://www.paws-r-sdk.com/docs/fsx_describe_volumes/) for full documentation.
 #'
 #' @param VolumeIds The IDs of the volumes whose descriptions you want to retrieve.
 #' @param Filters Enter a filter `Name` and `Values` pair to view a select set of volumes.
@@ -1151,7 +1300,7 @@ fsx_describe_volumes <- function(VolumeIds = NULL, Filters = NULL, MaxResults = 
 #' @description
 #' Use this action to disassociate, or remove, one or more Domain Name Service (DNS) aliases from an Amazon FSx for Windows File Server file system. If you attempt to disassociate a DNS alias that is not associated with the file system, Amazon FSx responds with a 400 Bad Request. For more information, see [Working with DNS Aliases](https://docs.aws.amazon.com/fsx/latest/WindowsGuide/managing-dns-aliases.html).
 #'
-#' See [https://paws-r.github.io/docs/fsx/disassociate_file_system_aliases.html](https://paws-r.github.io/docs/fsx/disassociate_file_system_aliases.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/fsx_disassociate_file_system_aliases/](https://www.paws-r-sdk.com/docs/fsx_disassociate_file_system_aliases/) for full documentation.
 #'
 #' @param ClientRequestToken 
 #' @param FileSystemId &#91;required&#93; Specifies the file system from which to disassociate the DNS aliases.
@@ -1183,7 +1332,7 @@ fsx_disassociate_file_system_aliases <- function(ClientRequestToken = NULL, File
 #' @description
 #' Lists tags for Amazon FSx resources.
 #'
-#' See [https://paws-r.github.io/docs/fsx/list_tags_for_resource.html](https://paws-r.github.io/docs/fsx/list_tags_for_resource.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/fsx_list_tags_for_resource/](https://www.paws-r-sdk.com/docs/fsx_list_tags_for_resource/) for full documentation.
 #'
 #' @param ResourceARN &#91;required&#93; The ARN of the Amazon FSx resource that will have its tags listed.
 #' @param MaxResults Maximum number of tags to return in the response (integer). This
@@ -1220,7 +1369,7 @@ fsx_list_tags_for_resource <- function(ResourceARN, MaxResults = NULL, NextToken
 #' @description
 #' Releases the file system lock from an Amazon FSx for OpenZFS file system.
 #'
-#' See [https://paws-r.github.io/docs/fsx/release_file_system_nfs_v3_locks.html](https://paws-r.github.io/docs/fsx/release_file_system_nfs_v3_locks.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/fsx_release_file_system_nfs_v3_locks/](https://www.paws-r-sdk.com/docs/fsx_release_file_system_nfs_v3_locks/) for full documentation.
 #'
 #' @param FileSystemId &#91;required&#93; 
 #' @param ClientRequestToken 
@@ -1251,7 +1400,7 @@ fsx_release_file_system_nfs_v3_locks <- function(FileSystemId, ClientRequestToke
 #' @description
 #' Returns an Amazon FSx for OpenZFS volume to the state saved by the specified snapshot.
 #'
-#' See [https://paws-r.github.io/docs/fsx/restore_volume_from_snapshot.html](https://paws-r.github.io/docs/fsx/restore_volume_from_snapshot.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/fsx_restore_volume_from_snapshot/](https://www.paws-r-sdk.com/docs/fsx_restore_volume_from_snapshot/) for full documentation.
 #'
 #' @param ClientRequestToken 
 #' @param VolumeId &#91;required&#93; The ID of the volume that you are restoring.
@@ -1296,7 +1445,7 @@ fsx_restore_volume_from_snapshot <- function(ClientRequestToken = NULL, VolumeId
 #' @description
 #' Tags an Amazon FSx resource.
 #'
-#' See [https://paws-r.github.io/docs/fsx/tag_resource.html](https://paws-r.github.io/docs/fsx/tag_resource.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/fsx_tag_resource/](https://www.paws-r-sdk.com/docs/fsx_tag_resource/) for full documentation.
 #'
 #' @param ResourceARN &#91;required&#93; The Amazon Resource Name (ARN) of the Amazon FSx resource that you want
 #' to tag.
@@ -1328,7 +1477,7 @@ fsx_tag_resource <- function(ResourceARN, Tags) {
 #' @description
 #' This action removes a tag from an Amazon FSx resource.
 #'
-#' See [https://paws-r.github.io/docs/fsx/untag_resource.html](https://paws-r.github.io/docs/fsx/untag_resource.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/fsx_untag_resource/](https://www.paws-r-sdk.com/docs/fsx_untag_resource/) for full documentation.
 #'
 #' @param ResourceARN &#91;required&#93; The ARN of the Amazon FSx resource to untag.
 #' @param TagKeys &#91;required&#93; A list of keys of tags on the resource to untag. In case the tag key
@@ -1358,9 +1507,9 @@ fsx_untag_resource <- function(ResourceARN, TagKeys) {
 #' an Amazon FSx for Lustre file system
 #'
 #' @description
-#' Updates the configuration of an existing data repository association on an Amazon FSx for Lustre file system. Data repository associations are supported only for file systems with the `Persistent_2` deployment type.
+#' Updates the configuration of an existing data repository association on an Amazon FSx for Lustre file system. Data repository associations are supported on all FSx for Lustre 2.12 and newer file systems, excluding `scratch_1` deployment type.
 #'
-#' See [https://paws-r.github.io/docs/fsx/update_data_repository_association.html](https://paws-r.github.io/docs/fsx/update_data_repository_association.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/fsx_update_data_repository_association/](https://www.paws-r-sdk.com/docs/fsx_update_data_repository_association/) for full documentation.
 #'
 #' @param AssociationId &#91;required&#93; The ID of the data repository association that you are updating.
 #' @param ClientRequestToken 
@@ -1399,34 +1548,57 @@ fsx_update_data_repository_association <- function(AssociationId, ClientRequestT
 }
 .fsx$operations$update_data_repository_association <- fsx_update_data_repository_association
 
+#' Updates the configuration of an existing Amazon File Cache resource
+#'
+#' @description
+#' Updates the configuration of an existing Amazon File Cache resource. You can update multiple properties in a single request.
+#'
+#' See [https://www.paws-r-sdk.com/docs/fsx_update_file_cache/](https://www.paws-r-sdk.com/docs/fsx_update_file_cache/) for full documentation.
+#'
+#' @param FileCacheId &#91;required&#93; The ID of the cache that you are updating.
+#' @param ClientRequestToken 
+#' @param LustreConfiguration The configuration updates for an Amazon File Cache resource.
+#'
+#' @keywords internal
+#'
+#' @rdname fsx_update_file_cache
+fsx_update_file_cache <- function(FileCacheId, ClientRequestToken = NULL, LustreConfiguration = NULL) {
+  op <- new_operation(
+    name = "UpdateFileCache",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .fsx$update_file_cache_input(FileCacheId = FileCacheId, ClientRequestToken = ClientRequestToken, LustreConfiguration = LustreConfiguration)
+  output <- .fsx$update_file_cache_output()
+  config <- get_config()
+  svc <- .fsx$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.fsx$operations$update_file_cache <- fsx_update_file_cache
+
 #' Use this operation to update the configuration of an existing Amazon FSx
 #' file system
 #'
 #' @description
 #' Use this operation to update the configuration of an existing Amazon FSx file system. You can update multiple properties in a single request.
 #'
-#' See [https://paws-r.github.io/docs/fsx/update_file_system.html](https://paws-r.github.io/docs/fsx/update_file_system.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/fsx_update_file_system/](https://www.paws-r-sdk.com/docs/fsx_update_file_system/) for full documentation.
 #'
 #' @param FileSystemId &#91;required&#93; The ID of the file system that you are updating.
-#' @param ClientRequestToken A string of up to 64 ASCII characters that Amazon FSx uses to ensure
+#' @param ClientRequestToken A string of up to 63 ASCII characters that Amazon FSx uses to ensure
 #' idempotent updates. This string is automatically filled on your behalf
 #' when you use the Command Line Interface (CLI) or an Amazon Web Services
 #' SDK.
-#' @param StorageCapacity Use this parameter to increase the storage capacity of an Amazon FSx for
-#' Windows File Server, Amazon FSx for Lustre, or Amazon FSx for NetApp
-#' ONTAP file system. Specifies the storage capacity target value, in GiB,
-#' to increase the storage capacity for the file system that you're
-#' updating.
+#' @param StorageCapacity Use this parameter to increase the storage capacity of an FSx for
+#' Windows File Server, FSx for Lustre, FSx for OpenZFS, or FSx for ONTAP
+#' file system. Specifies the storage capacity target value, in GiB, to
+#' increase the storage capacity for the file system that you're updating.
 #' 
 #' You can't make a storage capacity increase request if there is an
 #' existing storage capacity increase request in progress.
-#' 
-#' For Windows file systems, the storage capacity target value must be at
-#' least 10 percent greater than the current storage capacity value. To
-#' increase storage capacity, the file system must have at least 16 MBps of
-#' throughput capacity. For more information, see [Managing storage
-#' capacity](https://docs.aws.amazon.com/fsx/latest/WindowsGuide/managing-storage-capacity.html)
-#' in the *Amazon FSx for Windows File Server User Guide*.
 #' 
 #' For Lustre file systems, the storage capacity target value can be the
 #' following:
@@ -1445,7 +1617,20 @@ fsx_update_data_repository_association <- function(AssociationId, ClientRequestT
 #' 
 #' For more information, see [Managing storage and throughput
 #' capacity](https://docs.aws.amazon.com/fsx/latest/LustreGuide/managing-storage-capacity.html)
-#' in the *Amazon FSx for Lustre User Guide*.
+#' in the *FSx for Lustre User Guide*.
+#' 
+#' For FSx for OpenZFS file systems, the storage capacity target value must
+#' be at least 10 percent greater than the current storage capacity value.
+#' For more information, see [Managing storage
+#' capacity](https://docs.aws.amazon.com/fsx/latest/OpenZFSGuide/managing-storage-capacity.html)
+#' in the *FSx for OpenZFS User Guide*.
+#' 
+#' For Windows file systems, the storage capacity target value must be at
+#' least 10 percent greater than the current storage capacity value. To
+#' increase storage capacity, the file system must have at least 16 MBps of
+#' throughput capacity. For more information, see [Managing storage
+#' capacity](https://docs.aws.amazon.com/fsx/latest/WindowsGuide/managing-storage-capacity.html)
+#' in the *Amazon FSxfor Windows File Server User Guide*.
 #' 
 #' For ONTAP file systems, the storage capacity target value must be at
 #' least 10 percent greater than the current storage capacity value. For
@@ -1456,7 +1641,7 @@ fsx_update_data_repository_association <- function(AssociationId, ClientRequestT
 #' system.
 #' @param LustreConfiguration 
 #' @param OntapConfiguration 
-#' @param OpenZFSConfiguration The configuration updates for an Amazon FSx for OpenZFS file system.
+#' @param OpenZFSConfiguration The configuration updates for an FSx for OpenZFS file system.
 #'
 #' @keywords internal
 #'
@@ -1483,7 +1668,7 @@ fsx_update_file_system <- function(FileSystemId, ClientRequestToken = NULL, Stor
 #' @description
 #' Updates the name of an Amazon FSx for OpenZFS snapshot.
 #'
-#' See [https://paws-r.github.io/docs/fsx/update_snapshot.html](https://paws-r.github.io/docs/fsx/update_snapshot.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/fsx_update_snapshot/](https://www.paws-r-sdk.com/docs/fsx_update_snapshot/) for full documentation.
 #'
 #' @param ClientRequestToken 
 #' @param Name &#91;required&#93; The name of the snapshot to update.
@@ -1510,19 +1695,19 @@ fsx_update_snapshot <- function(ClientRequestToken = NULL, Name, SnapshotId) {
 }
 .fsx$operations$update_snapshot <- fsx_update_snapshot
 
-#' Updates an Amazon FSx for ONTAP storage virtual machine (SVM)
+#' Updates an FSx for ONTAP storage virtual machine (SVM)
 #'
 #' @description
-#' Updates an Amazon FSx for ONTAP storage virtual machine (SVM).
+#' Updates an FSx for ONTAP storage virtual machine (SVM).
 #'
-#' See [https://paws-r.github.io/docs/fsx/update_storage_virtual_machine.html](https://paws-r.github.io/docs/fsx/update_storage_virtual_machine.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/fsx_update_storage_virtual_machine/](https://www.paws-r-sdk.com/docs/fsx_update_storage_virtual_machine/) for full documentation.
 #'
-#' @param ActiveDirectoryConfiguration Updates the Microsoft Active Directory (AD) configuration for an SVM
-#' that is joined to an AD.
+#' @param ActiveDirectoryConfiguration Specifies updates to an SVM's Microsoft Active Directory (AD)
+#' configuration.
 #' @param ClientRequestToken 
 #' @param StorageVirtualMachineId &#91;required&#93; The ID of the SVM that you want to update, in the format
 #' `svm-0123456789abcdef0`.
-#' @param SvmAdminPassword Enter a new SvmAdminPassword if you are updating it.
+#' @param SvmAdminPassword Specifies a new SvmAdminPassword.
 #'
 #' @keywords internal
 #'
@@ -1550,7 +1735,7 @@ fsx_update_storage_virtual_machine <- function(ActiveDirectoryConfiguration = NU
 #' @description
 #' Updates the configuration of an Amazon FSx for NetApp ONTAP or Amazon FSx for OpenZFS volume.
 #'
-#' See [https://paws-r.github.io/docs/fsx/update_volume.html](https://paws-r.github.io/docs/fsx/update_volume.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/fsx_update_volume/](https://www.paws-r-sdk.com/docs/fsx_update_volume/) for full documentation.
 #'
 #' @param ClientRequestToken 
 #' @param VolumeId &#91;required&#93; The ID of the volume that you want to update, in the format

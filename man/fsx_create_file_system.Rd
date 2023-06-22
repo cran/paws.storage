@@ -21,7 +21,7 @@ fsx_create_file_system(
 )
 }
 \arguments{
-\item{ClientRequestToken}{A string of up to 64 ASCII characters that Amazon FSx uses to ensure
+\item{ClientRequestToken}{A string of up to 63 ASCII characters that Amazon FSx uses to ensure
 idempotent creation. This string is automatically filled on your behalf
 when you use the Command Line Interface (CLI) or an Amazon Web Services
 SDK.}
@@ -126,6 +126,6 @@ operation fails.}
 \description{
 Creates a new, empty Amazon FSx file system. You can create the following supported Amazon FSx file systems using the \code{\link[=fsx_create_file_system]{create_file_system}} API operation:
 
-See \url{https://paws-r.github.io/docs/fsx/create_file_system.html} for full documentation.
+See \url{https://www.paws-r-sdk.com/docs/fsx_create_file_system/} for full documentation.
 }
 \keyword{internal}

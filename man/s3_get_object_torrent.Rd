@@ -24,8 +24,8 @@ different account, the request fails with the HTTP status code
 \verb{403 Forbidden} (access denied).}
 }
 \description{
-Returns torrent files from a bucket. BitTorrent can save you bandwidth when you're distributing large files. For more information about BitTorrent, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/uploading-downloading-objects.html}{Using BitTorrent with Amazon S3}.
+Returns torrent files from a bucket. BitTorrent can save you bandwidth when you're distributing large files.
 
-See \url{https://paws-r.github.io/docs/s3/get_object_torrent.html} for full documentation.
+See \url{https://www.paws-r-sdk.com/docs/s3_get_object_torrent/} for full documentation.
 }
 \keyword{internal}

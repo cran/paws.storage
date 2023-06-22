@@ -7,7 +7,8 @@
 s3control_get_access_point(AccountId, Name)
 }
 \arguments{
-\item{AccountId}{[required] The account ID for the account that owns the specified access point.}
+\item{AccountId}{[required] The Amazon Web Services account ID for the account that owns the
+specified access point.}
 
 \item{Name}{[required] The name of the access point whose configuration information you want to
 retrieve.
@@ -19,7 +20,7 @@ For using this parameter with S3 on Outposts with the Amazon Web
 Services SDK and CLI, you must specify the ARN of the access point
 accessed in the format
 \verb{arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/accesspoint/<my-accesspoint-name>}.
-For example, to access the access point \code{reports-ap} through outpost
+For example, to access the access point \code{reports-ap} through Outpost
 \code{my-outpost} owned by account \code{123456789012} in Region \code{us-west-2}, use
 the URL encoding of
 \code{arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/accesspoint/reports-ap}.
@@ -28,6 +29,6 @@ The value must be URL encoded.}
 \description{
 Returns configuration information about the specified access point.
 
-See \url{https://paws-r.github.io/docs/s3control/get_access_point.html} for full documentation.
+See \url{https://www.paws-r-sdk.com/docs/s3control_get_access_point/} for full documentation.
 }
 \keyword{internal}

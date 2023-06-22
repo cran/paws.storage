@@ -9,13 +9,13 @@ fsx_delete_backup(BackupId, ClientRequestToken = NULL)
 \arguments{
 \item{BackupId}{[required] The ID of the backup that you want to delete.}
 
-\item{ClientRequestToken}{A string of up to 64 ASCII characters that Amazon FSx uses to ensure
+\item{ClientRequestToken}{A string of up to 63 ASCII characters that Amazon FSx uses to ensure
 idempotent deletion. This parameter is automatically filled on your
 behalf when using the CLI or SDK.}
 }
 \description{
 Deletes an Amazon FSx backup. After deletion, the backup no longer exists, and its data is gone.
 
-See \url{https://paws-r.github.io/docs/fsx/delete_backup.html} for full documentation.
+See \url{https://www.paws-r-sdk.com/docs/fsx_delete_backup/} for full documentation.
 }
 \keyword{internal}

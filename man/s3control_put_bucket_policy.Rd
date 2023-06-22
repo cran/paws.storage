@@ -23,7 +23,7 @@ For using this parameter with S3 on Outposts with the Amazon Web
 Services SDK and CLI, you must specify the ARN of the bucket accessed in
 the format
 \verb{arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>}.
-For example, to access the bucket \code{reports} through outpost \code{my-outpost}
+For example, to access the bucket \code{reports} through Outpost \code{my-outpost}
 owned by account \code{123456789012} in Region \code{us-west-2}, use the URL
 encoding of
 \code{arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/bucket/reports}.
@@ -39,6 +39,6 @@ This is not supported by Amazon S3 on Outposts buckets.}
 \description{
 This action puts a bucket policy to an Amazon S3 on Outposts bucket. To put a policy on an S3 bucket, see \code{\link[=s3control_put_bucket_policy]{put_bucket_policy}} in the \emph{Amazon S3 API Reference}.
 
-See \url{https://paws-r.github.io/docs/s3control/put_bucket_policy.html} for full documentation.
+See \url{https://www.paws-r-sdk.com/docs/s3control_put_bucket_policy/} for full documentation.
 }
 \keyword{internal}

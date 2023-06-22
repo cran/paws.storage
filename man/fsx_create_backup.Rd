@@ -16,7 +16,7 @@ fsx_create_backup(
 \arguments{
 \item{FileSystemId}{The ID of the file system to back up.}
 
-\item{ClientRequestToken}{(Optional) A string of up to 64 ASCII characters that Amazon FSx uses to
+\item{ClientRequestToken}{(Optional) A string of up to 63 ASCII characters that Amazon FSx uses to
 ensure idempotent creation. This string is automatically filled on your
 behalf when you use the Command Line Interface (CLI) or an Amazon Web
 Services SDK.}
@@ -32,6 +32,6 @@ existing file system tags are copied from the file system to the backup.}
 \description{
 Creates a backup of an existing Amazon FSx for Windows File Server file system, Amazon FSx for Lustre file system, Amazon FSx for NetApp ONTAP volume, or Amazon FSx for OpenZFS file system. We recommend creating regular backups so that you can restore a file system or volume from a backup if an issue arises with the original file system or volume.
 
-See \url{https://paws-r.github.io/docs/fsx/create_backup.html} for full documentation.
+See \url{https://www.paws-r-sdk.com/docs/fsx_create_backup/} for full documentation.
 }
 \keyword{internal}
