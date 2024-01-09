@@ -19,33 +19,33 @@ NULL
 #' config
 #' Optional configuration of credentials, endpoint, and/or region.
 #' \itemize{
-#' \item{\strong{credentials}:} {\itemize{
-#' \item{\strong{creds}:} {\itemize{
-#' \item{\strong{access_key_id}:} {AWS access key ID}
-#' \item{\strong{secret_access_key}:} {AWS secret access key}
-#' \item{\strong{session_token}:} {AWS temporary session token}
+#' \item{\strong{credentials}: \itemize{
+#' \item{\strong{creds}: \itemize{
+#' \item{\strong{access_key_id}: AWS access key ID}
+#' \item{\strong{secret_access_key}: AWS secret access key}
+#' \item{\strong{session_token}: AWS temporary session token}
 #' }}
-#' \item{\strong{profile}:} {The name of a profile to use. If not given, then the default profile is used.}
-#' \item{\strong{anonymous}:} {Set anonymous credentials.}
-#' \item{\strong{endpoint}:} {The complete URL to use for the constructed client.}
-#' \item{\strong{region}:} {The AWS Region used in instantiating the client.}
+#' \item{\strong{profile}: The name of a profile to use. If not given, then the default profile is used.}
+#' \item{\strong{anonymous}: Set anonymous credentials.}
 #' }}
-#' \item{\strong{close_connection}:} {Immediately close all HTTP connections.}
-#' \item{\strong{timeout}:} {The time in seconds till a timeout exception is thrown when attempting to make a connection. The default is 60 seconds.}
-#' \item{\strong{s3_force_path_style}:} {Set this to `true` to force the request to use path-style addressing, i.e. `http://s3.amazonaws.com/BUCKET/KEY`.}
-#' \item{\strong{sts_regional_endpoint}:} {Set sts regional endpoint resolver to regional or legacy \url{https://docs.aws.amazon.com/sdkref/latest/guide/feature-sts-regionalized-endpoints.html}}
+#' \item{\strong{endpoint}: The complete URL to use for the constructed client.}
+#' \item{\strong{region}: The AWS Region used in instantiating the client.}
+#' \item{\strong{close_connection}: Immediately close all HTTP connections.}
+#' \item{\strong{timeout}: The time in seconds till a timeout exception is thrown when attempting to make a connection. The default is 60 seconds.}
+#' \item{\strong{s3_force_path_style}: Set this to `true` to force the request to use path-style addressing, i.e. `http://s3.amazonaws.com/BUCKET/KEY`.}
+#' \item{\strong{sts_regional_endpoint}: Set sts regional endpoint resolver to regional or legacy \url{https://docs.aws.amazon.com/sdkref/latest/guide/feature-sts-regionalized-endpoints.html}}
 #' }
 #' @param
 #' credentials
 #' Optional credentials shorthand for the config parameter
 #' \itemize{
-#' \item{\strong{creds}:} {\itemize{
-#' \item{\strong{access_key_id}:} {AWS access key ID}
-#' \item{\strong{secret_access_key}:} {AWS secret access key}
-#' \item{\strong{session_token}:} {AWS temporary session token}
+#' \item{\strong{creds}: \itemize{
+#' \item{\strong{access_key_id}: AWS access key ID}
+#' \item{\strong{secret_access_key}: AWS secret access key}
+#' \item{\strong{session_token}: AWS temporary session token}
 #' }}
-#' \item{\strong{profile}:} {The name of a profile to use. If not given, then the default profile is used.}
-#' \item{\strong{anonymous}:} {Set anonymous credentials.}
+#' \item{\strong{profile}: The name of a profile to use. If not given, then the default profile is used.}
+#' \item{\strong{anonymous}: Set anonymous credentials.}
 #' }
 #' @param
 #' endpoint
@@ -118,7 +118,7 @@ NULL
 #'  \link[=efs_delete_file_system]{delete_file_system} \tab Deletes a file system, permanently severing access to its contents\cr
 #'  \link[=efs_delete_file_system_policy]{delete_file_system_policy} \tab Deletes the FileSystemPolicy for the specified file system\cr
 #'  \link[=efs_delete_mount_target]{delete_mount_target} \tab Deletes the specified mount target\cr
-#'  \link[=efs_delete_replication_configuration]{delete_replication_configuration} \tab Deletes an existing replication configuration\cr
+#'  \link[=efs_delete_replication_configuration]{delete_replication_configuration} \tab Deletes a replication configuration\cr
 #'  \link[=efs_delete_tags]{delete_tags} \tab DEPRECATED - DeleteTags is deprecated and not maintained\cr
 #'  \link[=efs_describe_access_points]{describe_access_points} \tab Returns the description of a specific Amazon EFS access point if the AccessPointId is provided\cr
 #'  \link[=efs_describe_account_preferences]{describe_account_preferences} \tab Returns the account preferences settings for the Amazon Web Services account associated with the user making the request, in the current Amazon Web Services Region\cr
@@ -135,10 +135,11 @@ NULL
 #'  \link[=efs_put_account_preferences]{put_account_preferences} \tab Use this operation to set the account preference in the current Amazon Web Services Region to use long 17 character (63 bit) or short 8 character (32 bit) resource IDs for new EFS file system and mount target resources\cr
 #'  \link[=efs_put_backup_policy]{put_backup_policy} \tab Updates the file system's backup policy\cr
 #'  \link[=efs_put_file_system_policy]{put_file_system_policy} \tab Applies an Amazon EFS FileSystemPolicy to an Amazon EFS file system\cr
-#'  \link[=efs_put_lifecycle_configuration]{put_lifecycle_configuration} \tab Use this action to manage EFS lifecycle management and EFS Intelligent-Tiering\cr
+#'  \link[=efs_put_lifecycle_configuration]{put_lifecycle_configuration} \tab Use this action to manage storage for your file system\cr
 #'  \link[=efs_tag_resource]{tag_resource} \tab Creates a tag for an EFS resource\cr
 #'  \link[=efs_untag_resource]{untag_resource} \tab Removes tags from an EFS resource\cr
-#'  \link[=efs_update_file_system]{update_file_system} \tab Updates the throughput mode or the amount of provisioned throughput of an existing file system
+#'  \link[=efs_update_file_system]{update_file_system} \tab Updates the throughput mode or the amount of provisioned throughput of an existing file system\cr
+#'  \link[=efs_update_file_system_protection]{update_file_system_protection} \tab Updates protection on the file system
 #' }
 #'
 #' @return

@@ -1,6 +1,6 @@
 Package: paws.storage
 Title: 'Amazon Web Services' Storage Services
-Version: 0.4.0
+Version: 0.5.0
 Authors@R: c(
     person("David", "Kretch", , "david.kretch@gmail.com", role = "aut"),
     person("Adam", "Banker", , "adam.banker39@gmail.com", role = "aut"),
@@ -26,7 +26,8 @@ Collate: 'backup_service.R' 'backup_interfaces.R' 'backup_operations.R'
         'finspacedata_interfaces.R' 'finspacedata_operations.R'
         'fsx_service.R' 'fsx_interfaces.R' 'fsx_operations.R'
         'glacier_service.R' 'glacier_interfaces.R'
-        'glacier_operations.R' 'recyclebin_service.R'
+        'glacier_operations.R' 'omics_service.R' 'omics_interfaces.R'
+        'omics_operations.R' 'recyclebin_service.R'
         'recyclebin_interfaces.R' 'recyclebin_operations.R'
         'reexports_paws.common.R' 's3_service.R' 's3_operations.R'
         's3_custom.R' 's3_interfaces.R' 's3control_service.R'
@@ -35,11 +36,11 @@ Collate: 'backup_service.R' 'backup_interfaces.R' 'backup_operations.R'
         's3outposts_operations.R' 'storagegateway_service.R'
         'storagegateway_interfaces.R' 'storagegateway_operations.R'
 NeedsCompilation: no
-Packaged: 2023-09-11 15:37:18 UTC; dyfanjones
+Packaged: 2024-01-09 17:43:10 UTC; dyfanjones
 Author: David Kretch [aut],
   Adam Banker [aut],
   Dyfan Jones [cre],
   Amazon.com, Inc. [cph]
 Maintainer: Dyfan Jones <dyfan.r.jones@gmail.com>
 Repository: CRAN
-Date/Publication: 2023-09-11 19:30:03 UTC
+Date/Publication: 2024-01-09 23:30:07 UTC

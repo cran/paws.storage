@@ -20,11 +20,11 @@ NULL
 #' @param FileSystemId &#91;required&#93; The ID of the EFS file system that the access point provides access to.
 #' @param PosixUser The operating system user and group applied to all file system requests
 #' made using the access point.
-#' @param RootDirectory Specifies the directory on the Amazon EFS file system that the access
-#' point exposes as the root directory of your file system to NFS clients
-#' using the access point. The clients using the access point can only
-#' access the root directory and below. If the `RootDirectory` \> `Path`
-#' specified does not exist, EFS creates it and applies the `CreationInfo`
+#' @param RootDirectory Specifies the directory on the EFS file system that the access point
+#' exposes as the root directory of your file system to NFS clients using
+#' the access point. The clients using the access point can only access the
+#' root directory and below. If the `RootDirectory` \> `Path` specified
+#' does not exist, Amazon EFS creates it and applies the `CreationInfo`
 #' settings when a client connects to an access point. When specifying a
 #' `RootDirectory`, you must provide the `Path`, and the `CreationInfo`.
 #' 
@@ -63,15 +63,18 @@ efs_create_access_point <- function(ClientToken, Tags = NULL, FileSystemId, Posi
 #'
 #' @param CreationToken &#91;required&#93; A string of up to 64 ASCII characters. Amazon EFS uses this to ensure
 #' idempotent creation.
-#' @param PerformanceMode The performance mode of the file system. We recommend `generalPurpose`
-#' performance mode for most file systems. File systems using the `maxIO`
+#' @param PerformanceMode The Performance mode of the file system. We recommend `generalPurpose`
+#' performance mode for all file systems. File systems using the `maxIO`
 #' performance mode can scale to higher levels of aggregate throughput and
 #' operations per second with a tradeoff of slightly higher latencies for
 #' most file operations. The performance mode can't be changed after the
-#' file system has been created.
+#' file system has been created. The `maxIO` mode is not supported on One
+#' Zone file systems.
 #' 
-#' The `maxIO` mode is not supported on file systems using One Zone storage
-#' classes.
+#' Due to the higher per-operation latencies with Max I/O, we recommend
+#' using General Purpose performance mode for all file systems.
+#' 
+#' Default is `generalPurpose`.
 #' @param Encrypted A Boolean value that, if true, creates an encrypted file system. When
 #' creating an encrypted file system, you have the option of specifying an
 #' existing Key Management Service key (KMS key). If you don't specify a
@@ -104,36 +107,34 @@ efs_create_access_point <- function(ClientToken, Tags = NULL, FileSystemId, Posi
 #' `bursting`, `provisioned`, or `elastic`. If you set `ThroughputMode` to
 #' `provisioned`, you must also set a value for
 #' `ProvisionedThroughputInMibps`. After you create the file system, you
-#' can decrease your file system's throughput in Provisioned Throughput
-#' mode or change between the throughput modes, with certain time
-#' restrictions. For more information, see [Specifying throughput with
-#' provisioned
+#' can decrease your file system's Provisioned throughput or change between
+#' the throughput modes, with certain time restrictions. For more
+#' information, see [Specifying throughput with provisioned
 #' mode](https://docs.aws.amazon.com/efs/latest/ug/performance.html#provisioned-throughput)
 #' in the *Amazon EFS User Guide*.
 #' 
 #' Default is `bursting`.
-#' @param ProvisionedThroughputInMibps The throughput, measured in MiB/s, that you want to provision for a file
-#' system that you're creating. Valid values are 1-1024. Required if
-#' `ThroughputMode` is set to `provisioned`. The upper limit for throughput
-#' is 1024 MiB/s. To increase this limit, contact Amazon Web Services
-#' Support. For more information, see [Amazon EFS quotas that you can
+#' @param ProvisionedThroughputInMibps The throughput, measured in mebibytes per second (MiBps), that you want
+#' to provision for a file system that you're creating. Required if
+#' `ThroughputMode` is set to `provisioned`. Valid values are 1-3414 MiBps,
+#' with the upper limit depending on Region. To increase this limit,
+#' contact Amazon Web Services Support. For more information, see [Amazon
+#' EFS quotas that you can
 #' increase](https://docs.aws.amazon.com/efs/latest/ug/limits.html#soft-limits)
 #' in the *Amazon EFS User Guide*.
-#' @param AvailabilityZoneName Used to create a file system that uses One Zone storage classes. It
-#' specifies the Amazon Web Services Availability Zone in which to create
-#' the file system. Use the format `us-east-1a` to specify the Availability
-#' Zone. For more information about One Zone storage classes, see [Using
-#' EFS storage
-#' classes](https://docs.aws.amazon.com/efs/latest/ug/storage-classes.html)
-#' in the *Amazon EFS User Guide*.
+#' @param AvailabilityZoneName Used to create a One Zone file system. It specifies the Amazon Web
+#' Services Availability Zone in which to create the file system. Use the
+#' format `us-east-1a` to specify the Availability Zone. For more
+#' information about One Zone file systems, see [Using EFS storage
+#' classes](https://docs.aws.amazon.com/efs/latest/ug/) in the *Amazon EFS
+#' User Guide*.
 #' 
-#' One Zone storage classes are not available in all Availability Zones in
+#' One Zone file systems are not available in all Availability Zones in
 #' Amazon Web Services Regions where Amazon EFS is available.
 #' @param Backup Specifies whether automatic backups are enabled on the file system that
 #' you are creating. Set the value to `true` to enable automatic backups.
-#' If you are creating a file system that uses One Zone storage classes,
-#' automatic backups are enabled by default. For more information, see
-#' [Automatic
+#' If you are creating a One Zone file system, automatic backups are
+#' enabled by default. For more information, see [Automatic
 #' backups](https://docs.aws.amazon.com/efs/latest/ug/awsbackup.html#automatic-backups)
 #' in the *Amazon EFS User Guide*.
 #' 
@@ -177,9 +178,9 @@ efs_create_file_system <- function(CreationToken, PerformanceMode = NULL, Encryp
 #' See [https://www.paws-r-sdk.com/docs/efs_create_mount_target/](https://www.paws-r-sdk.com/docs/efs_create_mount_target/) for full documentation.
 #'
 #' @param FileSystemId &#91;required&#93; The ID of the file system for which to create the mount target.
-#' @param SubnetId &#91;required&#93; The ID of the subnet to add the mount target in. For file systems that
-#' use One Zone storage classes, use the subnet that is associated with the
-#' file system's Availability Zone.
+#' @param SubnetId &#91;required&#93; The ID of the subnet to add the mount target in. For One Zone file
+#' systems, use the subnet that is associated with the file system's
+#' Availability Zone.
 #' @param IpAddress Valid IPv4 address within the address range of the specified subnet.
 #' @param SecurityGroups Up to five VPC security group IDs, of the form `sg-xxxxxxxx`. These must
 #' be for the same VPC as subnet specified.
@@ -386,10 +387,10 @@ efs_delete_mount_target <- function(MountTargetId) {
 }
 .efs$operations$delete_mount_target <- efs_delete_mount_target
 
-#' Deletes an existing replication configuration
+#' Deletes a replication configuration
 #'
 #' @description
-#' Deletes an existing replication configuration. To delete a replication configuration, you must make the request from the Amazon Web Services Region in which the destination file system is located. Deleting a replication configuration ends the replication process. After a replication configuration is deleted, the destination file system is no longer read-only. You can write to the destination file system after its status becomes `Writeable`.
+#' Deletes a replication configuration. Deleting a replication configuration ends the replication process. After a replication configuration is deleted, the destination file system becomes `Writeable` and its replication overwrite protection is re-enabled. For more information, see [Delete a replication configuration](https://docs.aws.amazon.com/efs/latest/ug/delete-replications.html).
 #'
 #' See [https://www.paws-r-sdk.com/docs/efs_delete_replication_configuration/](https://www.paws-r-sdk.com/docs/efs_delete_replication_configuration/) for full documentation.
 #'
@@ -472,7 +473,7 @@ efs_describe_access_points <- function(MaxResults = NULL, NextToken = NULL, Acce
     name = "DescribeAccessPoints",
     http_method = "GET",
     http_path = "/2015-02-01/access-points",
-    paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults")
+    paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults", result_key = "AccessPoints")
   )
   input <- .efs$describe_access_points_input(MaxResults = MaxResults, NextToken = NextToken, AccessPointId = AccessPointId, FileSystemId = FileSystemId)
   output <- .efs$describe_access_points_output()
@@ -489,7 +490,7 @@ efs_describe_access_points <- function(MaxResults = NULL, NextToken = NULL, Acce
 #' Amazon Web Services Region
 #'
 #' @description
-#' Returns the account preferences settings for the Amazon Web Services account associated with the user making the request, in the current Amazon Web Services Region. For more information, see [Managing Amazon EFS resource IDs](https://docs.aws.amazon.com/efs/latest/ug/).
+#' Returns the account preferences settings for the Amazon Web Services account associated with the user making the request, in the current Amazon Web Services Region.
 #'
 #' See [https://www.paws-r-sdk.com/docs/efs_describe_account_preferences/](https://www.paws-r-sdk.com/docs/efs_describe_account_preferences/) for full documentation.
 #'
@@ -527,7 +528,8 @@ efs_describe_account_preferences <- function(NextToken = NULL, MaxResults = NULL
 #'
 #' See [https://www.paws-r-sdk.com/docs/efs_describe_backup_policy/](https://www.paws-r-sdk.com/docs/efs_describe_backup_policy/) for full documentation.
 #'
-#' @param FileSystemId &#91;required&#93; Specifies which EFS file system to retrieve the `BackupPolicy` for.
+#' @param FileSystemId &#91;required&#93; Specifies which EFS file system for which to retrieve the
+#' `BackupPolicy`.
 #'
 #' @keywords internal
 #'
@@ -608,7 +610,7 @@ efs_describe_file_systems <- function(MaxItems = NULL, Marker = NULL, CreationTo
     name = "DescribeFileSystems",
     http_method = "GET",
     http_path = "/2015-02-01/file-systems",
-    paginator = list(input_token = "Marker", output_token = "NextMarker", limit_key = "MaxItems")
+    paginator = list(input_token = "Marker", output_token = "NextMarker", limit_key = "MaxItems", result_key = "FileSystems")
   )
   input <- .efs$describe_file_systems_input(MaxItems = MaxItems, Marker = Marker, CreationToken = CreationToken, FileSystemId = FileSystemId)
   output <- .efs$describe_file_systems_output()
@@ -624,7 +626,7 @@ efs_describe_file_systems <- function(MaxItems = NULL, Marker = NULL, CreationTo
 #' Amazon EFS file system
 #'
 #' @description
-#' Returns the current `LifecycleConfiguration` object for the specified Amazon EFS file system. EFS lifecycle management uses the `LifecycleConfiguration` object to identify which files to move to the EFS Infrequent Access (IA) storage class. For a file system without a `LifecycleConfiguration` object, the call returns an empty array in the response.
+#' Returns the current `LifecycleConfiguration` object for the specified Amazon EFS file system. Lifecycle management uses the `LifecycleConfiguration` object to identify when to move files between storage classes. For a file system without a `LifecycleConfiguration` object, the call returns an empty array in the response.
 #'
 #' See [https://www.paws-r-sdk.com/docs/efs_describe_lifecycle_configuration/](https://www.paws-r-sdk.com/docs/efs_describe_lifecycle_configuration/) for full documentation.
 #'
@@ -716,7 +718,7 @@ efs_describe_mount_targets <- function(MaxItems = NULL, Marker = NULL, FileSyste
     name = "DescribeMountTargets",
     http_method = "GET",
     http_path = "/2015-02-01/mount-targets",
-    paginator = list()
+    paginator = list(input_token = "Marker", output_token = "NextMarker", limit_key = "MaxItems", result_key = "MountTargets")
   )
   input <- .efs$describe_mount_targets_input(MaxItems = MaxItems, Marker = Marker, FileSystemId = FileSystemId, MountTargetId = MountTargetId, AccessPointId = AccessPointId)
   output <- .efs$describe_mount_targets_output()
@@ -750,7 +752,7 @@ efs_describe_replication_configurations <- function(FileSystemId = NULL, NextTok
     name = "DescribeReplicationConfigurations",
     http_method = "GET",
     http_path = "/2015-02-01/file-systems/replication-configurations",
-    paginator = list()
+    paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults", result_key = "Replications")
   )
   input <- .efs$describe_replication_configurations_input(FileSystemId = FileSystemId, NextToken = NextToken, MaxResults = MaxResults)
   output <- .efs$describe_replication_configurations_output()
@@ -786,7 +788,7 @@ efs_describe_tags <- function(MaxItems = NULL, Marker = NULL, FileSystemId) {
     name = "DescribeTags",
     http_method = "GET",
     http_path = "/2015-02-01/tags/{FileSystemId}/",
-    paginator = list(input_token = "Marker", output_token = "NextMarker", limit_key = "MaxItems")
+    paginator = list(input_token = "Marker", output_token = "NextMarker", limit_key = "MaxItems", result_key = "Tags")
   )
   input <- .efs$describe_tags_input(MaxItems = MaxItems, Marker = Marker, FileSystemId = FileSystemId)
   output <- .efs$describe_tags_output()
@@ -978,11 +980,10 @@ efs_put_file_system_policy <- function(FileSystemId, Policy, BypassPolicyLockout
 }
 .efs$operations$put_file_system_policy <- efs_put_file_system_policy
 
-#' Use this action to manage EFS lifecycle management and EFS
-#' Intelligent-Tiering
+#' Use this action to manage storage for your file system
 #'
 #' @description
-#' Use this action to manage EFS lifecycle management and EFS Intelligent-Tiering. A `LifecycleConfiguration` consists of one or more `LifecyclePolicy` objects that define the following:
+#' Use this action to manage storage for your file system. A `LifecycleConfiguration` consists of one or more `LifecyclePolicy` objects that define the following:
 #'
 #' See [https://www.paws-r-sdk.com/docs/efs_put_lifecycle_configuration/](https://www.paws-r-sdk.com/docs/efs_put_lifecycle_configuration/) for full documentation.
 #'
@@ -990,22 +991,35 @@ efs_put_file_system_policy <- function(FileSystemId, Policy, BypassPolicyLockout
 #' `LifecycleConfiguration` object (String).
 #' @param LifecyclePolicies &#91;required&#93; An array of `LifecyclePolicy` objects that define the file system's
 #' `LifecycleConfiguration` object. A `LifecycleConfiguration` object
-#' informs EFS lifecycle management and EFS Intelligent-Tiering of the
-#' following:
+#' informs EFS Lifecycle management of the following:
 #' 
-#' -   When to move files in the file system from primary storage to the IA
-#'     storage class.
+#' -   **`TransitionToIA`** – When to move files in the file system from
+#'     primary storage (Standard storage class) into the Infrequent Access
+#'     (IA) storage.
 #' 
-#' -   When to move files that are in IA storage to primary storage.
+#' -   **`TransitionToArchive`** – When to move files in the file system
+#'     from their current storage class (either IA or Standard storage)
+#'     into the Archive storage.
+#' 
+#'     File systems cannot transition into Archive storage before
+#'     transitioning into IA storage. Therefore, TransitionToArchive must
+#'     either not be set or must be later than TransitionToIA.
+#' 
+#'     The Archive storage class is available only for file systems that
+#'     use the Elastic Throughput mode and the General Purpose Performance
+#'     mode.
+#' 
+#' -   **`TransitionToPrimaryStorageClass`** – Whether to move files in the
+#'     file system back to primary storage (Standard storage class) after
+#'     they are accessed in IA or Archive storage.
 #' 
 #' When using the `put-lifecycle-configuration` CLI command or the
 #' [`put_lifecycle_configuration`][efs_put_lifecycle_configuration] API
 #' action, Amazon EFS requires that each `LifecyclePolicy` object have only
 #' a single transition. This means that in a request body,
 #' `LifecyclePolicies` must be structured as an array of `LifecyclePolicy`
-#' objects, one object for each transition, `TransitionToIA`,
-#' `TransitionToPrimaryStorageClass`. See the example requests in the
-#' following section for more information.
+#' objects, one object for each storage transition. See the example
+#' requests in the following section for more information.
 #'
 #' @keywords internal
 #'
@@ -1101,11 +1115,14 @@ efs_untag_resource <- function(ResourceId, TagKeys) {
 #' updating your throughput mode, you don't need to provide this value in
 #' your request. If you are changing the `ThroughputMode` to `provisioned`,
 #' you must also set a value for `ProvisionedThroughputInMibps`.
-#' @param ProvisionedThroughputInMibps (Optional) Sets the amount of provisioned throughput, in MiB/s, for the
-#' file system. Valid values are 1-1024. If you are changing the throughput
-#' mode to provisioned, you must also provide the amount of provisioned
-#' throughput. Required if `ThroughputMode` is changed to `provisioned` on
-#' update.
+#' @param ProvisionedThroughputInMibps (Optional) The throughput, measured in mebibytes per second (MiBps),
+#' that you want to provision for a file system that you're creating.
+#' Required if `ThroughputMode` is set to `provisioned`. Valid values are
+#' 1-3414 MiBps, with the upper limit depending on Region. To increase this
+#' limit, contact Amazon Web Services Support. For more information, see
+#' [Amazon EFS quotas that you can
+#' increase](https://docs.aws.amazon.com/efs/latest/ug/limits.html#soft-limits)
+#' in the *Amazon EFS User Guide*.
 #'
 #' @keywords internal
 #'
@@ -1126,3 +1143,49 @@ efs_update_file_system <- function(FileSystemId, ThroughputMode = NULL, Provisio
   return(response)
 }
 .efs$operations$update_file_system <- efs_update_file_system
+
+#' Updates protection on the file system
+#'
+#' @description
+#' Updates protection on the file system.
+#'
+#' See [https://www.paws-r-sdk.com/docs/efs_update_file_system_protection/](https://www.paws-r-sdk.com/docs/efs_update_file_system_protection/) for full documentation.
+#'
+#' @param FileSystemId &#91;required&#93; The ID of the file system to update.
+#' @param ReplicationOverwriteProtection The status of the file system's replication overwrite protection.
+#' 
+#' -   `ENABLED` – The file system cannot be used as the destination file
+#'     system in a replication configuration. The file system is writeable.
+#'     Replication overwrite protection is `ENABLED` by default.
+#' 
+#' -   `DISABLED` – The file system can be used as the destination file
+#'     system in a replication configuration. The file system is read-only
+#'     and can only be modified by EFS replication.
+#' 
+#' -   `REPLICATING` – The file system is being used as the destination
+#'     file system in a replication configuration. The file system is
+#'     read-only and is only modified only by EFS replication.
+#' 
+#' If the replication configuration is deleted, the file system's
+#' replication overwrite protection is re-enabled, the file system becomes
+#' writeable.
+#'
+#' @keywords internal
+#'
+#' @rdname efs_update_file_system_protection
+efs_update_file_system_protection <- function(FileSystemId, ReplicationOverwriteProtection = NULL) {
+  op <- new_operation(
+    name = "UpdateFileSystemProtection",
+    http_method = "PUT",
+    http_path = "/2015-02-01/file-systems/{FileSystemId}/protection",
+    paginator = list()
+  )
+  input <- .efs$update_file_system_protection_input(FileSystemId = FileSystemId, ReplicationOverwriteProtection = ReplicationOverwriteProtection)
+  output <- .efs$update_file_system_protection_output()
+  config <- get_config()
+  svc <- .efs$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.efs$operations$update_file_system_protection <- efs_update_file_system_protection
