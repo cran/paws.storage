@@ -125,7 +125,7 @@ s3_download_file <- function(Bucket, Key, Filename, IfMatch = NULL, IfModifiedSi
   input <- .s3$get_object_input(Bucket = Bucket, IfMatch = IfMatch, IfModifiedSince = IfModifiedSince, IfNoneMatch = IfNoneMatch, IfUnmodifiedSince = IfUnmodifiedSince, Key = Key, Range = Range, ResponseCacheControl = ResponseCacheControl, ResponseContentDisposition = ResponseContentDisposition, ResponseContentEncoding = ResponseContentEncoding, ResponseContentLanguage = ResponseContentLanguage, ResponseContentType = ResponseContentType, ResponseExpires = ResponseExpires, VersionId = VersionId, SSECustomerAlgorithm = SSECustomerAlgorithm, SSECustomerKey = SSECustomerKey, SSECustomerKeyMD5 = SSECustomerKeyMD5, RequestPayer = RequestPayer, PartNumber = PartNumber, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_object_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output, Filename)
   response <- send_request(request)
   return(list())
@@ -241,7 +241,7 @@ s3_generate_presigned_url <- function(client_method,
   config <- get_config()
 
   # get service
-  svc <- get(.pkg_api, envir = getNamespace(pkg_name))[["service"]](config)
+  svc <- get(.pkg_api, envir = getNamespace(pkg_name))[["service"]](config, op)
 
   # create new request
   request <- new_request(svc, op, input, output)

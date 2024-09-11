@@ -1,6 +1,6 @@
 Package: paws.storage
 Title: 'Amazon Web Services' Storage Services
-Version: 0.6.0
+Version: 0.7.0
 Authors@R: c(
     person("David", "Kretch", , "david.kretch@gmail.com", role = "aut"),
     person("Adam", "Banker", , "adam.banker39@gmail.com", role = "aut"),
@@ -13,19 +13,17 @@ Description: Interface to 'Amazon Web Services' storage services,
 License: Apache License (>= 2.0)
 URL: https://github.com/paws-r/paws
 BugReports: https://github.com/paws-r/paws/issues
-Imports: paws.common (>= 0.6.0)
+Imports: paws.common (>= 0.7.5)
 Suggests: testthat
 Encoding: UTF-8
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Collate: 'backup_service.R' 'backup_interfaces.R' 'backup_operations.R'
-        'backupstorage_service.R' 'backupstorage_interfaces.R'
-        'backupstorage_operations.R' 'dlm_service.R' 'dlm_interfaces.R'
-        'dlm_operations.R' 'ebs_service.R' 'ebs_interfaces.R'
-        'ebs_operations.R' 'efs_service.R' 'efs_interfaces.R'
-        'efs_operations.R' 'finspacedata_service.R'
-        'finspacedata_interfaces.R' 'finspacedata_operations.R'
-        'fsx_service.R' 'fsx_interfaces.R' 'fsx_operations.R'
-        'glacier_service.R' 'glacier_interfaces.R'
+        'dlm_service.R' 'dlm_interfaces.R' 'dlm_operations.R'
+        'ebs_service.R' 'ebs_interfaces.R' 'ebs_operations.R'
+        'efs_service.R' 'efs_interfaces.R' 'efs_operations.R'
+        'finspacedata_service.R' 'finspacedata_interfaces.R'
+        'finspacedata_operations.R' 'fsx_service.R' 'fsx_interfaces.R'
+        'fsx_operations.R' 'glacier_service.R' 'glacier_interfaces.R'
         'glacier_operations.R' 'omics_service.R' 'omics_interfaces.R'
         'omics_operations.R' 'recyclebin_service.R'
         'recyclebin_interfaces.R' 'recyclebin_operations.R'
@@ -36,11 +34,11 @@ Collate: 'backup_service.R' 'backup_interfaces.R' 'backup_operations.R'
         's3outposts_operations.R' 'storagegateway_service.R'
         'storagegateway_interfaces.R' 'storagegateway_operations.R'
 NeedsCompilation: no
-Packaged: 2024-05-10 13:19:33 UTC; dyfanjones
+Packaged: 2024-09-11 08:30:09 UTC; dyfanjones
 Author: David Kretch [aut],
   Adam Banker [aut],
   Dyfan Jones [cre],
   Amazon.com, Inc. [cph]
 Maintainer: Dyfan Jones <dyfan.r.jones@gmail.com>
 Repository: CRAN
-Date/Publication: 2024-05-10 17:00:02 UTC
+Date/Publication: 2024-09-11 23:30:02 UTC

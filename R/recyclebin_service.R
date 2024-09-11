@@ -22,7 +22,7 @@ NULL
 #' restored, the resource is permanently deleted from the Recycle Bin and
 #' is no longer available for recovery. For more information about Recycle
 #' Bin, see [Recycle
-#' Bin](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/recycle-bin.html)
+#' Bin](https://docs.aws.amazon.com/ebs/latest/userguide/recycle-bin.html)
 #' in the *Amazon Elastic Compute Cloud User Guide*.
 #'
 #' @param
@@ -157,7 +157,7 @@ recyclebin <- function(config = list(), credentials = list(), endpoint = NULL, r
   target_prefix = ""
 )
 
-.recyclebin$service <- function(config = list()) {
+.recyclebin$service <- function(config = list(), op = NULL) {
   handlers <- new_handlers("restjson", "v4")
-  new_service(.recyclebin$metadata, handlers, config)
+  new_service(.recyclebin$metadata, handlers, config, op)
 }

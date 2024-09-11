@@ -13,6 +13,12 @@ s3_head_object(
   IfUnmodifiedSince = NULL,
   Key,
   Range = NULL,
+  ResponseCacheControl = NULL,
+  ResponseContentDisposition = NULL,
+  ResponseContentEncoding = NULL,
+  ResponseContentLanguage = NULL,
+  ResponseContentType = NULL,
+  ResponseExpires = NULL,
   VersionId = NULL,
   SSECustomerAlgorithm = NULL,
   SSECustomerKey = NULL,
@@ -122,6 +128,18 @@ satisfiable, only the \code{ContentLength} is affected in the response. If
 the Range is not satisfiable, S3 returns a
 \verb{416 - Requested Range Not Satisfiable} error.}
 
+\item{ResponseCacheControl}{Sets the \code{Cache-Control} header of the response.}
+
+\item{ResponseContentDisposition}{Sets the \code{Content-Disposition} header of the response.}
+
+\item{ResponseContentEncoding}{Sets the \code{Content-Encoding} header of the response.}
+
+\item{ResponseContentLanguage}{Sets the \code{Content-Language} header of the response.}
+
+\item{ResponseContentType}{Sets the \code{Content-Type} header of the response.}
+
+\item{ResponseExpires}{Sets the \code{Expires} header of the response.}
+
 \item{VersionId}{Version ID used to reference a specific version of the object.
 
 For directory buckets in this API operation, only the \code{null} value of
@@ -159,10 +177,11 @@ with the HTTP status code \verb{403 Forbidden} (access denied).}
 
 \item{ChecksumMode}{To retrieve the checksum, this parameter must be enabled.
 
-In addition, if you enable \code{ChecksumMode} and the object is encrypted
-with Amazon Web Services Key Management Service (Amazon Web Services
-KMS), you must have permission to use the \code{kms:Decrypt} action for the
-request to succeed.}
+In addition, if you enable checksum mode and the object is uploaded with
+a
+\href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_Checksum.html}{checksum}
+and encrypted with an Key Management Service (KMS) key, you must have
+permission to use the \code{kms:Decrypt} action to retrieve the checksum.}
 }
 \description{
 The \code{HEAD} operation retrieves metadata from an object without returning the object itself. This operation is useful if you're interested only in an object's metadata.

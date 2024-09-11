@@ -63,12 +63,13 @@ s3_abort_multipart_upload <- function(Bucket, Key, UploadId, RequestPayer = NULL
     name = "AbortMultipartUpload",
     http_method = "DELETE",
     http_path = "/{Bucket}/{Key+}",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$abort_multipart_upload_input(Bucket = Bucket, Key = Key, UploadId = UploadId, RequestPayer = RequestPayer, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$abort_multipart_upload_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -151,6 +152,22 @@ s3_abort_multipart_upload <- function(Bucket, Key, UploadId, RequestPayer = NULL
 #' @param ExpectedBucketOwner The account ID of the expected bucket owner. If the account ID that you
 #' provide does not match the actual owner of the bucket, the request fails
 #' with the HTTP status code `403 Forbidden` (access denied).
+#' @param IfNoneMatch Uploads the object only if the object key name does not already exist in
+#' the bucket specified. Otherwise, Amazon S3 returns a
+#' `412 Precondition Failed` error.
+#' 
+#' If a conflicting operation occurs during the upload S3 returns a
+#' `409 ConditionalRequestConflict` response. On a 409 failure you should
+#' re-initiate the multipart upload with
+#' [`create_multipart_upload`][s3_create_multipart_upload] and re-upload
+#' each part.
+#' 
+#' Expects the '*' (asterisk) character.
+#' 
+#' For more information about conditional requests, see [RFC
+#' 7232](https://datatracker.ietf.org/doc/html/rfc7232), or [Conditional
+#' requests](https://docs.aws.amazon.com/AmazonS3/latest/userguide/conditional-requests.html)
+#' in the *Amazon S3 User Guide*.
 #' @param SSECustomerAlgorithm The server-side encryption (SSE) algorithm used to encrypt the object.
 #' This parameter is required only when the object was created using a
 #' checksum algorithm or if your bucket policy requires the use of SSE-C.
@@ -177,17 +194,18 @@ s3_abort_multipart_upload <- function(Bucket, Key, UploadId, RequestPayer = NULL
 #' @keywords internal
 #'
 #' @rdname s3_complete_multipart_upload
-s3_complete_multipart_upload <- function(Bucket, Key, MultipartUpload = NULL, UploadId, ChecksumCRC32 = NULL, ChecksumCRC32C = NULL, ChecksumSHA1 = NULL, ChecksumSHA256 = NULL, RequestPayer = NULL, ExpectedBucketOwner = NULL, SSECustomerAlgorithm = NULL, SSECustomerKey = NULL, SSECustomerKeyMD5 = NULL) {
+s3_complete_multipart_upload <- function(Bucket, Key, MultipartUpload = NULL, UploadId, ChecksumCRC32 = NULL, ChecksumCRC32C = NULL, ChecksumSHA1 = NULL, ChecksumSHA256 = NULL, RequestPayer = NULL, ExpectedBucketOwner = NULL, IfNoneMatch = NULL, SSECustomerAlgorithm = NULL, SSECustomerKey = NULL, SSECustomerKeyMD5 = NULL) {
   op <- new_operation(
     name = "CompleteMultipartUpload",
     http_method = "POST",
     http_path = "/{Bucket}/{Key+}",
+    host_prefix = "",
     paginator = list()
   )
-  input <- .s3$complete_multipart_upload_input(Bucket = Bucket, Key = Key, MultipartUpload = MultipartUpload, UploadId = UploadId, ChecksumCRC32 = ChecksumCRC32, ChecksumCRC32C = ChecksumCRC32C, ChecksumSHA1 = ChecksumSHA1, ChecksumSHA256 = ChecksumSHA256, RequestPayer = RequestPayer, ExpectedBucketOwner = ExpectedBucketOwner, SSECustomerAlgorithm = SSECustomerAlgorithm, SSECustomerKey = SSECustomerKey, SSECustomerKeyMD5 = SSECustomerKeyMD5)
+  input <- .s3$complete_multipart_upload_input(Bucket = Bucket, Key = Key, MultipartUpload = MultipartUpload, UploadId = UploadId, ChecksumCRC32 = ChecksumCRC32, ChecksumCRC32C = ChecksumCRC32C, ChecksumSHA1 = ChecksumSHA1, ChecksumSHA256 = ChecksumSHA256, RequestPayer = RequestPayer, ExpectedBucketOwner = ExpectedBucketOwner, IfNoneMatch = IfNoneMatch, SSECustomerAlgorithm = SSECustomerAlgorithm, SSECustomerKey = SSECustomerKey, SSECustomerKeyMD5 = SSECustomerKeyMD5)
   output <- .s3$complete_multipart_upload_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -731,12 +749,13 @@ s3_copy_object <- function(ACL = NULL, Bucket, CacheControl = NULL, ChecksumAlgo
     name = "CopyObject",
     http_method = "PUT",
     http_path = "/{Bucket}/{Key+}",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$copy_object_input(ACL = ACL, Bucket = Bucket, CacheControl = CacheControl, ChecksumAlgorithm = ChecksumAlgorithm, ContentDisposition = ContentDisposition, ContentEncoding = ContentEncoding, ContentLanguage = ContentLanguage, ContentType = ContentType, CopySource = CopySource, CopySourceIfMatch = CopySourceIfMatch, CopySourceIfModifiedSince = CopySourceIfModifiedSince, CopySourceIfNoneMatch = CopySourceIfNoneMatch, CopySourceIfUnmodifiedSince = CopySourceIfUnmodifiedSince, Expires = Expires, GrantFullControl = GrantFullControl, GrantRead = GrantRead, GrantReadACP = GrantReadACP, GrantWriteACP = GrantWriteACP, Key = Key, Metadata = Metadata, MetadataDirective = MetadataDirective, TaggingDirective = TaggingDirective, ServerSideEncryption = ServerSideEncryption, StorageClass = StorageClass, WebsiteRedirectLocation = WebsiteRedirectLocation, SSECustomerAlgorithm = SSECustomerAlgorithm, SSECustomerKey = SSECustomerKey, SSECustomerKeyMD5 = SSECustomerKeyMD5, SSEKMSKeyId = SSEKMSKeyId, SSEKMSEncryptionContext = SSEKMSEncryptionContext, BucketKeyEnabled = BucketKeyEnabled, CopySourceSSECustomerAlgorithm = CopySourceSSECustomerAlgorithm, CopySourceSSECustomerKey = CopySourceSSECustomerKey, CopySourceSSECustomerKeyMD5 = CopySourceSSECustomerKeyMD5, RequestPayer = RequestPayer, Tagging = Tagging, ObjectLockMode = ObjectLockMode, ObjectLockRetainUntilDate = ObjectLockRetainUntilDate, ObjectLockLegalHoldStatus = ObjectLockLegalHoldStatus, ExpectedBucketOwner = ExpectedBucketOwner, ExpectedSourceBucketOwner = ExpectedSourceBucketOwner)
   output <- .s3$copy_object_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -804,12 +823,13 @@ s3_create_bucket <- function(ACL = NULL, Bucket, CreateBucketConfiguration = NUL
     name = "CreateBucket",
     http_method = "PUT",
     http_path = "/{Bucket}",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$create_bucket_input(ACL = ACL, Bucket = Bucket, CreateBucketConfiguration = CreateBucketConfiguration, GrantFullControl = GrantFullControl, GrantRead = GrantRead, GrantReadACP = GrantReadACP, GrantWrite = GrantWrite, GrantWriteACP = GrantWriteACP, ObjectLockEnabledForBucket = ObjectLockEnabledForBucket, ObjectOwnership = ObjectOwnership)
   output <- .s3$create_bucket_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -1201,12 +1221,13 @@ s3_create_multipart_upload <- function(ACL = NULL, Bucket, CacheControl = NULL, 
     name = "CreateMultipartUpload",
     http_method = "POST",
     http_path = "/{Bucket}/{Key+}?uploads",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$create_multipart_upload_input(ACL = ACL, Bucket = Bucket, CacheControl = CacheControl, ContentDisposition = ContentDisposition, ContentEncoding = ContentEncoding, ContentLanguage = ContentLanguage, ContentType = ContentType, Expires = Expires, GrantFullControl = GrantFullControl, GrantRead = GrantRead, GrantReadACP = GrantReadACP, GrantWriteACP = GrantWriteACP, Key = Key, Metadata = Metadata, ServerSideEncryption = ServerSideEncryption, StorageClass = StorageClass, WebsiteRedirectLocation = WebsiteRedirectLocation, SSECustomerAlgorithm = SSECustomerAlgorithm, SSECustomerKey = SSECustomerKey, SSECustomerKeyMD5 = SSECustomerKeyMD5, SSEKMSKeyId = SSEKMSKeyId, SSEKMSEncryptionContext = SSEKMSEncryptionContext, BucketKeyEnabled = BucketKeyEnabled, RequestPayer = RequestPayer, Tagging = Tagging, ObjectLockMode = ObjectLockMode, ObjectLockRetainUntilDate = ObjectLockRetainUntilDate, ObjectLockLegalHoldStatus = ObjectLockLegalHoldStatus, ExpectedBucketOwner = ExpectedBucketOwner, ChecksumAlgorithm = ChecksumAlgorithm)
   output <- .s3$create_multipart_upload_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -1242,12 +1263,13 @@ s3_create_session <- function(SessionMode = NULL, Bucket) {
     name = "CreateSession",
     http_method = "GET",
     http_path = "/{Bucket}?session",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$create_session_input(SessionMode = SessionMode, Bucket = Bucket)
   output <- .s3$create_session_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -1289,12 +1311,13 @@ s3_delete_bucket <- function(Bucket, ExpectedBucketOwner = NULL) {
     name = "DeleteBucket",
     http_method = "DELETE",
     http_path = "/{Bucket}",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$delete_bucket_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$delete_bucket_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -1322,12 +1345,13 @@ s3_delete_bucket_analytics_configuration <- function(Bucket, Id, ExpectedBucketO
     name = "DeleteBucketAnalyticsConfiguration",
     http_method = "DELETE",
     http_path = "/{Bucket}?analytics",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$delete_bucket_analytics_configuration_input(Bucket = Bucket, Id = Id, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$delete_bucket_analytics_configuration_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -1354,12 +1378,13 @@ s3_delete_bucket_cors <- function(Bucket, ExpectedBucketOwner = NULL) {
     name = "DeleteBucketCors",
     http_method = "DELETE",
     http_path = "/{Bucket}?cors",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$delete_bucket_cors_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$delete_bucket_cors_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -1387,12 +1412,13 @@ s3_delete_bucket_encryption <- function(Bucket, ExpectedBucketOwner = NULL) {
     name = "DeleteBucketEncryption",
     http_method = "DELETE",
     http_path = "/{Bucket}?encryption",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$delete_bucket_encryption_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$delete_bucket_encryption_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -1418,12 +1444,13 @@ s3_delete_bucket_intelligent_tiering_configuration <- function(Bucket, Id) {
     name = "DeleteBucketIntelligentTieringConfiguration",
     http_method = "DELETE",
     http_path = "/{Bucket}?intelligent-tiering",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$delete_bucket_intelligent_tiering_configuration_input(Bucket = Bucket, Id = Id)
   output <- .s3$delete_bucket_intelligent_tiering_configuration_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -1451,12 +1478,13 @@ s3_delete_bucket_inventory_configuration <- function(Bucket, Id, ExpectedBucketO
     name = "DeleteBucketInventoryConfiguration",
     http_method = "DELETE",
     http_path = "/{Bucket}?inventory",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$delete_bucket_inventory_configuration_input(Bucket = Bucket, Id = Id, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$delete_bucket_inventory_configuration_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -1483,12 +1511,13 @@ s3_delete_bucket_lifecycle <- function(Bucket, ExpectedBucketOwner = NULL) {
     name = "DeleteBucketLifecycle",
     http_method = "DELETE",
     http_path = "/{Bucket}?lifecycle",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$delete_bucket_lifecycle_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$delete_bucket_lifecycle_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -1518,12 +1547,13 @@ s3_delete_bucket_metrics_configuration <- function(Bucket, Id, ExpectedBucketOwn
     name = "DeleteBucketMetricsConfiguration",
     http_method = "DELETE",
     http_path = "/{Bucket}?metrics",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$delete_bucket_metrics_configuration_input(Bucket = Bucket, Id = Id, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$delete_bucket_metrics_configuration_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -1550,12 +1580,13 @@ s3_delete_bucket_ownership_controls <- function(Bucket, ExpectedBucketOwner = NU
     name = "DeleteBucketOwnershipControls",
     http_method = "DELETE",
     http_path = "/{Bucket}?ownershipControls",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$delete_bucket_ownership_controls_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$delete_bucket_ownership_controls_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -1597,12 +1628,13 @@ s3_delete_bucket_policy <- function(Bucket, ExpectedBucketOwner = NULL) {
     name = "DeleteBucketPolicy",
     http_method = "DELETE",
     http_path = "/{Bucket}?policy",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$delete_bucket_policy_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$delete_bucket_policy_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -1629,12 +1661,13 @@ s3_delete_bucket_replication <- function(Bucket, ExpectedBucketOwner = NULL) {
     name = "DeleteBucketReplication",
     http_method = "DELETE",
     http_path = "/{Bucket}?replication",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$delete_bucket_replication_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$delete_bucket_replication_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -1661,12 +1694,13 @@ s3_delete_bucket_tagging <- function(Bucket, ExpectedBucketOwner = NULL) {
     name = "DeleteBucketTagging",
     http_method = "DELETE",
     http_path = "/{Bucket}?tagging",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$delete_bucket_tagging_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$delete_bucket_tagging_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -1693,12 +1727,13 @@ s3_delete_bucket_website <- function(Bucket, ExpectedBucketOwner = NULL) {
     name = "DeleteBucketWebsite",
     http_method = "DELETE",
     http_path = "/{Bucket}?website",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$delete_bucket_website_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$delete_bucket_website_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -1779,12 +1814,13 @@ s3_delete_object <- function(Bucket, Key, MFA = NULL, VersionId = NULL, RequestP
     name = "DeleteObject",
     http_method = "DELETE",
     http_path = "/{Bucket}/{Key+}",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$delete_object_input(Bucket = Bucket, Key = Key, MFA = MFA, VersionId = VersionId, RequestPayer = RequestPayer, BypassGovernanceRetention = BypassGovernanceRetention, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$delete_object_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -1837,12 +1873,13 @@ s3_delete_object_tagging <- function(Bucket, Key, VersionId = NULL, ExpectedBuck
     name = "DeleteObjectTagging",
     http_method = "DELETE",
     http_path = "/{Bucket}/{Key+}?tagging",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$delete_object_tagging_input(Bucket = Bucket, Key = Key, VersionId = VersionId, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$delete_object_tagging_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -1961,12 +1998,13 @@ s3_delete_objects <- function(Bucket, Delete, MFA = NULL, RequestPayer = NULL, B
     name = "DeleteObjects",
     http_method = "POST",
     http_path = "/{Bucket}?delete",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$delete_objects_input(Bucket = Bucket, Delete = Delete, MFA = MFA, RequestPayer = RequestPayer, BypassGovernanceRetention = BypassGovernanceRetention, ExpectedBucketOwner = ExpectedBucketOwner, ChecksumAlgorithm = ChecksumAlgorithm)
   output <- .s3$delete_objects_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -1994,12 +2032,13 @@ s3_delete_public_access_block <- function(Bucket, ExpectedBucketOwner = NULL) {
     name = "DeletePublicAccessBlock",
     http_method = "DELETE",
     http_path = "/{Bucket}?publicAccessBlock",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$delete_public_access_block_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$delete_public_access_block_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -2028,12 +2067,13 @@ s3_get_bucket_accelerate_configuration <- function(Bucket, ExpectedBucketOwner =
     name = "GetBucketAccelerateConfiguration",
     http_method = "GET",
     http_path = "/{Bucket}?accelerate",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$get_bucket_accelerate_configuration_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner, RequestPayer = RequestPayer)
   output <- .s3$get_bucket_accelerate_configuration_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -2071,12 +2111,13 @@ s3_get_bucket_acl <- function(Bucket, ExpectedBucketOwner = NULL) {
     name = "GetBucketAcl",
     http_method = "GET",
     http_path = "/{Bucket}?acl",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$get_bucket_acl_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_acl_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -2105,12 +2146,13 @@ s3_get_bucket_analytics_configuration <- function(Bucket, Id, ExpectedBucketOwne
     name = "GetBucketAnalyticsConfiguration",
     http_method = "GET",
     http_path = "/{Bucket}?analytics",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$get_bucket_analytics_configuration_input(Bucket = Bucket, Id = Id, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_analytics_configuration_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -2148,12 +2190,13 @@ s3_get_bucket_cors <- function(Bucket, ExpectedBucketOwner = NULL) {
     name = "GetBucketCors",
     http_method = "GET",
     http_path = "/{Bucket}?cors",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$get_bucket_cors_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_cors_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -2181,12 +2224,13 @@ s3_get_bucket_encryption <- function(Bucket, ExpectedBucketOwner = NULL) {
     name = "GetBucketEncryption",
     http_method = "GET",
     http_path = "/{Bucket}?encryption",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$get_bucket_encryption_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_encryption_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -2212,12 +2256,13 @@ s3_get_bucket_intelligent_tiering_configuration <- function(Bucket, Id) {
     name = "GetBucketIntelligentTieringConfiguration",
     http_method = "GET",
     http_path = "/{Bucket}?intelligent-tiering",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$get_bucket_intelligent_tiering_configuration_input(Bucket = Bucket, Id = Id)
   output <- .s3$get_bucket_intelligent_tiering_configuration_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -2246,12 +2291,13 @@ s3_get_bucket_inventory_configuration <- function(Bucket, Id, ExpectedBucketOwne
     name = "GetBucketInventoryConfiguration",
     http_method = "GET",
     http_path = "/{Bucket}?inventory",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$get_bucket_inventory_configuration_input(Bucket = Bucket, Id = Id, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_inventory_configuration_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -2278,12 +2324,13 @@ s3_get_bucket_lifecycle <- function(Bucket, ExpectedBucketOwner = NULL) {
     name = "GetBucketLifecycle",
     http_method = "GET",
     http_path = "/{Bucket}?lifecycle",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$get_bucket_lifecycle_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_lifecycle_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -2310,12 +2357,13 @@ s3_get_bucket_lifecycle_configuration <- function(Bucket, ExpectedBucketOwner = 
     name = "GetBucketLifecycleConfiguration",
     http_method = "GET",
     http_path = "/{Bucket}?lifecycle",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$get_bucket_lifecycle_configuration_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_lifecycle_configuration_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -2353,12 +2401,13 @@ s3_get_bucket_location <- function(Bucket, ExpectedBucketOwner = NULL) {
     name = "GetBucketLocation",
     http_method = "GET",
     http_path = "/{Bucket}?location",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$get_bucket_location_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_location_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -2385,12 +2434,13 @@ s3_get_bucket_logging <- function(Bucket, ExpectedBucketOwner = NULL) {
     name = "GetBucketLogging",
     http_method = "GET",
     http_path = "/{Bucket}?logging",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$get_bucket_logging_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_logging_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -2420,12 +2470,13 @@ s3_get_bucket_metrics_configuration <- function(Bucket, Id, ExpectedBucketOwner 
     name = "GetBucketMetricsConfiguration",
     http_method = "GET",
     http_path = "/{Bucket}?metrics",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$get_bucket_metrics_configuration_input(Bucket = Bucket, Id = Id, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_metrics_configuration_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -2463,12 +2514,13 @@ s3_get_bucket_notification <- function(Bucket, ExpectedBucketOwner = NULL) {
     name = "GetBucketNotification",
     http_method = "GET",
     http_path = "/{Bucket}?notification",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$get_bucket_notification_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_notification_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -2506,12 +2558,13 @@ s3_get_bucket_notification_configuration <- function(Bucket, ExpectedBucketOwner
     name = "GetBucketNotificationConfiguration",
     http_method = "GET",
     http_path = "/{Bucket}?notification",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$get_bucket_notification_configuration_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_notification_configuration_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -2539,12 +2592,13 @@ s3_get_bucket_ownership_controls <- function(Bucket, ExpectedBucketOwner = NULL)
     name = "GetBucketOwnershipControls",
     http_method = "GET",
     http_path = "/{Bucket}?ownershipControls",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$get_bucket_ownership_controls_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_ownership_controls_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -2601,12 +2655,13 @@ s3_get_bucket_policy <- function(Bucket, ExpectedBucketOwner = NULL) {
     name = "GetBucketPolicy",
     http_method = "GET",
     http_path = "/{Bucket}?policy",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$get_bucket_policy_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_policy_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -2634,12 +2689,13 @@ s3_get_bucket_policy_status <- function(Bucket, ExpectedBucketOwner = NULL) {
     name = "GetBucketPolicyStatus",
     http_method = "GET",
     http_path = "/{Bucket}?policyStatus",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$get_bucket_policy_status_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_policy_status_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -2666,12 +2722,13 @@ s3_get_bucket_replication <- function(Bucket, ExpectedBucketOwner = NULL) {
     name = "GetBucketReplication",
     http_method = "GET",
     http_path = "/{Bucket}?replication",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$get_bucket_replication_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_replication_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -2699,12 +2756,13 @@ s3_get_bucket_request_payment <- function(Bucket, ExpectedBucketOwner = NULL) {
     name = "GetBucketRequestPayment",
     http_method = "GET",
     http_path = "/{Bucket}?requestPayment",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$get_bucket_request_payment_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_request_payment_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -2731,12 +2789,13 @@ s3_get_bucket_tagging <- function(Bucket, ExpectedBucketOwner = NULL) {
     name = "GetBucketTagging",
     http_method = "GET",
     http_path = "/{Bucket}?tagging",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$get_bucket_tagging_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_tagging_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -2763,12 +2822,13 @@ s3_get_bucket_versioning <- function(Bucket, ExpectedBucketOwner = NULL) {
     name = "GetBucketVersioning",
     http_method = "GET",
     http_path = "/{Bucket}?versioning",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$get_bucket_versioning_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_versioning_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -2795,12 +2855,13 @@ s3_get_bucket_website <- function(Bucket, ExpectedBucketOwner = NULL) {
     name = "GetBucketWebsite",
     http_method = "GET",
     http_path = "/{Bucket}?website",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$get_bucket_website_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_website_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -3010,6 +3071,12 @@ s3_get_bucket_website <- function(Bucket, ExpectedBucketOwner = NULL) {
 #' provide does not match the actual owner of the bucket, the request fails
 #' with the HTTP status code `403 Forbidden` (access denied).
 #' @param ChecksumMode To retrieve the checksum, this mode must be enabled.
+#' 
+#' In addition, if you enable checksum mode and the object is uploaded with
+#' a
+#' [checksum](https://docs.aws.amazon.com/AmazonS3/latest/API/API_Checksum.html)
+#' and encrypted with an Key Management Service (KMS) key, you must have
+#' permission to use the `kms:Decrypt` action to retrieve the checksum.
 #'
 #' @keywords internal
 #'
@@ -3019,12 +3086,13 @@ s3_get_object <- function(Bucket, IfMatch = NULL, IfModifiedSince = NULL, IfNone
     name = "GetObject",
     http_method = "GET",
     http_path = "/{Bucket}/{Key+}",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$get_object_input(Bucket = Bucket, IfMatch = IfMatch, IfModifiedSince = IfModifiedSince, IfNoneMatch = IfNoneMatch, IfUnmodifiedSince = IfUnmodifiedSince, Key = Key, Range = Range, ResponseCacheControl = ResponseCacheControl, ResponseContentDisposition = ResponseContentDisposition, ResponseContentEncoding = ResponseContentEncoding, ResponseContentLanguage = ResponseContentLanguage, ResponseContentType = ResponseContentType, ResponseExpires = ResponseExpires, VersionId = VersionId, SSECustomerAlgorithm = SSECustomerAlgorithm, SSECustomerKey = SSECustomerKey, SSECustomerKeyMD5 = SSECustomerKeyMD5, RequestPayer = RequestPayer, PartNumber = PartNumber, ExpectedBucketOwner = ExpectedBucketOwner, ChecksumMode = ChecksumMode)
   output <- .s3$get_object_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -3069,12 +3137,13 @@ s3_get_object_acl <- function(Bucket, Key, VersionId = NULL, RequestPayer = NULL
     name = "GetObjectAcl",
     http_method = "GET",
     http_path = "/{Bucket}/{Key+}?acl",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$get_object_acl_input(Bucket = Bucket, Key = Key, VersionId = VersionId, RequestPayer = RequestPayer, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_object_acl_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -3168,12 +3237,13 @@ s3_get_object_attributes <- function(Bucket, Key, VersionId = NULL, MaxParts = N
     name = "GetObjectAttributes",
     http_method = "GET",
     http_path = "/{Bucket}/{Key+}?attributes",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$get_object_attributes_input(Bucket = Bucket, Key = Key, VersionId = VersionId, MaxParts = MaxParts, PartNumberMarker = PartNumberMarker, SSECustomerAlgorithm = SSECustomerAlgorithm, SSECustomerKey = SSECustomerKey, SSECustomerKeyMD5 = SSECustomerKeyMD5, RequestPayer = RequestPayer, ExpectedBucketOwner = ExpectedBucketOwner, ObjectAttributes = ObjectAttributes)
   output <- .s3$get_object_attributes_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -3218,12 +3288,13 @@ s3_get_object_legal_hold <- function(Bucket, Key, VersionId = NULL, RequestPayer
     name = "GetObjectLegalHold",
     http_method = "GET",
     http_path = "/{Bucket}/{Key+}?legal-hold",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$get_object_legal_hold_input(Bucket = Bucket, Key = Key, VersionId = VersionId, RequestPayer = RequestPayer, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_object_legal_hold_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -3262,12 +3333,13 @@ s3_get_object_lock_configuration <- function(Bucket, ExpectedBucketOwner = NULL)
     name = "GetObjectLockConfiguration",
     http_method = "GET",
     http_path = "/{Bucket}?object-lock",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$get_object_lock_configuration_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_object_lock_configuration_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -3312,12 +3384,13 @@ s3_get_object_retention <- function(Bucket, Key, VersionId = NULL, RequestPayer 
     name = "GetObjectRetention",
     http_method = "GET",
     http_path = "/{Bucket}/{Key+}?retention",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$get_object_retention_input(Bucket = Bucket, Key = Key, VersionId = VersionId, RequestPayer = RequestPayer, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_object_retention_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -3371,12 +3444,13 @@ s3_get_object_tagging <- function(Bucket, Key, VersionId = NULL, ExpectedBucketO
     name = "GetObjectTagging",
     http_method = "GET",
     http_path = "/{Bucket}/{Key+}?tagging",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$get_object_tagging_input(Bucket = Bucket, Key = Key, VersionId = VersionId, ExpectedBucketOwner = ExpectedBucketOwner, RequestPayer = RequestPayer)
   output <- .s3$get_object_tagging_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -3406,12 +3480,13 @@ s3_get_object_torrent <- function(Bucket, Key, RequestPayer = NULL, ExpectedBuck
     name = "GetObjectTorrent",
     http_method = "GET",
     http_path = "/{Bucket}/{Key+}?torrent",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$get_object_torrent_input(Bucket = Bucket, Key = Key, RequestPayer = RequestPayer, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_object_torrent_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -3439,12 +3514,13 @@ s3_get_public_access_block <- function(Bucket, ExpectedBucketOwner = NULL) {
     name = "GetPublicAccessBlock",
     http_method = "GET",
     http_path = "/{Bucket}?publicAccessBlock",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$get_public_access_block_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_public_access_block_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -3517,12 +3593,13 @@ s3_head_bucket <- function(Bucket, ExpectedBucketOwner = NULL) {
     name = "HeadBucket",
     http_method = "HEAD",
     http_path = "/{Bucket}",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$head_bucket_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$head_bucket_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -3636,6 +3713,12 @@ s3_head_bucket <- function(Bucket, ExpectedBucketOwner = NULL) {
 #' satisfiable, only the `ContentLength` is affected in the response. If
 #' the Range is not satisfiable, S3 returns a
 #' `416 - Requested Range Not Satisfiable` error.
+#' @param ResponseCacheControl Sets the `Cache-Control` header of the response.
+#' @param ResponseContentDisposition Sets the `Content-Disposition` header of the response.
+#' @param ResponseContentEncoding Sets the `Content-Encoding` header of the response.
+#' @param ResponseContentLanguage Sets the `Content-Language` header of the response.
+#' @param ResponseContentType Sets the `Content-Type` header of the response.
+#' @param ResponseExpires Sets the `Expires` header of the response.
 #' @param VersionId Version ID used to reference a specific version of the object.
 #' 
 #' For directory buckets in this API operation, only the `null` value of
@@ -3666,25 +3749,27 @@ s3_head_bucket <- function(Bucket, ExpectedBucketOwner = NULL) {
 #' with the HTTP status code `403 Forbidden` (access denied).
 #' @param ChecksumMode To retrieve the checksum, this parameter must be enabled.
 #' 
-#' In addition, if you enable `ChecksumMode` and the object is encrypted
-#' with Amazon Web Services Key Management Service (Amazon Web Services
-#' KMS), you must have permission to use the `kms:Decrypt` action for the
-#' request to succeed.
+#' In addition, if you enable checksum mode and the object is uploaded with
+#' a
+#' [checksum](https://docs.aws.amazon.com/AmazonS3/latest/API/API_Checksum.html)
+#' and encrypted with an Key Management Service (KMS) key, you must have
+#' permission to use the `kms:Decrypt` action to retrieve the checksum.
 #'
 #' @keywords internal
 #'
 #' @rdname s3_head_object
-s3_head_object <- function(Bucket, IfMatch = NULL, IfModifiedSince = NULL, IfNoneMatch = NULL, IfUnmodifiedSince = NULL, Key, Range = NULL, VersionId = NULL, SSECustomerAlgorithm = NULL, SSECustomerKey = NULL, SSECustomerKeyMD5 = NULL, RequestPayer = NULL, PartNumber = NULL, ExpectedBucketOwner = NULL, ChecksumMode = NULL) {
+s3_head_object <- function(Bucket, IfMatch = NULL, IfModifiedSince = NULL, IfNoneMatch = NULL, IfUnmodifiedSince = NULL, Key, Range = NULL, ResponseCacheControl = NULL, ResponseContentDisposition = NULL, ResponseContentEncoding = NULL, ResponseContentLanguage = NULL, ResponseContentType = NULL, ResponseExpires = NULL, VersionId = NULL, SSECustomerAlgorithm = NULL, SSECustomerKey = NULL, SSECustomerKeyMD5 = NULL, RequestPayer = NULL, PartNumber = NULL, ExpectedBucketOwner = NULL, ChecksumMode = NULL) {
   op <- new_operation(
     name = "HeadObject",
     http_method = "HEAD",
     http_path = "/{Bucket}/{Key+}",
+    host_prefix = "",
     paginator = list()
   )
-  input <- .s3$head_object_input(Bucket = Bucket, IfMatch = IfMatch, IfModifiedSince = IfModifiedSince, IfNoneMatch = IfNoneMatch, IfUnmodifiedSince = IfUnmodifiedSince, Key = Key, Range = Range, VersionId = VersionId, SSECustomerAlgorithm = SSECustomerAlgorithm, SSECustomerKey = SSECustomerKey, SSECustomerKeyMD5 = SSECustomerKeyMD5, RequestPayer = RequestPayer, PartNumber = PartNumber, ExpectedBucketOwner = ExpectedBucketOwner, ChecksumMode = ChecksumMode)
+  input <- .s3$head_object_input(Bucket = Bucket, IfMatch = IfMatch, IfModifiedSince = IfModifiedSince, IfNoneMatch = IfNoneMatch, IfUnmodifiedSince = IfUnmodifiedSince, Key = Key, Range = Range, ResponseCacheControl = ResponseCacheControl, ResponseContentDisposition = ResponseContentDisposition, ResponseContentEncoding = ResponseContentEncoding, ResponseContentLanguage = ResponseContentLanguage, ResponseContentType = ResponseContentType, ResponseExpires = ResponseExpires, VersionId = VersionId, SSECustomerAlgorithm = SSECustomerAlgorithm, SSECustomerKey = SSECustomerKey, SSECustomerKeyMD5 = SSECustomerKeyMD5, RequestPayer = RequestPayer, PartNumber = PartNumber, ExpectedBucketOwner = ExpectedBucketOwner, ChecksumMode = ChecksumMode)
   output <- .s3$head_object_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -3714,12 +3799,13 @@ s3_list_bucket_analytics_configurations <- function(Bucket, ContinuationToken = 
     name = "ListBucketAnalyticsConfigurations",
     http_method = "GET",
     http_path = "/{Bucket}?analytics",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$list_bucket_analytics_configurations_input(Bucket = Bucket, ContinuationToken = ContinuationToken, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$list_bucket_analytics_configurations_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -3746,12 +3832,13 @@ s3_list_bucket_intelligent_tiering_configurations <- function(Bucket, Continuati
     name = "ListBucketIntelligentTieringConfigurations",
     http_method = "GET",
     http_path = "/{Bucket}?intelligent-tiering",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$list_bucket_intelligent_tiering_configurations_input(Bucket = Bucket, ContinuationToken = ContinuationToken)
   output <- .s3$list_bucket_intelligent_tiering_configurations_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -3783,12 +3870,13 @@ s3_list_bucket_inventory_configurations <- function(Bucket, ContinuationToken = 
     name = "ListBucketInventoryConfigurations",
     http_method = "GET",
     http_path = "/{Bucket}?inventory",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$list_bucket_inventory_configurations_input(Bucket = Bucket, ContinuationToken = ContinuationToken, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$list_bucket_inventory_configurations_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -3820,12 +3908,13 @@ s3_list_bucket_metrics_configurations <- function(Bucket, ContinuationToken = NU
     name = "ListBucketMetricsConfigurations",
     http_method = "GET",
     http_path = "/{Bucket}?metrics",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$list_bucket_metrics_configurations_input(Bucket = Bucket, ContinuationToken = ContinuationToken, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$list_bucket_metrics_configurations_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -3839,22 +3928,33 @@ s3_list_bucket_metrics_configurations <- function(Bucket, ContinuationToken = NU
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3_list_buckets/](https://www.paws-r-sdk.com/docs/s3_list_buckets/) for full documentation.
 #'
-
+#' @param MaxBuckets Maximum number of buckets to be returned in response. When the number is
+#' more than the count of buckets that are owned by an Amazon Web Services
+#' account, return all the buckets in response.
+#' @param ContinuationToken `ContinuationToken` indicates to Amazon S3 that the list is being
+#' continued on this bucket with a token. `ContinuationToken` is obfuscated
+#' and is not a real key. You can use this `ContinuationToken` for
+#' pagination of the list results.
+#' 
+#' Length Constraints: Minimum length of 0. Maximum length of 1024.
+#' 
+#' Required: No.
 #'
 #' @keywords internal
 #'
 #' @rdname s3_list_buckets
-s3_list_buckets <- function() {
+s3_list_buckets <- function(MaxBuckets = NULL, ContinuationToken = NULL) {
   op <- new_operation(
     name = "ListBuckets",
     http_method = "GET",
     http_path = "/",
-    paginator = list(result_key = "Buckets")
+    host_prefix = "",
+    paginator = list(input_token = "ContinuationToken", limit_key = "MaxBuckets", output_token = "ContinuationToken", result_key = "Buckets")
   )
-  input <- .s3$list_buckets_input()
+  input <- .s3$list_buckets_input(MaxBuckets = MaxBuckets, ContinuationToken = ContinuationToken)
   output <- .s3$list_buckets_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -3870,9 +3970,9 @@ s3_list_buckets <- function() {
 #' See [https://www.paws-r-sdk.com/docs/s3_list_directory_buckets/](https://www.paws-r-sdk.com/docs/s3_list_directory_buckets/) for full documentation.
 #'
 #' @param ContinuationToken `ContinuationToken` indicates to Amazon S3 that the list is being
-#' continued on this bucket with a token. `ContinuationToken` is obfuscated
-#' and is not a real key. You can use this `ContinuationToken` for
-#' pagination of the list results.
+#' continued on buckets in this account with a token. `ContinuationToken`
+#' is obfuscated and is not a real bucket name. You can use this
+#' `ContinuationToken` for the pagination of the list results.
 #' @param MaxDirectoryBuckets Maximum number of buckets to be returned in response. When the number is
 #' more than the count of buckets that are owned by an Amazon Web Services
 #' account, return all the buckets in response.
@@ -3885,12 +3985,13 @@ s3_list_directory_buckets <- function(ContinuationToken = NULL, MaxDirectoryBuck
     name = "ListDirectoryBuckets",
     http_method = "GET",
     http_path = "/",
+    host_prefix = "",
     paginator = list(input_token = "ContinuationToken", limit_key = "MaxDirectoryBuckets", output_token = "ContinuationToken", result_key = "Buckets")
   )
   input <- .s3$list_directory_buckets_input(ContinuationToken = ContinuationToken, MaxDirectoryBuckets = MaxDirectoryBuckets)
   output <- .s3$list_directory_buckets_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -4011,12 +4112,13 @@ s3_list_multipart_uploads <- function(Bucket, Delimiter = NULL, EncodingType = N
     name = "ListMultipartUploadsRequest",
     http_method = "GET",
     http_path = "/{Bucket}?uploads",
+    host_prefix = "",
     paginator = list(input_token = list("KeyMarker", "UploadIdMarker"), limit_key = "MaxUploads", more_results = "IsTruncated", output_token = c("NextKeyMarker", "NextUploadIdMarker"), result_key = list("Uploads", "CommonPrefixes"))
   )
   input <- .s3$list_multipart_uploads_input(Bucket = Bucket, Delimiter = Delimiter, EncodingType = EncodingType, KeyMarker = KeyMarker, MaxUploads = MaxUploads, Prefix = Prefix, UploadIdMarker = UploadIdMarker, ExpectedBucketOwner = ExpectedBucketOwner, RequestPayer = RequestPayer)
   output <- .s3$list_multipart_uploads_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -4067,12 +4169,13 @@ s3_list_object_versions <- function(Bucket, Delimiter = NULL, EncodingType = NUL
     name = "ListObjectVersions",
     http_method = "GET",
     http_path = "/{Bucket}?versions",
+    host_prefix = "",
     paginator = list(input_token = list("KeyMarker", "VersionIdMarker"), limit_key = "MaxKeys", more_results = "IsTruncated", output_token = c("NextKeyMarker", "NextVersionIdMarker"), result_key = list("Versions", "DeleteMarkers", "CommonPrefixes"))
   )
   input <- .s3$list_object_versions_input(Bucket = Bucket, Delimiter = Delimiter, EncodingType = EncodingType, KeyMarker = KeyMarker, MaxKeys = MaxKeys, Prefix = Prefix, VersionIdMarker = VersionIdMarker, ExpectedBucketOwner = ExpectedBucketOwner, RequestPayer = RequestPayer, OptionalObjectAttributes = OptionalObjectAttributes)
   output <- .s3$list_object_versions_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -4150,12 +4253,13 @@ s3_list_objects <- function(Bucket, Delimiter = NULL, EncodingType = NULL, Marke
     name = "ListObjects",
     http_method = "GET",
     http_path = "/{Bucket}",
+    host_prefix = "",
     paginator = list(input_token = c("Marker", "Marker"), limit_key = "MaxKeys", more_results = "IsTruncated", output_token = c("NextMarker", "Contents[-1].Key"), result_key = list("Contents", "CommonPrefixes"))
   )
   input <- .s3$list_objects_input(Bucket = Bucket, Delimiter = Delimiter, EncodingType = EncodingType, Marker = Marker, MaxKeys = MaxKeys, Prefix = Prefix, RequestPayer = RequestPayer, ExpectedBucketOwner = ExpectedBucketOwner, OptionalObjectAttributes = OptionalObjectAttributes)
   output <- .s3$list_objects_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -4219,10 +4323,21 @@ s3_list_objects <- function(Bucket, Delimiter = NULL, EncodingType = NULL, Marke
 #'     uploads, see [Multipart Upload
 #'     Overview](https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html)
 #'     in the *Amazon S3 User Guide*.
-#' @param EncodingType Encoding type used by Amazon S3 to encode object keys in the response.
-#' If using `url`, non-ASCII characters used in an object's key name will
-#' be URL encoded. For example, the object test_file(3).png will appear as
-#' test_file%283%29.png.
+#' @param EncodingType Encoding type used by Amazon S3 to encode the [object
+#' keys](https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-keys.html)
+#' in the response. Responses are encoded only in UTF-8. An object key can
+#' contain any Unicode character. However, the XML 1.0 parser can't parse
+#' certain characters, such as characters with an ASCII value from 0 to 10.
+#' For characters that aren't supported in XML 1.0, you can add this
+#' parameter to request that Amazon S3 encode the keys in the response. For
+#' more information about characters to avoid in object key names, see
+#' [Object key naming
+#' guidelines](https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-keys.html#object-key-guidelines).
+#' 
+#' When using the URL encoding type, non-ASCII characters that are used in
+#' an object's key name will be percent-encoded according to UTF-8 code
+#' values. For example, the object `test_file(3).png` will appear as
+#' `test_file%283%29.png`.
 #' @param MaxKeys Sets the maximum number of keys returned in the response. By default,
 #' the action returns up to 1,000 key names. The response might contain
 #' fewer keys but will never contain more.
@@ -4267,12 +4382,13 @@ s3_list_objects_v2 <- function(Bucket, Delimiter = NULL, EncodingType = NULL, Ma
     name = "ListObjectsV2",
     http_method = "GET",
     http_path = "/{Bucket}?list-type=2",
+    host_prefix = "",
     paginator = list(input_token = "ContinuationToken", limit_key = "MaxKeys", output_token = "NextContinuationToken", result_key = list( "Contents", "CommonPrefixes"))
   )
   input <- .s3$list_objects_v2_input(Bucket = Bucket, Delimiter = Delimiter, EncodingType = EncodingType, MaxKeys = MaxKeys, Prefix = Prefix, ContinuationToken = ContinuationToken, FetchOwner = FetchOwner, StartAfter = StartAfter, RequestPayer = RequestPayer, ExpectedBucketOwner = ExpectedBucketOwner, OptionalObjectAttributes = OptionalObjectAttributes)
   output <- .s3$list_objects_v2_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -4364,12 +4480,13 @@ s3_list_parts <- function(Bucket, Key, MaxParts = NULL, PartNumberMarker = NULL,
     name = "ListPartsRequest",
     http_method = "GET",
     http_path = "/{Bucket}/{Key+}",
+    host_prefix = "",
     paginator = list(input_token = "PartNumberMarker", limit_key = "MaxParts", more_results = "IsTruncated", output_token = "NextPartNumberMarker", result_key = "Parts")
   )
   input <- .s3$list_parts_input(Bucket = Bucket, Key = Key, MaxParts = MaxParts, PartNumberMarker = PartNumberMarker, UploadId = UploadId, RequestPayer = RequestPayer, ExpectedBucketOwner = ExpectedBucketOwner, SSECustomerAlgorithm = SSECustomerAlgorithm, SSECustomerKey = SSECustomerKey, SSECustomerKeyMD5 = SSECustomerKeyMD5)
   output <- .s3$list_parts_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -4408,12 +4525,13 @@ s3_put_bucket_accelerate_configuration <- function(Bucket, AccelerateConfigurati
     name = "PutBucketAccelerateConfiguration",
     http_method = "PUT",
     http_path = "/{Bucket}?accelerate",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$put_bucket_accelerate_configuration_input(Bucket = Bucket, AccelerateConfiguration = AccelerateConfiguration, ExpectedBucketOwner = ExpectedBucketOwner, ChecksumAlgorithm = ChecksumAlgorithm)
   output <- .s3$put_bucket_accelerate_configuration_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -4471,12 +4589,13 @@ s3_put_bucket_acl <- function(ACL = NULL, AccessControlPolicy = NULL, Bucket, Co
     name = "PutBucketAcl",
     http_method = "PUT",
     http_path = "/{Bucket}?acl",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$put_bucket_acl_input(ACL = ACL, AccessControlPolicy = AccessControlPolicy, Bucket = Bucket, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, GrantFullControl = GrantFullControl, GrantRead = GrantRead, GrantReadACP = GrantReadACP, GrantWrite = GrantWrite, GrantWriteACP = GrantWriteACP, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_bucket_acl_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -4505,12 +4624,13 @@ s3_put_bucket_analytics_configuration <- function(Bucket, Id, AnalyticsConfigura
     name = "PutBucketAnalyticsConfiguration",
     http_method = "PUT",
     http_path = "/{Bucket}?analytics",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$put_bucket_analytics_configuration_input(Bucket = Bucket, Id = Id, AnalyticsConfiguration = AnalyticsConfiguration, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_bucket_analytics_configuration_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -4560,12 +4680,13 @@ s3_put_bucket_cors <- function(Bucket, CORSConfiguration, ContentMD5 = NULL, Che
     name = "PutBucketCors",
     http_method = "PUT",
     http_path = "/{Bucket}?cors",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$put_bucket_cors_input(Bucket = Bucket, CORSConfiguration = CORSConfiguration, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_bucket_cors_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -4619,12 +4740,13 @@ s3_put_bucket_encryption <- function(Bucket, ContentMD5 = NULL, ChecksumAlgorith
     name = "PutBucketEncryption",
     http_method = "PUT",
     http_path = "/{Bucket}?encryption",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$put_bucket_encryption_input(Bucket = Bucket, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, ServerSideEncryptionConfiguration = ServerSideEncryptionConfiguration, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_bucket_encryption_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -4651,12 +4773,13 @@ s3_put_bucket_intelligent_tiering_configuration <- function(Bucket, Id, Intellig
     name = "PutBucketIntelligentTieringConfiguration",
     http_method = "PUT",
     http_path = "/{Bucket}?intelligent-tiering",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$put_bucket_intelligent_tiering_configuration_input(Bucket = Bucket, Id = Id, IntelligentTieringConfiguration = IntelligentTieringConfiguration)
   output <- .s3$put_bucket_intelligent_tiering_configuration_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -4685,12 +4808,13 @@ s3_put_bucket_inventory_configuration <- function(Bucket, Id, InventoryConfigura
     name = "PutBucketInventoryConfiguration",
     http_method = "PUT",
     http_path = "/{Bucket}?inventory",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$put_bucket_inventory_configuration_input(Bucket = Bucket, Id = Id, InventoryConfiguration = InventoryConfiguration, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_bucket_inventory_configuration_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -4732,12 +4856,13 @@ s3_put_bucket_lifecycle <- function(Bucket, ContentMD5 = NULL, ChecksumAlgorithm
     name = "PutBucketLifecycle",
     http_method = "PUT",
     http_path = "/{Bucket}?lifecycle",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$put_bucket_lifecycle_input(Bucket = Bucket, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, LifecycleConfiguration = LifecycleConfiguration, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_bucket_lifecycle_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -4776,12 +4901,13 @@ s3_put_bucket_lifecycle_configuration <- function(Bucket, ChecksumAlgorithm = NU
     name = "PutBucketLifecycleConfiguration",
     http_method = "PUT",
     http_path = "/{Bucket}?lifecycle",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$put_bucket_lifecycle_configuration_input(Bucket = Bucket, ChecksumAlgorithm = ChecksumAlgorithm, LifecycleConfiguration = LifecycleConfiguration, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_bucket_lifecycle_configuration_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -4826,12 +4952,13 @@ s3_put_bucket_logging <- function(Bucket, BucketLoggingStatus, ContentMD5 = NULL
     name = "PutBucketLogging",
     http_method = "PUT",
     http_path = "/{Bucket}?logging",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$put_bucket_logging_input(Bucket = Bucket, BucketLoggingStatus = BucketLoggingStatus, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_bucket_logging_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -4862,12 +4989,13 @@ s3_put_bucket_metrics_configuration <- function(Bucket, Id, MetricsConfiguration
     name = "PutBucketMetricsConfiguration",
     http_method = "PUT",
     http_path = "/{Bucket}?metrics",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$put_bucket_metrics_configuration_input(Bucket = Bucket, Id = Id, MetricsConfiguration = MetricsConfiguration, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_bucket_metrics_configuration_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -4912,12 +5040,13 @@ s3_put_bucket_notification <- function(Bucket, ContentMD5 = NULL, ChecksumAlgori
     name = "PutBucketNotification",
     http_method = "PUT",
     http_path = "/{Bucket}?notification",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$put_bucket_notification_input(Bucket = Bucket, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, NotificationConfiguration = NotificationConfiguration, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_bucket_notification_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -4947,12 +5076,13 @@ s3_put_bucket_notification_configuration <- function(Bucket, NotificationConfigu
     name = "PutBucketNotificationConfiguration",
     http_method = "PUT",
     http_path = "/{Bucket}?notification",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$put_bucket_notification_configuration_input(Bucket = Bucket, NotificationConfiguration = NotificationConfiguration, ExpectedBucketOwner = ExpectedBucketOwner, SkipDestinationValidation = SkipDestinationValidation)
   output <- .s3$put_bucket_notification_configuration_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -4987,12 +5117,13 @@ s3_put_bucket_ownership_controls <- function(Bucket, ContentMD5 = NULL, Expected
     name = "PutBucketOwnershipControls",
     http_method = "PUT",
     http_path = "/{Bucket}?ownershipControls",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$put_bucket_ownership_controls_input(Bucket = Bucket, ContentMD5 = ContentMD5, ExpectedBucketOwner = ExpectedBucketOwner, OwnershipControls = OwnershipControls)
   output <- .s3$put_bucket_ownership_controls_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -5079,12 +5210,13 @@ s3_put_bucket_policy <- function(Bucket, ContentMD5 = NULL, ChecksumAlgorithm = 
     name = "PutBucketPolicy",
     http_method = "PUT",
     http_path = "/{Bucket}?policy",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$put_bucket_policy_input(Bucket = Bucket, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, ConfirmRemoveSelfBucketAccess = ConfirmRemoveSelfBucketAccess, Policy = Policy, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_bucket_policy_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -5132,12 +5264,13 @@ s3_put_bucket_replication <- function(Bucket, ContentMD5 = NULL, ChecksumAlgorit
     name = "PutBucketReplication",
     http_method = "PUT",
     http_path = "/{Bucket}?replication",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$put_bucket_replication_input(Bucket = Bucket, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, ReplicationConfiguration = ReplicationConfiguration, Token = Token, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_bucket_replication_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -5184,12 +5317,13 @@ s3_put_bucket_request_payment <- function(Bucket, ContentMD5 = NULL, ChecksumAlg
     name = "PutBucketRequestPayment",
     http_method = "PUT",
     http_path = "/{Bucket}?requestPayment",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$put_bucket_request_payment_input(Bucket = Bucket, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, RequestPaymentConfiguration = RequestPaymentConfiguration, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_bucket_request_payment_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -5236,12 +5370,13 @@ s3_put_bucket_tagging <- function(Bucket, ContentMD5 = NULL, ChecksumAlgorithm =
     name = "PutBucketTagging",
     http_method = "PUT",
     http_path = "/{Bucket}?tagging",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$put_bucket_tagging_input(Bucket = Bucket, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, Tagging = Tagging, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_bucket_tagging_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -5290,12 +5425,13 @@ s3_put_bucket_versioning <- function(Bucket, ContentMD5 = NULL, ChecksumAlgorith
     name = "PutBucketVersioning",
     http_method = "PUT",
     http_path = "/{Bucket}?versioning",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$put_bucket_versioning_input(Bucket = Bucket, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, MFA = MFA, VersioningConfiguration = VersioningConfiguration, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_bucket_versioning_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -5342,12 +5478,13 @@ s3_put_bucket_website <- function(Bucket, ContentMD5 = NULL, ChecksumAlgorithm =
     name = "PutBucketWebsite",
     http_method = "PUT",
     http_path = "/{Bucket}?website",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$put_bucket_website_input(Bucket = Bucket, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, WebsiteConfiguration = WebsiteConfiguration, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_bucket_website_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -5518,6 +5655,20 @@ s3_put_bucket_website <- function(Bucket, ContentMD5 = NULL, ChecksumAlgorithm =
 #' in the *Amazon S3 User Guide*.
 #' @param Expires The date and time at which the object is no longer cacheable. For more
 #' information, see <https://www.rfc-editor.org/rfc/rfc7234#section-5.3>.
+#' @param IfNoneMatch Uploads the object only if the object key name does not already exist in
+#' the bucket specified. Otherwise, Amazon S3 returns a
+#' `412 Precondition Failed` error.
+#' 
+#' If a conflicting operation occurs during the upload S3 returns a
+#' `409 ConditionalRequestConflict` response. On a 409 failure you should
+#' retry the upload.
+#' 
+#' Expects the '*' (asterisk) character.
+#' 
+#' For more information about conditional requests, see [RFC
+#' 7232](https://datatracker.ietf.org/doc/html/rfc7232), or [Conditional
+#' requests](https://docs.aws.amazon.com/AmazonS3/latest/userguide/conditional-requests.html)
+#' in the *Amazon S3 User Guide*.
 #' @param GrantFullControl Gives the grantee READ, READ_ACP, and WRITE_ACP permissions on the
 #' object.
 #' 
@@ -5667,17 +5818,18 @@ s3_put_bucket_website <- function(Bucket, ContentMD5 = NULL, ChecksumAlgorithm =
 #' @keywords internal
 #'
 #' @rdname s3_put_object
-s3_put_object <- function(ACL = NULL, Body = NULL, Bucket, CacheControl = NULL, ContentDisposition = NULL, ContentEncoding = NULL, ContentLanguage = NULL, ContentLength = NULL, ContentMD5 = NULL, ContentType = NULL, ChecksumAlgorithm = NULL, ChecksumCRC32 = NULL, ChecksumCRC32C = NULL, ChecksumSHA1 = NULL, ChecksumSHA256 = NULL, Expires = NULL, GrantFullControl = NULL, GrantRead = NULL, GrantReadACP = NULL, GrantWriteACP = NULL, Key, Metadata = NULL, ServerSideEncryption = NULL, StorageClass = NULL, WebsiteRedirectLocation = NULL, SSECustomerAlgorithm = NULL, SSECustomerKey = NULL, SSECustomerKeyMD5 = NULL, SSEKMSKeyId = NULL, SSEKMSEncryptionContext = NULL, BucketKeyEnabled = NULL, RequestPayer = NULL, Tagging = NULL, ObjectLockMode = NULL, ObjectLockRetainUntilDate = NULL, ObjectLockLegalHoldStatus = NULL, ExpectedBucketOwner = NULL) {
+s3_put_object <- function(ACL = NULL, Body = NULL, Bucket, CacheControl = NULL, ContentDisposition = NULL, ContentEncoding = NULL, ContentLanguage = NULL, ContentLength = NULL, ContentMD5 = NULL, ContentType = NULL, ChecksumAlgorithm = NULL, ChecksumCRC32 = NULL, ChecksumCRC32C = NULL, ChecksumSHA1 = NULL, ChecksumSHA256 = NULL, Expires = NULL, IfNoneMatch = NULL, GrantFullControl = NULL, GrantRead = NULL, GrantReadACP = NULL, GrantWriteACP = NULL, Key, Metadata = NULL, ServerSideEncryption = NULL, StorageClass = NULL, WebsiteRedirectLocation = NULL, SSECustomerAlgorithm = NULL, SSECustomerKey = NULL, SSECustomerKeyMD5 = NULL, SSEKMSKeyId = NULL, SSEKMSEncryptionContext = NULL, BucketKeyEnabled = NULL, RequestPayer = NULL, Tagging = NULL, ObjectLockMode = NULL, ObjectLockRetainUntilDate = NULL, ObjectLockLegalHoldStatus = NULL, ExpectedBucketOwner = NULL) {
   op <- new_operation(
     name = "PutObject",
     http_method = "PUT",
     http_path = "/{Bucket}/{Key+}",
+    host_prefix = "",
     paginator = list()
   )
-  input <- .s3$put_object_input(ACL = ACL, Body = Body, Bucket = Bucket, CacheControl = CacheControl, ContentDisposition = ContentDisposition, ContentEncoding = ContentEncoding, ContentLanguage = ContentLanguage, ContentLength = ContentLength, ContentMD5 = ContentMD5, ContentType = ContentType, ChecksumAlgorithm = ChecksumAlgorithm, ChecksumCRC32 = ChecksumCRC32, ChecksumCRC32C = ChecksumCRC32C, ChecksumSHA1 = ChecksumSHA1, ChecksumSHA256 = ChecksumSHA256, Expires = Expires, GrantFullControl = GrantFullControl, GrantRead = GrantRead, GrantReadACP = GrantReadACP, GrantWriteACP = GrantWriteACP, Key = Key, Metadata = Metadata, ServerSideEncryption = ServerSideEncryption, StorageClass = StorageClass, WebsiteRedirectLocation = WebsiteRedirectLocation, SSECustomerAlgorithm = SSECustomerAlgorithm, SSECustomerKey = SSECustomerKey, SSECustomerKeyMD5 = SSECustomerKeyMD5, SSEKMSKeyId = SSEKMSKeyId, SSEKMSEncryptionContext = SSEKMSEncryptionContext, BucketKeyEnabled = BucketKeyEnabled, RequestPayer = RequestPayer, Tagging = Tagging, ObjectLockMode = ObjectLockMode, ObjectLockRetainUntilDate = ObjectLockRetainUntilDate, ObjectLockLegalHoldStatus = ObjectLockLegalHoldStatus, ExpectedBucketOwner = ExpectedBucketOwner)
+  input <- .s3$put_object_input(ACL = ACL, Body = Body, Bucket = Bucket, CacheControl = CacheControl, ContentDisposition = ContentDisposition, ContentEncoding = ContentEncoding, ContentLanguage = ContentLanguage, ContentLength = ContentLength, ContentMD5 = ContentMD5, ContentType = ContentType, ChecksumAlgorithm = ChecksumAlgorithm, ChecksumCRC32 = ChecksumCRC32, ChecksumCRC32C = ChecksumCRC32C, ChecksumSHA1 = ChecksumSHA1, ChecksumSHA256 = ChecksumSHA256, Expires = Expires, IfNoneMatch = IfNoneMatch, GrantFullControl = GrantFullControl, GrantRead = GrantRead, GrantReadACP = GrantReadACP, GrantWriteACP = GrantWriteACP, Key = Key, Metadata = Metadata, ServerSideEncryption = ServerSideEncryption, StorageClass = StorageClass, WebsiteRedirectLocation = WebsiteRedirectLocation, SSECustomerAlgorithm = SSECustomerAlgorithm, SSECustomerKey = SSECustomerKey, SSECustomerKeyMD5 = SSECustomerKeyMD5, SSEKMSKeyId = SSEKMSKeyId, SSEKMSEncryptionContext = SSEKMSEncryptionContext, BucketKeyEnabled = BucketKeyEnabled, RequestPayer = RequestPayer, Tagging = Tagging, ObjectLockMode = ObjectLockMode, ObjectLockRetainUntilDate = ObjectLockRetainUntilDate, ObjectLockLegalHoldStatus = ObjectLockLegalHoldStatus, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_object_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -5773,12 +5925,13 @@ s3_put_object_acl <- function(ACL = NULL, AccessControlPolicy = NULL, Bucket, Co
     name = "PutObjectAcl",
     http_method = "PUT",
     http_path = "/{Bucket}/{Key+}?acl",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$put_object_acl_input(ACL = ACL, AccessControlPolicy = AccessControlPolicy, Bucket = Bucket, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, GrantFullControl = GrantFullControl, GrantRead = GrantRead, GrantReadACP = GrantReadACP, GrantWrite = GrantWrite, GrantWriteACP = GrantWriteACP, Key = Key, RequestPayer = RequestPayer, VersionId = VersionId, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_object_acl_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -5839,12 +5992,13 @@ s3_put_object_legal_hold <- function(Bucket, Key, LegalHold = NULL, RequestPayer
     name = "PutObjectLegalHold",
     http_method = "PUT",
     http_path = "/{Bucket}/{Key+}?legal-hold",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$put_object_legal_hold_input(Bucket = Bucket, Key = Key, LegalHold = LegalHold, RequestPayer = RequestPayer, VersionId = VersionId, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_object_legal_hold_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -5892,12 +6046,13 @@ s3_put_object_lock_configuration <- function(Bucket, ObjectLockConfiguration = N
     name = "PutObjectLockConfiguration",
     http_method = "PUT",
     http_path = "/{Bucket}?object-lock",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$put_object_lock_configuration_input(Bucket = Bucket, ObjectLockConfiguration = ObjectLockConfiguration, RequestPayer = RequestPayer, Token = Token, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_object_lock_configuration_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -5961,12 +6116,13 @@ s3_put_object_retention <- function(Bucket, Key, Retention = NULL, RequestPayer 
     name = "PutObjectRetention",
     http_method = "PUT",
     http_path = "/{Bucket}/{Key+}?retention",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$put_object_retention_input(Bucket = Bucket, Key = Key, Retention = Retention, RequestPayer = RequestPayer, VersionId = VersionId, BypassGovernanceRetention = BypassGovernanceRetention, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_object_retention_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -6036,12 +6192,13 @@ s3_put_object_tagging <- function(Bucket, Key, VersionId = NULL, ContentMD5 = NU
     name = "PutObjectTagging",
     http_method = "PUT",
     http_path = "/{Bucket}/{Key+}?tagging",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$put_object_tagging_input(Bucket = Bucket, Key = Key, VersionId = VersionId, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, Tagging = Tagging, ExpectedBucketOwner = ExpectedBucketOwner, RequestPayer = RequestPayer)
   output <- .s3$put_object_tagging_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -6092,12 +6249,13 @@ s3_put_public_access_block <- function(Bucket, ContentMD5 = NULL, ChecksumAlgori
     name = "PutPublicAccessBlock",
     http_method = "PUT",
     http_path = "/{Bucket}?publicAccessBlock",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$put_public_access_block_input(Bucket = Bucket, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, PublicAccessBlockConfiguration = PublicAccessBlockConfiguration, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_public_access_block_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -6162,12 +6320,13 @@ s3_restore_object <- function(Bucket, Key, VersionId = NULL, RestoreRequest = NU
     name = "RestoreObject",
     http_method = "POST",
     http_path = "/{Bucket}/{Key+}?restore",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$restore_object_input(Bucket = Bucket, Key = Key, VersionId = VersionId, RestoreRequest = RestoreRequest, RequestPayer = RequestPayer, ChecksumAlgorithm = ChecksumAlgorithm, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$restore_object_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -6234,12 +6393,13 @@ s3_select_object_content <- function(Bucket, Key, SSECustomerAlgorithm = NULL, S
     name = "SelectObjectContent",
     http_method = "POST",
     http_path = "/{Bucket}/{Key+}?select&select-type=2",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$select_object_content_input(Bucket = Bucket, Key = Key, SSECustomerAlgorithm = SSECustomerAlgorithm, SSECustomerKey = SSECustomerKey, SSECustomerKeyMD5 = SSECustomerKeyMD5, Expression = Expression, ExpressionType = ExpressionType, RequestProgress = RequestProgress, InputSerialization = InputSerialization, OutputSerialization = OutputSerialization, ScanRange = ScanRange, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$select_object_content_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -6373,12 +6533,13 @@ s3_upload_part <- function(Body = NULL, Bucket, ContentLength = NULL, ContentMD5
     name = "UploadPart",
     http_method = "PUT",
     http_path = "/{Bucket}/{Key+}",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$upload_part_input(Body = Body, Bucket = Bucket, ContentLength = ContentLength, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, ChecksumCRC32 = ChecksumCRC32, ChecksumCRC32C = ChecksumCRC32C, ChecksumSHA1 = ChecksumSHA1, ChecksumSHA256 = ChecksumSHA256, Key = Key, PartNumber = PartNumber, UploadId = UploadId, SSECustomerAlgorithm = SSECustomerAlgorithm, SSECustomerKey = SSECustomerKey, SSECustomerKeyMD5 = SSECustomerKeyMD5, RequestPayer = RequestPayer, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$upload_part_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -6594,12 +6755,13 @@ s3_upload_part_copy <- function(Bucket, CopySource, CopySourceIfMatch = NULL, Co
     name = "CopyPart",
     http_method = "PUT",
     http_path = "/{Bucket}/{Key+}",
+    host_prefix = "",
     paginator = list()
   )
   input <- .s3$upload_part_copy_input(Bucket = Bucket, CopySource = CopySource, CopySourceIfMatch = CopySourceIfMatch, CopySourceIfModifiedSince = CopySourceIfModifiedSince, CopySourceIfNoneMatch = CopySourceIfNoneMatch, CopySourceIfUnmodifiedSince = CopySourceIfUnmodifiedSince, CopySourceRange = CopySourceRange, Key = Key, PartNumber = PartNumber, UploadId = UploadId, SSECustomerAlgorithm = SSECustomerAlgorithm, SSECustomerKey = SSECustomerKey, SSECustomerKeyMD5 = SSECustomerKeyMD5, CopySourceSSECustomerAlgorithm = CopySourceSSECustomerAlgorithm, CopySourceSSECustomerKey = CopySourceSSECustomerKey, CopySourceSSECustomerKeyMD5 = CopySourceSSECustomerKeyMD5, RequestPayer = RequestPayer, ExpectedBucketOwner = ExpectedBucketOwner, ExpectedSourceBucketOwner = ExpectedSourceBucketOwner)
   output <- .s3$upload_part_copy_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
@@ -6782,12 +6944,13 @@ s3_write_get_object_response <- function(RequestRoute, RequestToken, Body = NULL
     name = "WriteGetObjectResponse",
     http_method = "POST",
     http_path = "/WriteGetObjectResponse",
+    host_prefix = "{RequestRoute}.",
     paginator = list()
   )
   input <- .s3$write_get_object_response_input(RequestRoute = RequestRoute, RequestToken = RequestToken, Body = Body, StatusCode = StatusCode, ErrorCode = ErrorCode, ErrorMessage = ErrorMessage, AcceptRanges = AcceptRanges, CacheControl = CacheControl, ContentDisposition = ContentDisposition, ContentEncoding = ContentEncoding, ContentLanguage = ContentLanguage, ContentLength = ContentLength, ContentRange = ContentRange, ContentType = ContentType, ChecksumCRC32 = ChecksumCRC32, ChecksumCRC32C = ChecksumCRC32C, ChecksumSHA1 = ChecksumSHA1, ChecksumSHA256 = ChecksumSHA256, DeleteMarker = DeleteMarker, ETag = ETag, Expires = Expires, Expiration = Expiration, LastModified = LastModified, MissingMeta = MissingMeta, Metadata = Metadata, ObjectLockMode = ObjectLockMode, ObjectLockLegalHoldStatus = ObjectLockLegalHoldStatus, ObjectLockRetainUntilDate = ObjectLockRetainUntilDate, PartsCount = PartsCount, ReplicationStatus = ReplicationStatus, RequestCharged = RequestCharged, Restore = Restore, ServerSideEncryption = ServerSideEncryption, SSECustomerAlgorithm = SSECustomerAlgorithm, SSEKMSKeyId = SSEKMSKeyId, SSECustomerKeyMD5 = SSECustomerKeyMD5, StorageClass = StorageClass, TagCount = TagCount, VersionId = VersionId, BucketKeyEnabled = BucketKeyEnabled)
   output <- .s3$write_get_object_response_output()
   config <- get_config()
-  svc <- .s3$service(config)
+  svc <- .s3$service(config, op)
   request <- new_request(svc, op, input, output)
   response <- send_request(request)
   return(response)
