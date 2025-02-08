@@ -2,7 +2,7 @@
 % Please edit documentation in R/s3_operations.R
 \name{s3_put_bucket_tagging}
 \alias{s3_put_bucket_tagging}
-\title{This operation is not supported by directory buckets}
+\title{This operation is not supported for directory buckets}
 \usage{
 s3_put_bucket_tagging(
   Bucket,
@@ -15,7 +15,7 @@ s3_put_bucket_tagging(
 \arguments{
 \item{Bucket}{[required] The bucket name.}
 
-\item{ContentMD5}{The base64-encoded 128-bit MD5 digest of the data. You must use this
+\item{ContentMD5}{The Base64 encoded 128-bit \code{MD5} digest of the data. You must use this
 header as a message integrity check to verify that the request body was
 not corrupted in transit. For more information, see \href{https://www.ietf.org/rfc/rfc1864.txt}{RFC 1864}.
 
@@ -41,7 +41,7 @@ provide does not match the actual owner of the bucket, the request fails
 with the HTTP status code \verb{403 Forbidden} (access denied).}
 }
 \description{
-This operation is not supported by directory buckets.
+This operation is not supported for directory buckets.
 
 See \url{https://www.paws-r-sdk.com/docs/s3_put_bucket_tagging/} for full documentation.
 }

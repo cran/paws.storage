@@ -45,6 +45,11 @@ NULL
 #' is critical to all later functions of the gateway and cannot be changed
 #' after activation. The default value is `CACHED`.
 #' 
+#' Amazon FSx File Gateway is no longer available to new customers.
+#' Existing customers of FSx File Gateway can continue to use the service
+#' normally. For capabilities similar to FSx File Gateway, visit [this blog
+#' post](https://aws.amazon.com/blogs/storage/switch-your-file-share-access-from-amazon-fsx-file-gateway-to-amazon-fsx-for-windows-file-server/).
+#' 
 #' Valid Values: `STORED` | `CACHED` | `VTL` | `FILE_S3` | `FILE_FSX_SMB`
 #' @param TapeDriveType The value that indicates the type of tape drive to use for tape gateway.
 #' This field is optional.
@@ -71,7 +76,8 @@ storagegateway_activate_gateway <- function(ActivationKey, GatewayName, GatewayT
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$activate_gateway_input(ActivationKey = ActivationKey, GatewayName = GatewayName, GatewayTimezone = GatewayTimezone, GatewayRegion = GatewayRegion, GatewayType = GatewayType, TapeDriveType = TapeDriveType, MediumChangerType = MediumChangerType, Tags = Tags)
   output <- .storagegateway$activate_gateway_output()
@@ -105,7 +111,8 @@ storagegateway_add_cache <- function(GatewayARN, DiskIds) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$add_cache_input(GatewayARN = GatewayARN, DiskIds = DiskIds)
   output <- .storagegateway$add_cache_output()
@@ -142,7 +149,8 @@ storagegateway_add_tags_to_resource <- function(ResourceARN, Tags) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$add_tags_to_resource_input(ResourceARN = ResourceARN, Tags = Tags)
   output <- .storagegateway$add_tags_to_resource_output()
@@ -177,7 +185,8 @@ storagegateway_add_upload_buffer <- function(GatewayARN, DiskIds) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$add_upload_buffer_input(GatewayARN = GatewayARN, DiskIds = DiskIds)
   output <- .storagegateway$add_upload_buffer_output()
@@ -212,7 +221,8 @@ storagegateway_add_working_storage <- function(GatewayARN, DiskIds) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$add_working_storage_input(GatewayARN = GatewayARN, DiskIds = DiskIds)
   output <- .storagegateway$add_working_storage_output()
@@ -256,7 +266,8 @@ storagegateway_assign_tape_pool <- function(TapeARN, PoolId, BypassGovernanceRet
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$assign_tape_pool_input(TapeARN = TapeARN, PoolId = PoolId, BypassGovernanceRetention = BypassGovernanceRetention)
   output <- .storagegateway$assign_tape_pool_output()
@@ -303,7 +314,8 @@ storagegateway_associate_file_system <- function(UserName, Password, ClientToken
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$associate_file_system_input(UserName = UserName, Password = Password, ClientToken = ClientToken, GatewayARN = GatewayARN, LocationARN = LocationARN, Tags = Tags, AuditDestinationARN = AuditDestinationARN, CacheAttributes = CacheAttributes, EndpointNetworkConfiguration = EndpointNetworkConfiguration)
   output <- .storagegateway$associate_file_system_output()
@@ -354,7 +366,8 @@ storagegateway_attach_volume <- function(GatewayARN, TargetName = NULL, VolumeAR
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$attach_volume_input(GatewayARN = GatewayARN, TargetName = TargetName, VolumeARN = VolumeARN, NetworkInterfaceId = NetworkInterfaceId, DiskId = DiskId)
   output <- .storagegateway$attach_volume_output()
@@ -387,7 +400,8 @@ storagegateway_cancel_archival <- function(GatewayARN, TapeARN) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$cancel_archival_input(GatewayARN = GatewayARN, TapeARN = TapeARN)
   output <- .storagegateway$cancel_archival_output()
@@ -420,7 +434,8 @@ storagegateway_cancel_retrieval <- function(GatewayARN, TapeARN) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$cancel_retrieval_input(GatewayARN = GatewayARN, TapeARN = TapeARN)
   output <- .storagegateway$cancel_retrieval_output()
@@ -493,7 +508,8 @@ storagegateway_create_cachedi_scsi_volume <- function(GatewayARN, VolumeSizeInBy
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$create_cachedi_scsi_volume_input(GatewayARN = GatewayARN, VolumeSizeInBytes = VolumeSizeInBytes, SnapshotId = SnapshotId, TargetName = TargetName, SourceVolumeARN = SourceVolumeARN, NetworkInterfaceId = NetworkInterfaceId, ClientToken = ClientToken, KMSEncrypted = KMSEncrypted, KMSKey = KMSKey, Tags = Tags)
   output <- .storagegateway$create_cachedi_scsi_volume_output()
@@ -518,14 +534,39 @@ storagegateway_create_cachedi_scsi_volume <- function(GatewayARN, VolumeSizeInBy
 #' @param NFSFileShareDefaults File share default values. Optional.
 #' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the S3 File Gateway on which you want
 #' to create a file share.
-#' @param KMSEncrypted Set to `true` to use Amazon S3 server-side encryption with your own KMS
-#' key, or `false` to use a key managed by Amazon S3. Optional.
+#' @param EncryptionType A value that specifies the type of server-side encryption that the file
+#' share will use for the data that it stores in Amazon S3.
+#' 
+#' We recommend using `EncryptionType` instead of `KMSEncrypted` to set the
+#' file share encryption method. You do not need to provide values for both
+#' parameters.
+#' 
+#' If values for both parameters exist in the same request, then the
+#' specified encryption methods must not conflict. For example, if
+#' `EncryptionType` is `SseS3`, then `KMSEncrypted` must be `false`. If
+#' `EncryptionType` is `SseKms` or `DsseKms`, then `KMSEncrypted` must be
+#' `true`.
+#' @param KMSEncrypted Optional. Set to `true` to use Amazon S3 server-side encryption with
+#' your own KMS key (SSE-KMS), or `false` to use a key managed by Amazon S3
+#' (SSE-S3). To use dual-layer encryption (DSSE-KMS), set the
+#' `EncryptionType` parameter instead.
+#' 
+#' We recommend using `EncryptionType` instead of `KMSEncrypted` to set the
+#' file share encryption method. You do not need to provide values for both
+#' parameters.
+#' 
+#' If values for both parameters exist in the same request, then the
+#' specified encryption methods must not conflict. For example, if
+#' `EncryptionType` is `SseS3`, then `KMSEncrypted` must be `false`. If
+#' `EncryptionType` is `SseKms` or `DsseKms`, then `KMSEncrypted` must be
+#' `true`.
 #' 
 #' Valid Values: `true` | `false`
-#' @param KMSKey The Amazon Resource Name (ARN) of a symmetric customer master key (CMK)
-#' used for Amazon S3 server-side encryption. Storage Gateway does not
-#' support asymmetric CMKs. This value can only be set when `KMSEncrypted`
-#' is `true`. Optional.
+#' @param KMSKey Optional. The Amazon Resource Name (ARN) of a symmetric customer master
+#' key (CMK) used for Amazon S3 server-side encryption. Storage Gateway
+#' does not support asymmetric CMKs. This value must be set if
+#' `KMSEncrypted` is `true`, or if `EncryptionType` is `SseKms` or
+#' `DsseKms`.
 #' @param Role &#91;required&#93; The ARN of the Identity and Access Management (IAM) role that an S3 File
 #' Gateway assumes when it accesses the underlying storage.
 #' @param LocationARN &#91;required&#93; A custom ARN for the backend storage used for storing data for file
@@ -537,7 +578,7 @@ storagegateway_create_cachedi_scsi_volume <- function(GatewayARN, VolumeSizeInBy
 #' 
 #' Bucket ARN:
 #' 
-#' `arn:aws:s3:::my-bucket/prefix/`
+#' `arn:aws:s3:::amzn-s3-demo-bucket/prefix/`
 #' 
 #' Access point ARN:
 #' 
@@ -601,6 +642,9 @@ storagegateway_create_cachedi_scsi_volume <- function(GatewayARN, VolumeSizeInBy
 #' 
 #' `FileShareName` must be set if an S3 prefix name is set in
 #' `LocationARN`, or if an access point or access point alias is used.
+#' 
+#' A valid NFS file share name can only contain the following characters:
+#' `a`-`z`, `A`-`Z`, `0`-`9`, `-`, `.`, and `_`.
 #' @param CacheAttributes Specifies refresh cache information for the file share.
 #' @param NotificationPolicy The notification policy of the file share. `SettlingTimeInSeconds`
 #' controls the number of seconds to wait after the last point in time a
@@ -611,6 +655,10 @@ storagegateway_create_cachedi_scsi_volume <- function(GatewayARN, VolumeSizeInBy
 #' 
 #' `SettlingTimeInSeconds` has no effect on the timing of the object
 #' uploading to Amazon S3, only the timing of the notification.
+#' 
+#' This setting is not meant to specify an exact time at which the
+#' notification will be sent. In some cases, the gateway might require more
+#' than the specified delay time to generate and send notifications.
 #' 
 #' The following example sets `NotificationPolicy` on with
 #' `SettlingTimeInSeconds` set to 60.
@@ -637,15 +685,16 @@ storagegateway_create_cachedi_scsi_volume <- function(GatewayARN, VolumeSizeInBy
 #' @keywords internal
 #'
 #' @rdname storagegateway_create_nfs_file_share
-storagegateway_create_nfs_file_share <- function(ClientToken, NFSFileShareDefaults = NULL, GatewayARN, KMSEncrypted = NULL, KMSKey = NULL, Role, LocationARN, DefaultStorageClass = NULL, ObjectACL = NULL, ClientList = NULL, Squash = NULL, ReadOnly = NULL, GuessMIMETypeEnabled = NULL, RequesterPays = NULL, Tags = NULL, FileShareName = NULL, CacheAttributes = NULL, NotificationPolicy = NULL, VPCEndpointDNSName = NULL, BucketRegion = NULL, AuditDestinationARN = NULL) {
+storagegateway_create_nfs_file_share <- function(ClientToken, NFSFileShareDefaults = NULL, GatewayARN, EncryptionType = NULL, KMSEncrypted = NULL, KMSKey = NULL, Role, LocationARN, DefaultStorageClass = NULL, ObjectACL = NULL, ClientList = NULL, Squash = NULL, ReadOnly = NULL, GuessMIMETypeEnabled = NULL, RequesterPays = NULL, Tags = NULL, FileShareName = NULL, CacheAttributes = NULL, NotificationPolicy = NULL, VPCEndpointDNSName = NULL, BucketRegion = NULL, AuditDestinationARN = NULL) {
   op <- new_operation(
     name = "CreateNFSFileShare",
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
-  input <- .storagegateway$create_nfs_file_share_input(ClientToken = ClientToken, NFSFileShareDefaults = NFSFileShareDefaults, GatewayARN = GatewayARN, KMSEncrypted = KMSEncrypted, KMSKey = KMSKey, Role = Role, LocationARN = LocationARN, DefaultStorageClass = DefaultStorageClass, ObjectACL = ObjectACL, ClientList = ClientList, Squash = Squash, ReadOnly = ReadOnly, GuessMIMETypeEnabled = GuessMIMETypeEnabled, RequesterPays = RequesterPays, Tags = Tags, FileShareName = FileShareName, CacheAttributes = CacheAttributes, NotificationPolicy = NotificationPolicy, VPCEndpointDNSName = VPCEndpointDNSName, BucketRegion = BucketRegion, AuditDestinationARN = AuditDestinationARN)
+  input <- .storagegateway$create_nfs_file_share_input(ClientToken = ClientToken, NFSFileShareDefaults = NFSFileShareDefaults, GatewayARN = GatewayARN, EncryptionType = EncryptionType, KMSEncrypted = KMSEncrypted, KMSKey = KMSKey, Role = Role, LocationARN = LocationARN, DefaultStorageClass = DefaultStorageClass, ObjectACL = ObjectACL, ClientList = ClientList, Squash = Squash, ReadOnly = ReadOnly, GuessMIMETypeEnabled = GuessMIMETypeEnabled, RequesterPays = RequesterPays, Tags = Tags, FileShareName = FileShareName, CacheAttributes = CacheAttributes, NotificationPolicy = NotificationPolicy, VPCEndpointDNSName = VPCEndpointDNSName, BucketRegion = BucketRegion, AuditDestinationARN = AuditDestinationARN)
   output <- .storagegateway$create_nfs_file_share_output()
   config <- get_config()
   svc <- .storagegateway$service(config, op)
@@ -666,14 +715,39 @@ storagegateway_create_nfs_file_share <- function(ClientToken, NFSFileShareDefaul
 #' @param ClientToken &#91;required&#93; A unique string value that you supply that is used by S3 File Gateway to
 #' ensure idempotent file share creation.
 #' @param GatewayARN &#91;required&#93; The ARN of the S3 File Gateway on which you want to create a file share.
-#' @param KMSEncrypted Set to `true` to use Amazon S3 server-side encryption with your own KMS
-#' key, or `false` to use a key managed by Amazon S3. Optional.
+#' @param EncryptionType A value that specifies the type of server-side encryption that the file
+#' share will use for the data that it stores in Amazon S3.
+#' 
+#' We recommend using `EncryptionType` instead of `KMSEncrypted` to set the
+#' file share encryption method. You do not need to provide values for both
+#' parameters.
+#' 
+#' If values for both parameters exist in the same request, then the
+#' specified encryption methods must not conflict. For example, if
+#' `EncryptionType` is `SseS3`, then `KMSEncrypted` must be `false`. If
+#' `EncryptionType` is `SseKms` or `DsseKms`, then `KMSEncrypted` must be
+#' `true`.
+#' @param KMSEncrypted Optional. Set to `true` to use Amazon S3 server-side encryption with
+#' your own KMS key (SSE-KMS), or `false` to use a key managed by Amazon S3
+#' (SSE-S3). To use dual-layer encryption (DSSE-KMS), set the
+#' `EncryptionType` parameter instead.
+#' 
+#' We recommend using `EncryptionType` instead of `KMSEncrypted` to set the
+#' file share encryption method. You do not need to provide values for both
+#' parameters.
+#' 
+#' If values for both parameters exist in the same request, then the
+#' specified encryption methods must not conflict. For example, if
+#' `EncryptionType` is `SseS3`, then `KMSEncrypted` must be `false`. If
+#' `EncryptionType` is `SseKms` or `DsseKms`, then `KMSEncrypted` must be
+#' `true`.
 #' 
 #' Valid Values: `true` | `false`
-#' @param KMSKey The Amazon Resource Name (ARN) of a symmetric customer master key (CMK)
-#' used for Amazon S3 server-side encryption. Storage Gateway does not
-#' support asymmetric CMKs. This value can only be set when `KMSEncrypted`
-#' is `true`. Optional.
+#' @param KMSKey Optional. The Amazon Resource Name (ARN) of a symmetric customer master
+#' key (CMK) used for Amazon S3 server-side encryption. Storage Gateway
+#' does not support asymmetric CMKs. This value must be set if
+#' `KMSEncrypted` is `true`, or if `EncryptionType` is `SseKms` or
+#' `DsseKms`.
 #' @param Role &#91;required&#93; The ARN of the Identity and Access Management (IAM) role that an S3 File
 #' Gateway assumes when it accesses the underlying storage.
 #' @param LocationARN &#91;required&#93; A custom ARN for the backend storage used for storing data for file
@@ -685,7 +759,7 @@ storagegateway_create_nfs_file_share <- function(ClientToken, NFSFileShareDefaul
 #' 
 #' Bucket ARN:
 #' 
-#' `arn:aws:s3:::my-bucket/prefix/`
+#' `arn:aws:s3:::amzn-s3-demo-bucket/prefix/`
 #' 
 #' Access point ARN:
 #' 
@@ -731,10 +805,9 @@ storagegateway_create_nfs_file_share <- function(ClientToken, NFSFileShareDefaul
 #' file share. Set it to `false` to map file and directory permissions to
 #' the POSIX permissions.
 #' 
-#' For more information, see [Using Microsoft Windows ACLs to control
-#' access to an SMB file
-#' share](https://docs.aws.amazon.com/storagegateway/) in the *Storage
-#' Gateway User Guide*.
+#' For more information, see [Using Windows ACLs to limit SMB file share
+#' access](https://docs.aws.amazon.com/filegateway/latest/files3/smb-acl.html)
+#' in the *Amazon S3 File Gateway User Guide*.
 #' 
 #' Valid Values: `true` | `false`
 #' @param AccessBasedEnumeration The files and folders on this share will only be visible to users with
@@ -776,6 +849,10 @@ storagegateway_create_nfs_file_share <- function(ClientToken, NFSFileShareDefaul
 #' 
 #' `FileShareName` must be set if an S3 prefix name is set in
 #' `LocationARN`, or if an access point or access point alias is used.
+#' 
+#' A valid SMB file share name cannot contain the following characters:
+#' `[`,`]`,`#`,`;`,`<`,`>`,`:`,`\"`,`\`,`/`,`|`,`?`,`*`,`+`, or ASCII
+#' control characters `1-31`.
 #' @param CacheAttributes Specifies refresh cache information for the file share.
 #' @param NotificationPolicy The notification policy of the file share. `SettlingTimeInSeconds`
 #' controls the number of seconds to wait after the last point in time a
@@ -786,6 +863,10 @@ storagegateway_create_nfs_file_share <- function(ClientToken, NFSFileShareDefaul
 #' 
 #' `SettlingTimeInSeconds` has no effect on the timing of the object
 #' uploading to Amazon S3, only the timing of the notification.
+#' 
+#' This setting is not meant to specify an exact time at which the
+#' notification will be sent. In some cases, the gateway might require more
+#' than the specified delay time to generate and send notifications.
 #' 
 #' The following example sets `NotificationPolicy` on with
 #' `SettlingTimeInSeconds` set to 60.
@@ -819,15 +900,16 @@ storagegateway_create_nfs_file_share <- function(ClientToken, NFSFileShareDefaul
 #' @keywords internal
 #'
 #' @rdname storagegateway_create_smb_file_share
-storagegateway_create_smb_file_share <- function(ClientToken, GatewayARN, KMSEncrypted = NULL, KMSKey = NULL, Role, LocationARN, DefaultStorageClass = NULL, ObjectACL = NULL, ReadOnly = NULL, GuessMIMETypeEnabled = NULL, RequesterPays = NULL, SMBACLEnabled = NULL, AccessBasedEnumeration = NULL, AdminUserList = NULL, ValidUserList = NULL, InvalidUserList = NULL, AuditDestinationARN = NULL, Authentication = NULL, CaseSensitivity = NULL, Tags = NULL, FileShareName = NULL, CacheAttributes = NULL, NotificationPolicy = NULL, VPCEndpointDNSName = NULL, BucketRegion = NULL, OplocksEnabled = NULL) {
+storagegateway_create_smb_file_share <- function(ClientToken, GatewayARN, EncryptionType = NULL, KMSEncrypted = NULL, KMSKey = NULL, Role, LocationARN, DefaultStorageClass = NULL, ObjectACL = NULL, ReadOnly = NULL, GuessMIMETypeEnabled = NULL, RequesterPays = NULL, SMBACLEnabled = NULL, AccessBasedEnumeration = NULL, AdminUserList = NULL, ValidUserList = NULL, InvalidUserList = NULL, AuditDestinationARN = NULL, Authentication = NULL, CaseSensitivity = NULL, Tags = NULL, FileShareName = NULL, CacheAttributes = NULL, NotificationPolicy = NULL, VPCEndpointDNSName = NULL, BucketRegion = NULL, OplocksEnabled = NULL) {
   op <- new_operation(
     name = "CreateSMBFileShare",
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
-  input <- .storagegateway$create_smb_file_share_input(ClientToken = ClientToken, GatewayARN = GatewayARN, KMSEncrypted = KMSEncrypted, KMSKey = KMSKey, Role = Role, LocationARN = LocationARN, DefaultStorageClass = DefaultStorageClass, ObjectACL = ObjectACL, ReadOnly = ReadOnly, GuessMIMETypeEnabled = GuessMIMETypeEnabled, RequesterPays = RequesterPays, SMBACLEnabled = SMBACLEnabled, AccessBasedEnumeration = AccessBasedEnumeration, AdminUserList = AdminUserList, ValidUserList = ValidUserList, InvalidUserList = InvalidUserList, AuditDestinationARN = AuditDestinationARN, Authentication = Authentication, CaseSensitivity = CaseSensitivity, Tags = Tags, FileShareName = FileShareName, CacheAttributes = CacheAttributes, NotificationPolicy = NotificationPolicy, VPCEndpointDNSName = VPCEndpointDNSName, BucketRegion = BucketRegion, OplocksEnabled = OplocksEnabled)
+  input <- .storagegateway$create_smb_file_share_input(ClientToken = ClientToken, GatewayARN = GatewayARN, EncryptionType = EncryptionType, KMSEncrypted = KMSEncrypted, KMSKey = KMSKey, Role = Role, LocationARN = LocationARN, DefaultStorageClass = DefaultStorageClass, ObjectACL = ObjectACL, ReadOnly = ReadOnly, GuessMIMETypeEnabled = GuessMIMETypeEnabled, RequesterPays = RequesterPays, SMBACLEnabled = SMBACLEnabled, AccessBasedEnumeration = AccessBasedEnumeration, AdminUserList = AdminUserList, ValidUserList = ValidUserList, InvalidUserList = InvalidUserList, AuditDestinationARN = AuditDestinationARN, Authentication = Authentication, CaseSensitivity = CaseSensitivity, Tags = Tags, FileShareName = FileShareName, CacheAttributes = CacheAttributes, NotificationPolicy = NotificationPolicy, VPCEndpointDNSName = VPCEndpointDNSName, BucketRegion = BucketRegion, OplocksEnabled = OplocksEnabled)
   output <- .storagegateway$create_smb_file_share_output()
   config <- get_config()
   svc <- .storagegateway$service(config, op)
@@ -868,7 +950,8 @@ storagegateway_create_snapshot <- function(VolumeARN, SnapshotDescription, Tags 
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$create_snapshot_input(VolumeARN = VolumeARN, SnapshotDescription = SnapshotDescription, Tags = Tags)
   output <- .storagegateway$create_snapshot_output()
@@ -911,7 +994,8 @@ storagegateway_create_snapshot_from_volume_recovery_point <- function(VolumeARN,
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$create_snapshot_from_volume_recovery_point_input(VolumeARN = VolumeARN, SnapshotDescription = SnapshotDescription, Tags = Tags)
   output <- .storagegateway$create_snapshot_from_volume_recovery_point_output()
@@ -983,7 +1067,8 @@ storagegateway_create_storedi_scsi_volume <- function(GatewayARN, DiskId, Snapsh
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$create_storedi_scsi_volume_input(GatewayARN = GatewayARN, DiskId = DiskId, SnapshotId = SnapshotId, PreserveExistingData = PreserveExistingData, TargetName = TargetName, NetworkInterfaceId = NetworkInterfaceId, KMSEncrypted = KMSEncrypted, KMSKey = KMSKey, Tags = Tags)
   output <- .storagegateway$create_storedi_scsi_volume_output()
@@ -1032,7 +1117,8 @@ storagegateway_create_tape_pool <- function(PoolName, StorageClass, RetentionLoc
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$create_tape_pool_input(PoolName = PoolName, StorageClass = StorageClass, RetentionLockType = RetentionLockType, RetentionLockTimeInDays = RetentionLockTimeInDays, Tags = Tags)
   output <- .storagegateway$create_tape_pool_output()
@@ -1094,7 +1180,8 @@ storagegateway_create_tape_with_barcode <- function(GatewayARN, TapeSizeInBytes,
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$create_tape_with_barcode_input(GatewayARN = GatewayARN, TapeSizeInBytes = TapeSizeInBytes, TapeBarcode = TapeBarcode, KMSEncrypted = KMSEncrypted, KMSKey = KMSKey, PoolId = PoolId, Worm = Worm, Tags = Tags)
   output <- .storagegateway$create_tape_with_barcode_output()
@@ -1163,7 +1250,8 @@ storagegateway_create_tapes <- function(GatewayARN, TapeSizeInBytes, ClientToken
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$create_tapes_input(GatewayARN = GatewayARN, TapeSizeInBytes = TapeSizeInBytes, ClientToken = ClientToken, NumTapesToCreate = NumTapesToCreate, TapeBarcodePrefix = TapeBarcodePrefix, KMSEncrypted = KMSEncrypted, KMSKey = KMSKey, PoolId = PoolId, Worm = Worm, Tags = Tags)
   output <- .storagegateway$create_tapes_output()
@@ -1193,7 +1281,8 @@ storagegateway_delete_automatic_tape_creation_policy <- function(GatewayARN) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$delete_automatic_tape_creation_policy_input(GatewayARN = GatewayARN)
   output <- .storagegateway$delete_automatic_tape_creation_policy_output()
@@ -1227,7 +1316,8 @@ storagegateway_delete_bandwidth_rate_limit <- function(GatewayARN, BandwidthType
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$delete_bandwidth_rate_limit_input(GatewayARN = GatewayARN, BandwidthType = BandwidthType)
   output <- .storagegateway$delete_bandwidth_rate_limit_output()
@@ -1261,7 +1351,8 @@ storagegateway_delete_chap_credentials <- function(TargetARN, InitiatorName) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$delete_chap_credentials_input(TargetARN = TargetARN, InitiatorName = InitiatorName)
   output <- .storagegateway$delete_chap_credentials_output()
@@ -1298,7 +1389,8 @@ storagegateway_delete_file_share <- function(FileShareARN, ForceDelete = NULL) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$delete_file_share_input(FileShareARN = FileShareARN, ForceDelete = ForceDelete)
   output <- .storagegateway$delete_file_share_output()
@@ -1328,7 +1420,8 @@ storagegateway_delete_gateway <- function(GatewayARN) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$delete_gateway_input(GatewayARN = GatewayARN)
   output <- .storagegateway$delete_gateway_output()
@@ -1358,7 +1451,8 @@ storagegateway_delete_snapshot_schedule <- function(VolumeARN) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$delete_snapshot_schedule_input(VolumeARN = VolumeARN)
   output <- .storagegateway$delete_snapshot_schedule_output()
@@ -1396,7 +1490,8 @@ storagegateway_delete_tape <- function(GatewayARN, TapeARN, BypassGovernanceRete
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$delete_tape_input(GatewayARN = GatewayARN, TapeARN = TapeARN, BypassGovernanceRetention = BypassGovernanceRetention)
   output <- .storagegateway$delete_tape_output()
@@ -1431,7 +1526,8 @@ storagegateway_delete_tape_archive <- function(TapeARN, BypassGovernanceRetentio
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$delete_tape_archive_input(TapeARN = TapeARN, BypassGovernanceRetention = BypassGovernanceRetention)
   output <- .storagegateway$delete_tape_archive_output()
@@ -1461,7 +1557,8 @@ storagegateway_delete_tape_pool <- function(PoolARN) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$delete_tape_pool_input(PoolARN = PoolARN)
   output <- .storagegateway$delete_tape_pool_output()
@@ -1494,7 +1591,8 @@ storagegateway_delete_volume <- function(VolumeARN) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$delete_volume_input(VolumeARN = VolumeARN)
   output <- .storagegateway$delete_volume_output()
@@ -1525,7 +1623,8 @@ storagegateway_describe_availability_monitor_test <- function(GatewayARN) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$describe_availability_monitor_test_input(GatewayARN = GatewayARN)
   output <- .storagegateway$describe_availability_monitor_test_output()
@@ -1555,7 +1654,8 @@ storagegateway_describe_bandwidth_rate_limit <- function(GatewayARN) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$describe_bandwidth_rate_limit_input(GatewayARN = GatewayARN)
   output <- .storagegateway$describe_bandwidth_rate_limit_output()
@@ -1585,7 +1685,8 @@ storagegateway_describe_bandwidth_rate_limit_schedule <- function(GatewayARN) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$describe_bandwidth_rate_limit_schedule_input(GatewayARN = GatewayARN)
   output <- .storagegateway$describe_bandwidth_rate_limit_schedule_output()
@@ -1615,7 +1716,8 @@ storagegateway_describe_cache <- function(GatewayARN) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$describe_cache_input(GatewayARN = GatewayARN)
   output <- .storagegateway$describe_cache_output()
@@ -1649,7 +1751,8 @@ storagegateway_describe_cachedi_scsi_volumes <- function(VolumeARNs) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list(result_key = "CachediSCSIVolumes")
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$describe_cachedi_scsi_volumes_input(VolumeARNs = VolumeARNs)
   output <- .storagegateway$describe_cachedi_scsi_volumes_output()
@@ -1683,7 +1786,8 @@ storagegateway_describe_chap_credentials <- function(TargetARN) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$describe_chap_credentials_input(TargetARN = TargetARN)
   output <- .storagegateway$describe_chap_credentials_output()
@@ -1714,7 +1818,8 @@ storagegateway_describe_file_system_associations <- function(FileSystemAssociati
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$describe_file_system_associations_input(FileSystemAssociationARNList = FileSystemAssociationARNList)
   output <- .storagegateway$describe_file_system_associations_output()
@@ -1745,7 +1850,8 @@ storagegateway_describe_gateway_information <- function(GatewayARN) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$describe_gateway_information_input(GatewayARN = GatewayARN)
   output <- .storagegateway$describe_gateway_information_output()
@@ -1777,7 +1883,8 @@ storagegateway_describe_maintenance_start_time <- function(GatewayARN) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$describe_maintenance_start_time_input(GatewayARN = GatewayARN)
   output <- .storagegateway$describe_maintenance_start_time_output()
@@ -1809,7 +1916,8 @@ storagegateway_describe_nfs_file_shares <- function(FileShareARNList) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$describe_nfs_file_shares_input(FileShareARNList = FileShareARNList)
   output <- .storagegateway$describe_nfs_file_shares_output()
@@ -1841,7 +1949,8 @@ storagegateway_describe_smb_file_shares <- function(FileShareARNList) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$describe_smb_file_shares_input(FileShareARNList = FileShareARNList)
   output <- .storagegateway$describe_smb_file_shares_output()
@@ -1872,7 +1981,8 @@ storagegateway_describe_smb_settings <- function(GatewayARN) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$describe_smb_settings_input(GatewayARN = GatewayARN)
   output <- .storagegateway$describe_smb_settings_output()
@@ -1904,7 +2014,8 @@ storagegateway_describe_snapshot_schedule <- function(VolumeARN) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$describe_snapshot_schedule_input(VolumeARN = VolumeARN)
   output <- .storagegateway$describe_snapshot_schedule_output()
@@ -1938,7 +2049,8 @@ storagegateway_describe_storedi_scsi_volumes <- function(VolumeARNs) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list(result_key = "StorediSCSIVolumes")
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$describe_storedi_scsi_volumes_input(VolumeARNs = VolumeARNs)
   output <- .storagegateway$describe_storedi_scsi_volumes_output()
@@ -1974,7 +2086,8 @@ storagegateway_describe_tape_archives <- function(TapeARNs = NULL, Marker = NULL
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list(input_token = "Marker", limit_key = "Limit", output_token = "Marker", result_key = "TapeArchives")
+    paginator = list(input_token = "Marker", limit_key = "Limit", output_token = "Marker", result_key = "TapeArchives"),
+    stream_api = FALSE
   )
   input <- .storagegateway$describe_tape_archives_input(TapeARNs = TapeARNs, Marker = Marker, Limit = Limit)
   output <- .storagegateway$describe_tape_archives_output()
@@ -2009,7 +2122,8 @@ storagegateway_describe_tape_recovery_points <- function(GatewayARN, Marker = NU
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list(input_token = "Marker", limit_key = "Limit", output_token = "Marker", result_key = "TapeRecoveryPointInfos")
+    paginator = list(input_token = "Marker", limit_key = "Limit", output_token = "Marker", result_key = "TapeRecoveryPointInfos"),
+    stream_api = FALSE
   )
   input <- .storagegateway$describe_tape_recovery_points_input(GatewayARN = GatewayARN, Marker = Marker, Limit = Limit)
   output <- .storagegateway$describe_tape_recovery_points_output()
@@ -2053,7 +2167,8 @@ storagegateway_describe_tapes <- function(GatewayARN, TapeARNs = NULL, Marker = 
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list(input_token = "Marker", limit_key = "Limit", output_token = "Marker", result_key = "Tapes")
+    paginator = list(input_token = "Marker", limit_key = "Limit", output_token = "Marker", result_key = "Tapes"),
+    stream_api = FALSE
   )
   input <- .storagegateway$describe_tapes_input(GatewayARN = GatewayARN, TapeARNs = TapeARNs, Marker = Marker, Limit = Limit)
   output <- .storagegateway$describe_tapes_output()
@@ -2083,7 +2198,8 @@ storagegateway_describe_upload_buffer <- function(GatewayARN) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$describe_upload_buffer_input(GatewayARN = GatewayARN)
   output <- .storagegateway$describe_upload_buffer_output()
@@ -2124,7 +2240,8 @@ storagegateway_describe_vtl_devices <- function(GatewayARN, VTLDeviceARNs = NULL
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list(input_token = "Marker", limit_key = "Limit", output_token = "Marker", result_key = "VTLDevices")
+    paginator = list(input_token = "Marker", limit_key = "Limit", output_token = "Marker", result_key = "VTLDevices"),
+    stream_api = FALSE
   )
   input <- .storagegateway$describe_vtl_devices_input(GatewayARN = GatewayARN, VTLDeviceARNs = VTLDeviceARNs, Marker = Marker, Limit = Limit)
   output <- .storagegateway$describe_vtl_devices_output()
@@ -2154,7 +2271,8 @@ storagegateway_describe_working_storage <- function(GatewayARN) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$describe_working_storage_input(GatewayARN = GatewayARN)
   output <- .storagegateway$describe_working_storage_output()
@@ -2191,7 +2309,8 @@ storagegateway_detach_volume <- function(VolumeARN, ForceDetach = NULL) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$detach_volume_input(VolumeARN = VolumeARN, ForceDetach = ForceDetach)
   output <- .storagegateway$detach_volume_output()
@@ -2221,7 +2340,8 @@ storagegateway_disable_gateway <- function(GatewayARN) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$disable_gateway_input(GatewayARN = GatewayARN)
   output <- .storagegateway$disable_gateway_output()
@@ -2257,7 +2377,8 @@ storagegateway_disassociate_file_system <- function(FileSystemAssociationARN, Fo
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$disassociate_file_system_input(FileSystemAssociationARN = FileSystemAssociationARN, ForceDelete = ForceDelete)
   output <- .storagegateway$disassociate_file_system_output()
@@ -2306,7 +2427,8 @@ storagegateway_join_domain <- function(GatewayARN, DomainName, OrganizationalUni
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$join_domain_input(GatewayARN = GatewayARN, DomainName = DomainName, OrganizationalUnit = OrganizationalUnit, DomainControllers = DomainControllers, TimeoutInSeconds = TimeoutInSeconds, UserName = UserName, Password = Password)
   output <- .storagegateway$join_domain_output()
@@ -2336,7 +2458,8 @@ storagegateway_list_automatic_tape_creation_policies <- function(GatewayARN = NU
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$list_automatic_tape_creation_policies_input(GatewayARN = GatewayARN)
   output <- .storagegateway$list_automatic_tape_creation_policies_output()
@@ -2375,7 +2498,8 @@ storagegateway_list_file_shares <- function(GatewayARN = NULL, Limit = NULL, Mar
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list(input_token = "Marker", limit_key = "Limit", non_aggregate_keys = list( "Marker"), output_token = "NextMarker", result_key = "FileShareInfoList")
+    paginator = list(input_token = "Marker", limit_key = "Limit", non_aggregate_keys = list( "Marker"), output_token = "NextMarker", result_key = "FileShareInfoList"),
+    stream_api = FALSE
   )
   input <- .storagegateway$list_file_shares_input(GatewayARN = GatewayARN, Limit = Limit, Marker = Marker)
   output <- .storagegateway$list_file_shares_output()
@@ -2414,7 +2538,8 @@ storagegateway_list_file_system_associations <- function(GatewayARN = NULL, Limi
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list(input_token = "Marker", limit_key = "Limit", non_aggregate_keys = list( "Marker"), output_token = "NextMarker", result_key = "FileSystemAssociationSummaryList")
+    paginator = list(input_token = "Marker", limit_key = "Limit", non_aggregate_keys = list( "Marker"), output_token = "NextMarker", result_key = "FileSystemAssociationSummaryList"),
+    stream_api = FALSE
   )
   input <- .storagegateway$list_file_system_associations_input(GatewayARN = GatewayARN, Limit = Limit, Marker = Marker)
   output <- .storagegateway$list_file_system_associations_output()
@@ -2448,7 +2573,8 @@ storagegateway_list_gateways <- function(Marker = NULL, Limit = NULL) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list(input_token = "Marker", limit_key = "Limit", output_token = "Marker", result_key = "Gateways")
+    paginator = list(input_token = "Marker", limit_key = "Limit", output_token = "Marker", result_key = "Gateways"),
+    stream_api = FALSE
   )
   input <- .storagegateway$list_gateways_input(Marker = Marker, Limit = Limit)
   output <- .storagegateway$list_gateways_output()
@@ -2478,7 +2604,8 @@ storagegateway_list_local_disks <- function(GatewayARN) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list(result_key = "Disks")
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$list_local_disks_input(GatewayARN = GatewayARN)
   output <- .storagegateway$list_local_disks_output()
@@ -2513,7 +2640,8 @@ storagegateway_list_tags_for_resource <- function(ResourceARN, Marker = NULL, Li
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list(input_token = "Marker", limit_key = "Limit", non_aggregate_keys = list( "ResourceARN"), output_token = "Marker", result_key = "Tags")
+    paginator = list(input_token = "Marker", limit_key = "Limit", non_aggregate_keys = list( "ResourceARN"), output_token = "Marker", result_key = "Tags"),
+    stream_api = FALSE
   )
   input <- .storagegateway$list_tags_for_resource_input(ResourceARN = ResourceARN, Marker = Marker, Limit = Limit)
   output <- .storagegateway$list_tags_for_resource_output()
@@ -2549,7 +2677,8 @@ storagegateway_list_tape_pools <- function(PoolARNs = NULL, Marker = NULL, Limit
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list(input_token = "Marker", limit_key = "Limit", output_token = "Marker", result_key = "PoolInfos")
+    paginator = list(input_token = "Marker", limit_key = "Limit", output_token = "Marker", result_key = "PoolInfos"),
+    stream_api = FALSE
   )
   input <- .storagegateway$list_tape_pools_input(PoolARNs = PoolARNs, Marker = Marker, Limit = Limit)
   output <- .storagegateway$list_tape_pools_output()
@@ -2584,7 +2713,8 @@ storagegateway_list_tapes <- function(TapeARNs = NULL, Marker = NULL, Limit = NU
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list(input_token = "Marker", limit_key = "Limit", output_token = "Marker", result_key = "TapeInfos")
+    paginator = list(input_token = "Marker", limit_key = "Limit", output_token = "Marker", result_key = "TapeInfos"),
+    stream_api = FALSE
   )
   input <- .storagegateway$list_tapes_input(TapeARNs = TapeARNs, Marker = Marker, Limit = Limit)
   output <- .storagegateway$list_tapes_output()
@@ -2616,7 +2746,8 @@ storagegateway_list_volume_initiators <- function(VolumeARN) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$list_volume_initiators_input(VolumeARN = VolumeARN)
   output <- .storagegateway$list_volume_initiators_output()
@@ -2646,7 +2777,8 @@ storagegateway_list_volume_recovery_points <- function(GatewayARN) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list(result_key = "VolumeRecoveryPointInfos")
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$list_volume_recovery_points_input(GatewayARN = GatewayARN)
   output <- .storagegateway$list_volume_recovery_points_output()
@@ -2681,7 +2813,8 @@ storagegateway_list_volumes <- function(GatewayARN = NULL, Marker = NULL, Limit 
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list(input_token = "Marker", limit_key = "Limit", output_token = "Marker", result_key = "VolumeInfos")
+    paginator = list(input_token = "Marker", limit_key = "Limit", output_token = "Marker", result_key = "VolumeInfos"),
+    stream_api = FALSE
   )
   input <- .storagegateway$list_volumes_input(GatewayARN = GatewayARN, Marker = Marker, Limit = Limit)
   output <- .storagegateway$list_volumes_output()
@@ -2712,7 +2845,8 @@ storagegateway_notify_when_uploaded <- function(FileShareARN) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$notify_when_uploaded_input(FileShareARN = FileShareARN)
   output <- .storagegateway$notify_when_uploaded_output()
@@ -2758,7 +2892,8 @@ storagegateway_refresh_cache <- function(FileShareARN, FolderList = NULL, Recurs
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$refresh_cache_input(FileShareARN = FileShareARN, FolderList = FolderList, Recursive = Recursive)
   output <- .storagegateway$refresh_cache_output()
@@ -2791,7 +2926,8 @@ storagegateway_remove_tags_from_resource <- function(ResourceARN, TagKeys) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$remove_tags_from_resource_input(ResourceARN = ResourceARN, TagKeys = TagKeys)
   output <- .storagegateway$remove_tags_from_resource_output()
@@ -2822,7 +2958,8 @@ storagegateway_reset_cache <- function(GatewayARN) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$reset_cache_input(GatewayARN = GatewayARN)
   output <- .storagegateway$reset_cache_output()
@@ -2861,7 +2998,8 @@ storagegateway_retrieve_tape_archive <- function(TapeARN, GatewayARN) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$retrieve_tape_archive_input(TapeARN = TapeARN, GatewayARN = GatewayARN)
   output <- .storagegateway$retrieve_tape_archive_output()
@@ -2893,7 +3031,8 @@ storagegateway_retrieve_tape_recovery_point <- function(TapeARN, GatewayARN) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$retrieve_tape_recovery_point_input(TapeARN = TapeARN, GatewayARN = GatewayARN)
   output <- .storagegateway$retrieve_tape_recovery_point_output()
@@ -2924,7 +3063,8 @@ storagegateway_set_local_console_password <- function(GatewayARN, LocalConsolePa
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$set_local_console_password_input(GatewayARN = GatewayARN, LocalConsolePassword = LocalConsolePassword)
   output <- .storagegateway$set_local_console_password_output()
@@ -2956,7 +3096,8 @@ storagegateway_set_smb_guest_password <- function(GatewayARN, Password) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$set_smb_guest_password_input(GatewayARN = GatewayARN, Password = Password)
   output <- .storagegateway$set_smb_guest_password_output()
@@ -2986,7 +3127,8 @@ storagegateway_shutdown_gateway <- function(GatewayARN) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$shutdown_gateway_input(GatewayARN = GatewayARN)
   output <- .storagegateway$shutdown_gateway_output()
@@ -3017,7 +3159,8 @@ storagegateway_start_availability_monitor_test <- function(GatewayARN) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$start_availability_monitor_test_input(GatewayARN = GatewayARN)
   output <- .storagegateway$start_availability_monitor_test_output()
@@ -3047,7 +3190,8 @@ storagegateway_start_gateway <- function(GatewayARN) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$start_gateway_input(GatewayARN = GatewayARN)
   output <- .storagegateway$start_gateway_output()
@@ -3080,7 +3224,8 @@ storagegateway_update_automatic_tape_creation_policy <- function(AutomaticTapeCr
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$update_automatic_tape_creation_policy_input(AutomaticTapeCreationRules = AutomaticTapeCreationRules, GatewayARN = GatewayARN)
   output <- .storagegateway$update_automatic_tape_creation_policy_output()
@@ -3112,7 +3257,8 @@ storagegateway_update_bandwidth_rate_limit <- function(GatewayARN, AverageUpload
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$update_bandwidth_rate_limit_input(GatewayARN = GatewayARN, AverageUploadRateLimitInBitsPerSec = AverageUploadRateLimitInBitsPerSec, AverageDownloadRateLimitInBitsPerSec = AverageDownloadRateLimitInBitsPerSec)
   output <- .storagegateway$update_bandwidth_rate_limit_output()
@@ -3145,7 +3291,8 @@ storagegateway_update_bandwidth_rate_limit_schedule <- function(GatewayARN, Band
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$update_bandwidth_rate_limit_schedule_input(GatewayARN = GatewayARN, BandwidthRateLimitIntervals = BandwidthRateLimitIntervals)
   output <- .storagegateway$update_bandwidth_rate_limit_schedule_output()
@@ -3189,7 +3336,8 @@ storagegateway_update_chap_credentials <- function(TargetARN, SecretToAuthentica
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$update_chap_credentials_input(TargetARN = TargetARN, SecretToAuthenticateInitiator = SecretToAuthenticateInitiator, InitiatorName = InitiatorName, SecretToAuthenticateTarget = SecretToAuthenticateTarget)
   output <- .storagegateway$update_chap_credentials_output()
@@ -3226,7 +3374,8 @@ storagegateway_update_file_system_association <- function(FileSystemAssociationA
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$update_file_system_association_input(FileSystemAssociationARN = FileSystemAssociationARN, UserName = UserName, Password = Password, AuditDestinationARN = AuditDestinationARN, CacheAttributes = CacheAttributes)
   output <- .storagegateway$update_file_system_association_output()
@@ -3269,7 +3418,8 @@ storagegateway_update_gateway_information <- function(GatewayARN, GatewayName = 
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$update_gateway_information_input(GatewayARN = GatewayARN, GatewayName = GatewayName, GatewayTimezone = GatewayTimezone, CloudWatchLogGroupARN = CloudWatchLogGroupARN, GatewayCapacity = GatewayCapacity)
   output <- .storagegateway$update_gateway_information_output()
@@ -3299,7 +3449,8 @@ storagegateway_update_gateway_software_now <- function(GatewayARN) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$update_gateway_software_now_input(GatewayARN = GatewayARN)
   output <- .storagegateway$update_gateway_software_now_output()
@@ -3342,7 +3493,11 @@ storagegateway_update_gateway_software_now <- function(GatewayARN) {
 #' `ALL_VERSIONS` - Enables regular gateway maintenance updates.
 #' 
 #' `EMERGENCY_VERSIONS_ONLY` - Disables regular gateway maintenance
-#' updates.
+#' updates. The gateway will still receive emergency version updates on
+#' rare occasions if necessary to remedy highly critical security or
+#' durability issues. You will be notified before an emergency version
+#' update is applied. These updates are applied during your gateway's
+#' scheduled maintenance window.
 #'
 #' @keywords internal
 #'
@@ -3353,7 +3508,8 @@ storagegateway_update_maintenance_start_time <- function(GatewayARN, HourOfDay =
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$update_maintenance_start_time_input(GatewayARN = GatewayARN, HourOfDay = HourOfDay, MinuteOfHour = MinuteOfHour, DayOfWeek = DayOfWeek, DayOfMonth = DayOfMonth, SoftwareUpdatePreferences = SoftwareUpdatePreferences)
   output <- .storagegateway$update_maintenance_start_time_output()
@@ -3373,14 +3529,39 @@ storagegateway_update_maintenance_start_time <- function(GatewayARN, HourOfDay =
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_update_nfs_file_share/](https://www.paws-r-sdk.com/docs/storagegateway_update_nfs_file_share/) for full documentation.
 #'
 #' @param FileShareARN &#91;required&#93; The Amazon Resource Name (ARN) of the file share to be updated.
-#' @param KMSEncrypted Set to `true` to use Amazon S3 server-side encryption with your own KMS
-#' key, or `false` to use a key managed by Amazon S3. Optional.
+#' @param EncryptionType A value that specifies the type of server-side encryption that the file
+#' share will use for the data that it stores in Amazon S3.
+#' 
+#' We recommend using `EncryptionType` instead of `KMSEncrypted` to set the
+#' file share encryption method. You do not need to provide values for both
+#' parameters.
+#' 
+#' If values for both parameters exist in the same request, then the
+#' specified encryption methods must not conflict. For example, if
+#' `EncryptionType` is `SseS3`, then `KMSEncrypted` must be `false`. If
+#' `EncryptionType` is `SseKms` or `DsseKms`, then `KMSEncrypted` must be
+#' `true`.
+#' @param KMSEncrypted Optional. Set to `true` to use Amazon S3 server-side encryption with
+#' your own KMS key (SSE-KMS), or `false` to use a key managed by Amazon S3
+#' (SSE-S3). To use dual-layer encryption (DSSE-KMS), set the
+#' `EncryptionType` parameter instead.
+#' 
+#' We recommend using `EncryptionType` instead of `KMSEncrypted` to set the
+#' file share encryption method. You do not need to provide values for both
+#' parameters.
+#' 
+#' If values for both parameters exist in the same request, then the
+#' specified encryption methods must not conflict. For example, if
+#' `EncryptionType` is `SseS3`, then `KMSEncrypted` must be `false`. If
+#' `EncryptionType` is `SseKms` or `DsseKms`, then `KMSEncrypted` must be
+#' `true`.
 #' 
 #' Valid Values: `true` | `false`
-#' @param KMSKey The Amazon Resource Name (ARN) of a symmetric customer master key (CMK)
-#' used for Amazon S3 server-side encryption. Storage Gateway does not
-#' support asymmetric CMKs. This value can only be set when `KMSEncrypted`
-#' is `true`. Optional.
+#' @param KMSKey Optional. The Amazon Resource Name (ARN) of a symmetric customer master
+#' key (CMK) used for Amazon S3 server-side encryption. Storage Gateway
+#' does not support asymmetric CMKs. This value must be set if
+#' `KMSEncrypted` is `true`, or if `EncryptionType` is `SseKms` or
+#' `DsseKms`.
 #' @param NFSFileShareDefaults The default values for the file share. Optional.
 #' @param DefaultStorageClass The default storage class for objects put into an Amazon S3 bucket by
 #' the S3 File Gateway. The default value is `S3_STANDARD`. Optional.
@@ -3424,6 +3605,9 @@ storagegateway_update_maintenance_start_time <- function(GatewayARN, HourOfDay =
 #' 
 #' `FileShareName` must be set if an S3 prefix name is set in
 #' `LocationARN`, or if an access point or access point alias is used.
+#' 
+#' A valid NFS file share name can only contain the following characters:
+#' `a`-`z`, `A`-`Z`, `0`-`9`, `-`, `.`, and `_`.
 #' @param CacheAttributes Specifies refresh cache information for the file share.
 #' @param NotificationPolicy The notification policy of the file share. `SettlingTimeInSeconds`
 #' controls the number of seconds to wait after the last point in time a
@@ -3434,6 +3618,10 @@ storagegateway_update_maintenance_start_time <- function(GatewayARN, HourOfDay =
 #' 
 #' `SettlingTimeInSeconds` has no effect on the timing of the object
 #' uploading to Amazon S3, only the timing of the notification.
+#' 
+#' This setting is not meant to specify an exact time at which the
+#' notification will be sent. In some cases, the gateway might require more
+#' than the specified delay time to generate and send notifications.
 #' 
 #' The following example sets `NotificationPolicy` on with
 #' `SettlingTimeInSeconds` set to 60.
@@ -3448,15 +3636,16 @@ storagegateway_update_maintenance_start_time <- function(GatewayARN, HourOfDay =
 #' @keywords internal
 #'
 #' @rdname storagegateway_update_nfs_file_share
-storagegateway_update_nfs_file_share <- function(FileShareARN, KMSEncrypted = NULL, KMSKey = NULL, NFSFileShareDefaults = NULL, DefaultStorageClass = NULL, ObjectACL = NULL, ClientList = NULL, Squash = NULL, ReadOnly = NULL, GuessMIMETypeEnabled = NULL, RequesterPays = NULL, FileShareName = NULL, CacheAttributes = NULL, NotificationPolicy = NULL, AuditDestinationARN = NULL) {
+storagegateway_update_nfs_file_share <- function(FileShareARN, EncryptionType = NULL, KMSEncrypted = NULL, KMSKey = NULL, NFSFileShareDefaults = NULL, DefaultStorageClass = NULL, ObjectACL = NULL, ClientList = NULL, Squash = NULL, ReadOnly = NULL, GuessMIMETypeEnabled = NULL, RequesterPays = NULL, FileShareName = NULL, CacheAttributes = NULL, NotificationPolicy = NULL, AuditDestinationARN = NULL) {
   op <- new_operation(
     name = "UpdateNFSFileShare",
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
-  input <- .storagegateway$update_nfs_file_share_input(FileShareARN = FileShareARN, KMSEncrypted = KMSEncrypted, KMSKey = KMSKey, NFSFileShareDefaults = NFSFileShareDefaults, DefaultStorageClass = DefaultStorageClass, ObjectACL = ObjectACL, ClientList = ClientList, Squash = Squash, ReadOnly = ReadOnly, GuessMIMETypeEnabled = GuessMIMETypeEnabled, RequesterPays = RequesterPays, FileShareName = FileShareName, CacheAttributes = CacheAttributes, NotificationPolicy = NotificationPolicy, AuditDestinationARN = AuditDestinationARN)
+  input <- .storagegateway$update_nfs_file_share_input(FileShareARN = FileShareARN, EncryptionType = EncryptionType, KMSEncrypted = KMSEncrypted, KMSKey = KMSKey, NFSFileShareDefaults = NFSFileShareDefaults, DefaultStorageClass = DefaultStorageClass, ObjectACL = ObjectACL, ClientList = ClientList, Squash = Squash, ReadOnly = ReadOnly, GuessMIMETypeEnabled = GuessMIMETypeEnabled, RequesterPays = RequesterPays, FileShareName = FileShareName, CacheAttributes = CacheAttributes, NotificationPolicy = NotificationPolicy, AuditDestinationARN = AuditDestinationARN)
   output <- .storagegateway$update_nfs_file_share_output()
   config <- get_config()
   svc <- .storagegateway$service(config, op)
@@ -3475,14 +3664,39 @@ storagegateway_update_nfs_file_share <- function(FileShareARN, KMSEncrypted = NU
 #'
 #' @param FileShareARN &#91;required&#93; The Amazon Resource Name (ARN) of the SMB file share that you want to
 #' update.
-#' @param KMSEncrypted Set to `true` to use Amazon S3 server-side encryption with your own KMS
-#' key, or `false` to use a key managed by Amazon S3. Optional.
+#' @param EncryptionType A value that specifies the type of server-side encryption that the file
+#' share will use for the data that it stores in Amazon S3.
+#' 
+#' We recommend using `EncryptionType` instead of `KMSEncrypted` to set the
+#' file share encryption method. You do not need to provide values for both
+#' parameters.
+#' 
+#' If values for both parameters exist in the same request, then the
+#' specified encryption methods must not conflict. For example, if
+#' `EncryptionType` is `SseS3`, then `KMSEncrypted` must be `false`. If
+#' `EncryptionType` is `SseKms` or `DsseKms`, then `KMSEncrypted` must be
+#' `true`.
+#' @param KMSEncrypted Optional. Set to `true` to use Amazon S3 server-side encryption with
+#' your own KMS key (SSE-KMS), or `false` to use a key managed by Amazon S3
+#' (SSE-S3). To use dual-layer encryption (DSSE-KMS), set the
+#' `EncryptionType` parameter instead.
+#' 
+#' We recommend using `EncryptionType` instead of `KMSEncrypted` to set the
+#' file share encryption method. You do not need to provide values for both
+#' parameters.
+#' 
+#' If values for both parameters exist in the same request, then the
+#' specified encryption methods must not conflict. For example, if
+#' `EncryptionType` is `SseS3`, then `KMSEncrypted` must be `false`. If
+#' `EncryptionType` is `SseKms` or `DsseKms`, then `KMSEncrypted` must be
+#' `true`.
 #' 
 #' Valid Values: `true` | `false`
-#' @param KMSKey The Amazon Resource Name (ARN) of a symmetric customer master key (CMK)
-#' used for Amazon S3 server-side encryption. Storage Gateway does not
-#' support asymmetric CMKs. This value can only be set when `KMSEncrypted`
-#' is `true`. Optional.
+#' @param KMSKey Optional. The Amazon Resource Name (ARN) of a symmetric customer master
+#' key (CMK) used for Amazon S3 server-side encryption. Storage Gateway
+#' does not support asymmetric CMKs. This value must be set if
+#' `KMSEncrypted` is `true`, or if `EncryptionType` is `SseKms` or
+#' `DsseKms`.
 #' @param DefaultStorageClass The default storage class for objects put into an Amazon S3 bucket by
 #' the S3 File Gateway. The default value is `S3_STANDARD`. Optional.
 #' 
@@ -3514,10 +3728,9 @@ storagegateway_update_nfs_file_share <- function(FileShareARN, KMSEncrypted = NU
 #' file share. Set it to `false` to map file and directory permissions to
 #' the POSIX permissions.
 #' 
-#' For more information, see [Using Microsoft Windows ACLs to control
-#' access to an SMB file
-#' share](https://docs.aws.amazon.com/storagegateway/) in the *Storage
-#' Gateway User Guide*.
+#' For more information, see [Using Windows ACLs to limit SMB file share
+#' access](https://docs.aws.amazon.com/filegateway/latest/files3/smb-acl.html)
+#' in the *Amazon S3 File Gateway User Guide*.
 #' 
 #' Valid Values: `true` | `false`
 #' @param AccessBasedEnumeration The files and folders on this share will only be visible to users with
@@ -3546,6 +3759,10 @@ storagegateway_update_nfs_file_share <- function(FileShareARN, KMSEncrypted = NU
 #' 
 #' `FileShareName` must be set if an S3 prefix name is set in
 #' `LocationARN`, or if an access point or access point alias is used.
+#' 
+#' A valid SMB file share name cannot contain the following characters:
+#' `[`,`]`,`#`,`;`,`<`,`>`,`:`,`\"`,`\`,`/`,`|`,`?`,`*`,`+`, or ASCII
+#' control characters `1-31`.
 #' @param CacheAttributes Specifies refresh cache information for the file share.
 #' @param NotificationPolicy The notification policy of the file share. `SettlingTimeInSeconds`
 #' controls the number of seconds to wait after the last point in time a
@@ -3556,6 +3773,10 @@ storagegateway_update_nfs_file_share <- function(FileShareARN, KMSEncrypted = NU
 #' 
 #' `SettlingTimeInSeconds` has no effect on the timing of the object
 #' uploading to Amazon S3, only the timing of the notification.
+#' 
+#' This setting is not meant to specify an exact time at which the
+#' notification will be sent. In some cases, the gateway might require more
+#' than the specified delay time to generate and send notifications.
 #' 
 #' The following example sets `NotificationPolicy` on with
 #' `SettlingTimeInSeconds` set to 60.
@@ -3577,15 +3798,16 @@ storagegateway_update_nfs_file_share <- function(FileShareARN, KMSEncrypted = NU
 #' @keywords internal
 #'
 #' @rdname storagegateway_update_smb_file_share
-storagegateway_update_smb_file_share <- function(FileShareARN, KMSEncrypted = NULL, KMSKey = NULL, DefaultStorageClass = NULL, ObjectACL = NULL, ReadOnly = NULL, GuessMIMETypeEnabled = NULL, RequesterPays = NULL, SMBACLEnabled = NULL, AccessBasedEnumeration = NULL, AdminUserList = NULL, ValidUserList = NULL, InvalidUserList = NULL, AuditDestinationARN = NULL, CaseSensitivity = NULL, FileShareName = NULL, CacheAttributes = NULL, NotificationPolicy = NULL, OplocksEnabled = NULL) {
+storagegateway_update_smb_file_share <- function(FileShareARN, EncryptionType = NULL, KMSEncrypted = NULL, KMSKey = NULL, DefaultStorageClass = NULL, ObjectACL = NULL, ReadOnly = NULL, GuessMIMETypeEnabled = NULL, RequesterPays = NULL, SMBACLEnabled = NULL, AccessBasedEnumeration = NULL, AdminUserList = NULL, ValidUserList = NULL, InvalidUserList = NULL, AuditDestinationARN = NULL, CaseSensitivity = NULL, FileShareName = NULL, CacheAttributes = NULL, NotificationPolicy = NULL, OplocksEnabled = NULL) {
   op <- new_operation(
     name = "UpdateSMBFileShare",
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
-  input <- .storagegateway$update_smb_file_share_input(FileShareARN = FileShareARN, KMSEncrypted = KMSEncrypted, KMSKey = KMSKey, DefaultStorageClass = DefaultStorageClass, ObjectACL = ObjectACL, ReadOnly = ReadOnly, GuessMIMETypeEnabled = GuessMIMETypeEnabled, RequesterPays = RequesterPays, SMBACLEnabled = SMBACLEnabled, AccessBasedEnumeration = AccessBasedEnumeration, AdminUserList = AdminUserList, ValidUserList = ValidUserList, InvalidUserList = InvalidUserList, AuditDestinationARN = AuditDestinationARN, CaseSensitivity = CaseSensitivity, FileShareName = FileShareName, CacheAttributes = CacheAttributes, NotificationPolicy = NotificationPolicy, OplocksEnabled = OplocksEnabled)
+  input <- .storagegateway$update_smb_file_share_input(FileShareARN = FileShareARN, EncryptionType = EncryptionType, KMSEncrypted = KMSEncrypted, KMSKey = KMSKey, DefaultStorageClass = DefaultStorageClass, ObjectACL = ObjectACL, ReadOnly = ReadOnly, GuessMIMETypeEnabled = GuessMIMETypeEnabled, RequesterPays = RequesterPays, SMBACLEnabled = SMBACLEnabled, AccessBasedEnumeration = AccessBasedEnumeration, AdminUserList = AdminUserList, ValidUserList = ValidUserList, InvalidUserList = InvalidUserList, AuditDestinationARN = AuditDestinationARN, CaseSensitivity = CaseSensitivity, FileShareName = FileShareName, CacheAttributes = CacheAttributes, NotificationPolicy = NotificationPolicy, OplocksEnabled = OplocksEnabled)
   output <- .storagegateway$update_smb_file_share_output()
   config <- get_config()
   svc <- .storagegateway$service(config, op)
@@ -3615,7 +3837,8 @@ storagegateway_update_smb_file_share_visibility <- function(GatewayARN, FileShar
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$update_smb_file_share_visibility_input(GatewayARN = GatewayARN, FileSharesVisible = FileSharesVisible)
   output <- .storagegateway$update_smb_file_share_visibility_output()
@@ -3648,7 +3871,8 @@ storagegateway_update_smb_local_groups <- function(GatewayARN, SMBLocalGroups) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$update_smb_local_groups_input(GatewayARN = GatewayARN, SMBLocalGroups = SMBLocalGroups)
   output <- .storagegateway$update_smb_local_groups_output()
@@ -3701,7 +3925,8 @@ storagegateway_update_smb_security_strategy <- function(GatewayARN, SMBSecurityS
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$update_smb_security_strategy_input(GatewayARN = GatewayARN, SMBSecurityStrategy = SMBSecurityStrategy)
   output <- .storagegateway$update_smb_security_strategy_output()
@@ -3746,7 +3971,8 @@ storagegateway_update_snapshot_schedule <- function(VolumeARN, StartAt, Recurren
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$update_snapshot_schedule_input(VolumeARN = VolumeARN, StartAt = StartAt, RecurrenceInHours = RecurrenceInHours, Description = Description, Tags = Tags)
   output <- .storagegateway$update_snapshot_schedule_output()
@@ -3779,7 +4005,8 @@ storagegateway_update_vtl_device_type <- function(VTLDeviceARN, DeviceType) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .storagegateway$update_vtl_device_type_input(VTLDeviceARN = VTLDeviceARN, DeviceType = DeviceType)
   output <- .storagegateway$update_vtl_device_type_output()

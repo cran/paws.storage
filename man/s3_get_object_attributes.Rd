@@ -24,10 +24,10 @@ s3_get_object_attributes(
 
 \strong{Directory buckets} - When you use this operation with a directory
 bucket, you must use virtual-hosted-style requests in the format
-\code{ Bucket_name.s3express-az_id.region.amazonaws.com}. Path-style requests
-are not supported. Directory bucket names must be unique in the chosen
-Availability Zone. Bucket names must follow the format
-\code{ bucket_base_name--az-id--x-s3} (for example,
+\code{ Bucket-name.s3express-zone-id.region-code.amazonaws.com}. Path-style
+requests are not supported. Directory bucket names must be unique in the
+chosen Zone (Availability Zone or Local Zone). Bucket names must follow
+the format \code{ bucket-base-name--zone-id--x-s3} (for example,
 \code{ DOC-EXAMPLE-BUCKET--usw2-az1--x-s3}). For information about bucket
 naming restrictions, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-bucket-naming-rules.html}{Directory bucket naming rules}
 in the \emph{Amazon S3 User Guide}.
@@ -52,7 +52,7 @@ S3 on Outposts hostname takes the form
 \code{ AccessPointName-AccountId.outpostID.s3-outposts.Region.amazonaws.com}.
 When you use this action with S3 on Outposts through the Amazon Web
 Services SDKs, you provide the Outposts access point ARN in place of the
-bucket name. For more information about S3 on Outposts ARNs, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/S3onOutposts.html}{What is S3 on Outposts?}
+bucket name. For more information about S3 on Outposts ARNs, see \href{https://docs.aws.amazon.com/AmazonS3/latest/s3-outposts/S3onOutposts.html}{What is S3 on Outposts?}
 in the \emph{Amazon S3 User Guide}.}
 
 \item{Key}{[required] The object key.}

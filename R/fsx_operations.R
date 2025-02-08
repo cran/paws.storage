@@ -41,7 +41,8 @@ fsx_associate_file_system_aliases <- function(ClientRequestToken = NULL, FileSys
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .fsx$associate_file_system_aliases_input(ClientRequestToken = ClientRequestToken, FileSystemId = FileSystemId, Aliases = Aliases)
   output <- .fsx$associate_file_system_aliases_output()
@@ -72,7 +73,8 @@ fsx_cancel_data_repository_task <- function(TaskId) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .fsx$cancel_data_repository_task_input(TaskId = TaskId)
   output <- .fsx$cancel_data_repository_task_output()
@@ -122,7 +124,8 @@ fsx_copy_backup <- function(ClientRequestToken = NULL, SourceBackupId, SourceReg
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .fsx$copy_backup_input(ClientRequestToken = ClientRequestToken, SourceBackupId = SourceBackupId, SourceRegion = SourceRegion, KmsKeyId = KmsKeyId, CopyTags = CopyTags, Tags = Tags)
   output <- .fsx$copy_backup_output()
@@ -182,7 +185,8 @@ fsx_copy_snapshot_and_update_volume <- function(ClientRequestToken = NULL, Volum
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .fsx$copy_snapshot_and_update_volume_input(ClientRequestToken = ClientRequestToken, VolumeId = VolumeId, SourceSnapshotARN = SourceSnapshotARN, CopyStrategy = CopyStrategy, Options = Options)
   output <- .fsx$copy_snapshot_and_update_volume_output()
@@ -224,7 +228,8 @@ fsx_create_backup <- function(FileSystemId = NULL, ClientRequestToken = NULL, Ta
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .fsx$create_backup_input(FileSystemId = FileSystemId, ClientRequestToken = ClientRequestToken, Tags = Tags, VolumeId = VolumeId)
   output <- .fsx$create_backup_output()
@@ -263,8 +268,9 @@ fsx_create_backup <- function(FileSystemId = NULL, ClientRequestToken = NULL, Ta
 #' associated with a file system.
 #' @param DataRepositoryPath &#91;required&#93; The path to the Amazon S3 data repository that will be linked to the
 #' file system. The path can be an S3 bucket or prefix in the format
-#' `s3://myBucket/myPrefix/`. This path specifies where in the S3 data
-#' repository files will be imported from or exported to.
+#' `s3://bucket-name/prefix/` (where `prefix` is optional). This path
+#' specifies where in the S3 data repository files will be imported from or
+#' exported to.
 #' @param BatchImportMetaDataOnCreate Set to `true` to run an import data repository task to import metadata
 #' from the data repository to the file system after the data repository
 #' association is created. Default is `false`.
@@ -294,7 +300,8 @@ fsx_create_data_repository_association <- function(FileSystemId, FileSystemPath 
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .fsx$create_data_repository_association_input(FileSystemId = FileSystemId, FileSystemPath = FileSystemPath, DataRepositoryPath = DataRepositoryPath, BatchImportMetaDataOnCreate = BatchImportMetaDataOnCreate, ImportedFileChunkSize = ImportedFileChunkSize, S3 = S3, ClientRequestToken = ClientRequestToken, Tags = Tags)
   output <- .fsx$create_data_repository_association_output()
@@ -345,7 +352,7 @@ fsx_create_data_repository_association <- function(FileSystemId, FileSystemPath 
 #' -   For import tasks, the list contains paths in the Amazon S3 bucket
 #'     from which POSIX metadata changes are imported to the FSx for Lustre
 #'     file system. The path can be an S3 bucket or prefix in the format
-#'     `s3://myBucket/myPrefix` (where `myPrefix` is optional).
+#'     `s3://bucket-name/prefix` (where `prefix` is optional).
 #' 
 #' -   For release tasks, the list contains directory or file paths on the
 #'     FSx for Lustre file system from which to release exported files. If
@@ -380,7 +387,8 @@ fsx_create_data_repository_task <- function(Type, Paths = NULL, FileSystemId, Re
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .fsx$create_data_repository_task_input(Type = Type, Paths = Paths, FileSystemId = FileSystemId, Report = Report, ClientRequestToken = ClientRequestToken, Tags = Tags, CapacityToRelease = CapacityToRelease, ReleaseConfiguration = ReleaseConfiguration)
   output <- .fsx$create_data_repository_task_output()
@@ -455,7 +463,8 @@ fsx_create_file_cache <- function(ClientRequestToken = NULL, FileCacheType, File
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .fsx$create_file_cache_input(ClientRequestToken = ClientRequestToken, FileCacheType = FileCacheType, FileCacheTypeVersion = FileCacheTypeVersion, StorageCapacity = StorageCapacity, SubnetIds = SubnetIds, SecurityGroupIds = SecurityGroupIds, Tags = Tags, CopyTagsToDataRepositoryAssociations = CopyTagsToDataRepositoryAssociations, KmsKeyId = KmsKeyId, LustreConfiguration = LustreConfiguration, DataRepositoryAssociations = DataRepositoryAssociations)
   output <- .fsx$create_file_cache_output()
@@ -480,7 +489,7 @@ fsx_create_file_cache <- function(ClientRequestToken = NULL, FileCacheType, File
 #' SDK.
 #' @param FileSystemType &#91;required&#93; The type of Amazon FSx file system to create. Valid values are
 #' `WINDOWS`, `LUSTRE`, `ONTAP`, and `OPENZFS`.
-#' @param StorageCapacity &#91;required&#93; Sets the storage capacity of the file system that you're creating, in
+#' @param StorageCapacity Sets the storage capacity of the file system that you're creating, in
 #' gibibytes (GiB).
 #' 
 #' **FSx for Lustre file systems** - The amount of storage capacity that
@@ -513,8 +522,8 @@ fsx_create_file_cache <- function(ClientRequestToken = NULL, FileCacheType, File
 #' -   For SSD storage, valid values are 32 GiB-65,536 GiB (64 TiB).
 #' 
 #' -   For HDD storage, valid values are 2000 GiB-65,536 GiB (64 TiB).
-#' @param StorageType Sets the storage type for the file system that you're creating. Valid
-#' values are `SSD` and `HDD`.
+#' @param StorageType Sets the storage class for the file system that you're creating. Valid
+#' values are `SSD`, `HDD`, and `INTELLIGENT_TIERING`.
 #' 
 #' -   Set to `SSD` to use solid state drive storage. SSD is supported on
 #'     all Windows, Lustre, ONTAP, and OpenZFS deployment types.
@@ -523,11 +532,17 @@ fsx_create_file_cache <- function(ClientRequestToken = NULL, FileCacheType, File
 #'     `SINGLE_AZ_2` and `MULTI_AZ_1` Windows file system deployment types,
 #'     and on `PERSISTENT_1` Lustre file system deployment types.
 #' 
+#' -   Set to `INTELLIGENT_TIERING` to use fully elastic,
+#'     intelligently-tiered storage. Intelligent-Tiering is only available
+#'     for OpenZFS file systems with the Multi-AZ deployment type.
+#' 
 #' Default value is `SSD`. For more information, see [Storage type
 #' options](https://docs.aws.amazon.com/fsx/latest/WindowsGuide/managing-storage-configuration.html#optimize-storage-costs)
-#' in the *FSx for Windows File Server User Guide* and [Multiple storage
+#' in the *FSx for Windows File Server User Guide*, [Multiple storage
 #' options](https://docs.aws.amazon.com/fsx/latest/LustreGuide/what-is.html#storage-options)
-#' in the *FSx for Lustre User Guide*.
+#' in the *FSx for Lustre User Guide*, and [Working with
+#' Intelligent-Tiering](https://docs.aws.amazon.com/fsx/latest/OpenZFSGuide/performance-intelligent-tiering.html)
+#' in the *Amazon FSx for OpenZFS User Guide*.
 #' @param SubnetIds &#91;required&#93; Specifies the IDs of the subnets that the file system will be accessible
 #' from. For Windows and ONTAP `MULTI_AZ_1` deployment types,provide
 #' exactly two subnet IDs, one for the preferred file server and one for
@@ -582,13 +597,14 @@ fsx_create_file_cache <- function(ClientRequestToken = NULL, FileCacheType, File
 #' @keywords internal
 #'
 #' @rdname fsx_create_file_system
-fsx_create_file_system <- function(ClientRequestToken = NULL, FileSystemType, StorageCapacity, StorageType = NULL, SubnetIds, SecurityGroupIds = NULL, Tags = NULL, KmsKeyId = NULL, WindowsConfiguration = NULL, LustreConfiguration = NULL, OntapConfiguration = NULL, FileSystemTypeVersion = NULL, OpenZFSConfiguration = NULL) {
+fsx_create_file_system <- function(ClientRequestToken = NULL, FileSystemType, StorageCapacity = NULL, StorageType = NULL, SubnetIds, SecurityGroupIds = NULL, Tags = NULL, KmsKeyId = NULL, WindowsConfiguration = NULL, LustreConfiguration = NULL, OntapConfiguration = NULL, FileSystemTypeVersion = NULL, OpenZFSConfiguration = NULL) {
   op <- new_operation(
     name = "CreateFileSystem",
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .fsx$create_file_system_input(ClientRequestToken = ClientRequestToken, FileSystemType = FileSystemType, StorageCapacity = StorageCapacity, StorageType = StorageType, SubnetIds = SubnetIds, SecurityGroupIds = SecurityGroupIds, Tags = Tags, KmsKeyId = KmsKeyId, WindowsConfiguration = WindowsConfiguration, LustreConfiguration = LustreConfiguration, OntapConfiguration = OntapConfiguration, FileSystemTypeVersion = FileSystemTypeVersion, OpenZFSConfiguration = OpenZFSConfiguration)
   output <- .fsx$create_file_system_output()
@@ -679,7 +695,8 @@ fsx_create_file_system_from_backup <- function(BackupId, ClientRequestToken = NU
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .fsx$create_file_system_from_backup_input(BackupId = BackupId, ClientRequestToken = ClientRequestToken, SubnetIds = SubnetIds, SecurityGroupIds = SecurityGroupIds, Tags = Tags, WindowsConfiguration = WindowsConfiguration, LustreConfiguration = LustreConfiguration, StorageType = StorageType, KmsKeyId = KmsKeyId, FileSystemTypeVersion = FileSystemTypeVersion, OpenZFSConfiguration = OpenZFSConfiguration, StorageCapacity = StorageCapacity)
   output <- .fsx$create_file_system_from_backup_output()
@@ -712,7 +729,8 @@ fsx_create_snapshot <- function(ClientRequestToken = NULL, Name, VolumeId, Tags 
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .fsx$create_snapshot_input(ClientRequestToken = ClientRequestToken, Name = Name, VolumeId = VolumeId, Tags = Tags)
   output <- .fsx$create_snapshot_output()
@@ -769,7 +787,8 @@ fsx_create_storage_virtual_machine <- function(ActiveDirectoryConfiguration = NU
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .fsx$create_storage_virtual_machine_input(ActiveDirectoryConfiguration = ActiveDirectoryConfiguration, ClientRequestToken = ClientRequestToken, FileSystemId = FileSystemId, Name = Name, SvmAdminPassword = SvmAdminPassword, Tags = Tags, RootVolumeSecurityStyle = RootVolumeSecurityStyle)
   output <- .fsx$create_storage_virtual_machine_output()
@@ -805,7 +824,8 @@ fsx_create_volume <- function(ClientRequestToken = NULL, VolumeType, Name, Ontap
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .fsx$create_volume_input(ClientRequestToken = ClientRequestToken, VolumeType = VolumeType, Name = Name, OntapConfiguration = OntapConfiguration, Tags = Tags, OpenZFSConfiguration = OpenZFSConfiguration)
   output <- .fsx$create_volume_output()
@@ -840,7 +860,8 @@ fsx_create_volume_from_backup <- function(BackupId, ClientRequestToken = NULL, N
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .fsx$create_volume_from_backup_input(BackupId = BackupId, ClientRequestToken = ClientRequestToken, Name = Name, OntapConfiguration = OntapConfiguration, Tags = Tags)
   output <- .fsx$create_volume_from_backup_output()
@@ -873,7 +894,8 @@ fsx_delete_backup <- function(BackupId, ClientRequestToken = NULL) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .fsx$delete_backup_input(BackupId = BackupId, ClientRequestToken = ClientRequestToken)
   output <- .fsx$delete_backup_output()
@@ -907,7 +929,8 @@ fsx_delete_data_repository_association <- function(AssociationId, ClientRequestT
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .fsx$delete_data_repository_association_input(AssociationId = AssociationId, ClientRequestToken = ClientRequestToken, DeleteDataInFileSystem = DeleteDataInFileSystem)
   output <- .fsx$delete_data_repository_association_output()
@@ -938,7 +961,8 @@ fsx_delete_file_cache <- function(FileCacheId, ClientRequestToken = NULL) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .fsx$delete_file_cache_input(FileCacheId = FileCacheId, ClientRequestToken = ClientRequestToken)
   output <- .fsx$delete_file_cache_output()
@@ -976,7 +1000,8 @@ fsx_delete_file_system <- function(FileSystemId, ClientRequestToken = NULL, Wind
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .fsx$delete_file_system_input(FileSystemId = FileSystemId, ClientRequestToken = ClientRequestToken, WindowsConfiguration = WindowsConfiguration, LustreConfiguration = LustreConfiguration, OpenZFSConfiguration = OpenZFSConfiguration)
   output <- .fsx$delete_file_system_output()
@@ -1007,7 +1032,8 @@ fsx_delete_snapshot <- function(ClientRequestToken = NULL, SnapshotId) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .fsx$delete_snapshot_input(ClientRequestToken = ClientRequestToken, SnapshotId = SnapshotId)
   output <- .fsx$delete_snapshot_output()
@@ -1038,7 +1064,8 @@ fsx_delete_storage_virtual_machine <- function(ClientRequestToken = NULL, Storag
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .fsx$delete_storage_virtual_machine_input(ClientRequestToken = ClientRequestToken, StorageVirtualMachineId = StorageVirtualMachineId)
   output <- .fsx$delete_storage_virtual_machine_output()
@@ -1074,7 +1101,8 @@ fsx_delete_volume <- function(ClientRequestToken = NULL, VolumeId, OntapConfigur
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .fsx$delete_volume_input(ClientRequestToken = ClientRequestToken, VolumeId = VolumeId, OntapConfiguration = OntapConfiguration, OpenZFSConfiguration = OpenZFSConfiguration)
   output <- .fsx$delete_volume_output()
@@ -1117,7 +1145,8 @@ fsx_describe_backups <- function(BackupIds = NULL, Filters = NULL, MaxResults = 
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults")
+    paginator = list(input_token = "NextToken", limit_key = "MaxResults", output_token = "NextToken", result_key = "Backups"),
+    stream_api = FALSE
   )
   input <- .fsx$describe_backups_input(BackupIds = BackupIds, Filters = Filters, MaxResults = MaxResults, NextToken = NextToken)
   output <- .fsx$describe_backups_output()
@@ -1154,7 +1183,8 @@ fsx_describe_data_repository_associations <- function(AssociationIds = NULL, Fil
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults")
+    paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults"),
+    stream_api = FALSE
   )
   input <- .fsx$describe_data_repository_associations_input(AssociationIds = AssociationIds, Filters = Filters, MaxResults = MaxResults, NextToken = NextToken)
   output <- .fsx$describe_data_repository_associations_output()
@@ -1193,7 +1223,8 @@ fsx_describe_data_repository_tasks <- function(TaskIds = NULL, Filters = NULL, M
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults")
+    paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults"),
+    stream_api = FALSE
   )
   input <- .fsx$describe_data_repository_tasks_input(TaskIds = TaskIds, Filters = Filters, MaxResults = MaxResults, NextToken = NextToken)
   output <- .fsx$describe_data_repository_tasks_output()
@@ -1226,7 +1257,8 @@ fsx_describe_file_caches <- function(FileCacheIds = NULL, MaxResults = NULL, Nex
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults")
+    paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults"),
+    stream_api = FALSE
   )
   input <- .fsx$describe_file_caches_input(FileCacheIds = FileCacheIds, MaxResults = MaxResults, NextToken = NextToken)
   output <- .fsx$describe_file_caches_output()
@@ -1267,7 +1299,8 @@ fsx_describe_file_system_aliases <- function(ClientRequestToken = NULL, FileSyst
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults")
+    paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults"),
+    stream_api = FALSE
   )
   input <- .fsx$describe_file_system_aliases_input(ClientRequestToken = ClientRequestToken, FileSystemId = FileSystemId, MaxResults = MaxResults, NextToken = NextToken)
   output <- .fsx$describe_file_system_aliases_output()
@@ -1307,7 +1340,8 @@ fsx_describe_file_systems <- function(FileSystemIds = NULL, MaxResults = NULL, N
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults")
+    paginator = list(input_token = "NextToken", limit_key = "MaxResults", output_token = "NextToken", result_key = "FileSystems"),
+    stream_api = FALSE
   )
   input <- .fsx$describe_file_systems_input(FileSystemIds = FileSystemIds, MaxResults = MaxResults, NextToken = NextToken)
   output <- .fsx$describe_file_systems_output()
@@ -1339,7 +1373,8 @@ fsx_describe_shared_vpc_configuration <- function() {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .fsx$describe_shared_vpc_configuration_input()
   output <- .fsx$describe_shared_vpc_configuration_output()
@@ -1380,7 +1415,8 @@ fsx_describe_snapshots <- function(SnapshotIds = NULL, Filters = NULL, MaxResult
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults")
+    paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults"),
+    stream_api = FALSE
   )
   input <- .fsx$describe_snapshots_input(SnapshotIds = SnapshotIds, Filters = Filters, MaxResults = MaxResults, NextToken = NextToken, IncludeShared = IncludeShared)
   output <- .fsx$describe_snapshots_output()
@@ -1414,7 +1450,8 @@ fsx_describe_storage_virtual_machines <- function(StorageVirtualMachineIds = NUL
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults", result_key = "StorageVirtualMachines")
+    paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults", result_key = "StorageVirtualMachines"),
+    stream_api = FALSE
   )
   input <- .fsx$describe_storage_virtual_machines_input(StorageVirtualMachineIds = StorageVirtualMachineIds, Filters = Filters, MaxResults = MaxResults, NextToken = NextToken)
   output <- .fsx$describe_storage_virtual_machines_output()
@@ -1448,7 +1485,8 @@ fsx_describe_volumes <- function(VolumeIds = NULL, Filters = NULL, MaxResults = 
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults", result_key = "Volumes")
+    paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults", result_key = "Volumes"),
+    stream_api = FALSE
   )
   input <- .fsx$describe_volumes_input(VolumeIds = VolumeIds, Filters = Filters, MaxResults = MaxResults, NextToken = NextToken)
   output <- .fsx$describe_volumes_output()
@@ -1483,7 +1521,8 @@ fsx_disassociate_file_system_aliases <- function(ClientRequestToken = NULL, File
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .fsx$disassociate_file_system_aliases_input(ClientRequestToken = ClientRequestToken, FileSystemId = FileSystemId, Aliases = Aliases)
   output <- .fsx$disassociate_file_system_aliases_output()
@@ -1521,7 +1560,8 @@ fsx_list_tags_for_resource <- function(ResourceARN, MaxResults = NULL, NextToken
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults")
+    paginator = list(input_token = "NextToken", limit_key = "MaxResults", output_token = "NextToken", result_key = "Tags"),
+    stream_api = FALSE
   )
   input <- .fsx$list_tags_for_resource_input(ResourceARN = ResourceARN, MaxResults = MaxResults, NextToken = NextToken)
   output <- .fsx$list_tags_for_resource_output()
@@ -1552,7 +1592,8 @@ fsx_release_file_system_nfs_v3_locks <- function(FileSystemId, ClientRequestToke
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .fsx$release_file_system_nfs_v3_locks_input(FileSystemId = FileSystemId, ClientRequestToken = ClientRequestToken)
   output <- .fsx$release_file_system_nfs_v3_locks_output()
@@ -1599,7 +1640,8 @@ fsx_restore_volume_from_snapshot <- function(ClientRequestToken = NULL, VolumeId
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .fsx$restore_volume_from_snapshot_input(ClientRequestToken = ClientRequestToken, VolumeId = VolumeId, SnapshotId = SnapshotId, Options = Options)
   output <- .fsx$restore_volume_from_snapshot_output()
@@ -1632,7 +1674,8 @@ fsx_start_misconfigured_state_recovery <- function(ClientRequestToken = NULL, Fi
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .fsx$start_misconfigured_state_recovery_input(ClientRequestToken = ClientRequestToken, FileSystemId = FileSystemId)
   output <- .fsx$start_misconfigured_state_recovery_output()
@@ -1665,7 +1708,8 @@ fsx_tag_resource <- function(ResourceARN, Tags) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .fsx$tag_resource_input(ResourceARN = ResourceARN, Tags = Tags)
   output <- .fsx$tag_resource_output()
@@ -1697,7 +1741,8 @@ fsx_untag_resource <- function(ResourceARN, TagKeys) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .fsx$untag_resource_input(ResourceARN = ResourceARN, TagKeys = TagKeys)
   output <- .fsx$untag_resource_output()
@@ -1743,7 +1788,8 @@ fsx_update_data_repository_association <- function(AssociationId, ClientRequestT
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .fsx$update_data_repository_association_input(AssociationId = AssociationId, ClientRequestToken = ClientRequestToken, ImportedFileChunkSize = ImportedFileChunkSize, S3 = S3)
   output <- .fsx$update_data_repository_association_output()
@@ -1775,7 +1821,8 @@ fsx_update_file_cache <- function(FileCacheId, ClientRequestToken = NULL, Lustre
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .fsx$update_file_cache_input(FileCacheId = FileCacheId, ClientRequestToken = ClientRequestToken, LustreConfiguration = LustreConfiguration)
   output <- .fsx$update_file_cache_output()
@@ -1861,7 +1908,8 @@ fsx_update_file_system <- function(FileSystemId, ClientRequestToken = NULL, Stor
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .fsx$update_file_system_input(FileSystemId = FileSystemId, ClientRequestToken = ClientRequestToken, StorageCapacity = StorageCapacity, WindowsConfiguration = WindowsConfiguration, LustreConfiguration = LustreConfiguration, OntapConfiguration = OntapConfiguration, OpenZFSConfiguration = OpenZFSConfiguration, StorageType = StorageType)
   output <- .fsx$update_file_system_output()
@@ -1896,7 +1944,8 @@ fsx_update_shared_vpc_configuration <- function(EnableFsxRouteTableUpdatesFromPa
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .fsx$update_shared_vpc_configuration_input(EnableFsxRouteTableUpdatesFromParticipantAccounts = EnableFsxRouteTableUpdatesFromParticipantAccounts, ClientRequestToken = ClientRequestToken)
   output <- .fsx$update_shared_vpc_configuration_output()
@@ -1929,7 +1978,8 @@ fsx_update_snapshot <- function(ClientRequestToken = NULL, Name, SnapshotId) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .fsx$update_snapshot_input(ClientRequestToken = ClientRequestToken, Name = Name, SnapshotId = SnapshotId)
   output <- .fsx$update_snapshot_output()
@@ -1964,7 +2014,8 @@ fsx_update_storage_virtual_machine <- function(ActiveDirectoryConfiguration = NU
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .fsx$update_storage_virtual_machine_input(ActiveDirectoryConfiguration = ActiveDirectoryConfiguration, ClientRequestToken = ClientRequestToken, StorageVirtualMachineId = StorageVirtualMachineId, SvmAdminPassword = SvmAdminPassword)
   output <- .fsx$update_storage_virtual_machine_output()
@@ -2003,7 +2054,8 @@ fsx_update_volume <- function(ClientRequestToken = NULL, VolumeId, OntapConfigur
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .fsx$update_volume_input(ClientRequestToken = ClientRequestToken, VolumeId = VolumeId, OntapConfiguration = OntapConfiguration, Name = Name, OpenZFSConfiguration = OpenZFSConfiguration)
   output <- .fsx$update_volume_output()

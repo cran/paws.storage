@@ -1,6 +1,6 @@
 Package: paws.storage
 Title: 'Amazon Web Services' Storage Services
-Version: 0.7.0
+Version: 0.8.0
 Authors@R: c(
     person("David", "Kretch", , "david.kretch@gmail.com", role = "aut"),
     person("Adam", "Banker", , "adam.banker39@gmail.com", role = "aut"),
@@ -11,9 +11,10 @@ Description: Interface to 'Amazon Web Services' storage services,
     including 'Simple Storage Service' ('S3') and more
     <https://aws.amazon.com/>.
 License: Apache License (>= 2.0)
-URL: https://github.com/paws-r/paws
+URL: https://github.com/paws-r/paws,
+        https://paws-r.r-universe.dev/paws.storage
 BugReports: https://github.com/paws-r/paws/issues
-Imports: paws.common (>= 0.7.5)
+Imports: paws.common (>= 0.8.0)
 Suggests: testthat
 Encoding: UTF-8
 RoxygenNote: 7.3.2
@@ -34,11 +35,11 @@ Collate: 'backup_service.R' 'backup_interfaces.R' 'backup_operations.R'
         's3outposts_operations.R' 'storagegateway_service.R'
         'storagegateway_interfaces.R' 'storagegateway_operations.R'
 NeedsCompilation: no
-Packaged: 2024-09-11 08:30:09 UTC; dyfanjones
+Packaged: 2025-02-08 19:53:10 UTC; dyfanjones
 Author: David Kretch [aut],
   Adam Banker [aut],
   Dyfan Jones [cre],
   Amazon.com, Inc. [cph]
 Maintainer: Dyfan Jones <dyfan.r.jones@gmail.com>
 Repository: CRAN
-Date/Publication: 2024-09-11 23:30:02 UTC
+Date/Publication: 2025-02-08 21:50:02 UTC

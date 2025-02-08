@@ -2,7 +2,7 @@
 % Please edit documentation in R/s3_operations.R
 \name{s3_put_bucket_cors}
 \alias{s3_put_bucket_cors}
-\title{This operation is not supported by directory buckets}
+\title{This operation is not supported for directory buckets}
 \usage{
 s3_put_bucket_cors(
   Bucket,
@@ -19,7 +19,7 @@ s3_put_bucket_cors(
 S3 bucket. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/cors.html}{Enabling Cross-Origin Resource Sharing}
 in the \emph{Amazon S3 User Guide}.}
 
-\item{ContentMD5}{The base64-encoded 128-bit MD5 digest of the data. This header must be
+\item{ContentMD5}{The Base64 encoded 128-bit \code{MD5} digest of the data. This header must be
 used as a message integrity check to verify that the request body was
 not corrupted in transit. For more information, go to \href{https://www.ietf.org/rfc/rfc1864.txt}{RFC 1864.}
 
@@ -43,7 +43,7 @@ provide does not match the actual owner of the bucket, the request fails
 with the HTTP status code \verb{403 Forbidden} (access denied).}
 }
 \description{
-This operation is not supported by directory buckets.
+This operation is not supported for directory buckets.
 
 See \url{https://www.paws-r-sdk.com/docs/s3_put_bucket_cors/} for full documentation.
 }
