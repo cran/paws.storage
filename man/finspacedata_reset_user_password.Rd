@@ -8,8 +8,7 @@ one}
 finspacedata_reset_user_password(userId, clientToken = NULL)
 }
 \arguments{
-\item{userId}{[required] The unique identifier of the user that a temporary password is requested
-for.}
+\item{userId}{[required] The unique identifier of the user that a temporary password is requested for.}
 
 \item{clientToken}{A token that ensures idempotency. This token expires in 10 minutes.}
 }

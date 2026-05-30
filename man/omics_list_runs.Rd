@@ -2,11 +2,12 @@
 % Please edit documentation in R/omics_operations.R
 \name{omics_list_runs}
 \alias{omics_list_runs}
-\title{Retrieves a list of runs}
+\title{Retrieves a list of runs and returns each run's metadata and status}
 \usage{
 omics_list_runs(
   name = NULL,
   runGroupId = NULL,
+  batchId = NULL,
   startingToken = NULL,
   maxResults = NULL,
   status = NULL
@@ -17,15 +18,16 @@ omics_list_runs(
 
 \item{runGroupId}{Filter the list by run group ID.}
 
-\item{startingToken}{Specify the pagination token from a previous request to retrieve the
-next page of results.}
+\item{batchId}{Filter by batch ID.}
+
+\item{startingToken}{Specify the pagination token from a previous request to retrieve the next page of results.}
 
 \item{maxResults}{The maximum number of runs to return in one page of results.}
 
 \item{status}{The status of a run.}
 }
 \description{
-Retrieves a list of runs.
+Retrieves a list of runs and returns each run's metadata and status.
 
 See \url{https://www.paws-r-sdk.com/docs/omics_list_runs/} for full documentation.
 }

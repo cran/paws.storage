@@ -13,20 +13,13 @@ backup_create_framework(
 )
 }
 \arguments{
-\item{FrameworkName}{[required] The unique name of the framework. The name must be between 1 and 256
-characters, starting with a letter, and consisting of letters (a-z,
-A-Z), numbers (0-9), and underscores (_).}
+\item{FrameworkName}{[required] The unique name of the framework. The name must be between 1 and 256 characters, starting with a letter, and consisting of letters (a-z, A-Z), numbers (0-9), and underscores (_).}
 
-\item{FrameworkDescription}{An optional description of the framework with a maximum of 1,024
-characters.}
+\item{FrameworkDescription}{An optional description of the framework with a maximum of 1,024 characters.}
 
-\item{FrameworkControls}{[required] The controls that make up the framework. Each control in the list has a
-name, input parameters, and scope.}
+\item{FrameworkControls}{[required] The controls that make up the framework. Each control in the list has a name, input parameters, and scope.}
 
-\item{IdempotencyToken}{A customer-chosen string that you can use to distinguish between
-otherwise identical calls to \code{CreateFrameworkInput}. Retrying a
-successful request with the same idempotency token results in a success
-message with no action taken.}
+\item{IdempotencyToken}{A customer-chosen string that you can use to distinguish between otherwise identical calls to \code{CreateFrameworkInput}. Retrying a successful request with the same idempotency token results in a success message with no action taken.}
 
 \item{FrameworkTags}{The tags to assign to the framework.}
 }

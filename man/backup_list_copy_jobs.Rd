@@ -17,19 +17,16 @@ backup_list_copy_jobs(
   ByCompleteBefore = NULL,
   ByCompleteAfter = NULL,
   ByParentJobId = NULL,
-  ByMessageCategory = NULL
+  ByMessageCategory = NULL,
+  BySourceRecoveryPointArn = NULL
 )
 }
 \arguments{
-\item{NextToken}{The next item following a partial list of returned items. For example,
-if a request is made to return MaxResults number of items, NextToken
-allows you to return more items in your list starting at the location
-pointed to by the next token.}
+\item{NextToken}{The next item following a partial list of returned items. For example, if a request is made to return MaxResults number of items, NextToken allows you to return more items in your list starting at the location pointed to by the next token.}
 
 \item{MaxResults}{The maximum number of items to be returned.}
 
-\item{ByResourceArn}{Returns only copy jobs that match the specified resource Amazon Resource
-Name (ARN).}
+\item{ByResourceArn}{Returns only copy jobs that match the specified resource Amazon Resource Name (ARN).}
 
 \item{ByState}{Returns only copy jobs that are in the specified state.}
 
@@ -46,47 +43,39 @@ Name (ARN).}
 \item \code{EBS} for Amazon Elastic Block Store
 \item \code{EC2} for Amazon Elastic Compute Cloud
 \item \code{EFS} for Amazon Elastic File System
+\item \code{EKS} for Amazon Elastic Kubernetes Service
 \item \code{FSx} for Amazon FSx
 \item \code{Neptune} for Amazon Neptune
 \item \code{RDS} for Amazon Relational Database Service
 \item \code{Redshift} for Amazon Redshift
 \item \code{S3} for Amazon Simple Storage Service (Amazon S3)
-\item \verb{SAP HANA on Amazon EC2} for SAP HANA databases on Amazon Elastic
-Compute Cloud instances
+\item \verb{SAP HANA on Amazon EC2} for SAP HANA databases on Amazon Elastic Compute Cloud instances
 \item \verb{Storage Gateway} for Storage Gateway
 \item \code{Timestream} for Amazon Timestream
 \item \code{VirtualMachine} for VMware virtual machines
 }}
 
-\item{ByDestinationVaultArn}{An Amazon Resource Name (ARN) that uniquely identifies a source backup
-vault to copy from; for example,
-\code{arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault}.}
+\item{ByDestinationVaultArn}{An Amazon Resource Name (ARN) that uniquely identifies a source backup vault to copy from; for example, \code{arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault}.}
 
-\item{ByAccountId}{The account ID to list the jobs from. Returns only copy jobs associated
-with the specified account ID.}
+\item{ByAccountId}{The account ID to list the jobs from. Returns only copy jobs associated with the specified account ID.}
 
-\item{ByCompleteBefore}{Returns only copy jobs completed before a date expressed in Unix format
-and Coordinated Universal Time (UTC).}
+\item{ByCompleteBefore}{Returns only copy jobs completed before a date expressed in Unix format and Coordinated Universal Time (UTC).}
 
-\item{ByCompleteAfter}{Returns only copy jobs completed after a date expressed in Unix format
-and Coordinated Universal Time (UTC).}
+\item{ByCompleteAfter}{Returns only copy jobs completed after a date expressed in Unix format and Coordinated Universal Time (UTC).}
 
 \item{ByParentJobId}{This is a filter to list child (nested) jobs based on parent job ID.}
 
-\item{ByMessageCategory}{This is an optional parameter that can be used to filter out jobs with a
-MessageCategory which matches the value you input.
+\item{ByMessageCategory}{This is an optional parameter that can be used to filter out jobs with a MessageCategory which matches the value you input.
 
-Example strings may include \code{AccessDenied}, \code{SUCCESS}, \code{AGGREGATE_ALL},
-and \code{INVALIDPARAMETERS}.
+Example strings may include \code{AccessDenied}, \code{SUCCESS}, \code{AGGREGATE_ALL}, and \code{INVALIDPARAMETERS}.
 
-View
-\href{https://docs.aws.amazon.com/aws-backup/latest/devguide/monitoring.html}{Monitoring}
-for a list of accepted strings.
+View \href{https://docs.aws.amazon.com/aws-backup/latest/devguide/monitoring.html}{Monitoring} for a list of accepted strings.
 
 The the value ANY returns count of all message categories.
 
-\code{AGGREGATE_ALL} aggregates job counts for all message categories and
-returns the sum.}
+\code{AGGREGATE_ALL} aggregates job counts for all message categories and returns the sum.}
+
+\item{BySourceRecoveryPointArn}{Filters copy jobs by the specified source recovery point ARN.}
 }
 \description{
 Returns metadata about your copy jobs.

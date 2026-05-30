@@ -11,17 +11,11 @@ storagegateway_delete_tape(
 )
 }
 \arguments{
-\item{GatewayARN}{[required] The unique Amazon Resource Name (ARN) of the gateway that the virtual
-tape to delete is associated with. Use the
-\code{\link[=storagegateway_list_gateways]{list_gateways}} operation to return a
-list of gateways for your account and Amazon Web Services Region.}
+\item{GatewayARN}{[required] The unique Amazon Resource Name (ARN) of the gateway that the virtual tape to delete is associated with. Use the \code{\link[=storagegateway_list_gateways]{list_gateways}} operation to return a list of gateways for your account and Amazon Web Services Region.}
 
 \item{TapeARN}{[required] The Amazon Resource Name (ARN) of the virtual tape to delete.}
 
-\item{BypassGovernanceRetention}{Set to \code{TRUE} to delete an archived tape that belongs to a custom pool
-with tape retention lock. Only archived tapes with tape retention lock
-set to \code{governance} can be deleted. Archived tapes with tape retention
-lock set to \code{compliance} can't be deleted.}
+\item{BypassGovernanceRetention}{Set to \code{TRUE} to delete an archived tape that belongs to a custom pool with tape retention lock. Only archived tapes with tape retention lock set to \code{governance} can be deleted. Archived tapes with tape retention lock set to \code{compliance} can't be deleted.}
 }
 \description{
 Deletes the specified virtual tape. This operation is only supported in the tape gateway type.

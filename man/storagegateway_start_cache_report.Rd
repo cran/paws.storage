@@ -18,42 +18,27 @@ storagegateway_start_cache_report(
 )
 }
 \arguments{
-\item{FileShareARN}{[required]}
+\item{FileShareARN}{[required] The Amazon Resource Name (ARN) of the file share.}
 
 \item{Role}{[required] The ARN of the IAM role used when saving the cache report to Amazon S3.}
 
-\item{LocationARN}{[required] The ARN of the Amazon S3 bucket where the cache report will be saved.
+\item{LocationARN}{[required] The ARN of the Amazon S3 bucket where you want to save the cache report.
 
-We do not recommend saving the cache report to the same Amazon S3 bucket
-for which you are generating the report.
+We do not recommend saving the cache report to the same Amazon S3 bucket for which you are generating the report.
 
 This field does not accept access point ARNs.}
 
-\item{BucketRegion}{[required] The Amazon Web Services Region of the Amazon S3 bucket associated with
-the file share for which you want to generate the cache report.}
+\item{BucketRegion}{[required] The Amazon Web Services Region of the Amazon S3 bucket where you want to save the cache report.}
 
-\item{VPCEndpointDNSName}{The DNS name of the VPC endpoint associated with the Amazon S3 where you
-want to save the cache report. Optional.}
+\item{VPCEndpointDNSName}{The DNS name of the VPC endpoint associated with the Amazon S3 where you want to save the cache report. Optional.}
 
-\item{InclusionFilters}{The list of filters and parameters that determine which files are
-included in the report. You must specify at least one value for
-\code{InclusionFilters} or \code{ExclusionFilters} in a
-\code{\link[=storagegateway_start_cache_report]{start_cache_report}} request.}
+\item{InclusionFilters}{The list of filters and parameters that determine which files are included in the report. You must specify at least one value for \code{InclusionFilters} or \code{ExclusionFilters} in a \code{\link[=storagegateway_start_cache_report]{start_cache_report}} request.}
 
-\item{ExclusionFilters}{The list of filters and parameters that determine which files are
-excluded from the report. You must specify at least one value for
-\code{InclusionFilters} or \code{ExclusionFilters} in a
-\code{\link[=storagegateway_start_cache_report]{start_cache_report}} request.}
+\item{ExclusionFilters}{The list of filters and parameters that determine which files are excluded from the report. You must specify at least one value for \code{InclusionFilters} or \code{ExclusionFilters} in a \code{\link[=storagegateway_start_cache_report]{start_cache_report}} request.}
 
-\item{ClientToken}{[required] A unique identifier that you use to ensure idempotent report generation
-if you need to retry an unsuccessful
-\code{\link[=storagegateway_start_cache_report]{start_cache_report}} request. If
-you retry a request, use the same \code{ClientToken} you specified in the
-initial request.}
+\item{ClientToken}{[required] A unique identifier that you use to ensure idempotent report generation if you need to retry an unsuccessful \code{\link[=storagegateway_start_cache_report]{start_cache_report}} request. If you retry a request, use the same \code{ClientToken} you specified in the initial request.}
 
-\item{Tags}{A list of up to 50 key/value tags that you can assign to the cache
-report. Using tags can help you categorize your reports and more easily
-locate them in search results.}
+\item{Tags}{A list of up to 50 key/value tags that you can assign to the cache report. Using tags can help you categorize your reports and more easily locate them in search results.}
 }
 \description{
 Starts generating a report of the file metadata currently cached by an S3 File Gateway for a specific file share. You can use this report to identify and resolve issues if you have files failing upload from your gateway to Amazon S3. The report is a CSV file containing a list of files which match the set of filter parameters you specify in the request.

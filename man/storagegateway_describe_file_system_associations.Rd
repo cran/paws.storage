@@ -7,8 +7,7 @@
 storagegateway_describe_file_system_associations(FileSystemAssociationARNList)
 }
 \arguments{
-\item{FileSystemAssociationARNList}{[required] An array containing the Amazon Resource Name (ARN) of each file system
-association to be described.}
+\item{FileSystemAssociationARNList}{[required] An array containing the Amazon Resource Name (ARN) of each file system association to be described.}
 }
 \description{
 Gets the file system association information. This operation is only supported for FSx File Gateways.

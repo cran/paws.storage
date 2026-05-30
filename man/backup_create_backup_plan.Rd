@@ -11,18 +11,13 @@ backup_create_backup_plan(
 )
 }
 \arguments{
-\item{BackupPlan}{[required] The body of a backup plan. Includes a \code{BackupPlanName} and one or more
-sets of \code{Rules}.}
+\item{BackupPlan}{[required] The body of a backup plan. Includes a \code{BackupPlanName} and one or more sets of \code{Rules}.}
 
 \item{BackupPlanTags}{The tags to assign to the backup plan.}
 
-\item{CreatorRequestId}{Identifies the request and allows failed requests to be retried without
-the risk of running the operation twice. If the request includes a
-\code{CreatorRequestId} that matches an existing backup plan, that plan is
-returned. This parameter is optional.
+\item{CreatorRequestId}{Identifies the request and allows failed requests to be retried without the risk of running the operation twice. If the request includes a \code{CreatorRequestId} that matches an existing backup plan, that plan is returned. This parameter is optional.
 
-If used, this parameter must contain 1 to 50 alphanumeric or '-_.'
-characters.}
+If used, this parameter must contain 1 to 50 alphanumeric or '-_.' characters.}
 }
 \description{
 Creates a backup plan using a backup plan name and backup rules. A backup plan is a document that contains information that Backup uses to schedule tasks that create recovery points for resources.

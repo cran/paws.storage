@@ -16,8 +16,7 @@ backup_put_restore_validation_result(
 
 \item{ValidationStatus}{[required] The status of your restore validation.}
 
-\item{ValidationStatusMessage}{This is an optional message string you can input to describe the
-validation status for the restore test validation.}
+\item{ValidationStatusMessage}{This is an optional message string you can input to describe the validation status for the restore test validation.}
 }
 \description{
 This request allows you to send your independent self-run restore test validation results. \code{RestoreJobId} and \code{ValidationStatus} are required. Optionally, you can input a \code{ValidationStatusMessage}.

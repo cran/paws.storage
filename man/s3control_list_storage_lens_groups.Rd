@@ -9,8 +9,7 @@ s3control_list_storage_lens_groups(AccountId, NextToken = NULL)
 \arguments{
 \item{AccountId}{[required] The Amazon Web Services account ID that owns the Storage Lens groups.}
 
-\item{NextToken}{The token for the next set of results, or \code{null} if there are no more
-results.}
+\item{NextToken}{The token for the next set of results, or \code{null} if there are no more results.}
 }
 \description{
 Lists all the Storage Lens groups in the specified home Region.

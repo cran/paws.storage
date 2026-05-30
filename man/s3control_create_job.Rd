@@ -21,39 +21,25 @@ s3control_create_job(
 \arguments{
 \item{AccountId}{[required] The Amazon Web Services account ID that creates the job.}
 
-\item{ConfirmationRequired}{Indicates whether confirmation is required before Amazon S3 runs the
-job. Confirmation is only required for jobs created through the Amazon
-S3 console.}
+\item{ConfirmationRequired}{Indicates whether confirmation is required before Amazon S3 runs the job. Confirmation is only required for jobs created through the Amazon S3 console.}
 
-\item{Operation}{[required] The action that you want this job to perform on every object listed in
-the manifest. For more information about the available actions, see
-\href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/batch-ops-operations.html}{Operations}
-in the \emph{Amazon S3 User Guide}.}
+\item{Operation}{[required] The action that you want this job to perform on every object listed in the manifest. For more information about the available actions, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/batch-ops-operations.html}{Operations} in the \emph{Amazon S3 User Guide}.}
 
 \item{Report}{[required] Configuration parameters for the optional job-completion report.}
 
-\item{ClientRequestToken}{[required] An idempotency token to ensure that you don't accidentally submit the
-same request twice. You can use any string up to the maximum length.}
+\item{ClientRequestToken}{[required] An idempotency token to ensure that you don't accidentally submit the same request twice. You can use any string up to the maximum length.}
 
 \item{Manifest}{Configuration parameters for the manifest.}
 
-\item{Description}{A description for this job. You can use any string within the permitted
-length. Descriptions don't need to be unique and can be used for
-multiple jobs.}
+\item{Description}{A description for this job. You can use any string within the permitted length. Descriptions don't need to be unique and can be used for multiple jobs.}
 
-\item{Priority}{[required] The numerical priority for this job. Higher numbers indicate higher
-priority.}
+\item{Priority}{[required] The numerical priority for this job. Higher numbers indicate higher priority.}
 
-\item{RoleArn}{[required] The Amazon Resource Name (ARN) for the Identity and Access Management
-(IAM) role that Batch Operations will use to run this job's action on
-every object in the manifest.}
+\item{RoleArn}{[required] The Amazon Resource Name (ARN) for the Identity and Access Management (IAM) role that Batch Operations will use to run this job's action on every object in the manifest.}
 
-\item{Tags}{A set of tags to associate with the S3 Batch Operations job. This is an
-optional parameter.}
+\item{Tags}{A set of tags to associate with the S3 Batch Operations job. This is an optional parameter.}
 
-\item{ManifestGenerator}{The attribute container for the ManifestGenerator details. Jobs must be
-created with either a manifest file or a ManifestGenerator, but not
-both.}
+\item{ManifestGenerator}{The attribute container for the ManifestGenerator details. Jobs must be created with either a manifest file or a ManifestGenerator, but not both.}
 }
 \description{
 This operation creates an S3 Batch Operations job.

@@ -14,9 +14,9 @@ fsx_describe_file_caches(
 \arguments{
 \item{FileCacheIds}{IDs of the caches whose descriptions you want to retrieve (String).}
 
-\item{MaxResults}{}
+\item{MaxResults}{The maximum number of resources to return in the response. This value must be an integer greater than zero.}
 
-\item{NextToken}{}
+\item{NextToken}{(Optional) Opaque pagination token returned from a previous operation (String). If present, this token indicates from what point you can continue processing the request, where the previous \code{NextToken} value left off.}
 }
 \description{
 Returns the description of a specific Amazon File Cache resource, if a \code{FileCacheIds} value is provided for that cache. Otherwise, it returns descriptions of all caches owned by your Amazon Web Services account in the Amazon Web Services Region of the endpoint that you're calling.

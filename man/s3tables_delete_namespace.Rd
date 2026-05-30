@@ -7,8 +7,7 @@
 s3tables_delete_namespace(tableBucketARN, namespace)
 }
 \arguments{
-\item{tableBucketARN}{[required] The Amazon Resource Name (ARN) of the table bucket associated with the
-namespace.}
+\item{tableBucketARN}{[required] The Amazon Resource Name (ARN) of the table bucket associated with the namespace.}
 
 \item{namespace}{[required] The name of the namespace.}
 }

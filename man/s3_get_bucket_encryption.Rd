@@ -7,30 +7,16 @@
 s3_get_bucket_encryption(Bucket, ExpectedBucketOwner = NULL)
 }
 \arguments{
-\item{Bucket}{[required] The name of the bucket from which the server-side encryption
-configuration is retrieved.
+\item{Bucket}{[required] The name of the bucket from which the server-side encryption configuration is retrieved.
 
-\strong{Directory buckets} - When you use this operation with a directory
-bucket, you must use path-style requests in the format
-\verb{https://s3express-control.region-code.amazonaws.com/bucket-name }.
-Virtual-hosted-style requests aren't supported. Directory bucket names
-must be unique in the chosen Zone (Availability Zone or Local Zone).
-Bucket names must also follow the format
-\code{ bucket-base-name--zone-id--x-s3} (for example,
-\code{ DOC-EXAMPLE-BUCKET--usw2-az1--x-s3}). For information about bucket
-naming restrictions, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-bucket-naming-rules.html}{Directory bucket naming rules}
-in the \emph{Amazon S3 User Guide}}
+\strong{Directory buckets} - When you use this operation with a directory bucket, you must use path-style requests in the format \verb{https://s3express-control.region-code.amazonaws.com/bucket-name }. Virtual-hosted-style requests aren't supported. Directory bucket names must be unique in the chosen Zone (Availability Zone or Local Zone). Bucket names must also follow the format \code{ bucket-base-name--zone-id--x-s3} (for example, \code{ DOC-EXAMPLE-BUCKET--usw2-az1--x-s3}). For information about bucket naming restrictions, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-bucket-naming-rules.html}{Directory bucket naming rules} in the \emph{Amazon S3 User Guide}}
 
-\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you
-provide does not match the actual owner of the bucket, the request fails
-with the HTTP status code \verb{403 Forbidden} (access denied).
+\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you provide does not match the actual owner of the bucket, the request fails with the HTTP status code \verb{403 Forbidden} (access denied).
 
-For directory buckets, this header is not supported in this API
-operation. If you specify this header, the request fails with the HTTP
-status code \verb{501 Not Implemented}.}
+For directory buckets, this header is not supported in this API operation. If you specify this header, the request fails with the HTTP status code \verb{501 Not Implemented}.}
 }
 \description{
-Returns the default encryption configuration for an Amazon S3 bucket. By default, all buckets have a default encryption configuration that uses server-side encryption with Amazon S3 managed keys (SSE-S3).
+Returns the default encryption configuration for an Amazon S3 bucket. By default, all buckets have a default encryption configuration that uses server-side encryption with Amazon S3 managed keys (SSE-S3). This operation also returns the \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_ServerSideEncryptionRule.html#AmazonS3-Type-ServerSideEncryptionRule-BucketKeyEnabled}{BucketKeyEnabled} and \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_ServerSideEncryptionRule.html#AmazonS3-Type-ServerSideEncryptionRule-BlockedEncryptionTypes}{BlockedEncryptionTypes} statuses.
 
 See \url{https://www.paws-r-sdk.com/docs/s3_get_bucket_encryption/} for full documentation.
 }

@@ -8,13 +8,11 @@ Amazon Web Services account ID}
 s3control_create_storage_lens_group(AccountId, StorageLensGroup, Tags = NULL)
 }
 \arguments{
-\item{AccountId}{[required] The Amazon Web Services account ID that the Storage Lens group is
-created from and associated with.}
+\item{AccountId}{[required] The Amazon Web Services account ID that the Storage Lens group is created from and associated with.}
 
 \item{StorageLensGroup}{[required] The Storage Lens group configuration.}
 
-\item{Tags}{The Amazon Web Services resource tags that you're adding to your Storage
-Lens group. This parameter is optional.}
+\item{Tags}{The Amazon Web Services resource tags that you're adding to your Storage Lens group. This parameter is optional.}
 }
 \description{
 Creates a new S3 Storage Lens group and associates it with the specified Amazon Web Services account ID. An S3 Storage Lens group is a custom grouping of objects based on prefix, suffix, object tags, object size, object age, or a combination of these filters. For each Storage Lens group that you’ve created, you can also optionally add Amazon Web Services resource tags. For more information about S3 Storage Lens groups, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-lens-groups-overview.html}{Working with S3 Storage Lens groups}.

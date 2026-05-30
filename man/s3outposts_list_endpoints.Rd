@@ -7,8 +7,7 @@
 s3outposts_list_endpoints(NextToken = NULL, MaxResults = NULL)
 }
 \arguments{
-\item{NextToken}{If a previous response from this operation included a \code{NextToken} value,
-provide that value here to retrieve the next page of results.}
+\item{NextToken}{If a previous response from this operation included a \code{NextToken} value, provide that value here to retrieve the next page of results.}
 
 \item{MaxResults}{The maximum number of endpoints that will be returned in the response.}
 }

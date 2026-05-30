@@ -8,9 +8,7 @@ for a specified iSCSI target and initiator pair}
 storagegateway_delete_chap_credentials(TargetARN, InitiatorName)
 }
 \arguments{
-\item{TargetARN}{[required] The Amazon Resource Name (ARN) of the iSCSI volume target. Use the
-\code{\link[=storagegateway_describe_storedi_scsi_volumes]{describe_storedi_scsi_volumes}}
-operation to return to retrieve the TargetARN for specified VolumeARN.}
+\item{TargetARN}{[required] The Amazon Resource Name (ARN) of the iSCSI volume target. Use the \code{\link[=storagegateway_describe_storedi_scsi_volumes]{describe_storedi_scsi_volumes}} operation to return to retrieve the TargetARN for specified VolumeARN.}
 
 \item{InitiatorName}{[required] The iSCSI initiator that connects to the target.}
 }

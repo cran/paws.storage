@@ -5,15 +5,7 @@ NULL
 #' Amazon Elastic File System
 #'
 #' @description
-#' Amazon Elastic File System (Amazon EFS) provides simple, scalable file
-#' storage for use with Amazon EC2 Linux and Mac instances in the Amazon
-#' Web Services Cloud. With Amazon EFS, storage capacity is elastic,
-#' growing and shrinking automatically as you add and remove files, so that
-#' your applications have the storage they need, when they need it. For
-#' more information, see the [Amazon Elastic File System API
-#' Reference](https://docs.aws.amazon.com/efs/latest/ug/api-reference.html)
-#' and the [Amazon Elastic File System User
-#' Guide](https://docs.aws.amazon.com/efs/latest/ug/whatisefs.html).
+#' Amazon Elastic File System (Amazon EFS) provides simple, scalable file storage for use with Amazon EC2 Linux and Mac instances in the Amazon Web Services Cloud. With Amazon EFS, storage capacity is elastic, growing and shrinking automatically as you add and remove files, so that your applications have the storage they need, when they need it. For more information, see the [Amazon Elastic File System API Reference](https://docs.aws.amazon.com/efs/latest/ug/api-reference.html) and the [Amazon Elastic File System User Guide](https://docs.aws.amazon.com/efs/latest/ug/whatisefs.html).
 #'
 #' @param
 #' config
@@ -125,7 +117,7 @@ NULL
 #'  \link[=efs_describe_backup_policy]{describe_backup_policy} \tab Returns the backup policy for the specified EFS file system\cr
 #'  \link[=efs_describe_file_system_policy]{describe_file_system_policy} \tab Returns the FileSystemPolicy for the specified EFS file system\cr
 #'  \link[=efs_describe_file_systems]{describe_file_systems} \tab Returns the description of a specific Amazon EFS file system if either the file system CreationToken or the FileSystemId is provided\cr
-#'  \link[=efs_describe_lifecycle_configuration]{describe_lifecycle_configuration} \tab Returns the current LifecycleConfiguration object for the specified Amazon EFS file system\cr
+#'  \link[=efs_describe_lifecycle_configuration]{describe_lifecycle_configuration} \tab Returns the current LifecycleConfiguration object for the specified EFS file system\cr
 #'  \link[=efs_describe_mount_targets]{describe_mount_targets} \tab Returns the descriptions of all the current mount targets, or a specific mount target, for a file system\cr
 #'  \link[=efs_describe_mount_target_security_groups]{describe_mount_target_security_groups} \tab Returns the security groups currently in effect for a mount target\cr
 #'  \link[=efs_describe_replication_configurations]{describe_replication_configurations} \tab Retrieves the replication configuration for a specific file system\cr
@@ -171,7 +163,7 @@ efs <- function(config = list(), credentials = list(), endpoint = NULL, region =
 
 .efs$metadata <- list(
   service_name = "elasticfilesystem",
-  endpoints = list("^(us|eu|ap|sa|ca|me|af|il|mx)\\-\\w+\\-\\d+$" = list(endpoint = "elasticfilesystem.{region}.amazonaws.com", global = FALSE), "^cn\\-\\w+\\-\\d+$" = list(endpoint = "elasticfilesystem.{region}.amazonaws.com.cn", global = FALSE), "^us\\-gov\\-\\w+\\-\\d+$" = list(endpoint = "elasticfilesystem.{region}.amazonaws.com", global = FALSE), "^us\\-iso\\-\\w+\\-\\d+$" = list(endpoint = "elasticfilesystem.{region}.c2s.ic.gov", global = FALSE), "^us\\-isob\\-\\w+\\-\\d+$" = list(endpoint = "elasticfilesystem.{region}.sc2s.sgov.gov", global = FALSE), "^eu\\-isoe\\-\\w+\\-\\d+$" = list(endpoint = "elasticfilesystem.{region}.cloud.adc-e.uk", global = FALSE), "^us\\-isof\\-\\w+\\-\\d+$" = list(endpoint = "elasticfilesystem.{region}.csp.hci.ic.gov", global = FALSE)),
+  endpoints = list("^(us|eu|ap|sa|ca|me|af|il|mx)\\-\\w+\\-\\d+$" = list(endpoint = "elasticfilesystem.{region}.amazonaws.com", global = FALSE), "^cn\\-\\w+\\-\\d+$" = list(endpoint = "elasticfilesystem.{region}.amazonaws.com.cn", global = FALSE), "^us\\-gov\\-\\w+\\-\\d+$" = list(endpoint = "elasticfilesystem.{region}.amazonaws.com", global = FALSE), "^us\\-iso\\-\\w+\\-\\d+$" = list(endpoint = "elasticfilesystem.{region}.c2s.ic.gov", global = FALSE), "^us\\-isob\\-\\w+\\-\\d+$" = list(endpoint = "elasticfilesystem.{region}.sc2s.sgov.gov", global = FALSE), "^eu\\-isoe\\-\\w+\\-\\d+$" = list(endpoint = "elasticfilesystem.{region}.cloud.adc-e.uk", global = FALSE), "^us\\-isof\\-\\w+\\-\\d+$" = list(endpoint = "elasticfilesystem.{region}.csp.hci.ic.gov", global = FALSE), "^eusc\\-(de)\\-\\w+\\-\\d+$" = list(endpoint = "elasticfilesystem.{region}.amazonaws.eu", global = FALSE)),
   service_id = "EFS",
   api_version = "2015-02-01",
   signing_name = "elasticfilesystem",

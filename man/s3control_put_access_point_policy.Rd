@@ -2,36 +2,23 @@
 % Please edit documentation in R/s3control_operations.R
 \name{s3control_put_access_point_policy}
 \alias{s3control_put_access_point_policy}
-\title{This operation is not supported by directory buckets}
+\title{Associates an access policy with the specified access point}
 \usage{
 s3control_put_access_point_policy(AccountId, Name, Policy)
 }
 \arguments{
-\item{AccountId}{[required] The Amazon Web Services account ID for owner of the bucket associated
-with the specified access point.}
+\item{AccountId}{[required] The Amazon Web Services account ID for owner of the bucket associated with the specified access point.}
 
-\item{Name}{[required] The name of the access point that you want to associate with the
-specified policy.
+\item{Name}{[required] The name of the access point that you want to associate with the specified policy.
 
-For using this parameter with Amazon S3 on Outposts with the REST API,
-you must specify the name and the x-amz-outpost-id as well.
+For using this parameter with Amazon S3 on Outposts with the REST API, you must specify the name and the x-amz-outpost-id as well.
 
-For using this parameter with S3 on Outposts with the Amazon Web
-Services SDK and CLI, you must specify the ARN of the access point
-accessed in the format
-\verb{arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/accesspoint/<my-accesspoint-name>}.
-For example, to access the access point \code{reports-ap} through Outpost
-\code{my-outpost} owned by account \code{123456789012} in Region \code{us-west-2}, use
-the URL encoding of
-\code{arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/accesspoint/reports-ap}.
-The value must be URL encoded.}
+For using this parameter with S3 on Outposts with the Amazon Web Services SDK and CLI, you must specify the ARN of the access point accessed in the format \verb{arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/accesspoint/<my-accesspoint-name>}. For example, to access the access point \code{reports-ap} through Outpost \code{my-outpost} owned by account \code{123456789012} in Region \code{us-west-2}, use the URL encoding of \code{arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/accesspoint/reports-ap}. The value must be URL encoded.}
 
-\item{Policy}{[required] The policy that you want to apply to the specified access point. For
-more information about access point policies, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points.html}{Managing data access with Amazon S3 access points}
-in the \emph{Amazon S3 User Guide}.}
+\item{Policy}{[required] The policy that you want to apply to the specified access point. For more information about access point policies, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points.html}{Managing data access with Amazon S3 access points} or \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points-directory-buckets.html}{Managing access to shared datasets in directory buckets with access points} in the \emph{Amazon S3 User Guide}.}
 }
 \description{
-This operation is not supported by directory buckets.
+Associates an access policy with the specified access point. Each access point can have only one policy, so a request made to this API replaces any existing policy associated with the specified access point.
 
 See \url{https://www.paws-r-sdk.com/docs/s3control_put_access_point_policy/} for full documentation.
 }

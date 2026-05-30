@@ -13,29 +13,19 @@ backup_update_report_plan(
 )
 }
 \arguments{
-\item{ReportPlanName}{[required] The unique name of the report plan. This name is between 1 and 256
-characters, starting with a letter, and consisting of letters (a-z,
-A-Z), numbers (0-9), and underscores (_).}
+\item{ReportPlanName}{[required] The unique name of the report plan. This name is between 1 and 256 characters, starting with a letter, and consisting of letters (a-z, A-Z), numbers (0-9), and underscores (_).}
 
-\item{ReportPlanDescription}{An optional description of the report plan with a maximum 1,024
-characters.}
+\item{ReportPlanDescription}{An optional description of the report plan with a maximum 1,024 characters.}
 
-\item{ReportDeliveryChannel}{The information about where to deliver your reports, specifically your
-Amazon S3 bucket name, S3 key prefix, and the formats of your reports.}
+\item{ReportDeliveryChannel}{The information about where to deliver your reports, specifically your Amazon S3 bucket name, S3 key prefix, and the formats of your reports.}
 
-\item{ReportSetting}{The report template for the report. Reports are built using a report
-template. The report templates are:
+\item{ReportSetting}{The report template for the report. Reports are built using a report template. The report templates are:
 
 \code{RESOURCE_COMPLIANCE_REPORT | CONTROL_COMPLIANCE_REPORT | BACKUP_JOB_REPORT | COPY_JOB_REPORT | RESTORE_JOB_REPORT}
 
-If the report template is \code{RESOURCE_COMPLIANCE_REPORT} or
-\code{CONTROL_COMPLIANCE_REPORT}, this API resource also describes the report
-coverage by Amazon Web Services Regions and frameworks.}
+If the report template is \code{RESOURCE_COMPLIANCE_REPORT} or \code{CONTROL_COMPLIANCE_REPORT}, this API resource also describes the report coverage by Amazon Web Services Regions and frameworks.}
 
-\item{IdempotencyToken}{A customer-chosen string that you can use to distinguish between
-otherwise identical calls to \code{UpdateReportPlanInput}. Retrying a
-successful request with the same idempotency token results in a success
-message with no action taken.}
+\item{IdempotencyToken}{A customer-chosen string that you can use to distinguish between otherwise identical calls to \code{UpdateReportPlanInput}. Retrying a successful request with the same idempotency token results in a success message with no action taken.}
 }
 \description{
 Updates the specified report plan.

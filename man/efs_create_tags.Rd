@@ -7,8 +7,7 @@
 efs_create_tags(FileSystemId, Tags)
 }
 \arguments{
-\item{FileSystemId}{[required] The ID of the file system whose tags you want to modify (String). This
-operation modifies the tags only, not the file system.}
+\item{FileSystemId}{[required] The ID of the file system whose tags you want to modify (String). This operation modifies the tags only, not the file system.}
 
 \item{Tags}{[required] An array of \code{Tag} objects to add. Each \code{Tag} object is a key-value pair.}
 }

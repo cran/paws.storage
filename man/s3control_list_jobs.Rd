@@ -14,20 +14,13 @@ s3control_list_jobs(
 )
 }
 \arguments{
-\item{AccountId}{[required] The Amazon Web Services account ID associated with the S3 Batch
-Operations job.}
+\item{AccountId}{[required] The Amazon Web Services account ID associated with the S3 Batch Operations job.}
 
-\item{JobStatuses}{The \verb{List Jobs} request returns jobs that match the statuses listed in
-this element.}
+\item{JobStatuses}{The \verb{List Jobs} request returns jobs that match the statuses listed in this element.}
 
-\item{NextToken}{A pagination token to request the next page of results. Use the token
-that Amazon S3 returned in the \code{NextToken} element of the
-\code{ListJobsResult} from the previous \verb{List Jobs} request.}
+\item{NextToken}{A pagination token to request the next page of results. Use the token that Amazon S3 returned in the \code{NextToken} element of the \code{ListJobsResult} from the previous \verb{List Jobs} request.}
 
-\item{MaxResults}{The maximum number of jobs that Amazon S3 will include in the
-\verb{List Jobs} response. If there are more jobs than this number, the
-response will include a pagination token in the \code{NextToken} field to
-enable you to retrieve the next page of results.}
+\item{MaxResults}{The maximum number of jobs that Amazon S3 will include in the \verb{List Jobs} response. If there are more jobs than this number, the response will include a pagination token in the \code{NextToken} field to enable you to retrieve the next page of results.}
 }
 \description{
 Lists current S3 Batch Operations jobs as well as the jobs that have ended within the last 90 days for the Amazon Web Services account making the request. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/batch-ops.html}{S3 Batch Operations} in the \emph{Amazon S3 User Guide}.

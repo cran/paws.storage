@@ -11,8 +11,7 @@ backup_disassociate_recovery_point(BackupVaultName, RecoveryPointArn)
 \arguments{
 \item{BackupVaultName}{[required] The unique name of an Backup vault.}
 
-\item{RecoveryPointArn}{[required] An Amazon Resource Name (ARN) that uniquely identifies an Backup
-recovery point.}
+\item{RecoveryPointArn}{[required] An Amazon Resource Name (ARN) that uniquely identifies an Backup recovery point.}
 }
 \description{
 Deletes the specified continuous backup recovery point from Backup and releases control of that continuous backup to the source service, such as Amazon RDS. The source service will continue to create and retain continuous backups using the lifecycle that you specified in your original backup plan.

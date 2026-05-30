@@ -11,16 +11,11 @@ efs_describe_replication_configurations(
 )
 }
 \arguments{
-\item{FileSystemId}{You can retrieve the replication configuration for a specific file
-system by providing its file system ID. For cross-account,cross-region
-replication, an account can only describe the replication configuration
-for a file system in its own Region.}
+\item{FileSystemId}{You can retrieve the replication configuration for a specific file system by providing its file system ID. For cross-account,cross-region replication, an account can only describe the replication configuration for a file system in its own Region.}
 
-\item{NextToken}{\code{NextToken} is present if the response is paginated. You can use
-\code{NextToken} in a subsequent request to fetch the next page of output.}
+\item{NextToken}{\code{NextToken} is present if the response is paginated. You can use \code{NextToken} in a subsequent request to fetch the next page of output.}
 
-\item{MaxResults}{(Optional) To limit the number of objects returned in a response, you
-can specify the \code{MaxItems} parameter. The default value is 100.}
+\item{MaxResults}{(Optional) To limit the number of objects returned in a response, you can specify the \code{MaxItems} parameter. The default value is 100.}
 }
 \description{
 Retrieves the replication configuration for a specific file system. If a file system is not specified, all of the replication configurations for the Amazon Web Services account in an Amazon Web Services Region are retrieved.

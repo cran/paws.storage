@@ -14,21 +14,15 @@ fsx_describe_snapshots(
 )
 }
 \arguments{
-\item{SnapshotIds}{The IDs of the snapshots that you want to retrieve. This parameter value
-overrides any filters. If any IDs aren't found, a \code{SnapshotNotFound}
-error occurs.}
+\item{SnapshotIds}{The IDs of the snapshots that you want to retrieve. This parameter value overrides any filters. If any IDs aren't found, a \code{SnapshotNotFound} error occurs.}
 
-\item{Filters}{The filters structure. The supported names are \code{file-system-id} or
-\code{volume-id}.}
+\item{Filters}{The filters structure. The supported names are \code{file-system-id} or \code{volume-id}.}
 
-\item{MaxResults}{}
+\item{MaxResults}{The maximum number of resources to return in the response. This value must be an integer greater than zero.}
 
-\item{NextToken}{}
+\item{NextToken}{(Optional) Opaque pagination token returned from a previous operation (String). If present, this token indicates from what point you can continue processing the request, where the previous \code{NextToken} value left off.}
 
-\item{IncludeShared}{Set to \code{false} (default) if you want to only see the snapshots owned by
-your Amazon Web Services account. Set to \code{true} if you want to see the
-snapshots in your account and the ones shared with you from another
-account.}
+\item{IncludeShared}{Set to \code{false} (default) if you want to only see the snapshots owned by your Amazon Web Services account. Set to \code{true} if you want to see the snapshots in your account and the ones shared with you from another account.}
 }
 \description{
 Returns the description of specific Amazon FSx for OpenZFS snapshots, if a \code{SnapshotIds} value is provided. Otherwise, this operation returns all snapshots owned by your Amazon Web Services account in the Amazon Web Services Region of the endpoint that you're calling.

@@ -2,7 +2,8 @@
 % Please edit documentation in R/omics_operations.R
 \name{omics_start_reference_import_job}
 \alias{omics_start_reference_import_job}
-\title{Starts a reference import job}
+\title{Imports a reference genome from Amazon S3 into a specified reference
+store}
 \usage{
 omics_start_reference_import_job(
   referenceStoreId,
@@ -16,13 +17,12 @@ omics_start_reference_import_job(
 
 \item{roleArn}{[required] A service role for the job.}
 
-\item{clientToken}{To ensure that jobs don't run multiple times, specify a unique token for
-each job.}
+\item{clientToken}{To ensure that jobs don't run multiple times, specify a unique token for each job.}
 
 \item{sources}{[required] The job's source files.}
 }
 \description{
-Starts a reference import job.
+Imports a reference genome from Amazon S3 into a specified reference store. You can have multiple reference genomes in a reference store. You can only import reference genomes one at a time into each reference store. Monitor the status of your reference import job by using the \code{\link[=omics_get_reference_import_job]{get_reference_import_job}} API operation.
 
 See \url{https://www.paws-r-sdk.com/docs/omics_start_reference_import_job/} for full documentation.
 }

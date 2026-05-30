@@ -8,9 +8,7 @@ on the target backup vault}
 backup_put_backup_vault_access_policy(BackupVaultName, Policy = NULL)
 }
 \arguments{
-\item{BackupVaultName}{[required] The name of a logical container where backups are stored. Backup vaults
-are identified by names that are unique to the account used to create
-them and the Amazon Web Services Region where they are created.}
+\item{BackupVaultName}{[required] The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.}
 
 \item{Policy}{The backup vault access policy document in JSON format.}
 }

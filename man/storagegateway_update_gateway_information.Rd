@@ -14,21 +14,17 @@ storagegateway_update_gateway_information(
 )
 }
 \arguments{
-\item{GatewayARN}{[required]}
+\item{GatewayARN}{[required] The Amazon Resource Name (ARN) of the gateway. Use the \code{\link[=storagegateway_list_gateways]{list_gateways}} operation to return a list of gateways for your account and Amazon Web Services Region.}
 
-\item{GatewayName}{}
+\item{GatewayName}{The name you configured for your gateway.}
 
 \item{GatewayTimezone}{A value that indicates the time zone of the gateway.}
 
-\item{CloudWatchLogGroupARN}{The Amazon Resource Name (ARN) of the Amazon CloudWatch log group that
-you want to use to monitor and log events in the gateway.
+\item{CloudWatchLogGroupARN}{The Amazon Resource Name (ARN) of the Amazon CloudWatch log group that you want to use to monitor and log events in the gateway.
 
 For more information, see \href{https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html}{What is Amazon CloudWatch Logs?}}
 
-\item{GatewayCapacity}{Specifies the size of the gateway's metadata cache. This setting impacts
-gateway performance and hardware recommendations. For more information,
-see \href{https://docs.aws.amazon.com/filegateway/latest/files3/Performance.html#performance-multiple-file-shares}{Performance guidance for gateways with multiple file shares}
-in the \emph{Amazon S3 File Gateway User Guide}.}
+\item{GatewayCapacity}{Specifies the size of the gateway's metadata cache. This setting impacts gateway performance and hardware recommendations. For more information, see \href{https://docs.aws.amazon.com/filegateway/latest/files3/Performance.html}{Performance guidance for gateways with multiple file shares} in the \emph{Amazon S3 File Gateway User Guide}.}
 }
 \description{
 Updates a gateway's metadata, which includes the gateway's name, time zone, and metadata cache size. To specify which gateway to update, use the Amazon Resource Name (ARN) of the gateway in your request.

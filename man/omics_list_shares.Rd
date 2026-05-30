@@ -14,12 +14,9 @@ omics_list_shares(
 \arguments{
 \item{resourceOwner}{[required] The account that owns the resource shares.}
 
-\item{filter}{Attributes that you use to filter for a specific subset of resource
-shares.}
+\item{filter}{Attributes that you use to filter for a specific subset of resource shares.}
 
-\item{nextToken}{Next token returned in the response of a previous
-ListReadSetUploadPartsRequest call. Used to get the next page of
-results.}
+\item{nextToken}{Next token returned in the response of a previous ListReadSetUploadPartsRequest call. Used to get the next page of results.}
 
 \item{maxResults}{The maximum number of shares to return in one page of results.}
 }

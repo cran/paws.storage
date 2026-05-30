@@ -8,38 +8,27 @@ s3control_list_access_points(
   AccountId,
   Bucket = NULL,
   NextToken = NULL,
-  MaxResults = NULL
+  MaxResults = NULL,
+  DataSourceId = NULL,
+  DataSourceType = NULL
 )
 }
 \arguments{
-\item{AccountId}{[required] The Amazon Web Services account ID for the account that owns the
-specified access points.}
+\item{AccountId}{[required] The Amazon Web Services account ID for the account that owns the specified access points.}
 
 \item{Bucket}{The name of the bucket whose associated access points you want to list.
 
-For using this parameter with Amazon S3 on Outposts with the REST API,
-you must specify the name and the x-amz-outpost-id as well.
+For using this parameter with Amazon S3 on Outposts with the REST API, you must specify the name and the x-amz-outpost-id as well.
 
-For using this parameter with S3 on Outposts with the Amazon Web
-Services SDK and CLI, you must specify the ARN of the bucket accessed in
-the format
-\verb{arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>}.
-For example, to access the bucket \code{reports} through Outpost \code{my-outpost}
-owned by account \code{123456789012} in Region \code{us-west-2}, use the URL
-encoding of
-\code{arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/bucket/reports}.
-The value must be URL encoded.}
+For using this parameter with S3 on Outposts with the Amazon Web Services SDK and CLI, you must specify the ARN of the bucket accessed in the format \verb{arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>}. For example, to access the bucket \code{reports} through Outpost \code{my-outpost} owned by account \code{123456789012} in Region \code{us-west-2}, use the URL encoding of \code{arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/bucket/reports}. The value must be URL encoded.}
 
-\item{NextToken}{A continuation token. If a previous call to
-\code{\link[=s3control_list_access_points]{list_access_points}} returned a
-continuation token in the \code{NextToken} field, then providing that value
-here causes Amazon S3 to retrieve the next page of results.}
+\item{NextToken}{A continuation token. If a previous call to \code{\link[=s3control_list_access_points]{list_access_points}} returned a continuation token in the \code{NextToken} field, then providing that value here causes Amazon S3 to retrieve the next page of results.}
 
-\item{MaxResults}{The maximum number of access points that you want to include in the
-list. If the specified bucket has more than this number of access
-points, then the response will include a continuation token in the
-\code{NextToken} field that you can use to retrieve the next page of access
-points.}
+\item{MaxResults}{The maximum number of access points that you want to include in the list. If the specified bucket has more than this number of access points, then the response will include a continuation token in the \code{NextToken} field that you can use to retrieve the next page of access points.}
+
+\item{DataSourceId}{The unique identifier for the data source of the access point.}
+
+\item{DataSourceType}{The type of the data source that the access point is attached to. Returns only access points attached to S3 buckets by default. To return all access points specify \code{DataSourceType} as \code{ALL}.}
 }
 \description{
 This operation is not supported by directory buckets.

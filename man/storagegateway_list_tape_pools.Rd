@@ -7,15 +7,11 @@
 storagegateway_list_tape_pools(PoolARNs = NULL, Marker = NULL, Limit = NULL)
 }
 \arguments{
-\item{PoolARNs}{The Amazon Resource Name (ARN) of each of the custom tape pools you want
-to list. If you don't specify a custom tape pool ARN, the response lists
-all custom tape pools.}
+\item{PoolARNs}{The Amazon Resource Name (ARN) of each of the custom tape pools you want to list. If you don't specify a custom tape pool ARN, the response lists all custom tape pools.}
 
-\item{Marker}{A string that indicates the position at which to begin the returned list
-of tape pools.}
+\item{Marker}{A string that indicates the position at which to begin the returned list of tape pools.}
 
-\item{Limit}{An optional number limit for the tape pools in the list returned by this
-call.}
+\item{Limit}{An optional number limit for the tape pools in the list returned by this call.}
 }
 \description{
 Lists custom tape pools. You specify custom tape pools to list by specifying one or more custom tape pool Amazon Resource Names (ARNs). If you don't specify a custom tape pool ARN, the operation lists all custom tape pools.

@@ -13,17 +13,11 @@ NULL
 #'
 #' @param SnapshotId &#91;required&#93; The ID of the snapshot.
 #' @param ChangedBlocksCount &#91;required&#93; The number of blocks that were written to the snapshot.
-#' @param Checksum An aggregated Base-64 SHA256 checksum based on the checksums of each
-#' written block.
+#' @param Checksum An aggregated Base-64 SHA256 checksum based on the checksums of each written block.
 #' 
-#' To generate the aggregated checksum using the linear aggregation method,
-#' arrange the checksums for each written block in ascending order of their
-#' block index, concatenate them to form a single string, and then generate
-#' the checksum on the entire string using the SHA256 algorithm.
-#' @param ChecksumAlgorithm The algorithm used to generate the checksum. Currently, the only
-#' supported algorithm is `SHA256`.
-#' @param ChecksumAggregationMethod The aggregation method used to generate the checksum. Currently, the
-#' only supported aggregation method is `LINEAR`.
+#' To generate the aggregated checksum using the linear aggregation method, arrange the checksums for each written block in ascending order of their block index, concatenate them to form a single string, and then generate the checksum on the entire string using the SHA256 algorithm.
+#' @param ChecksumAlgorithm The algorithm used to generate the checksum. Currently, the only supported algorithm is `SHA256`.
+#' @param ChecksumAggregationMethod The aggregation method used to generate the checksum. Currently, the only supported aggregation method is `LINEAR`.
 #'
 #' @keywords internal
 #'
@@ -56,20 +50,9 @@ ebs_complete_snapshot <- function(SnapshotId, ChangedBlocksCount, Checksum = NUL
 #'
 #' @param SnapshotId &#91;required&#93; The ID of the snapshot containing the block from which to get data.
 #' 
-#' If the specified snapshot is encrypted, you must have permission to use
-#' the KMS key that was used to encrypt the snapshot. For more information,
-#' see [Using
-#' encryption](https://docs.aws.amazon.com/ebs/latest/userguide/ebsapis-using-encryption.html)
-#' in the *Amazon Elastic Compute Cloud User Guide*.
-#' @param BlockIndex &#91;required&#93; The block index of the block in which to read the data. A block index is
-#' a logical index in units of `512` KiB blocks. To identify the block
-#' index, divide the logical offset of the data in the logical volume by
-#' the block size (logical offset of data/`524288`). The logical offset of
-#' the data must be `512` KiB aligned.
-#' @param BlockToken &#91;required&#93; The block token of the block from which to get data. You can obtain the
-#' `BlockToken` by running the
-#' [`list_changed_blocks`][ebs_list_changed_blocks] or
-#' [`list_snapshot_blocks`][ebs_list_snapshot_blocks] operations.
+#' If the specified snapshot is encrypted, you must have permission to use the KMS key that was used to encrypt the snapshot. For more information, see [Using encryption](https://docs.aws.amazon.com/ebs/latest/userguide/ebsapis-using-encryption.html) in the *Amazon Elastic Compute Cloud User Guide*.
+#' @param BlockIndex &#91;required&#93; The block index of the block in which to read the data. A block index is a logical index in units of `512` KiB blocks. To identify the block index, divide the logical offset of the data in the logical volume by the block size (logical offset of data/`524288`). The logical offset of the data must be `512` KiB aligned.
+#' @param BlockToken &#91;required&#93; The block token of the block from which to get data. You can obtain the `BlockToken` by running the [`list_changed_blocks`][ebs_list_changed_blocks] or [`list_snapshot_blocks`][ebs_list_snapshot_blocks] operations.
 #'
 #' @keywords internal
 #'
@@ -103,28 +86,21 @@ ebs_get_snapshot_block <- function(SnapshotId, BlockIndex, BlockToken) {
 #'
 #' @param FirstSnapshotId The ID of the first snapshot to use for the comparison.
 #' 
-#' The `FirstSnapshotID` parameter must be specified with a
-#' `SecondSnapshotId` parameter; otherwise, an error occurs.
+#' The `FirstSnapshotID` parameter must be specified with a `SecondSnapshotId` parameter; otherwise, an error occurs.
 #' @param SecondSnapshotId &#91;required&#93; The ID of the second snapshot to use for the comparison.
 #' 
-#' The `SecondSnapshotId` parameter must be specified with a
-#' `FirstSnapshotID` parameter; otherwise, an error occurs.
+#' The `SecondSnapshotId` parameter must be specified with a `FirstSnapshotID` parameter; otherwise, an error occurs.
 #' @param NextToken The token to request the next page of results.
 #' 
 #' If you specify **NextToken**, then **StartingBlockIndex** is ignored.
 #' @param MaxResults The maximum number of blocks to be returned by the request.
 #' 
-#' Even if additional blocks can be retrieved from the snapshot, the
-#' request can return less blocks than **MaxResults** or an empty array of
-#' blocks.
+#' Even if additional blocks can be retrieved from the snapshot, the request can return less blocks than **MaxResults** or an empty array of blocks.
 #' 
-#' To retrieve the next set of blocks from the snapshot, make another
-#' request with the returned **NextToken** value. The value of
-#' **NextToken** is `null` when there are no more blocks to return.
+#' To retrieve the next set of blocks from the snapshot, make another request with the returned **NextToken** value. The value of **NextToken** is `null` when there are no more blocks to return.
 #' @param StartingBlockIndex The block index from which the comparison should start.
 #' 
-#' The list in the response will start from this block index or the next
-#' valid block index in the snapshots.
+#' The list in the response will start from this block index or the next valid block index in the snapshots.
 #' 
 #' If you specify **NextToken**, then **StartingBlockIndex** is ignored.
 #'
@@ -164,16 +140,10 @@ ebs_list_changed_blocks <- function(FirstSnapshotId = NULL, SecondSnapshotId, Ne
 #' If you specify **NextToken**, then **StartingBlockIndex** is ignored.
 #' @param MaxResults The maximum number of blocks to be returned by the request.
 #' 
-#' Even if additional blocks can be retrieved from the snapshot, the
-#' request can return less blocks than **MaxResults** or an empty array of
-#' blocks.
+#' Even if additional blocks can be retrieved from the snapshot, the request can return less blocks than **MaxResults** or an empty array of blocks.
 #' 
-#' To retrieve the next set of blocks from the snapshot, make another
-#' request with the returned **NextToken** value. The value of
-#' **NextToken** is `null` when there are no more blocks to return.
-#' @param StartingBlockIndex The block index from which the list should start. The list in the
-#' response will start from this block index or the next valid block index
-#' in the snapshot.
+#' To retrieve the next set of blocks from the snapshot, make another request with the returned **NextToken** value. The value of **NextToken** is `null` when there are no more blocks to return.
+#' @param StartingBlockIndex The block index from which the list should start. The list in the response will start from this block index or the next valid block index in the snapshot.
 #' 
 #' If you specify **NextToken**, then **StartingBlockIndex** is ignored.
 #'
@@ -208,39 +178,17 @@ ebs_list_snapshot_blocks <- function(SnapshotId, NextToken = NULL, MaxResults = 
 #'
 #' @param SnapshotId &#91;required&#93; The ID of the snapshot.
 #' 
-#' If the specified snapshot is encrypted, you must have permission to use
-#' the KMS key that was used to encrypt the snapshot. For more information,
-#' see [Using
-#' encryption](https://docs.aws.amazon.com/ebs/latest/userguide/ebsapis-using-encryption.html)
-#' in the *Amazon Elastic Compute Cloud User Guide*..
-#' @param BlockIndex &#91;required&#93; The block index of the block in which to write the data. A block index
-#' is a logical index in units of `512` KiB blocks. To identify the block
-#' index, divide the logical offset of the data in the logical volume by
-#' the block size (logical offset of data/`524288`). The logical offset of
-#' the data must be `512` KiB aligned.
+#' If the specified snapshot is encrypted, you must have permission to use the KMS key that was used to encrypt the snapshot. For more information, see [Using encryption](https://docs.aws.amazon.com/ebs/latest/userguide/ebsapis-using-encryption.html) in the *Amazon Elastic Compute Cloud User Guide*..
+#' @param BlockIndex &#91;required&#93; The block index of the block in which to write the data. A block index is a logical index in units of `512` KiB blocks. To identify the block index, divide the logical offset of the data in the logical volume by the block size (logical offset of data/`524288`). The logical offset of the data must be `512` KiB aligned.
 #' @param BlockData &#91;required&#93; The data to write to the block.
 #' 
-#' The block data is not signed as part of the Signature Version 4 signing
-#' process. As a result, you must generate and provide a Base64-encoded
-#' SHA256 checksum for the block data using the **x-amz-Checksum** header.
-#' Also, you must specify the checksum algorithm using the
-#' **x-amz-Checksum-Algorithm** header. The checksum that you provide is
-#' part of the Signature Version 4 signing process. It is validated against
-#' a checksum generated by Amazon EBS to ensure the validity and
-#' authenticity of the data. If the checksums do not correspond, the
-#' request fails. For more information, see [Using checksums with the EBS
-#' direct
-#' APIs](https://docs.aws.amazon.com/ebs/latest/userguide/ebs-accessing-snapshot.html#ebsapis-using-checksums)
-#' in the *Amazon Elastic Compute Cloud User Guide*.
-#' @param DataLength &#91;required&#93; The size of the data to write to the block, in bytes. Currently, the
-#' only supported size is `524288` bytes.
+#' The block data is not signed as part of the Signature Version 4 signing process. As a result, you must generate and provide a Base64-encoded SHA256 checksum for the block data using the **x-amz-Checksum** header. Also, you must specify the checksum algorithm using the **x-amz-Checksum-Algorithm** header. The checksum that you provide is part of the Signature Version 4 signing process. It is validated against a checksum generated by Amazon EBS to ensure the validity and authenticity of the data. If the checksums do not correspond, the request fails. For more information, see [Using checksums with the EBS direct APIs](https://docs.aws.amazon.com/ebs/latest/userguide/ebs-accessing-snapshot.html#ebsapis-using-checksums) in the *Amazon Elastic Compute Cloud User Guide*.
+#' @param DataLength &#91;required&#93; The size of the data to write to the block, in bytes. Currently, the only supported size is `524288` bytes.
 #' 
 #' Valid values: `524288`
 #' @param Progress The progress of the write process, as a percentage.
-#' @param Checksum &#91;required&#93; A Base64-encoded SHA256 checksum of the data. Only SHA256 checksums are
-#' supported.
-#' @param ChecksumAlgorithm &#91;required&#93; The algorithm used to generate the checksum. Currently, the only
-#' supported algorithm is `SHA256`.
+#' @param Checksum &#91;required&#93; A Base64-encoded SHA256 checksum of the data. Only SHA256 checksums are supported.
+#' @param ChecksumAlgorithm &#91;required&#93; The algorithm used to generate the checksum. Currently, the only supported algorithm is `SHA256`.
 #'
 #' @keywords internal
 #'
@@ -271,81 +219,34 @@ ebs_put_snapshot_block <- function(SnapshotId, BlockIndex, BlockData, DataLength
 #'
 #' See [https://www.paws-r-sdk.com/docs/ebs_start_snapshot/](https://www.paws-r-sdk.com/docs/ebs_start_snapshot/) for full documentation.
 #'
-#' @param VolumeSize &#91;required&#93; The size of the volume, in GiB. The maximum size is `65536` GiB (64
-#' TiB).
-#' @param ParentSnapshotId The ID of the parent snapshot. If there is no parent snapshot, or if you
-#' are creating the first snapshot for an on-premises volume, omit this
-#' parameter.
+#' @param VolumeSize &#91;required&#93; The size of the volume, in GiB. The maximum size is `65536` GiB (64 TiB).
+#' @param ParentSnapshotId The ID of the parent snapshot. If there is no parent snapshot, or if you are creating the first snapshot for an on-premises volume, omit this parameter.
 #' 
-#' You can't specify **ParentSnapshotId** and **Encrypted** in the same
-#' request. If you specify both parameters, the request fails with
-#' `ValidationException`.
+#' You can't specify **ParentSnapshotId** and **Encrypted** in the same request. If you specify both parameters, the request fails with `ValidationException`.
 #' 
-#' The encryption status of the snapshot depends on the values that you
-#' specify for **Encrypted**, **KmsKeyArn**, and **ParentSnapshotId**, and
-#' whether your Amazon Web Services account is enabled for [encryption by
-#' default](https://docs.aws.amazon.com/ebs/latest/userguide/ebs-encryption.html#encryption-by-default).
-#' For more information, see [Using
-#' encryption](https://docs.aws.amazon.com/ebs/latest/userguide/ebsapis-using-encryption.html)
-#' in the *Amazon Elastic Compute Cloud User Guide*.
+#' The encryption status of the snapshot depends on the values that you specify for **Encrypted**, **KmsKeyArn**, and **ParentSnapshotId**, and whether your Amazon Web Services account is enabled for [encryption by default](https://docs.aws.amazon.com/ebs/latest/userguide/ebs-encryption.html?refid=faq_card#encryption-by-default). For more information, see [Using encryption](https://docs.aws.amazon.com/ebs/latest/userguide/ebsapis-using-encryption.html) in the *Amazon Elastic Compute Cloud User Guide*.
 #' 
-#' If you specify an encrypted parent snapshot, you must have permission to
-#' use the KMS key that was used to encrypt the parent snapshot. For more
-#' information, see [Permissions to use Key Management Service
-#' keys](https://docs.aws.amazon.com/ebs/latest/userguide/ebsapi-permissions.html#ebsapi-kms-permissions)
-#' in the *Amazon Elastic Compute Cloud User Guide*.
+#' If you specify an encrypted parent snapshot, you must have permission to use the KMS key that was used to encrypt the parent snapshot. For more information, see [Permissions to use Key Management Service keys](https://docs.aws.amazon.com/ebs/latest/userguide/ebsapi-permissions.html#ebsapi-kms-permissions) in the *Amazon Elastic Compute Cloud User Guide*.
 #' @param Tags The tags to apply to the snapshot.
 #' @param Description A description for the snapshot.
-#' @param ClientToken A unique, case-sensitive identifier that you provide to ensure the
-#' idempotency of the request. Idempotency ensures that an API request
-#' completes only once. With an idempotent request, if the original request
-#' completes successfully. The subsequent retries with the same client
-#' token return the result from the original successful request and they
-#' have no additional effect.
+#' @param ClientToken A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. Idempotency ensures that an API request completes only once. With an idempotent request, if the original request completes successfully. The subsequent retries with the same client token return the result from the original successful request and they have no additional effect.
 #' 
-#' If you do not specify a client token, one is automatically generated by
-#' the Amazon Web Services SDK.
+#' If you do not specify a client token, one is automatically generated by the Amazon Web Services SDK.
 #' 
-#' For more information, see [Idempotency for StartSnapshot
-#' API](https://docs.aws.amazon.com/ebs/latest/userguide/ebs-direct-api-idempotency.html)
-#' in the *Amazon Elastic Compute Cloud User Guide*.
+#' For more information, see [Idempotency for StartSnapshot API](https://docs.aws.amazon.com/ebs/latest/userguide/ebs-direct-api-idempotency.html) in the *Amazon Elastic Compute Cloud User Guide*.
 #' @param Encrypted Indicates whether to encrypt the snapshot.
 #' 
-#' You can't specify **Encrypted** and **ParentSnapshotId** in the same
-#' request. If you specify both parameters, the request fails with
-#' `ValidationException`.
+#' You can't specify **Encrypted** and **ParentSnapshotId** in the same request. If you specify both parameters, the request fails with `ValidationException`.
 #' 
-#' The encryption status of the snapshot depends on the values that you
-#' specify for **Encrypted**, **KmsKeyArn**, and **ParentSnapshotId**, and
-#' whether your Amazon Web Services account is enabled for [encryption by
-#' default](https://docs.aws.amazon.com/ebs/latest/userguide/ebs-encryption.html#encryption-by-default).
-#' For more information, see [Using
-#' encryption](https://docs.aws.amazon.com/ebs/latest/userguide/ebsapis-using-encryption.html)
-#' in the *Amazon Elastic Compute Cloud User Guide*.
+#' The encryption status of the snapshot depends on the values that you specify for **Encrypted**, **KmsKeyArn**, and **ParentSnapshotId**, and whether your Amazon Web Services account is enabled for [encryption by default](https://docs.aws.amazon.com/ebs/latest/userguide/ebs-encryption.html?refid=faq_card#encryption-by-default). For more information, see [Using encryption](https://docs.aws.amazon.com/ebs/latest/userguide/ebsapis-using-encryption.html) in the *Amazon Elastic Compute Cloud User Guide*.
 #' 
-#' To create an encrypted snapshot, you must have permission to use the KMS
-#' key. For more information, see [Permissions to use Key Management
-#' Service
-#' keys](https://docs.aws.amazon.com/ebs/latest/userguide/ebsapi-permissions.html#ebsapi-kms-permissions)
-#' in the *Amazon Elastic Compute Cloud User Guide*.
-#' @param KmsKeyArn The Amazon Resource Name (ARN) of the Key Management Service (KMS) key
-#' to be used to encrypt the snapshot.
+#' To create an encrypted snapshot, you must have permission to use the KMS key. For more information, see [Permissions to use Key Management Service keys](https://docs.aws.amazon.com/ebs/latest/userguide/ebsapi-permissions.html#ebsapi-kms-permissions) in the *Amazon Elastic Compute Cloud User Guide*.
+#' @param KmsKeyArn The Amazon Resource Name (ARN) of the Key Management Service (KMS) key to be used to encrypt the snapshot.
 #' 
-#' The encryption status of the snapshot depends on the values that you
-#' specify for **Encrypted**, **KmsKeyArn**, and **ParentSnapshotId**, and
-#' whether your Amazon Web Services account is enabled for [encryption by
-#' default](https://docs.aws.amazon.com/ebs/latest/userguide/ebs-encryption.html#encryption-by-default).
-#' For more information, see [Using
-#' encryption](https://docs.aws.amazon.com/ebs/latest/userguide/ebsapis-using-encryption.html)
-#' in the *Amazon Elastic Compute Cloud User Guide*.
+#' The encryption status of the snapshot depends on the values that you specify for **Encrypted**, **KmsKeyArn**, and **ParentSnapshotId**, and whether your Amazon Web Services account is enabled for [encryption by default](https://docs.aws.amazon.com/ebs/latest/userguide/ebs-encryption.html?refid=faq_card#encryption-by-default). For more information, see [Using encryption](https://docs.aws.amazon.com/ebs/latest/userguide/ebsapis-using-encryption.html) in the *Amazon Elastic Compute Cloud User Guide*.
 #' 
-#' To create an encrypted snapshot, you must have permission to use the KMS
-#' key. For more information, see [Permissions to use Key Management
-#' Service
-#' keys](https://docs.aws.amazon.com/ebs/latest/userguide/ebsapi-permissions.html#ebsapi-kms-permissions)
-#' in the *Amazon Elastic Compute Cloud User Guide*.
-#' @param Timeout The amount of time (in minutes) after which the snapshot is
-#' automatically cancelled if:
+#' To create an encrypted snapshot, you must have permission to use the KMS key. For more information, see [Permissions to use Key Management Service keys](https://docs.aws.amazon.com/ebs/latest/userguide/ebsapi-permissions.html#ebsapi-kms-permissions) in the *Amazon Elastic Compute Cloud User Guide*.
+#' @param Timeout The amount of time (in minutes) after which the snapshot is automatically cancelled if:
 #' 
 #' -   No blocks are written to the snapshot.
 #' 

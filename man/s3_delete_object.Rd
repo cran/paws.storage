@@ -20,94 +20,49 @@ s3_delete_object(
 \arguments{
 \item{Bucket}{[required] The bucket name of the bucket containing the object.
 
-\strong{Directory buckets} - When you use this operation with a directory
-bucket, you must use virtual-hosted-style requests in the format
-\code{ Bucket-name.s3express-zone-id.region-code.amazonaws.com}. Path-style
-requests are not supported. Directory bucket names must be unique in the
-chosen Zone (Availability Zone or Local Zone). Bucket names must follow
-the format \code{ bucket-base-name--zone-id--x-s3} (for example,
-\code{ amzn-s3-demo-bucket--usw2-az1--x-s3}). For information about bucket
-naming restrictions, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-bucket-naming-rules.html}{Directory bucket naming rules}
-in the \emph{Amazon S3 User Guide}.
+\strong{Directory buckets} - When you use this operation with a directory bucket, you must use virtual-hosted-style requests in the format \code{ Bucket-name.s3express-zone-id.region-code.amazonaws.com}. Path-style requests are not supported. Directory bucket names must be unique in the chosen Zone (Availability Zone or Local Zone). Bucket names must follow the format \code{ bucket-base-name--zone-id--x-s3} (for example, \code{ amzn-s3-demo-bucket--usw2-az1--x-s3}). For information about bucket naming restrictions, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-bucket-naming-rules.html}{Directory bucket naming rules} in the \emph{Amazon S3 User Guide}.
 
-\strong{Access points} - When you use this action with an access point, you
-must provide the alias of the access point in place of the bucket name
-or specify the access point ARN. When using the access point ARN, you
-must direct requests to the access point hostname. The access point
-hostname takes the form
-\emph{AccessPointName}-\emph{AccountId}.s3-accesspoint.\emph{Region}.amazonaws.com.
-When using this action with an access point through the Amazon Web
-Services SDKs, you provide the access point ARN in place of the bucket
-name. For more information about access point ARNs, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-access-points.html}{Using access points}
-in the \emph{Amazon S3 User Guide}.
+\strong{Access points} - When you use this action with an access point for general purpose buckets, you must provide the alias of the access point in place of the bucket name or specify the access point ARN. When you use this action with an access point for directory buckets, you must provide the access point name in place of the bucket name. When using the access point ARN, you must direct requests to the access point hostname. The access point hostname takes the form \emph{AccessPointName}-\emph{AccountId}.s3-accesspoint.\emph{Region}.amazonaws.com. When using this action with an access point through the Amazon Web Services SDKs, you provide the access point ARN in place of the bucket name. For more information about access point ARNs, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-access-points.html}{Using access points} in the \emph{Amazon S3 User Guide}.
 
-Access points and Object Lambda access points are not supported by
-directory buckets.
+Object Lambda access points are not supported by directory buckets.
 
-\strong{S3 on Outposts} - When you use this action with S3 on Outposts, you
-must direct requests to the S3 on Outposts hostname. The S3 on Outposts
-hostname takes the form
-\code{ AccessPointName-AccountId.outpostID.s3-outposts.Region.amazonaws.com}.
-When you use this action with S3 on Outposts, the destination bucket
-must be the Outposts access point ARN or the access point alias. For
-more information about S3 on Outposts, see \href{https://docs.aws.amazon.com/AmazonS3/latest/s3-outposts/S3onOutposts.html}{What is S3 on Outposts?}
-in the \emph{Amazon S3 User Guide}.}
+\strong{S3 on Outposts} - When you use this action with S3 on Outposts, you must direct requests to the S3 on Outposts hostname. The S3 on Outposts hostname takes the form \code{ AccessPointName-AccountId.outpostID.s3-outposts.Region.amazonaws.com}. When you use this action with S3 on Outposts, the destination bucket must be the Outposts access point ARN or the access point alias. For more information about S3 on Outposts, see \href{https://docs.aws.amazon.com/AmazonS3/latest/s3-outposts/S3onOutposts.html}{What is S3 on Outposts?} in the \emph{Amazon S3 User Guide}.}
 
 \item{Key}{[required] Key name of the object to delete.}
 
-\item{MFA}{The concatenation of the authentication device's serial number, a space,
-and the value that is displayed on your authentication device. Required
-to permanently delete a versioned object if versioning is configured
-with MFA delete enabled.
+\item{MFA}{The concatenation of the authentication device's serial number, a space, and the value that is displayed on your authentication device. Required to permanently delete a versioned object if versioning is configured with MFA delete enabled.
 
 This functionality is not supported for directory buckets.}
 
 \item{VersionId}{Version ID used to reference a specific version of the object.
 
-For directory buckets in this API operation, only the \code{null} value of
-the version ID is supported.}
+For directory buckets in this API operation, only the \code{null} value of the version ID is supported.}
 
-\item{RequestPayer}{}
-
-\item{BypassGovernanceRetention}{Indicates whether S3 Object Lock should bypass Governance-mode
-restrictions to process this operation. To use this header, you must
-have the \code{s3:BypassGovernanceRetention} permission.
+\item{RequestPayer}{Confirms that the requester knows that they will be charged for the request. Bucket owners need not specify this parameter in their requests. If either the source or destination S3 bucket has Requester Pays enabled, the requester will pay for the corresponding charges. For information about downloading objects from Requester Pays buckets, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/ObjectsinRequesterPaysBuckets.html}{Downloading Objects in Requester Pays Buckets} in the \emph{Amazon S3 User Guide}.
 
 This functionality is not supported for directory buckets.}
 
-\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you
-provide does not match the actual owner of the bucket, the request fails
-with the HTTP status code \verb{403 Forbidden} (access denied).}
+\item{BypassGovernanceRetention}{Indicates whether S3 Object Lock should bypass Governance-mode restrictions to process this operation. To use this header, you must have the \code{s3:BypassGovernanceRetention} permission.
 
-\item{IfMatch}{The \code{If-Match} header field makes the request method conditional on
-ETags. If the ETag value does not match, the operation returns a
-\verb{412 Precondition Failed} error. If the ETag matches or if the object
-doesn't exist, the operation will return a
-\verb{204 Success (No Content) response}.
+This functionality is not supported for directory buckets.}
 
-For more information about conditional requests, see \href{https://datatracker.ietf.org/doc/html/rfc7232}{RFC 7232}.
+\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you provide does not match the actual owner of the bucket, the request fails with the HTTP status code \verb{403 Forbidden} (access denied).}
 
-This functionality is only supported for directory buckets.}
+\item{IfMatch}{Deletes the object if the ETag (entity tag) value provided during the delete operation matches the ETag of the object in S3. If the ETag values do not match, the operation returns a \verb{412 Precondition Failed} error.
 
-\item{IfMatchLastModifiedTime}{If present, the object is deleted only if its modification times matches
-the provided \code{Timestamp}. If the \code{Timestamp} values do not match, the
-operation returns a \verb{412 Precondition Failed} error. If the \code{Timestamp}
-matches or if the object doesn’t exist, the operation returns a
-\verb{204 Success (No Content)} response.
+Expects the ETag value as a string. \code{If-Match} does accept a string value of an '*' (asterisk) character to denote a match of any ETag.
+
+For more information about conditional requests, see \href{https://datatracker.ietf.org/doc/html/rfc7232}{RFC 7232}.}
+
+\item{IfMatchLastModifiedTime}{If present, the object is deleted only if its modification times matches the provided \code{Timestamp}. If the \code{Timestamp} values do not match, the operation returns a \verb{412 Precondition Failed} error. If the \code{Timestamp} matches or if the object doesn’t exist, the operation returns a \verb{204 Success (No Content)} response.
 
 This functionality is only supported for directory buckets.}
 
-\item{IfMatchSize}{If present, the object is deleted only if its size matches the provided
-size in bytes. If the \code{Size} value does not match, the operation returns
-a \verb{412 Precondition Failed} error. If the \code{Size} matches or if the
-object doesn’t exist, the operation returns a \verb{204 Success (No Content)}
-response.
+\item{IfMatchSize}{If present, the object is deleted only if its size matches the provided size in bytes. If the \code{Size} value does not match, the operation returns a \verb{412 Precondition Failed} error. If the \code{Size} matches or if the object doesn’t exist, the operation returns a \verb{204 Success (No Content)} response.
 
 This functionality is only supported for directory buckets.
 
-You can use the \code{If-Match}, \verb{x-amz-if-match-last-modified-time} and
-\verb{x-amz-if-match-size} conditional headers in conjunction with each-other
-or individually.}
+You can use the \code{If-Match}, \verb{x-amz-if-match-last-modified-time} and \verb{x-amz-if-match-size} conditional headers in conjunction with each-other or individually.}
 }
 \description{
 Removes an object from a bucket. The behavior depends on the bucket's versioning state:

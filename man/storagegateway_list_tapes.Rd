@@ -8,13 +8,11 @@ tape shelf (VTS)}
 storagegateway_list_tapes(TapeARNs = NULL, Marker = NULL, Limit = NULL)
 }
 \arguments{
-\item{TapeARNs}{}
+\item{TapeARNs}{The Amazon Resource Name (ARN) of each of the tapes you want to list. If you don't specify a tape ARN, the response lists all tapes in both your VTL and VTS.}
 
-\item{Marker}{A string that indicates the position at which to begin the returned list
-of tapes.}
+\item{Marker}{A string that indicates the position at which to begin the returned list of tapes.}
 
-\item{Limit}{An optional number limit for the tapes in the list returned by this
-call.}
+\item{Limit}{An optional number limit for the tapes in the list returned by this call.}
 }
 \description{
 Lists virtual tapes in your virtual tape library (VTL) and your virtual tape shelf (VTS). You specify the tapes to list by specifying one or more tape Amazon Resource Names (ARNs). If you don't specify a tape ARN, the operation lists all virtual tapes in both your VTL and VTS.

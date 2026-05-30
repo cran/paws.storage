@@ -7,15 +7,11 @@
 s3control_create_multi_region_access_point(AccountId, ClientToken, Details)
 }
 \arguments{
-\item{AccountId}{[required] The Amazon Web Services account ID for the owner of the Multi-Region
-Access Point. The owner of the Multi-Region Access Point also must own
-the underlying buckets.}
+\item{AccountId}{[required] The Amazon Web Services account ID for the owner of the Multi-Region Access Point. The owner of the Multi-Region Access Point also must own the underlying buckets.}
 
-\item{ClientToken}{[required] An idempotency token used to identify the request and guarantee that
-requests are unique.}
+\item{ClientToken}{[required] An idempotency token used to identify the request and guarantee that requests are unique.}
 
-\item{Details}{[required] A container element containing details about the Multi-Region Access
-Point.}
+\item{Details}{[required] A container element containing details about the Multi-Region Access Point.}
 }
 \description{
 This operation is not supported by directory buckets.

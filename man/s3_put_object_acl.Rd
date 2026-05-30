@@ -2,7 +2,8 @@
 % Please edit documentation in R/s3_operations.R
 \name{s3_put_object_acl}
 \alias{s3_put_object_acl}
-\title{This operation is not supported for directory buckets}
+\title{End of support notice: As of October 1, 2025, Amazon S3 has discontinued
+support for Email Grantee Access Control Lists (ACLs)}
 \usage{
 s3_put_object_acl(
   ACL = NULL,
@@ -24,53 +25,23 @@ s3_put_object_acl(
 \arguments{
 \item{ACL}{The canned ACL to apply to the object. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/acl-overview.html#CannedACL}{Canned ACL}.}
 
-\item{AccessControlPolicy}{Contains the elements that set the ACL permissions for an object per
-grantee.}
+\item{AccessControlPolicy}{Contains the elements that set the ACL permissions for an object per grantee.}
 
-\item{Bucket}{[required] The bucket name that contains the object to which you want to attach the
-ACL.
+\item{Bucket}{[required] The bucket name that contains the object to which you want to attach the ACL.
 
-\strong{Access points} - When you use this action with an access point, you
-must provide the alias of the access point in place of the bucket name
-or specify the access point ARN. When using the access point ARN, you
-must direct requests to the access point hostname. The access point
-hostname takes the form
-\emph{AccessPointName}-\emph{AccountId}.s3-accesspoint.\emph{Region}.amazonaws.com.
-When using this action with an access point through the Amazon Web
-Services SDKs, you provide the access point ARN in place of the bucket
-name. For more information about access point ARNs, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-access-points.html}{Using access points}
-in the \emph{Amazon S3 User Guide}.
+\strong{Access points} - When you use this action with an access point for general purpose buckets, you must provide the alias of the access point in place of the bucket name or specify the access point ARN. When you use this action with an access point for directory buckets, you must provide the access point name in place of the bucket name. When using the access point ARN, you must direct requests to the access point hostname. The access point hostname takes the form \emph{AccessPointName}-\emph{AccountId}.s3-accesspoint.\emph{Region}.amazonaws.com. When using this action with an access point through the Amazon Web Services SDKs, you provide the access point ARN in place of the bucket name. For more information about access point ARNs, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-access-points.html}{Using access points} in the \emph{Amazon S3 User Guide}.
 
-\strong{S3 on Outposts} - When you use this action with S3 on Outposts, you
-must direct requests to the S3 on Outposts hostname. The S3 on Outposts
-hostname takes the form
-\code{ AccessPointName-AccountId.outpostID.s3-outposts.Region.amazonaws.com}.
-When you use this action with S3 on Outposts, the destination bucket
-must be the Outposts access point ARN or the access point alias. For
-more information about S3 on Outposts, see \href{https://docs.aws.amazon.com/AmazonS3/latest/s3-outposts/S3onOutposts.html}{What is S3 on Outposts?}
-in the \emph{Amazon S3 User Guide}.}
+\strong{S3 on Outposts} - When you use this action with S3 on Outposts, you must direct requests to the S3 on Outposts hostname. The S3 on Outposts hostname takes the form \code{ AccessPointName-AccountId.outpostID.s3-outposts.Region.amazonaws.com}. When you use this action with S3 on Outposts, the destination bucket must be the Outposts access point ARN or the access point alias. For more information about S3 on Outposts, see \href{https://docs.aws.amazon.com/AmazonS3/latest/s3-outposts/S3onOutposts.html}{What is S3 on Outposts?} in the \emph{Amazon S3 User Guide}.}
 
-\item{ContentMD5}{The Base64 encoded 128-bit \code{MD5} digest of the data. This header must be
-used as a message integrity check to verify that the request body was
-not corrupted in transit. For more information, go to \href{https://www.ietf.org/rfc/rfc1864.txt}{RFC 1864.\>}
+\item{ContentMD5}{The Base64 encoded 128-bit \code{MD5} digest of the data. This header must be used as a message integrity check to verify that the request body was not corrupted in transit. For more information, go to \href{https://www.ietf.org/rfc/rfc1864.txt}{RFC 1864.\>}
 
-For requests made using the Amazon Web Services Command Line Interface
-(CLI) or Amazon Web Services SDKs, this field is calculated
-automatically.}
+For requests made using the Amazon Web Services Command Line Interface (CLI) or Amazon Web Services SDKs, this field is calculated automatically.}
 
-\item{ChecksumAlgorithm}{Indicates the algorithm used to create the checksum for the object when
-you use the SDK. This header will not provide any additional
-functionality if you don't use the SDK. When you send this header, there
-must be a corresponding \code{x-amz-checksum} or \code{x-amz-trailer} header sent.
-Otherwise, Amazon S3 fails the request with the HTTP status code
-\verb{400 Bad Request}. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity}
-in the \emph{Amazon S3 User Guide}.
+\item{ChecksumAlgorithm}{Indicates the algorithm used to create the checksum for the object when you use the SDK. This header will not provide any additional functionality if you don't use the SDK. When you send this header, there must be a corresponding \code{x-amz-checksum} or \code{x-amz-trailer} header sent. Otherwise, Amazon S3 fails the request with the HTTP status code \verb{400 Bad Request}. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity} in the \emph{Amazon S3 User Guide}.
 
-If you provide an individual checksum, Amazon S3 ignores any provided
-\code{ChecksumAlgorithm} parameter.}
+If you provide an individual checksum, Amazon S3 ignores any provided \code{ChecksumAlgorithm} parameter.}
 
-\item{GrantFullControl}{Allows grantee the read, write, read ACP, and write ACP permissions on
-the bucket.
+\item{GrantFullControl}{Allows grantee the read, write, read ACP, and write ACP permissions on the bucket.
 
 This functionality is not supported for Amazon S3 on Outposts.}
 
@@ -84,8 +55,7 @@ This functionality is not supported for Amazon S3 on Outposts.}
 
 \item{GrantWrite}{Allows grantee to create new objects in the bucket.
 
-For the bucket and object owners of existing objects, also allows
-deletions and overwrites of those objects.}
+For the bucket and object owners of existing objects, also allows deletions and overwrites of those objects.}
 
 \item{GrantWriteACP}{Allows grantee to write the ACL for the applicable bucket.
 
@@ -93,18 +63,18 @@ This functionality is not supported for Amazon S3 on Outposts.}
 
 \item{Key}{[required] Key for which the PUT action was initiated.}
 
-\item{RequestPayer}{}
+\item{RequestPayer}{Confirms that the requester knows that they will be charged for the request. Bucket owners need not specify this parameter in their requests. If either the source or destination S3 bucket has Requester Pays enabled, the requester will pay for the corresponding charges. For information about downloading objects from Requester Pays buckets, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/ObjectsinRequesterPaysBuckets.html}{Downloading Objects in Requester Pays Buckets} in the \emph{Amazon S3 User Guide}.
+
+This functionality is not supported for directory buckets.}
 
 \item{VersionId}{Version ID used to reference a specific version of the object.
 
 This functionality is not supported for directory buckets.}
 
-\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you
-provide does not match the actual owner of the bucket, the request fails
-with the HTTP status code \verb{403 Forbidden} (access denied).}
+\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you provide does not match the actual owner of the bucket, the request fails with the HTTP status code \verb{403 Forbidden} (access denied).}
 }
 \description{
-This operation is not supported for directory buckets.
+End of support notice: As of October 1, 2025, Amazon S3 has discontinued support for Email Grantee Access Control Lists (ACLs). If you attempt to use an Email Grantee ACL in a request after October 1, 2025, the request will receive an \verb{HTTP 405} (Method Not Allowed) error.
 
 See \url{https://www.paws-r-sdk.com/docs/s3_put_object_acl/} for full documentation.
 }

@@ -22,34 +22,23 @@ backup_list_backup_jobs(
 )
 }
 \arguments{
-\item{NextToken}{The next item following a partial list of returned items. For example,
-if a request is made to return \code{MaxResults} number of items, \code{NextToken}
-allows you to return more items in your list starting at the location
-pointed to by the next token.}
+\item{NextToken}{The next item following a partial list of returned items. For example, if a request is made to return \code{MaxResults} number of items, \code{NextToken} allows you to return more items in your list starting at the location pointed to by the next token.}
 
 \item{MaxResults}{The maximum number of items to be returned.}
 
-\item{ByResourceArn}{Returns only backup jobs that match the specified resource Amazon
-Resource Name (ARN).}
+\item{ByResourceArn}{Returns only backup jobs that match the specified resource Amazon Resource Name (ARN).}
 
 \item{ByState}{Returns only backup jobs that are in the specified state.
 
-\verb{Completed with issues} is a status found only in the Backup console.
-For API, this status refers to jobs with a state of \code{COMPLETED} and a
-\code{MessageCategory} with a value other than \code{SUCCESS}; that is, the status
-is completed but comes with a status message.
+\verb{Completed with issues} is a status found only in the Backup console. For API, this status refers to jobs with a state of \code{COMPLETED} and a \code{MessageCategory} with a value other than \code{SUCCESS}; that is, the status is completed but comes with a status message.
 
-To obtain the job count for \verb{Completed with issues}, run two GET
-requests, and subtract the second, smaller number:
+To obtain the job count for \verb{Completed with issues}, run two GET requests, and subtract the second, smaller number:
 
 GET /backup-jobs/?state=COMPLETED
 
 GET /backup-jobs/?messageCategory=SUCCESS&state=COMPLETED}
 
-\item{ByBackupVaultName}{Returns only backup jobs that will be stored in the specified backup
-vault. Backup vaults are identified by names that are unique to the
-account used to create them and the Amazon Web Services Region where
-they are created.}
+\item{ByBackupVaultName}{Returns only backup jobs that will be stored in the specified backup vault. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.}
 
 \item{ByCreatedBefore}{Returns only backup jobs that were created before the specified date.}
 
@@ -64,45 +53,37 @@ they are created.}
 \item \code{EBS} for Amazon Elastic Block Store
 \item \code{EC2} for Amazon Elastic Compute Cloud
 \item \code{EFS} for Amazon Elastic File System
+\item \code{EKS} for Amazon Elastic Kubernetes Service
 \item \code{FSx} for Amazon FSx
 \item \code{Neptune} for Amazon Neptune
 \item \code{RDS} for Amazon Relational Database Service
 \item \code{Redshift} for Amazon Redshift
 \item \code{S3} for Amazon Simple Storage Service (Amazon S3)
-\item \verb{SAP HANA on Amazon EC2} for SAP HANA databases on Amazon Elastic
-Compute Cloud instances
+\item \verb{SAP HANA on Amazon EC2} for SAP HANA databases on Amazon Elastic Compute Cloud instances
 \item \verb{Storage Gateway} for Storage Gateway
 \item \code{Timestream} for Amazon Timestream
 \item \code{VirtualMachine} for VMware virtual machines
 }}
 
-\item{ByAccountId}{The account ID to list the jobs from. Returns only backup jobs
-associated with the specified account ID.
+\item{ByAccountId}{The account ID to list the jobs from. Returns only backup jobs associated with the specified account ID.
 
-If used from an Organizations management account, passing \code{*} returns
-all jobs across the organization.}
+If used from an Organizations management account, passing \code{*} returns all jobs across the organization.}
 
-\item{ByCompleteAfter}{Returns only backup jobs completed after a date expressed in Unix format
-and Coordinated Universal Time (UTC).}
+\item{ByCompleteAfter}{Returns only backup jobs completed after a date expressed in Unix format and Coordinated Universal Time (UTC).}
 
-\item{ByCompleteBefore}{Returns only backup jobs completed before a date expressed in Unix
-format and Coordinated Universal Time (UTC).}
+\item{ByCompleteBefore}{Returns only backup jobs completed before a date expressed in Unix format and Coordinated Universal Time (UTC).}
 
 \item{ByParentJobId}{This is a filter to list child (nested) jobs based on parent job ID.}
 
-\item{ByMessageCategory}{This is an optional parameter that can be used to filter out jobs with a
-MessageCategory which matches the value you input.
+\item{ByMessageCategory}{This is an optional parameter that can be used to filter out jobs with a MessageCategory which matches the value you input.
 
-Example strings may include \code{AccessDenied}, \code{SUCCESS}, \code{AGGREGATE_ALL},
-and \code{InvalidParameters}.
+Example strings may include \code{AccessDenied}, \code{SUCCESS}, \code{AGGREGATE_ALL}, and \code{InvalidParameters}.
 
-View
-\href{https://docs.aws.amazon.com/aws-backup/latest/devguide/monitoring.html}{Monitoring}
+View \href{https://docs.aws.amazon.com/aws-backup/latest/devguide/monitoring.html}{Monitoring}
 
 The wildcard () returns count of all message categories.
 
-\code{AGGREGATE_ALL} aggregates job counts for all message categories and
-returns the sum.}
+\code{AGGREGATE_ALL} aggregates job counts for all message categories and returns the sum.}
 }
 \description{
 Returns a list of existing backup jobs for an authenticated account for the last 30 days. For a longer period of time, consider using these \href{https://docs.aws.amazon.com/aws-backup/latest/devguide/monitoring.html}{monitoring tools}.

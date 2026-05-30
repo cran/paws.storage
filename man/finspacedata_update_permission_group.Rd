@@ -19,28 +19,17 @@ finspacedata_update_permission_group(
 
 \item{description}{A brief description for the permission group.}
 
-\item{applicationPermissions}{The permissions that are granted to a specific group for accessing the
-FinSpace application.
+\item{applicationPermissions}{The permissions that are granted to a specific group for accessing the FinSpace application.
 
-When assigning application permissions, be aware that the permission
-\code{ManageUsersAndGroups} allows users to grant themselves or others access
-to any functionality in their FinSpace environment's application. It
-should only be granted to trusted users.
+When assigning application permissions, be aware that the permission \code{ManageUsersAndGroups} allows users to grant themselves or others access to any functionality in their FinSpace environment's application. It should only be granted to trusted users.
 \itemize{
-\item \code{\link[=finspacedata_create_dataset]{create_dataset}} – Group members can
-create new datasets.
-\item \code{ManageClusters} – Group members can manage Apache Spark clusters
-from FinSpace notebooks.
-\item \code{ManageUsersAndGroups} – Group members can manage users and
-permission groups. This is a privileged permission that allows users
-to grant themselves or others access to any functionality in the
-application. It should only be granted to trusted users.
+\item \code{\link[=finspacedata_create_dataset]{create_dataset}} – Group members can create new datasets.
+\item \code{ManageClusters} – Group members can manage Apache Spark clusters from FinSpace notebooks.
+\item \code{ManageUsersAndGroups} – Group members can manage users and permission groups. This is a privileged permission that allows users to grant themselves or others access to any functionality in the application. It should only be granted to trusted users.
 \item \code{ManageAttributeSets} – Group members can manage attribute sets.
 \item \code{ViewAuditData} – Group members can view audit data.
-\item \code{AccessNotebooks} – Group members will have access to FinSpace
-notebooks.
-\item \code{GetTemporaryCredentials} – Group members can get temporary API
-credentials.
+\item \code{AccessNotebooks} – Group members will have access to FinSpace notebooks.
+\item \code{GetTemporaryCredentials} – Group members can get temporary API credentials.
 }}
 
 \item{clientToken}{A token that ensures idempotency. This token expires in 10 minutes.}

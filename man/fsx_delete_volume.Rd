@@ -12,16 +12,13 @@ fsx_delete_volume(
 )
 }
 \arguments{
-\item{ClientRequestToken}{}
+\item{ClientRequestToken}{(Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.}
 
 \item{VolumeId}{[required] The ID of the volume that you are deleting.}
 
-\item{OntapConfiguration}{For Amazon FSx for ONTAP volumes, specify whether to take a final backup
-of the volume and apply tags to the backup. To apply tags to the backup,
-you must have the \code{fsx:TagResource} permission.}
+\item{OntapConfiguration}{For Amazon FSx for ONTAP volumes, specify whether to take a final backup of the volume and apply tags to the backup. To apply tags to the backup, you must have the \code{fsx:TagResource} permission.}
 
-\item{OpenZFSConfiguration}{For Amazon FSx for OpenZFS volumes, specify whether to delete all child
-volumes and snapshots.}
+\item{OpenZFSConfiguration}{For Amazon FSx for OpenZFS volumes, specify whether to delete all child volumes and snapshots.}
 }
 \description{
 Deletes an Amazon FSx for NetApp ONTAP or Amazon FSx for OpenZFS volume.

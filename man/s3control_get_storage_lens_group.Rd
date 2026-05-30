@@ -7,11 +7,9 @@
 s3control_get_storage_lens_group(Name, AccountId)
 }
 \arguments{
-\item{Name}{[required] The name of the Storage Lens group that you're trying to retrieve the
-configuration details for.}
+\item{Name}{[required] The name of the Storage Lens group that you're trying to retrieve the configuration details for.}
 
-\item{AccountId}{[required] The Amazon Web Services account ID associated with the Storage Lens
-group that you're trying to retrieve the details for.}
+\item{AccountId}{[required] The Amazon Web Services account ID associated with the Storage Lens group that you're trying to retrieve the details for.}
 }
 \description{
 Retrieves the Storage Lens group configuration details.

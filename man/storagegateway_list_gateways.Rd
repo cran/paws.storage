@@ -8,11 +8,9 @@ Services Region specified in the request}
 storagegateway_list_gateways(Marker = NULL, Limit = NULL)
 }
 \arguments{
-\item{Marker}{An opaque string that indicates the position at which to begin the
-returned list of gateways.}
+\item{Marker}{An opaque string that indicates the position at which to begin the returned list of gateways.}
 
-\item{Limit}{Specifies that the list of gateways returned be limited to the specified
-number of items.}
+\item{Limit}{Specifies that the list of gateways returned be limited to the specified number of items.}
 }
 \description{
 Lists gateways owned by an Amazon Web Services account in an Amazon Web Services Region specified in the request. The returned list is ordered by gateway Amazon Resource Name (ARN).

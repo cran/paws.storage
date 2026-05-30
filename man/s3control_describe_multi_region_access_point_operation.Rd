@@ -10,13 +10,9 @@ s3control_describe_multi_region_access_point_operation(
 )
 }
 \arguments{
-\item{AccountId}{[required] The Amazon Web Services account ID for the owner of the Multi-Region
-Access Point.}
+\item{AccountId}{[required] The Amazon Web Services account ID for the owner of the Multi-Region Access Point.}
 
-\item{RequestTokenARN}{[required] The request token associated with the request you want to know about.
-This request token is returned as part of the response when you make an
-asynchronous request. You provide this token to query about the status
-of the asynchronous action.}
+\item{RequestTokenARN}{[required] The request token associated with the request you want to know about. This request token is returned as part of the response when you make an asynchronous request. You provide this token to query about the status of the asynchronous action.}
 }
 \description{
 This operation is not supported by directory buckets.

@@ -12,16 +12,11 @@ backup_create_restore_testing_selection(
 )
 }
 \arguments{
-\item{CreatorRequestId}{This is an optional unique string that identifies the request and allows
-failed requests to be retried without the risk of running the operation
-twice. If used, this parameter must contain 1 to 50 alphanumeric or
-'-_.' characters.}
+\item{CreatorRequestId}{This is an optional unique string that identifies the request and allows failed requests to be retried without the risk of running the operation twice. If used, this parameter must contain 1 to 50 alphanumeric or '-_.' characters.}
 
-\item{RestoreTestingPlanName}{[required] Input the restore testing plan name that was returned from the related
-CreateRestoreTestingPlan request.}
+\item{RestoreTestingPlanName}{[required] Input the restore testing plan name that was returned from the related CreateRestoreTestingPlan request.}
 
-\item{RestoreTestingSelection}{[required] This consists of \code{RestoreTestingSelectionName}, \code{ProtectedResourceType},
-and one of the following:
+\item{RestoreTestingSelection}{[required] This consists of \code{RestoreTestingSelectionName}, \code{ProtectedResourceType}, and one of the following:
 \itemize{
 \item \code{ProtectedResourceArns}
 \item \code{ProtectedResourceConditions}
@@ -29,10 +24,7 @@ and one of the following:
 
 Each protected resource type can have one single value.
 
-A restore testing selection can include a wildcard value ("*") for
-\code{ProtectedResourceArns} along with \code{ProtectedResourceConditions}.
-Alternatively, you can include up to 30 specific protected resource ARNs
-in \code{ProtectedResourceArns}.}
+A restore testing selection can include a wildcard value ("*") for \code{ProtectedResourceArns} along with \code{ProtectedResourceConditions}. Alternatively, you can include up to 30 specific protected resource ARNs in \code{ProtectedResourceArns}.}
 }
 \description{
 This request can be sent after CreateRestoreTestingPlan request returns successfully. This is the second part of creating a resource testing plan, and it must be completed sequentially.

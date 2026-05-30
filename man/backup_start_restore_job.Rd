@@ -14,21 +14,13 @@ backup_start_restore_job(
 )
 }
 \arguments{
-\item{RecoveryPointArn}{[required] An ARN that uniquely identifies a recovery point; for example,
-\verb{arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45}.}
+\item{RecoveryPointArn}{[required] An ARN that uniquely identifies a recovery point; for example, \verb{arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45}.}
 
 \item{Metadata}{[required] A set of metadata key-value pairs.
 
-You can get configuration metadata about a resource at the time it was
-backed up by calling
-\code{\link[=backup_get_recovery_point_restore_metadata]{get_recovery_point_restore_metadata}}.
-However, values in addition to those provided by
-\code{\link[=backup_get_recovery_point_restore_metadata]{get_recovery_point_restore_metadata}}
-might be required to restore a resource. For example, you might need to
-provide a new resource name if the original already exists.
+You can get configuration metadata about a resource at the time it was backed up by calling \code{\link[=backup_get_recovery_point_restore_metadata]{get_recovery_point_restore_metadata}}. However, values in addition to those provided by \code{\link[=backup_get_recovery_point_restore_metadata]{get_recovery_point_restore_metadata}} might be required to restore a resource. For example, you might need to provide a new resource name if the original already exists.
 
-For more information about the metadata for each resource, see the
-following:
+For more information about the metadata for each resource, see the following:
 \itemize{
 \item \href{https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-aur.html#aur-restore-cli}{Metadata for Amazon Aurora}
 \item \href{https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-docdb.html#docdb-restore-cli}{Metadata for Amazon DocumentDB}
@@ -37,6 +29,7 @@ following:
 \item \href{https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-ebs.html#ebs-restore-cli}{Metadata for Amazon EBS}
 \item \href{https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-ec2.html#restoring-ec2-cli}{Metadata for Amazon EC2}
 \item \href{https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-efs.html#efs-restore-cli}{Metadata for Amazon EFS}
+\item \href{https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-eks.html#eks-restore-backup-section}{Metadata for Amazon EKS}
 \item \href{https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-fsx.html#fsx-restore-cli}{Metadata for Amazon FSx}
 \item \href{https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-nep.html#nep-restore-cli}{Metadata for Amazon Neptune}
 \item \href{https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-rds.html#rds-restore-cli}{Metadata for Amazon RDS}
@@ -47,18 +40,11 @@ following:
 \item \href{https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-vm.html#vm-restore-cli}{Metadata for virtual machines}
 }}
 
-\item{IamRoleArn}{The Amazon Resource Name (ARN) of the IAM role that Backup uses to
-create the target resource; for example:
-\verb{arn:aws:iam::123456789012:role/S3Access}.}
+\item{IamRoleArn}{The Amazon Resource Name (ARN) of the IAM role that Backup uses to create the target resource; for example: \verb{arn:aws:iam::123456789012:role/S3Access}.}
 
-\item{IdempotencyToken}{A customer-chosen string that you can use to distinguish between
-otherwise identical calls to
-\code{\link[=backup_start_restore_job]{start_restore_job}}. Retrying a successful
-request with the same idempotency token results in a success message
-with no action taken.}
+\item{IdempotencyToken}{A customer-chosen string that you can use to distinguish between otherwise identical calls to \code{\link[=backup_start_restore_job]{start_restore_job}}. Retrying a successful request with the same idempotency token results in a success message with no action taken.}
 
-\item{ResourceType}{Starts a job to restore a recovery point for one of the following
-resources:
+\item{ResourceType}{Starts a job to restore a recovery point for one of the following resources:
 \itemize{
 \item \code{Aurora} - Amazon Aurora
 \item \code{DocumentDB} - Amazon DocumentDB
@@ -67,6 +53,7 @@ resources:
 \item \code{EBS} - Amazon Elastic Block Store
 \item \code{EC2} - Amazon Elastic Compute Cloud
 \item \code{EFS} - Amazon Elastic File System
+\item \code{EKS} - Amazon Elastic Kubernetes Service
 \item \code{FSx} - Amazon FSx
 \item \code{Neptune} - Amazon Neptune
 \item \code{RDS} - Amazon Relational Database Service
@@ -77,8 +64,7 @@ resources:
 \item \code{VirtualMachine} - Virtual machines
 }}
 
-\item{CopySourceTagsToRestoredResource}{This is an optional parameter. If this equals \code{True}, tags included in
-the backup will be copied to the restored resource.
+\item{CopySourceTagsToRestoredResource}{This is an optional parameter. If this equals \code{True}, tags included in the backup will be copied to the restored resource.
 
 This can only be applied to backups created through Backup.}
 }

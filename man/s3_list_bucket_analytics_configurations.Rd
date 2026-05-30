@@ -11,15 +11,11 @@ s3_list_bucket_analytics_configurations(
 )
 }
 \arguments{
-\item{Bucket}{[required] The name of the bucket from which analytics configurations are
-retrieved.}
+\item{Bucket}{[required] The name of the bucket from which analytics configurations are retrieved.}
 
-\item{ContinuationToken}{The \code{ContinuationToken} that represents a placeholder from where this
-request should begin.}
+\item{ContinuationToken}{The \code{ContinuationToken} that represents a placeholder from where this request should begin.}
 
-\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you
-provide does not match the actual owner of the bucket, the request fails
-with the HTTP status code \verb{403 Forbidden} (access denied).}
+\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you provide does not match the actual owner of the bucket, the request fails with the HTTP status code \verb{403 Forbidden} (access denied).}
 }
 \description{
 This operation is not supported for directory buckets.

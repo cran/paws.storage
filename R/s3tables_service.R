@@ -5,17 +5,7 @@ NULL
 #' Amazon S3 Tables
 #'
 #' @description
-#' An Amazon S3 table represents a structured dataset consisting of tabular
-#' data in [Apache Parquet](https://parquet.apache.org/docs/) format and
-#' related metadata. This data is stored inside an S3 table as a
-#' subresource. All tables in a table bucket are stored in the [Apache
-#' Iceberg](https://iceberg.apache.org/docs/latest/) table format. Through
-#' integration with the AWS Glue Data Catalog you can interact with your
-#' tables using AWS analytics services, such as Amazon Athena and Amazon
-#' Redshift. Amazon S3 manages maintenance of your tables through automatic
-#' file compaction and snapshot management. For more information, see
-#' [Amazon S3 table
-#' buckets](https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-buckets.html).
+#' An Amazon S3 table represents a structured dataset consisting of tabular data in [Apache Parquet](https://parquet.apache.org/docs/) format and related metadata. This data is stored inside an S3 table as a subresource. All tables in a table bucket are stored in the [Apache Iceberg](https://iceberg.apache.org/docs/latest/) table format. Through integration with the Amazon Web Services Glue Data Catalog you can interact with your tables using Amazon Web Services analytics services, such as Amazon Athena and Amazon Redshift. Amazon S3 manages maintenance of your tables through automatic file compaction and snapshot management. For more information, see [Amazon S3 table buckets](https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-buckets.html).
 #'
 #' @param
 #' config
@@ -106,25 +96,48 @@ NULL
 #'  \link[=s3tables_delete_namespace]{delete_namespace} \tab Deletes a namespace\cr
 #'  \link[=s3tables_delete_table]{delete_table} \tab Deletes a table\cr
 #'  \link[=s3tables_delete_table_bucket]{delete_table_bucket} \tab Deletes a table bucket\cr
+#'  \link[=s3tables_delete_table_bucket_encryption]{delete_table_bucket_encryption} \tab Deletes the encryption configuration for a table bucket\cr
+#'  \link[=s3tables_delete_table_bucket_metrics_configuration]{delete_table_bucket_metrics_configuration} \tab Deletes the metrics configuration for a table bucket\cr
 #'  \link[=s3tables_delete_table_bucket_policy]{delete_table_bucket_policy} \tab Deletes a table bucket policy\cr
+#'  \link[=s3tables_delete_table_bucket_replication]{delete_table_bucket_replication} \tab Deletes the replication configuration for a table bucket\cr
 #'  \link[=s3tables_delete_table_policy]{delete_table_policy} \tab Deletes a table policy\cr
+#'  \link[=s3tables_delete_table_replication]{delete_table_replication} \tab Deletes the replication configuration for a specific table\cr
 #'  \link[=s3tables_get_namespace]{get_namespace} \tab Gets details about a namespace\cr
 #'  \link[=s3tables_get_table]{get_table} \tab Gets details about a table\cr
 #'  \link[=s3tables_get_table_bucket]{get_table_bucket} \tab Gets details on a table bucket\cr
+#'  \link[=s3tables_get_table_bucket_encryption]{get_table_bucket_encryption} \tab Gets the encryption configuration for a table bucket\cr
 #'  \link[=s3tables_get_table_bucket_maintenance_configuration]{get_table_bucket_maintenance_configuration} \tab Gets details about a maintenance configuration for a given table bucket\cr
+#'  \link[=s3tables_get_table_bucket_metrics_configuration]{get_table_bucket_metrics_configuration} \tab Gets the metrics configuration for a table bucket\cr
 #'  \link[=s3tables_get_table_bucket_policy]{get_table_bucket_policy} \tab Gets details about a table bucket policy\cr
+#'  \link[=s3tables_get_table_bucket_replication]{get_table_bucket_replication} \tab Retrieves the replication configuration for a table bucket\cr
+#'  \link[=s3tables_get_table_bucket_storage_class]{get_table_bucket_storage_class} \tab Retrieves the storage class configuration for a specific table\cr
+#'  \link[=s3tables_get_table_encryption]{get_table_encryption} \tab Gets the encryption configuration for a table\cr
 #'  \link[=s3tables_get_table_maintenance_configuration]{get_table_maintenance_configuration} \tab Gets details about the maintenance configuration of a table\cr
 #'  \link[=s3tables_get_table_maintenance_job_status]{get_table_maintenance_job_status} \tab Gets the status of a maintenance job for a table\cr
 #'  \link[=s3tables_get_table_metadata_location]{get_table_metadata_location} \tab Gets the location of the table metadata\cr
 #'  \link[=s3tables_get_table_policy]{get_table_policy} \tab Gets details about a table policy\cr
+#'  \link[=s3tables_get_table_record_expiration_configuration]{get_table_record_expiration_configuration} \tab Retrieves the expiration configuration settings for records in a table, and the status of the configuration\cr
+#'  \link[=s3tables_get_table_record_expiration_job_status]{get_table_record_expiration_job_status} \tab Retrieves the status, metrics, and details of the latest record expiration job for a table\cr
+#'  \link[=s3tables_get_table_replication]{get_table_replication} \tab Retrieves the replication configuration for a specific table\cr
+#'  \link[=s3tables_get_table_replication_status]{get_table_replication_status} \tab Retrieves the replication status for a table, including the status of replication to each destination\cr
+#'  \link[=s3tables_get_table_storage_class]{get_table_storage_class} \tab Retrieves the storage class configuration for a specific table\cr
 #'  \link[=s3tables_list_namespaces]{list_namespaces} \tab Lists the namespaces within a table bucket\cr
 #'  \link[=s3tables_list_table_buckets]{list_table_buckets} \tab Lists table buckets for your account\cr
 #'  \link[=s3tables_list_tables]{list_tables} \tab List tables in the given table bucket\cr
+#'  \link[=s3tables_list_tags_for_resource]{list_tags_for_resource} \tab Lists all of the tags applied to a specified Amazon S3 Tables resource\cr
+#'  \link[=s3tables_put_table_bucket_encryption]{put_table_bucket_encryption} \tab Sets the encryption configuration for a table bucket\cr
 #'  \link[=s3tables_put_table_bucket_maintenance_configuration]{put_table_bucket_maintenance_configuration} \tab Creates a new maintenance configuration or replaces an existing maintenance configuration for a table bucket\cr
-#'  \link[=s3tables_put_table_bucket_policy]{put_table_bucket_policy} \tab Creates a new maintenance configuration or replaces an existing table bucket policy for a table bucket\cr
+#'  \link[=s3tables_put_table_bucket_metrics_configuration]{put_table_bucket_metrics_configuration} \tab Sets the metrics configuration for a table bucket\cr
+#'  \link[=s3tables_put_table_bucket_policy]{put_table_bucket_policy} \tab Creates a new table bucket policy or replaces an existing table bucket policy for a table bucket\cr
+#'  \link[=s3tables_put_table_bucket_replication]{put_table_bucket_replication} \tab Creates or updates the replication configuration for a table bucket\cr
+#'  \link[=s3tables_put_table_bucket_storage_class]{put_table_bucket_storage_class} \tab Sets or updates the storage class configuration for a table bucket\cr
 #'  \link[=s3tables_put_table_maintenance_configuration]{put_table_maintenance_configuration} \tab Creates a new maintenance configuration or replaces an existing maintenance configuration for a table\cr
-#'  \link[=s3tables_put_table_policy]{put_table_policy} \tab Creates a new maintenance configuration or replaces an existing table policy for a table\cr
+#'  \link[=s3tables_put_table_policy]{put_table_policy} \tab Creates a new table policy or replaces an existing table policy for a table\cr
+#'  \link[=s3tables_put_table_record_expiration_configuration]{put_table_record_expiration_configuration} \tab Creates or updates the expiration configuration settings for records in a table, including the status of the configuration\cr
+#'  \link[=s3tables_put_table_replication]{put_table_replication} \tab Creates or updates the replication configuration for a specific table\cr
 #'  \link[=s3tables_rename_table]{rename_table} \tab Renames a table or a namespace\cr
+#'  \link[=s3tables_tag_resource]{tag_resource} \tab Applies one or more user-defined tags to an Amazon S3 Tables resource or updates existing tags\cr
+#'  \link[=s3tables_untag_resource]{untag_resource} \tab Removes the specified user-defined tags from an Amazon S3 Tables resource\cr
 #'  \link[=s3tables_update_table_metadata_location]{update_table_metadata_location} \tab Updates the metadata location for a table
 #' }
 #'
@@ -157,7 +170,7 @@ s3tables <- function(config = list(), credentials = list(), endpoint = NULL, reg
 
 .s3tables$metadata <- list(
   service_name = "s3tables",
-  endpoints = list("^(us|eu|ap|sa|ca|me|af|il|mx)\\-\\w+\\-\\d+$" = list(endpoint = "s3tables.{region}.amazonaws.com", global = FALSE), "^cn\\-\\w+\\-\\d+$" = list(endpoint = "s3tables.{region}.amazonaws.com.cn", global = FALSE), "^us\\-gov\\-\\w+\\-\\d+$" = list(endpoint = "s3tables.{region}.amazonaws.com", global = FALSE), "^us\\-iso\\-\\w+\\-\\d+$" = list(endpoint = "s3tables.{region}.c2s.ic.gov", global = FALSE), "^us\\-isob\\-\\w+\\-\\d+$" = list(endpoint = "s3tables.{region}.sc2s.sgov.gov", global = FALSE), "^eu\\-isoe\\-\\w+\\-\\d+$" = list(endpoint = "s3tables.{region}.cloud.adc-e.uk", global = FALSE), "^us\\-isof\\-\\w+\\-\\d+$" = list(endpoint = "s3tables.{region}.csp.hci.ic.gov", global = FALSE)),
+  endpoints = list("^(us|eu|ap|sa|ca|me|af|il|mx)\\-\\w+\\-\\d+$" = list(endpoint = "s3tables.{region}.amazonaws.com", global = FALSE), "^cn\\-\\w+\\-\\d+$" = list(endpoint = "s3tables.{region}.amazonaws.com.cn", global = FALSE), "^us\\-gov\\-\\w+\\-\\d+$" = list(endpoint = "s3tables.{region}.amazonaws.com", global = FALSE), "^us\\-iso\\-\\w+\\-\\d+$" = list(endpoint = "s3tables.{region}.c2s.ic.gov", global = FALSE), "^us\\-isob\\-\\w+\\-\\d+$" = list(endpoint = "s3tables.{region}.sc2s.sgov.gov", global = FALSE), "^eu\\-isoe\\-\\w+\\-\\d+$" = list(endpoint = "s3tables.{region}.cloud.adc-e.uk", global = FALSE), "^us\\-isof\\-\\w+\\-\\d+$" = list(endpoint = "s3tables.{region}.csp.hci.ic.gov", global = FALSE), "^eusc\\-(de)\\-\\w+\\-\\d+$" = list(endpoint = "s3tables.{region}.amazonaws.eu", global = FALSE)),
   service_id = "S3Tables",
   api_version = "2018-05-10",
   signing_name = "s3tables",

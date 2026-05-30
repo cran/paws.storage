@@ -13,13 +13,9 @@ backup_list_recovery_points_by_resource(
 )
 }
 \arguments{
-\item{ResourceArn}{[required] An ARN that uniquely identifies a resource. The format of the ARN
-depends on the resource type.}
+\item{ResourceArn}{[required] An ARN that uniquely identifies a resource. The format of the ARN depends on the resource type.}
 
-\item{NextToken}{The next item following a partial list of returned items. For example,
-if a request is made to return \code{MaxResults} number of items, \code{NextToken}
-allows you to return more items in your list starting at the location
-pointed to by the next token.}
+\item{NextToken}{The next item following a partial list of returned items. For example, if a request is made to return \code{MaxResults} number of items, \code{NextToken} allows you to return more items in your list starting at the location pointed to by the next token.}
 
 \item{MaxResults}{The maximum number of items to be returned.
 
@@ -27,11 +23,9 @@ Amazon RDS requires a value of at least 20.}
 
 \item{ManagedByAWSBackupOnly}{This attribute filters recovery points based on ownership.
 
-If this is set to \code{TRUE}, the response will contain recovery points
-associated with the selected resources that are managed by Backup.
+If this is set to \code{TRUE}, the response will contain recovery points associated with the selected resources that are managed by Backup.
 
-If this is set to \code{FALSE}, the response will contain all recovery points
-associated with the selected resource.
+If this is set to \code{FALSE}, the response will contain all recovery points associated with the selected resource.
 
 Type: Boolean}
 }

@@ -14,10 +14,9 @@ fsx_delete_data_repository_association(
 \arguments{
 \item{AssociationId}{[required] The ID of the data repository association that you want to delete.}
 
-\item{ClientRequestToken}{}
+\item{ClientRequestToken}{(Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.}
 
-\item{DeleteDataInFileSystem}{Set to \code{true} to delete the data in the file system that corresponds to
-the data repository association.}
+\item{DeleteDataInFileSystem}{Set to \code{true} to delete the data in the file system that corresponds to the data repository association.}
 }
 \description{
 Deletes a data repository association on an Amazon FSx for Lustre file system. Deleting the data repository association unlinks the file system from the Amazon S3 bucket. When deleting a data repository association, you have the option of deleting the data in the file system that corresponds to the data repository association. Data repository associations are supported on all FSx for Lustre 2.12 and 2.15 file systems, excluding \code{scratch_1} deployment type.

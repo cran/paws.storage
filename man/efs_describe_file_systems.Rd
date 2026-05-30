@@ -13,22 +13,13 @@ efs_describe_file_systems(
 )
 }
 \arguments{
-\item{MaxItems}{(Optional) Specifies the maximum number of file systems to return in the
-response (integer). This number is automatically set to 100. The
-response is paginated at 100 per page if you have more than 100 file
-systems.}
+\item{MaxItems}{(Optional) Specifies the maximum number of file systems to return in the response (integer). This number is automatically set to 100. The response is paginated at 100 per page if you have more than 100 file systems.}
 
-\item{Marker}{(Optional) Opaque pagination token returned from a previous
-\code{\link[=efs_describe_file_systems]{describe_file_systems}} operation (String).
-If present, specifies to continue the list from where the returning call
-had left off.}
+\item{Marker}{(Optional) Opaque pagination token returned from a previous \code{\link[=efs_describe_file_systems]{describe_file_systems}} operation (String). If present, specifies to continue the list from where the returning call had left off.}
 
-\item{CreationToken}{(Optional) Restricts the list to the file system with this creation
-token (String). You specify a creation token when you create an Amazon
-EFS file system.}
+\item{CreationToken}{(Optional) Restricts the list to the file system with this creation token (String). You specify a creation token when you create an Amazon EFS file system.}
 
-\item{FileSystemId}{(Optional) ID of the file system whose description you want to retrieve
-(String).}
+\item{FileSystemId}{(Optional) ID of the file system whose description you want to retrieve (String).}
 }
 \description{
 Returns the description of a specific Amazon EFS file system if either the file system \code{CreationToken} or the \code{FileSystemId} is provided. Otherwise, it returns descriptions of all file systems owned by the caller's Amazon Web Services account in the Amazon Web Services Region of the endpoint that you're calling.

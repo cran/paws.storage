@@ -12,13 +12,11 @@ fsx_update_storage_virtual_machine(
 )
 }
 \arguments{
-\item{ActiveDirectoryConfiguration}{Specifies updates to an SVM's Microsoft Active Directory (AD)
-configuration.}
+\item{ActiveDirectoryConfiguration}{Specifies updates to an SVM's Microsoft Active Directory (AD) configuration.}
 
-\item{ClientRequestToken}{}
+\item{ClientRequestToken}{(Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.}
 
-\item{StorageVirtualMachineId}{[required] The ID of the SVM that you want to update, in the format
-\verb{svm-0123456789abcdef0}.}
+\item{StorageVirtualMachineId}{[required] The ID of the SVM that you want to update, in the format \verb{svm-0123456789abcdef0}.}
 
 \item{SvmAdminPassword}{Specifies a new SvmAdminPassword.}
 }

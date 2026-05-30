@@ -7,8 +7,7 @@
 s3control_delete_public_access_block(AccountId)
 }
 \arguments{
-\item{AccountId}{[required] The account ID for the Amazon Web Services account whose
-\code{PublicAccessBlock} configuration you want to remove.}
+\item{AccountId}{[required] The account ID for the Amazon Web Services account whose \code{PublicAccessBlock} configuration you want to remove.}
 }
 \description{
 This operation is not supported by directory buckets.

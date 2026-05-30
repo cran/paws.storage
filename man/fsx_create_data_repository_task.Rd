@@ -18,63 +18,32 @@ fsx_create_data_repository_task(
 \arguments{
 \item{Type}{[required] Specifies the type of data repository task to create.
 \itemize{
-\item \code{EXPORT_TO_REPOSITORY} tasks export from your Amazon FSx for Lustre
-file system to a linked data repository.
-\item \code{IMPORT_METADATA_FROM_REPOSITORY} tasks import metadata changes from
-a linked S3 bucket to your Amazon FSx for Lustre file system.
-\item \code{RELEASE_DATA_FROM_FILESYSTEM} tasks release files in your Amazon
-FSx for Lustre file system that have been exported to a linked S3
-bucket and that meet your specified release criteria.
-\item \code{AUTO_RELEASE_DATA} tasks automatically release files from an Amazon
-File Cache resource.
+\item \code{EXPORT_TO_REPOSITORY} tasks export from your Amazon FSx for Lustre file system to a linked data repository.
+\item \code{IMPORT_METADATA_FROM_REPOSITORY} tasks import metadata changes from a linked S3 bucket to your Amazon FSx for Lustre file system.
+\item \code{RELEASE_DATA_FROM_FILESYSTEM} tasks release files in your Amazon FSx for Lustre file system that have been exported to a linked S3 bucket and that meet your specified release criteria.
+\item \code{AUTO_RELEASE_DATA} tasks automatically release files from an Amazon File Cache resource.
 }}
 
-\item{Paths}{A list of paths for the data repository task to use when the task is
-processed. If a path that you provide isn't valid, the task fails. If
-you don't provide paths, the default behavior is to export all files to
-S3 (for export tasks), import all files from S3 (for import tasks), or
-release all exported files that meet the last accessed time criteria
-(for release tasks).
+\item{Paths}{A list of paths for the data repository task to use when the task is processed. If a path that you provide isn't valid, the task fails. If you don't provide paths, the default behavior is to export all files to S3 (for export tasks), import all files from S3 (for import tasks), or release all exported files that meet the last accessed time criteria (for release tasks).
 \itemize{
-\item For export tasks, the list contains paths on the FSx for Lustre file
-system from which the files are exported to the Amazon S3 bucket.
-The default path is the file system root directory. The paths you
-provide need to be relative to the mount point of the file system.
-If the mount point is \verb{/mnt/fsx} and \verb{/mnt/fsx/path1} is a directory
-or file on the file system you want to export, then the path to
-provide is \code{path1}.
-\item For import tasks, the list contains paths in the Amazon S3 bucket
-from which POSIX metadata changes are imported to the FSx for Lustre
-file system. The path can be an S3 bucket or prefix in the format
-\verb{s3://bucket-name/prefix} (where \code{prefix} is optional).
-\item For release tasks, the list contains directory or file paths on the
-FSx for Lustre file system from which to release exported files. If
-a directory is specified, files within the directory are released.
-If a file path is specified, only that file is released. To release
-all exported files in the file system, specify a forward slash (/)
-as the path.
+\item For export tasks, the list contains paths on the FSx for Lustre file system from which the files are exported to the Amazon S3 bucket. The default path is the file system root directory. The paths you provide need to be relative to the mount point of the file system. If the mount point is \verb{/mnt/fsx} and \verb{/mnt/fsx/path1} is a directory or file on the file system you want to export, then the path to provide is \code{path1}.
+\item For import tasks, the list contains paths in the Amazon S3 bucket from which POSIX metadata changes are imported to the FSx for Lustre file system. The path can be an S3 bucket or prefix in the format \verb{s3://bucket-name/prefix} (where \code{prefix} is optional).
+\item For release tasks, the list contains directory or file paths on the FSx for Lustre file system from which to release exported files. If a directory is specified, files within the directory are released. If a file path is specified, only that file is released. To release all exported files in the file system, specify a forward slash (/) as the path.
 
-A file must also meet the last accessed time criteria specified in
-for the file to be released.
+A file must also meet the last accessed time criteria specified in for the file to be released.
 }}
 
-\item{FileSystemId}{[required]}
+\item{FileSystemId}{[required] The globally unique ID of the file system, assigned by Amazon FSx.}
 
-\item{Report}{[required] Defines whether or not Amazon FSx provides a CompletionReport once the
-task has completed. A CompletionReport provides a detailed report on the
-files that Amazon FSx processed that meet the criteria specified by the
-\code{Scope} parameter. For more information, see \href{https://docs.aws.amazon.com/fsx/latest/LustreGuide/task-completion-report.html}{Working with Task Completion Reports}.}
+\item{Report}{[required] Defines whether or not Amazon FSx provides a CompletionReport once the task has completed. A CompletionReport provides a detailed report on the files that Amazon FSx processed that meet the criteria specified by the \code{Scope} parameter. For more information, see \href{https://docs.aws.amazon.com/fsx/latest/LustreGuide/task-completion-report.html}{Working with Task Completion Reports}.}
 
-\item{ClientRequestToken}{}
+\item{ClientRequestToken}{(Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.}
 
-\item{Tags}{}
+\item{Tags}{A list of \code{Tag} values, with a maximum of 50 elements.}
 
-\item{CapacityToRelease}{Specifies the amount of data to release, in GiB, by an Amazon File Cache
-\code{AUTO_RELEASE_DATA} task that automatically releases files from the
-cache.}
+\item{CapacityToRelease}{Specifies the amount of data to release, in GiB, by an Amazon File Cache \code{AUTO_RELEASE_DATA} task that automatically releases files from the cache.}
 
-\item{ReleaseConfiguration}{The configuration that specifies the last accessed time criteria for
-files that will be released from an Amazon FSx for Lustre file system.}
+\item{ReleaseConfiguration}{The configuration that specifies the last accessed time criteria for files that will be released from an Amazon FSx for Lustre file system.}
 }
 \description{
 Creates an Amazon FSx for Lustre data repository task. A \code{\link[=fsx_create_data_repository_task]{create_data_repository_task}} operation will fail if a data repository is not linked to the FSx file system.

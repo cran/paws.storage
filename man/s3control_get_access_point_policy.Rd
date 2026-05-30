@@ -2,7 +2,8 @@
 % Please edit documentation in R/s3control_operations.R
 \name{s3control_get_access_point_policy}
 \alias{s3control_get_access_point_policy}
-\title{This operation is not supported by directory buckets}
+\title{Returns the access point policy associated with the specified access
+point}
 \usage{
 s3control_get_access_point_policy(AccountId, Name)
 }
@@ -11,21 +12,12 @@ s3control_get_access_point_policy(AccountId, Name)
 
 \item{Name}{[required] The name of the access point whose policy you want to retrieve.
 
-For using this parameter with Amazon S3 on Outposts with the REST API,
-you must specify the name and the x-amz-outpost-id as well.
+For using this parameter with Amazon S3 on Outposts with the REST API, you must specify the name and the x-amz-outpost-id as well.
 
-For using this parameter with S3 on Outposts with the Amazon Web
-Services SDK and CLI, you must specify the ARN of the access point
-accessed in the format
-\verb{arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/accesspoint/<my-accesspoint-name>}.
-For example, to access the access point \code{reports-ap} through Outpost
-\code{my-outpost} owned by account \code{123456789012} in Region \code{us-west-2}, use
-the URL encoding of
-\code{arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/accesspoint/reports-ap}.
-The value must be URL encoded.}
+For using this parameter with S3 on Outposts with the Amazon Web Services SDK and CLI, you must specify the ARN of the access point accessed in the format \verb{arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/accesspoint/<my-accesspoint-name>}. For example, to access the access point \code{reports-ap} through Outpost \code{my-outpost} owned by account \code{123456789012} in Region \code{us-west-2}, use the URL encoding of \code{arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/accesspoint/reports-ap}. The value must be URL encoded.}
 }
 \description{
-This operation is not supported by directory buckets.
+Returns the access point policy associated with the specified access point.
 
 See \url{https://www.paws-r-sdk.com/docs/s3control_get_access_point_policy/} for full documentation.
 }

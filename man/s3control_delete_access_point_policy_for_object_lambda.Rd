@@ -7,11 +7,9 @@
 s3control_delete_access_point_policy_for_object_lambda(AccountId, Name)
 }
 \arguments{
-\item{AccountId}{[required] The account ID for the account that owns the specified Object Lambda
-Access Point.}
+\item{AccountId}{[required] The account ID for the account that owns the specified Object Lambda Access Point.}
 
-\item{Name}{[required] The name of the Object Lambda Access Point you want to delete the policy
-for.}
+\item{Name}{[required] The name of the Object Lambda Access Point you want to delete the policy for.}
 }
 \description{
 This operation is not supported by directory buckets.

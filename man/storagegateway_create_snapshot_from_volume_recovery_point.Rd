@@ -11,22 +11,13 @@ storagegateway_create_snapshot_from_volume_recovery_point(
 )
 }
 \arguments{
-\item{VolumeARN}{[required] The Amazon Resource Name (ARN) of the iSCSI volume target. Use the
-\code{\link[=storagegateway_describe_storedi_scsi_volumes]{describe_storedi_scsi_volumes}}
-operation to return to retrieve the TargetARN for specified VolumeARN.}
+\item{VolumeARN}{[required] The Amazon Resource Name (ARN) of the iSCSI volume target. Use the \code{\link[=storagegateway_describe_storedi_scsi_volumes]{describe_storedi_scsi_volumes}} operation to return to retrieve the TargetARN for specified VolumeARN.}
 
-\item{SnapshotDescription}{[required] Textual description of the snapshot that appears in the Amazon EC2
-console, Elastic Block Store snapshots panel in the \strong{Description}
-field, and in the Storage Gateway snapshot \strong{Details} pane,
-\strong{Description} field.}
+\item{SnapshotDescription}{[required] Textual description of the snapshot that appears in the Amazon EC2 console, Elastic Block Store snapshots panel in the \strong{Description} field, and in the Storage Gateway snapshot \strong{Details} pane, \strong{Description} field.}
 
-\item{Tags}{A list of up to 50 tags that can be assigned to a snapshot. Each tag is
-a key-value pair.
+\item{Tags}{A list of up to 50 tags that can be assigned to a snapshot. Each tag is a key-value pair.
 
-Valid characters for key and value are letters, spaces, and numbers
-representable in UTF-8 format, and the following special characters: + -
-= . _ : / @. The maximum length of a tag's key is 128 characters, and
-the maximum length for a tag's value is 256.}
+Valid characters for key and value are letters, spaces, and numbers representable in UTF-8 format, and the following special characters: + - = . _ : / @. The maximum length of a tag's key is 128 characters, and the maximum length for a tag's value is 256.}
 }
 \description{
 Initiates a snapshot of a gateway from a volume recovery point. This operation is only supported in the cached volume gateway type.

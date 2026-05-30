@@ -14,17 +14,13 @@ fsx_update_volume(
 )
 }
 \arguments{
-\item{ClientRequestToken}{}
+\item{ClientRequestToken}{(Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.}
 
-\item{VolumeId}{[required] The ID of the volume that you want to update, in the format
-\verb{fsvol-0123456789abcdef0}.}
+\item{VolumeId}{[required] The ID of the volume that you want to update, in the format \verb{fsvol-0123456789abcdef0}.}
 
 \item{OntapConfiguration}{The configuration of the ONTAP volume that you are updating.}
 
-\item{Name}{The name of the OpenZFS volume. OpenZFS root volumes are automatically
-named \code{FSX}. Child volume names must be unique among their parent
-volume's children. The name of the volume is part of the mount string
-for the OpenZFS volume.}
+\item{Name}{The name of the OpenZFS volume. OpenZFS root volumes are automatically named \code{FSX}. Child volume names must be unique among their parent volume's children. The name of the volume is part of the mount string for the OpenZFS volume.}
 
 \item{OpenZFSConfiguration}{The configuration of the OpenZFS volume that you are updating.}
 }

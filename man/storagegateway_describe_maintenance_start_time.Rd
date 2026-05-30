@@ -9,7 +9,7 @@ maintenance, and which types of updates to apply}
 storagegateway_describe_maintenance_start_time(GatewayARN)
 }
 \arguments{
-\item{GatewayARN}{[required]}
+\item{GatewayARN}{[required] The Amazon Resource Name (ARN) of the gateway. Use the \code{\link[=storagegateway_list_gateways]{list_gateways}} operation to return a list of gateways for your account and Amazon Web Services Region.}
 }
 \description{
 Returns your gateway's maintenance window schedule information, with values for monthly or weekly cadence, specific day and time to begin maintenance, and which types of updates to apply. Time values returned are for the gateway's time zone.

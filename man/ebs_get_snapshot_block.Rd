@@ -9,21 +9,11 @@ ebs_get_snapshot_block(SnapshotId, BlockIndex, BlockToken)
 \arguments{
 \item{SnapshotId}{[required] The ID of the snapshot containing the block from which to get data.
 
-If the specified snapshot is encrypted, you must have permission to use
-the KMS key that was used to encrypt the snapshot. For more information,
-see \href{https://docs.aws.amazon.com/ebs/latest/userguide/ebsapis-using-encryption.html}{Using encryption}
-in the \emph{Amazon Elastic Compute Cloud User Guide}.}
+If the specified snapshot is encrypted, you must have permission to use the KMS key that was used to encrypt the snapshot. For more information, see \href{https://docs.aws.amazon.com/ebs/latest/userguide/ebsapis-using-encryption.html}{Using encryption} in the \emph{Amazon Elastic Compute Cloud User Guide}.}
 
-\item{BlockIndex}{[required] The block index of the block in which to read the data. A block index is
-a logical index in units of \code{512} KiB blocks. To identify the block
-index, divide the logical offset of the data in the logical volume by
-the block size (logical offset of data/\code{524288}). The logical offset of
-the data must be \code{512} KiB aligned.}
+\item{BlockIndex}{[required] The block index of the block in which to read the data. A block index is a logical index in units of \code{512} KiB blocks. To identify the block index, divide the logical offset of the data in the logical volume by the block size (logical offset of data/\code{524288}). The logical offset of the data must be \code{512} KiB aligned.}
 
-\item{BlockToken}{[required] The block token of the block from which to get data. You can obtain the
-\code{BlockToken} by running the
-\code{\link[=ebs_list_changed_blocks]{list_changed_blocks}} or
-\code{\link[=ebs_list_snapshot_blocks]{list_snapshot_blocks}} operations.}
+\item{BlockToken}{[required] The block token of the block from which to get data. You can obtain the \code{BlockToken} by running the \code{\link[=ebs_list_changed_blocks]{list_changed_blocks}} or \code{\link[=ebs_list_snapshot_blocks]{list_snapshot_blocks}} operations.}
 }
 \description{
 Returns the data in a block in an Amazon Elastic Block Store snapshot.

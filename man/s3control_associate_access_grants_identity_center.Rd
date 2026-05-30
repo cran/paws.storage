@@ -10,13 +10,7 @@ s3control_associate_access_grants_identity_center(AccountId, IdentityCenterArn)
 \arguments{
 \item{AccountId}{[required] The Amazon Web Services account ID of the S3 Access Grants instance.}
 
-\item{IdentityCenterArn}{[required] The Amazon Resource Name (ARN) of the Amazon Web Services IAM Identity
-Center instance that you are associating with your S3 Access Grants
-instance. An IAM Identity Center instance is your corporate identity
-directory that you added to the IAM Identity Center. You can use the
-\href{https://docs.aws.amazon.com/singlesignon/latest/APIReference/API_ListInstances.html}{ListInstances}
-API operation to retrieve a list of your Identity Center instances and
-their ARNs.}
+\item{IdentityCenterArn}{[required] The Amazon Resource Name (ARN) of the Amazon Web Services IAM Identity Center instance that you are associating with your S3 Access Grants instance. An IAM Identity Center instance is your corporate identity directory that you added to the IAM Identity Center. You can use the \href{https://docs.aws.amazon.com/singlesignon/latest/APIReference/API_ListInstances.html}{ListInstances} API operation to retrieve a list of your Identity Center instances and their ARNs.}
 }
 \description{
 Associate your S3 Access Grants instance with an Amazon Web Services IAM Identity Center instance. Use this action if you want to create access grants for users or groups from your corporate identity directory. First, you must add your corporate identity directory to Amazon Web Services IAM Identity Center. Then, you can associate this IAM Identity Center instance with your S3 Access Grants instance.

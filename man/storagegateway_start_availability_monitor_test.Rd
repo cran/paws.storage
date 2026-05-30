@@ -8,7 +8,7 @@ High Availability monitoring in your host environment}
 storagegateway_start_availability_monitor_test(GatewayARN)
 }
 \arguments{
-\item{GatewayARN}{[required]}
+\item{GatewayARN}{[required] The Amazon Resource Name (ARN) of the gateway. Use the \code{\link[=storagegateway_list_gateways]{list_gateways}} operation to return a list of gateways for your account and Amazon Web Services Region.}
 }
 \description{
 Start a test that verifies that the specified gateway is configured for High Availability monitoring in your host environment. This request only initiates the test and that a successful response only indicates that the test was started. It doesn't indicate that the test passed. For the status of the test, invoke the \code{\link[=storagegateway_describe_availability_monitor_test]{describe_availability_monitor_test}} API.

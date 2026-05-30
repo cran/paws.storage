@@ -7,12 +7,9 @@
 storagegateway_add_cache(GatewayARN, DiskIds)
 }
 \arguments{
-\item{GatewayARN}{[required]}
+\item{GatewayARN}{[required] The Amazon Resource Name (ARN) of the gateway. Use the \code{\link[=storagegateway_list_gateways]{list_gateways}} operation to return a list of gateways for your account and Amazon Web Services Region.}
 
-\item{DiskIds}{[required] An array of strings that identify disks that are to be configured as
-working storage. Each string has a minimum length of 1 and maximum
-length of 300. You can get the disk IDs from the
-\code{\link[=storagegateway_list_local_disks]{list_local_disks}} API.}
+\item{DiskIds}{[required] An array of strings that identify disks that are to be configured as working storage. Each string has a minimum length of 1 and maximum length of 300. You can get the disk IDs from the \code{\link[=storagegateway_list_local_disks]{list_local_disks}} API.}
 }
 \description{
 Configures one or more gateway local disks as cache for a gateway. This operation is only supported in the cached volume, tape, and file gateway type (see \href{https://docs.aws.amazon.com/storagegateway/}{How Storage Gateway works (architecture)}.

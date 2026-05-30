@@ -19,59 +19,34 @@ fsx_create_file_cache(
 )
 }
 \arguments{
-\item{ClientRequestToken}{An idempotency token for resource creation, in a string of up to 63
-ASCII characters. This token is automatically filled on your behalf when
-you use the Command Line Interface (CLI) or an Amazon Web Services SDK.
+\item{ClientRequestToken}{An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.
 
-By using the idempotent operation, you can retry a
-\code{\link[=fsx_create_file_cache]{create_file_cache}} operation without the risk
-of creating an extra cache. This approach can be useful when an initial
-call fails in a way that makes it unclear whether a cache was created.
-Examples are if a transport level timeout occurred, or your connection
-was reset. If you use the same client request token and the initial call
-created a cache, the client receives success as long as the parameters
-are the same.}
+By using the idempotent operation, you can retry a \code{\link[=fsx_create_file_cache]{create_file_cache}} operation without the risk of creating an extra cache. This approach can be useful when an initial call fails in a way that makes it unclear whether a cache was created. Examples are if a transport level timeout occurred, or your connection was reset. If you use the same client request token and the initial call created a cache, the client receives success as long as the parameters are the same.}
 
 \item{FileCacheType}{[required] The type of cache that you're creating, which must be \code{LUSTRE}.}
 
-\item{FileCacheTypeVersion}{[required] Sets the Lustre version for the cache that you're creating, which must
-be \code{2.12}.}
+\item{FileCacheTypeVersion}{[required] Sets the Lustre version for the cache that you're creating, which must be \code{2.12}.}
 
-\item{StorageCapacity}{[required] The storage capacity of the cache in gibibytes (GiB). Valid values are
-1200 GiB, 2400 GiB, and increments of 2400 GiB.}
+\item{StorageCapacity}{[required] The storage capacity of the cache in gibibytes (GiB). Valid values are 1200 GiB, 2400 GiB, and increments of 2400 GiB.}
 
-\item{SubnetIds}{[required]}
+\item{SubnetIds}{[required] A list of subnet IDs that the cache will be accessible from. You can specify only one subnet ID in a call to the \code{\link[=fsx_create_file_cache]{create_file_cache}} operation.}
 
-\item{SecurityGroupIds}{A list of IDs specifying the security groups to apply to all network
-interfaces created for Amazon File Cache access. This list isn't
-returned in later requests to describe the cache.}
+\item{SecurityGroupIds}{A list of IDs specifying the security groups to apply to all network interfaces created for Amazon File Cache access. This list isn't returned in later requests to describe the cache.}
 
-\item{Tags}{}
+\item{Tags}{A list of \code{Tag} values, with a maximum of 50 elements.}
 
-\item{CopyTagsToDataRepositoryAssociations}{A boolean flag indicating whether tags for the cache should be copied to
-data repository associations. This value defaults to false.}
+\item{CopyTagsToDataRepositoryAssociations}{A boolean flag indicating whether tags for the cache should be copied to data repository associations. This value defaults to false.}
 
-\item{KmsKeyId}{Specifies the ID of the Key Management Service (KMS) key to use for
-encrypting data on an Amazon File Cache. If a \code{KmsKeyId} isn't
-specified, the Amazon FSx-managed KMS key for your account is used. For
-more information, see
-\href{https://docs.aws.amazon.com/kms/latest/APIReference/API_Encrypt.html}{Encrypt}
-in the \emph{Key Management Service API Reference}.}
+\item{KmsKeyId}{Specifies the ID of the Key Management Service (KMS) key to use for encrypting data on an Amazon File Cache. If a \code{KmsKeyId} isn't specified, the Amazon FSx-managed KMS key for your account is used. For more information, see \href{https://docs.aws.amazon.com/kms/latest/APIReference/API_Encrypt.html}{Encrypt} in the \emph{Key Management Service API Reference}.}
 
 \item{LustreConfiguration}{The configuration for the Amazon File Cache resource being created.}
 
-\item{DataRepositoryAssociations}{A list of up to 8 configurations for data repository associations (DRAs)
-to be created during the cache creation. The DRAs link the cache to
-either an Amazon S3 data repository or a Network File System (NFS) data
-repository that supports the NFSv3 protocol.
+\item{DataRepositoryAssociations}{A list of up to 8 configurations for data repository associations (DRAs) to be created during the cache creation. The DRAs link the cache to either an Amazon S3 data repository or a Network File System (NFS) data repository that supports the NFSv3 protocol.
 
 The DRA configurations must meet the following requirements:
 \itemize{
-\item All configurations on the list must be of the same data repository
-type, either all S3 or all NFS. A cache can't link to different data
-repository types at the same time.
-\item An NFS DRA must link to an NFS file system that supports the NFSv3
-protocol.
+\item All configurations on the list must be of the same data repository type, either all S3 or all NFS. A cache can't link to different data repository types at the same time.
+\item An NFS DRA must link to an NFS file system that supports the NFSv3 protocol.
 }
 
 DRA automatic import and automatic export is not supported.}

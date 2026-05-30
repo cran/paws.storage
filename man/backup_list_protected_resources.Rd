@@ -9,10 +9,7 @@ of the resource, and a resource type}
 backup_list_protected_resources(NextToken = NULL, MaxResults = NULL)
 }
 \arguments{
-\item{NextToken}{The next item following a partial list of returned items. For example,
-if a request is made to return \code{MaxResults} number of items, \code{NextToken}
-allows you to return more items in your list starting at the location
-pointed to by the next token.}
+\item{NextToken}{The next item following a partial list of returned items. For example, if a request is made to return \code{MaxResults} number of items, \code{NextToken} allows you to return more items in your list starting at the location pointed to by the next token.}
 
 \item{MaxResults}{The maximum number of items to be returned.}
 }

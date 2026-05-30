@@ -18,23 +18,17 @@ backup_list_indexed_recovery_points(
 \arguments{
 \item{NextToken}{The next item following a partial list of returned recovery points.
 
-For example, if a request is made to return \code{MaxResults} number of
-indexed recovery points, \code{NextToken} allows you to return more items in
-your list starting at the location pointed to by the next token.}
+For example, if a request is made to return \code{MaxResults} number of indexed recovery points, \code{NextToken} allows you to return more items in your list starting at the location pointed to by the next token.}
 
 \item{MaxResults}{The maximum number of resource list items to be returned.}
 
-\item{SourceResourceArn}{A string of the Amazon Resource Name (ARN) that uniquely identifies the
-source resource.}
+\item{SourceResourceArn}{A string of the Amazon Resource Name (ARN) that uniquely identifies the source resource.}
 
-\item{CreatedBefore}{Returns only indexed recovery points that were created before the
-specified date.}
+\item{CreatedBefore}{Returns only indexed recovery points that were created before the specified date.}
 
-\item{CreatedAfter}{Returns only indexed recovery points that were created after the
-specified date.}
+\item{CreatedAfter}{Returns only indexed recovery points that were created after the specified date.}
 
-\item{ResourceType}{Returns a list of indexed recovery points for the specified resource
-type(s).
+\item{ResourceType}{Returns a list of indexed recovery points for the specified resource type(s).
 
 Accepted values include:
 \itemize{
@@ -42,13 +36,11 @@ Accepted values include:
 \item \code{S3} for Amazon Simple Storage Service (Amazon S3)
 }}
 
-\item{IndexStatus}{Include this parameter to filter the returned list by the indicated
-statuses.
+\item{IndexStatus}{Include this parameter to filter the returned list by the indicated statuses.
 
 Accepted values: \code{PENDING} | \code{ACTIVE} | \code{FAILED} | \code{DELETING}
 
-A recovery point with an index that has the status of \code{ACTIVE} can be
-included in a search.}
+A recovery point with an index that has the status of \code{ACTIVE} can be included in a search.}
 }
 \description{
 This operation returns a list of recovery points that have an associated index, belonging to the specified account.

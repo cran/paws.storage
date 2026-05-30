@@ -11,8 +11,7 @@ s3control_list_multi_region_access_points(
 )
 }
 \arguments{
-\item{AccountId}{[required] The Amazon Web Services account ID for the owner of the Multi-Region
-Access Point.}
+\item{AccountId}{[required] The Amazon Web Services account ID for the owner of the Multi-Region Access Point.}
 
 \item{NextToken}{Not currently used. Do not use this parameter.}
 

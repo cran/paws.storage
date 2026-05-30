@@ -7,8 +7,7 @@
 s3control_get_access_point_policy_for_object_lambda(AccountId, Name)
 }
 \arguments{
-\item{AccountId}{[required] The account ID for the account that owns the specified Object Lambda
-Access Point.}
+\item{AccountId}{[required] The account ID for the account that owns the specified Object Lambda Access Point.}
 
 \item{Name}{[required] The name of the Object Lambda Access Point.}
 }

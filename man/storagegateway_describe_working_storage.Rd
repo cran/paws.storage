@@ -7,7 +7,7 @@
 storagegateway_describe_working_storage(GatewayARN)
 }
 \arguments{
-\item{GatewayARN}{[required]}
+\item{GatewayARN}{[required] The Amazon Resource Name (ARN) of the gateway. Use the \code{\link[=storagegateway_list_gateways]{list_gateways}} operation to return a list of gateways for your account and Amazon Web Services Region.}
 }
 \description{
 Returns information about the working storage of a gateway. This operation is only supported in the stored volumes gateway type. This operation is deprecated in cached volumes API version (20120630). Use DescribeUploadBuffer instead.

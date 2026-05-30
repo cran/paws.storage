@@ -14,7 +14,8 @@ s3_create_bucket(
   GrantWrite = NULL,
   GrantWriteACP = NULL,
   ObjectLockEnabledForBucket = NULL,
-  ObjectOwnership = NULL
+  ObjectOwnership = NULL,
+  BucketNamespace = NULL
 )
 }
 \arguments{
@@ -24,25 +25,13 @@ This functionality is not supported for directory buckets.}
 
 \item{Bucket}{[required] The name of the bucket to create.
 
-\strong{General purpose buckets} - For information about bucket naming
-restrictions, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html}{Bucket naming rules}
-in the \emph{Amazon S3 User Guide}.
+\strong{General purpose buckets} - For information about bucket naming restrictions, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html}{Bucket naming rules} in the \emph{Amazon S3 User Guide}.
 
-\strong{Directory buckets} - When you use this operation with a directory
-bucket, you must use path-style requests in the format
-\verb{https://s3express-control.region-code.amazonaws.com/bucket-name }.
-Virtual-hosted-style requests aren't supported. Directory bucket names
-must be unique in the chosen Zone (Availability Zone or Local Zone).
-Bucket names must also follow the format
-\code{ bucket-base-name--zone-id--x-s3} (for example,
-\code{ DOC-EXAMPLE-BUCKET--usw2-az1--x-s3}). For information about bucket
-naming restrictions, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-bucket-naming-rules.html}{Directory bucket naming rules}
-in the \emph{Amazon S3 User Guide}}
+\strong{Directory buckets} - When you use this operation with a directory bucket, you must use path-style requests in the format \verb{https://s3express-control.region-code.amazonaws.com/bucket-name }. Virtual-hosted-style requests aren't supported. Directory bucket names must be unique in the chosen Zone (Availability Zone or Local Zone). Bucket names must also follow the format \code{ bucket-base-name--zone-id--x-s3} (for example, \code{ DOC-EXAMPLE-BUCKET--usw2-az1--x-s3}). For information about bucket naming restrictions, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-bucket-naming-rules.html}{Directory bucket naming rules} in the \emph{Amazon S3 User Guide}}
 
 \item{CreateBucketConfiguration}{The configuration information for the bucket.}
 
-\item{GrantFullControl}{Allows grantee the read, write, read ACP, and write ACP permissions on
-the bucket.
+\item{GrantFullControl}{Allows grantee the read, write, read ACP, and write ACP permissions on the bucket.
 
 This functionality is not supported for directory buckets.}
 
@@ -56,8 +45,7 @@ This functionality is not supported for directory buckets.}
 
 \item{GrantWrite}{Allows grantee to create new objects in the bucket.
 
-For the bucket and object owners of existing objects, also allows
-deletions and overwrites of those objects.
+For the bucket and object owners of existing objects, also allows deletions and overwrites of those objects.
 
 This functionality is not supported for directory buckets.}
 
@@ -65,12 +53,27 @@ This functionality is not supported for directory buckets.}
 
 This functionality is not supported for directory buckets.}
 
-\item{ObjectLockEnabledForBucket}{Specifies whether you want S3 Object Lock to be enabled for the new
-bucket.
+\item{ObjectLockEnabledForBucket}{Specifies whether you want S3 Object Lock to be enabled for the new bucket.
 
 This functionality is not supported for directory buckets.}
 
-\item{ObjectOwnership}{}
+\item{ObjectOwnership}{The container element for object ownership for a bucket's ownership controls.
+
+\code{BucketOwnerPreferred} - Objects uploaded to the bucket change ownership to the bucket owner if the objects are uploaded with the \code{bucket-owner-full-control} canned ACL.
+
+\code{ObjectWriter} - The uploading account will own the object if the object is uploaded with the \code{bucket-owner-full-control} canned ACL.
+
+\code{BucketOwnerEnforced} - Access control lists (ACLs) are disabled and no longer affect permissions. The bucket owner automatically owns and has full control over every object in the bucket. The bucket only accepts PUT requests that don't specify an ACL or specify bucket owner full control ACLs (such as the predefined \code{bucket-owner-full-control} canned ACL or a custom ACL in XML format that grants the same permissions).
+
+By default, \code{ObjectOwnership} is set to \code{BucketOwnerEnforced} and ACLs are disabled. We recommend keeping ACLs disabled, except in uncommon use cases where you must control access for each object individually. For more information about S3 Object Ownership, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/about-object-ownership.html}{Controlling ownership of objects and disabling ACLs for your bucket} in the \emph{Amazon S3 User Guide}.
+
+This functionality is not supported for directory buckets. Directory buckets use the bucket owner enforced setting for S3 Object Ownership.}
+
+\item{BucketNamespace}{Specifies the namespace where you want to create your general purpose bucket. When you create a general purpose bucket, you can choose to create a bucket in the shared global namespace or you can choose to create a bucket in your account regional namespace. Your account regional namespace is a subdivision of the global namespace that only your account can create buckets in. For more information on bucket namespaces, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/gpbucketnamespaces.html}{Namespaces for general purpose buckets}.
+
+General purpose buckets in your account regional namespace must follow a specific naming convention. These buckets consist of a bucket name prefix that you create, and a suffix that contains your 12-digit Amazon Web Services Account ID, the Amazon Web Services Region code, and ends with \code{-an}. Bucket names must follow the format \code{bucket-name-prefix-accountId-region-an} (for example, \code{amzn-s3-demo-bucket-111122223333-us-west-2-an}). For information about bucket naming restrictions, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html#account-regional-naming-rules}{Account regional namespace naming rules} in the \emph{Amazon S3 User Guide}.
+
+This functionality is not supported for directory buckets.}
 }
 \description{
 This action creates an Amazon S3 bucket. To create an Amazon S3 on Outposts bucket, see \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_CreateBucket.html}{\code{create_bucket}} .

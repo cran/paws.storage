@@ -8,7 +8,7 @@ view or browse list}
 storagegateway_update_smb_file_share_visibility(GatewayARN, FileSharesVisible)
 }
 \arguments{
-\item{GatewayARN}{[required]}
+\item{GatewayARN}{[required] The Amazon Resource Name (ARN) of the gateway. Use the \code{\link[=storagegateway_list_gateways]{list_gateways}} operation to return a list of gateways for your account and Amazon Web Services Region.}
 
 \item{FileSharesVisible}{[required] The shares on this gateway appear when listing shares.}
 }

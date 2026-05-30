@@ -7,7 +7,7 @@
 storagegateway_list_automatic_tape_creation_policies(GatewayARN = NULL)
 }
 \arguments{
-\item{GatewayARN}{}
+\item{GatewayARN}{The Amazon Resource Name (ARN) of the gateway. Use the \code{\link[=storagegateway_list_gateways]{list_gateways}} operation to return a list of gateways for your account and Amazon Web Services Region.}
 }
 \description{
 Lists the automatic tape creation policies for a gateway. If there are no automatic tape creation policies for the gateway, it returns an empty list.

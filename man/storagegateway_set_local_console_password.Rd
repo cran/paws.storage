@@ -7,7 +7,7 @@
 storagegateway_set_local_console_password(GatewayARN, LocalConsolePassword)
 }
 \arguments{
-\item{GatewayARN}{[required]}
+\item{GatewayARN}{[required] The Amazon Resource Name (ARN) of the gateway. Use the \code{\link[=storagegateway_list_gateways]{list_gateways}} operation to return a list of gateways for your account and Amazon Web Services Region.}
 
 \item{LocalConsolePassword}{[required] The password you want to set for your VM local console.}
 }

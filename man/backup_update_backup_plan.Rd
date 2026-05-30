@@ -9,8 +9,7 @@ backup_update_backup_plan(BackupPlanId, BackupPlan)
 \arguments{
 \item{BackupPlanId}{[required] The ID of the backup plan.}
 
-\item{BackupPlan}{[required] The body of a backup plan. Includes a \code{BackupPlanName} and one or more
-sets of \code{Rules}.}
+\item{BackupPlan}{[required] The body of a backup plan. Includes a \code{BackupPlanName} and one or more sets of \code{Rules}.}
 }
 \description{
 Updates the specified backup plan. The new version is uniquely identified by its ID.

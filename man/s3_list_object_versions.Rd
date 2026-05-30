@@ -20,41 +20,29 @@ s3_list_object_versions(
 \arguments{
 \item{Bucket}{[required] The bucket name that contains the objects.}
 
-\item{Delimiter}{A delimiter is a character that you specify to group keys. All keys that
-contain the same string between the \code{prefix} and the first occurrence of
-the delimiter are grouped under a single result element in
-\code{CommonPrefixes}. These groups are counted as one result against the
-\code{max-keys} limitation. These keys are not returned elsewhere in the
-response.}
+\item{Delimiter}{A delimiter is a character that you specify to group keys. All keys that contain the same string between the \code{prefix} and the first occurrence of the delimiter are grouped under a single result element in \code{CommonPrefixes}. These groups are counted as one result against the \code{max-keys} limitation. These keys are not returned elsewhere in the response.
 
-\item{EncodingType}{}
+\code{CommonPrefixes} is filtered out from results if it is not lexicographically greater than the key-marker.}
+
+\item{EncodingType}{Encoding type used by Amazon S3 to encode the \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-keys.html}{object keys} in the response. Responses are encoded only in UTF-8. An object key can contain any Unicode character. However, the XML 1.0 parser can't parse certain characters, such as characters with an ASCII value from 0 to 10. For characters that aren't supported in XML 1.0, you can add this parameter to request that Amazon S3 encode the keys in the response. For more information about characters to avoid in object key names, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-keys.html#object-key-guidelines}{Object key naming guidelines}.
+
+When using the URL encoding type, non-ASCII characters that are used in an object's key name will be percent-encoded according to UTF-8 code values. For example, the object \verb{test_file(3).png} will appear as \verb{test_file\%283\%29.png}.}
 
 \item{KeyMarker}{Specifies the key to start with when listing objects in a bucket.}
 
-\item{MaxKeys}{Sets the maximum number of keys returned in the response. By default,
-the action returns up to 1,000 key names. The response might contain
-fewer keys but will never contain more. If additional keys satisfy the
-search criteria, but were not returned because \code{max-keys} was exceeded,
-the response contains \verb{<isTruncated>true</isTruncated>}. To return the
-additional keys, see \code{key-marker} and \code{version-id-marker}.}
+\item{MaxKeys}{Sets the maximum number of keys returned in the response. By default, the action returns up to 1,000 key names. The response might contain fewer keys but will never contain more. If additional keys satisfy the search criteria, but were not returned because \code{max-keys} was exceeded, the response contains \verb{<isTruncated>true</isTruncated>}. To return the additional keys, see \code{key-marker} and \code{version-id-marker}.}
 
-\item{Prefix}{Use this parameter to select only those keys that begin with the
-specified prefix. You can use prefixes to separate a bucket into
-different groupings of keys. (You can think of using \code{prefix} to make
-groups in the same way that you'd use a folder in a file system.) You
-can use \code{prefix} with \code{delimiter} to roll up numerous objects into a
-single result under \code{CommonPrefixes}.}
+\item{Prefix}{Use this parameter to select only those keys that begin with the specified prefix. You can use prefixes to separate a bucket into different groupings of keys. (You can think of using \code{prefix} to make groups in the same way that you'd use a folder in a file system.) You can use \code{prefix} with \code{delimiter} to roll up numerous objects into a single result under \code{CommonPrefixes}.}
 
 \item{VersionIdMarker}{Specifies the object version you want to start listing from.}
 
-\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you
-provide does not match the actual owner of the bucket, the request fails
-with the HTTP status code \verb{403 Forbidden} (access denied).}
+\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you provide does not match the actual owner of the bucket, the request fails with the HTTP status code \verb{403 Forbidden} (access denied).}
 
-\item{RequestPayer}{}
+\item{RequestPayer}{Confirms that the requester knows that they will be charged for the request. Bucket owners need not specify this parameter in their requests. If either the source or destination S3 bucket has Requester Pays enabled, the requester will pay for the corresponding charges. For information about downloading objects from Requester Pays buckets, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/ObjectsinRequesterPaysBuckets.html}{Downloading Objects in Requester Pays Buckets} in the \emph{Amazon S3 User Guide}.
 
-\item{OptionalObjectAttributes}{Specifies the optional fields that you want returned in the response.
-Fields that you do not specify are not returned.}
+This functionality is not supported for directory buckets.}
+
+\item{OptionalObjectAttributes}{Specifies the optional fields that you want returned in the response. Fields that you do not specify are not returned.}
 }
 \description{
 This operation is not supported for directory buckets.

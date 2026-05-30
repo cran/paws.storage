@@ -10,11 +10,9 @@ storagegateway_update_automatic_tape_creation_policy(
 )
 }
 \arguments{
-\item{AutomaticTapeCreationRules}{[required] An automatic tape creation policy consists of a list of automatic tape
-creation rules. The rules determine when and how to automatically create
-new tapes.}
+\item{AutomaticTapeCreationRules}{[required] An automatic tape creation policy consists of a list of automatic tape creation rules. The rules determine when and how to automatically create new tapes.}
 
-\item{GatewayARN}{[required]}
+\item{GatewayARN}{[required] The Amazon Resource Name (ARN) of the gateway. Use the \code{\link[=storagegateway_list_gateways]{list_gateways}} operation to return a list of gateways for your account and Amazon Web Services Region.}
 }
 \description{
 Updates the automatic tape creation policy of a gateway. Use this to update the policy with a new set of automatic tape creation rules. This is only supported for tape gateways.

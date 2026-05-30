@@ -21,14 +21,11 @@ omics_update_sequence_store(
 
 \item{description}{A description for the sequence store.}
 
-\item{clientToken}{To ensure that requests don't run multiple times, specify a unique token
-for each request.}
+\item{clientToken}{To ensure that requests don't run multiple times, specify a unique token for each request.}
 
-\item{fallbackLocation}{The S3 URI of a bucket and folder to store Read Sets that fail to
-upload.}
+\item{fallbackLocation}{The S3 URI of a bucket and folder to store Read Sets that fail to upload.}
 
-\item{propagatedSetLevelTags}{The tags keys to propagate to the S3 objects associated with read sets
-in the sequence store.}
+\item{propagatedSetLevelTags}{The tags keys to propagate to the S3 objects associated with read sets in the sequence store.}
 
 \item{s3AccessConfig}{S3 access configuration parameters.}
 }

@@ -9,8 +9,7 @@ fsx_untag_resource(ResourceARN, TagKeys)
 \arguments{
 \item{ResourceARN}{[required] The ARN of the Amazon FSx resource to untag.}
 
-\item{TagKeys}{[required] A list of keys of tags on the resource to untag. In case the tag key
-doesn't exist, the call will still succeed to be idempotent.}
+\item{TagKeys}{[required] A list of keys of tags on the resource to untag. In case the tag key doesn't exist, the call will still succeed to be idempotent.}
 }
 \description{
 This action removes a tag from an Amazon FSx resource.

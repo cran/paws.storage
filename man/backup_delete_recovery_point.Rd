@@ -7,13 +7,9 @@
 backup_delete_recovery_point(BackupVaultName, RecoveryPointArn)
 }
 \arguments{
-\item{BackupVaultName}{[required] The name of a logical container where backups are stored. Backup vaults
-are identified by names that are unique to the account used to create
-them and the Amazon Web Services Region where they are created.}
+\item{BackupVaultName}{[required] The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.}
 
-\item{RecoveryPointArn}{[required] An Amazon Resource Name (ARN) that uniquely identifies a recovery point;
-for example,
-\verb{arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45}.}
+\item{RecoveryPointArn}{[required] An Amazon Resource Name (ARN) that uniquely identifies a recovery point; for example, \verb{arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45}.}
 }
 \description{
 Deletes the recovery point specified by a recovery point ID.

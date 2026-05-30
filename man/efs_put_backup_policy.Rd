@@ -9,8 +9,7 @@ efs_put_backup_policy(FileSystemId, BackupPolicy)
 \arguments{
 \item{FileSystemId}{[required] Specifies which EFS file system to update the backup policy for.}
 
-\item{BackupPolicy}{[required] The backup policy included in the
-\code{\link[=efs_put_backup_policy]{put_backup_policy}} request.}
+\item{BackupPolicy}{[required] The backup policy included in the \code{\link[=efs_put_backup_policy]{put_backup_policy}} request.}
 }
 \description{
 Updates the file system's backup policy. Use this action to start or stop automatic backups of the file system.

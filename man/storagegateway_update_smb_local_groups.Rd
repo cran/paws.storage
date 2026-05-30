@@ -8,10 +8,9 @@ permissions for SMB file shares on the gateway}
 storagegateway_update_smb_local_groups(GatewayARN, SMBLocalGroups)
 }
 \arguments{
-\item{GatewayARN}{[required]}
+\item{GatewayARN}{[required] The Amazon Resource Name (ARN) of the gateway. Use the \code{\link[=storagegateway_list_gateways]{list_gateways}} operation to return a list of gateways for your account and Amazon Web Services Region.}
 
-\item{SMBLocalGroups}{[required] A list of Active Directory users and groups that you want to grant
-special permissions for SMB file shares on the gateway.}
+\item{SMBLocalGroups}{[required] A list of Active Directory users and groups that you want to grant special permissions for SMB file shares on the gateway.}
 }
 \description{
 Updates the list of Active Directory users and groups that have special permissions for SMB file shares on the gateway.

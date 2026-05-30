@@ -7,8 +7,7 @@
 s3control_get_multi_region_access_point_routes(AccountId, Mrap)
 }
 \arguments{
-\item{AccountId}{[required] The Amazon Web Services account ID for the owner of the Multi-Region
-Access Point.}
+\item{AccountId}{[required] The Amazon Web Services account ID for the owner of the Multi-Region Access Point.}
 
 \item{Mrap}{[required] The Multi-Region Access Point ARN.}
 }

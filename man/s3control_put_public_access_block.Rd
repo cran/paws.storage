@@ -7,11 +7,9 @@
 s3control_put_public_access_block(PublicAccessBlockConfiguration, AccountId)
 }
 \arguments{
-\item{PublicAccessBlockConfiguration}{[required] The \code{PublicAccessBlock} configuration that you want to apply to the
-specified Amazon Web Services account.}
+\item{PublicAccessBlockConfiguration}{[required] The \code{PublicAccessBlock} configuration that you want to apply to the specified Amazon Web Services account.}
 
-\item{AccountId}{[required] The account ID for the Amazon Web Services account whose
-\code{PublicAccessBlock} configuration you want to set.}
+\item{AccountId}{[required] The account ID for the Amazon Web Services account whose \code{PublicAccessBlock} configuration you want to set.}
 }
 \description{
 This operation is not supported by directory buckets.

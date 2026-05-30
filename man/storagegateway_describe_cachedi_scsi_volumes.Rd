@@ -7,11 +7,7 @@
 storagegateway_describe_cachedi_scsi_volumes(VolumeARNs)
 }
 \arguments{
-\item{VolumeARNs}{[required] An array of strings where each string represents the Amazon Resource
-Name (ARN) of a cached volume. All of the specified cached volumes must
-be from the same gateway. Use
-\code{\link[=storagegateway_list_volumes]{list_volumes}} to get volume ARNs for a
-gateway.}
+\item{VolumeARNs}{[required] An array of strings where each string represents the Amazon Resource Name (ARN) of a cached volume. All of the specified cached volumes must be from the same gateway. Use \code{\link[=storagegateway_list_volumes]{list_volumes}} to get volume ARNs for a gateway.}
 }
 \description{
 Returns a description of the gateway volumes specified in the request. This operation is only supported in the cached volume gateway types.

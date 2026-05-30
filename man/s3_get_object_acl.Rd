@@ -13,19 +13,9 @@ s3_get_object_acl(
 )
 }
 \arguments{
-\item{Bucket}{[required] The bucket name that contains the object for which to get the ACL
-information.
+\item{Bucket}{[required] The bucket name that contains the object for which to get the ACL information.
 
-\strong{Access points} - When you use this action with an access point, you
-must provide the alias of the access point in place of the bucket name
-or specify the access point ARN. When using the access point ARN, you
-must direct requests to the access point hostname. The access point
-hostname takes the form
-\emph{AccessPointName}-\emph{AccountId}.s3-accesspoint.\emph{Region}.amazonaws.com.
-When using this action with an access point through the Amazon Web
-Services SDKs, you provide the access point ARN in place of the bucket
-name. For more information about access point ARNs, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-access-points.html}{Using access points}
-in the \emph{Amazon S3 User Guide}.}
+\strong{Access points} - When you use this action with an access point for general purpose buckets, you must provide the alias of the access point in place of the bucket name or specify the access point ARN. When you use this action with an access point for directory buckets, you must provide the access point name in place of the bucket name. When using the access point ARN, you must direct requests to the access point hostname. The access point hostname takes the form \emph{AccessPointName}-\emph{AccountId}.s3-accesspoint.\emph{Region}.amazonaws.com. When using this action with an access point through the Amazon Web Services SDKs, you provide the access point ARN in place of the bucket name. For more information about access point ARNs, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-access-points.html}{Using access points} in the \emph{Amazon S3 User Guide}.}
 
 \item{Key}{[required] The key of the object for which to get the ACL information.}
 
@@ -33,11 +23,11 @@ in the \emph{Amazon S3 User Guide}.}
 
 This functionality is not supported for directory buckets.}
 
-\item{RequestPayer}{}
+\item{RequestPayer}{Confirms that the requester knows that they will be charged for the request. Bucket owners need not specify this parameter in their requests. If either the source or destination S3 bucket has Requester Pays enabled, the requester will pay for the corresponding charges. For information about downloading objects from Requester Pays buckets, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/ObjectsinRequesterPaysBuckets.html}{Downloading Objects in Requester Pays Buckets} in the \emph{Amazon S3 User Guide}.
 
-\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you
-provide does not match the actual owner of the bucket, the request fails
-with the HTTP status code \verb{403 Forbidden} (access denied).}
+This functionality is not supported for directory buckets.}
+
+\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you provide does not match the actual owner of the bucket, the request fails with the HTTP status code \verb{403 Forbidden} (access denied).}
 }
 \description{
 This operation is not supported for directory buckets.

@@ -8,25 +8,15 @@ a specific multipart upload}
 glacier_list_parts(accountId, vaultName, uploadId, marker = NULL, limit = NULL)
 }
 \arguments{
-\item{accountId}{[required] The \code{AccountId} value is the AWS account ID of the account that owns the
-vault. You can either specify an AWS account ID or optionally a single
-'\code{-}' (hyphen), in which case Amazon S3 Glacier uses the AWS account ID
-associated with the credentials used to sign the request. If you use an
-account ID, do not include any hyphens ('-') in the ID.}
+\item{accountId}{[required] The \code{AccountId} value is the AWS account ID of the account that owns the vault. You can either specify an AWS account ID or optionally a single '\code{-}' (hyphen), in which case Amazon Glacier uses the AWS account ID associated with the credentials used to sign the request. If you use an account ID, do not include any hyphens ('-') in the ID.}
 
 \item{vaultName}{[required] The name of the vault.}
 
 \item{uploadId}{[required] The upload ID of the multipart upload.}
 
-\item{marker}{An opaque string used for pagination. This value specifies the part at
-which the listing of parts should begin. Get the marker value from the
-response of a previous List Parts response. You need only include the
-marker if you are continuing the pagination of results started in a
-previous List Parts request.}
+\item{marker}{An opaque string used for pagination. This value specifies the part at which the listing of parts should begin. Get the marker value from the response of a previous List Parts response. You need only include the marker if you are continuing the pagination of results started in a previous List Parts request.}
 
-\item{limit}{The maximum number of parts to be returned. The default limit is 50. The
-number of parts returned might be fewer than the specified limit, but
-the number of returned parts never exceeds the limit.}
+\item{limit}{The maximum number of parts to be returned. The default limit is 50. The number of parts returned might be fewer than the specified limit, but the number of returned parts never exceeds the limit.}
 }
 \description{
 This operation lists the parts of an archive that have been uploaded in a specific multipart upload. You can make this request at any time during an in-progress multipart upload before you complete the upload (see \code{\link[=glacier_complete_multipart_upload]{complete_multipart_upload}}. List Parts returns an error for completed uploads. The list returned in the List Parts response is sorted by part range.

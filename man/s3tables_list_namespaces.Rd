@@ -16,10 +16,7 @@ s3tables_list_namespaces(
 
 \item{prefix}{The prefix of the namespaces.}
 
-\item{continuationToken}{\code{ContinuationToken} indicates to Amazon S3 that the list is being
-continued on this bucket with a token. \code{ContinuationToken} is obfuscated
-and is not a real key. You can use this \code{ContinuationToken} for
-pagination of the list results.}
+\item{continuationToken}{\code{ContinuationToken} indicates to Amazon S3 that the list is being continued on this bucket with a token. \code{ContinuationToken} is obfuscated and is not a real key. You can use this \code{ContinuationToken} for pagination of the list results.}
 
 \item{maxNamespaces}{The maximum number of namespaces to return in the list.}
 }

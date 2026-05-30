@@ -13,16 +13,11 @@ backup_list_protected_resources_by_backup_vault(
 )
 }
 \arguments{
-\item{BackupVaultName}{[required] The list of protected resources by backup vault within the vault(s) you
-specify by name.}
+\item{BackupVaultName}{[required] The list of protected resources by backup vault within the vault(s) you specify by name.}
 
-\item{BackupVaultAccountId}{The list of protected resources by backup vault within the vault(s) you
-specify by account ID.}
+\item{BackupVaultAccountId}{The list of protected resources by backup vault within the vault(s) you specify by account ID.}
 
-\item{NextToken}{The next item following a partial list of returned items. For example,
-if a request is made to return \code{MaxResults} number of items, \code{NextToken}
-allows you to return more items in your list starting at the location
-pointed to by the next token.}
+\item{NextToken}{The next item following a partial list of returned items. For example, if a request is made to return \code{MaxResults} number of items, \code{NextToken} allows you to return more items in your list starting at the location pointed to by the next token.}
 
 \item{MaxResults}{The maximum number of items to be returned.}
 }

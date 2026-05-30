@@ -2,7 +2,8 @@
 % Please edit documentation in R/omics_operations.R
 \name{omics_list_read_set_activation_jobs}
 \alias{omics_list_read_set_activation_jobs}
-\title{Retrieves a list of read set activation jobs}
+\title{Retrieves a list of read set activation jobs and returns the metadata in
+a JSON formatted output}
 \usage{
 omics_list_read_set_activation_jobs(
   sequenceStoreId,
@@ -14,16 +15,14 @@ omics_list_read_set_activation_jobs(
 \arguments{
 \item{sequenceStoreId}{[required] The read set's sequence store ID.}
 
-\item{maxResults}{The maximum number of read set activation jobs to return in one page of
-results.}
+\item{maxResults}{The maximum number of read set activation jobs to return in one page of results.}
 
-\item{nextToken}{Specify the pagination token from a previous request to retrieve the
-next page of results.}
+\item{nextToken}{Specify the pagination token from a previous request to retrieve the next page of results.}
 
 \item{filter}{A filter to apply to the list.}
 }
 \description{
-Retrieves a list of read set activation jobs.
+Retrieves a list of read set activation jobs and returns the metadata in a JSON formatted output. To extract metadata from a read set activation job, use the \code{\link[=omics_get_read_set_activation_job]{get_read_set_activation_job}} API operation.
 
 See \url{https://www.paws-r-sdk.com/docs/omics_list_read_set_activation_jobs/} for full documentation.
 }

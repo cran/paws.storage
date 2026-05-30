@@ -11,45 +11,33 @@ s3control_get_data_access(
   Permission,
   DurationSeconds = NULL,
   Privilege = NULL,
-  TargetType = NULL
+  TargetType = NULL,
+  AuditContext = NULL
 )
 }
 \arguments{
 \item{AccountId}{[required] The Amazon Web Services account ID of the S3 Access Grants instance.}
 
-\item{Target}{[required] The S3 URI path of the data to which you are requesting temporary access
-credentials. If the requesting account has an access grant for this
-data, S3 Access Grants vends temporary access credentials in the
-response.}
+\item{Target}{[required] The S3 URI path of the data to which you are requesting temporary access credentials. If the requesting account has an access grant for this data, S3 Access Grants vends temporary access credentials in the response.}
 
-\item{Permission}{[required] The type of permission granted to your S3 data, which can be set to one
-of the following values:
+\item{Permission}{[required] The type of permission granted to your S3 data, which can be set to one of the following values:
 \itemize{
 \item \code{READ} – Grant read-only access to the S3 data.
 \item \code{WRITE} – Grant write-only access to the S3 data.
 \item \code{READWRITE} – Grant both read and write access to the S3 data.
 }}
 
-\item{DurationSeconds}{The session duration, in seconds, of the temporary access credential
-that S3 Access Grants vends to the grantee or client application. The
-default value is 1 hour, but the grantee can specify a range from 900
-seconds (15 minutes) up to 43200 seconds (12 hours). If the grantee
-requests a value higher than this maximum, the operation fails.}
+\item{DurationSeconds}{The session duration, in seconds, of the temporary access credential that S3 Access Grants vends to the grantee or client application. The default value is 1 hour, but the grantee can specify a range from 900 seconds (15 minutes) up to 43200 seconds (12 hours). If the grantee requests a value higher than this maximum, the operation fails.}
 
-\item{Privilege}{The scope of the temporary access credential that S3 Access Grants vends
-to the grantee or client application.
+\item{Privilege}{The scope of the temporary access credential that S3 Access Grants vends to the grantee or client application.
 \itemize{
-\item \code{Default} – The scope of the returned temporary access token is the
-scope of the grant that is closest to the target scope.
-\item \code{Minimal} – The scope of the returned temporary access token is the
-same as the requested target scope as long as the requested scope is
-the same as or a subset of the grant scope.
+\item \code{Default} – The scope of the returned temporary access token is the scope of the grant that is closest to the target scope.
+\item \code{Minimal} – The scope of the returned temporary access token is the same as the requested target scope as long as the requested scope is the same as or a subset of the grant scope.
 }}
 
-\item{TargetType}{The type of \code{Target}. The only possible value is \code{Object}. Pass this
-value if the target data that you would like to access is a path to an
-object. Do not pass this value if the target data is a bucket or a
-bucket and a prefix.}
+\item{TargetType}{The type of \code{Target}. The only possible value is \code{Object}. Pass this value if the target data that you would like to access is a path to an object. Do not pass this value if the target data is a bucket or a bucket and a prefix.}
+
+\item{AuditContext}{The context to identify the job or query associated with the credential request. This information will be displayed in CloudTrail log in your account.}
 }
 \description{
 Returns a temporary access credential from S3 Access Grants to the grantee or client application. The \href{https://docs.aws.amazon.com/STS/latest/APIReference/API_Credentials.html}{temporary credential} is an Amazon Web Services STS token that grants them access to the S3 data.

@@ -17,32 +17,25 @@ storagegateway_associate_file_system(
 )
 }
 \arguments{
-\item{UserName}{[required] The user name of the user credential that has permission to access the
-root share D$ of the Amazon FSx file system. The user account must
-belong to the Amazon FSx delegated admin user group.}
+\item{UserName}{[required] The user name of the user credential that has permission to access the root share D$ of the Amazon FSx file system. The user account must belong to the Amazon FSx delegated admin user group.}
 
 \item{Password}{[required] The password of the user credential.}
 
-\item{ClientToken}{[required] A unique string value that you supply that is used by the FSx File
-Gateway to ensure idempotent file system association creation.}
+\item{ClientToken}{[required] A unique string value that you supply that is used by the FSx File Gateway to ensure idempotent file system association creation.}
 
-\item{GatewayARN}{[required]}
+\item{GatewayARN}{[required] The Amazon Resource Name (ARN) of the gateway. Use the \code{\link[=storagegateway_list_gateways]{list_gateways}} operation to return a list of gateways for your account and Amazon Web Services Region.}
 
-\item{LocationARN}{[required] The Amazon Resource Name (ARN) of the Amazon FSx file system to
-associate with the FSx File Gateway.}
+\item{LocationARN}{[required] The Amazon Resource Name (ARN) of the Amazon FSx file system to associate with the FSx File Gateway.}
 
-\item{Tags}{A list of up to 50 tags that can be assigned to the file system
-association. Each tag is a key-value pair.}
+\item{Tags}{A list of up to 50 tags that can be assigned to the file system association. Each tag is a key-value pair.}
 
 \item{AuditDestinationARN}{The Amazon Resource Name (ARN) of the storage used for the audit logs.}
 
-\item{CacheAttributes}{}
+\item{CacheAttributes}{The refresh cache information for the file share or FSx file systems.}
 
-\item{EndpointNetworkConfiguration}{Specifies the network configuration information for the gateway
-associated with the Amazon FSx file system.
+\item{EndpointNetworkConfiguration}{Specifies the network configuration information for the gateway associated with the Amazon FSx file system.
 
-If multiple file systems are associated with this gateway, this
-parameter's \code{IpAddresses} field is required.}
+If multiple file systems are associated with this gateway, this parameter's \code{IpAddresses} field is required.}
 }
 \description{
 Associate an Amazon FSx file system with the FSx File Gateway. After the association process is complete, the file shares on the Amazon FSx file system are available for access through the gateway. This operation only supports the FSx File Gateway type.

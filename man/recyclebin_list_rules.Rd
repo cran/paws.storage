@@ -14,27 +14,22 @@ recyclebin_list_rules(
 )
 }
 \arguments{
-\item{MaxResults}{The maximum number of results to return with a single call. To retrieve
-the remaining results, make another call with the returned \code{NextToken}
-value.}
+\item{MaxResults}{The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned \code{NextToken} value.}
 
 \item{NextToken}{The token for the next page of results.}
 
-\item{ResourceType}{[required] The resource type retained by the retention rule. Only retention rules
-that retain the specified resource type are listed. Currently, only
-Amazon EBS snapshots and EBS-backed AMIs are supported. To list
-retention rules that retain snapshots, specify \code{EBS_SNAPSHOT}. To list
-retention rules that retain EBS-backed AMIs, specify \code{EC2_IMAGE}.}
+\item{ResourceType}{[required] The resource type retained by the retention rule. Only retention rules that retain the specified resource type are listed. Currently, only EBS volumes, EBS snapshots, and EBS-backed AMIs are supported.
+\itemize{
+\item To list retention rules that retain EBS volumes, specify \code{EBS_VOLUME}.
+\item To list retention rules that retain EBS snapshots, specify \code{EBS_SNAPSHOT}.
+\item To list retention rules that retain EBS-backed AMIs, specify \code{EC2_IMAGE}.
+}}
 
-\item{ResourceTags}{[Tag-level retention rules only] Information about the resource tags
-used to identify resources that are retained by the retention rule.}
+\item{ResourceTags}{[Tag-level retention rules only] Information about the resource tags used to identify resources that are retained by the retention rule.}
 
-\item{LockState}{The lock state of the retention rules to list. Only retention rules with
-the specified lock state are returned.}
+\item{LockState}{The lock state of the retention rules to list. Only retention rules with the specified lock state are returned.}
 
-\item{ExcludeResourceTags}{[Region-level retention rules only] Information about the exclusion
-tags used to identify resources that are to be excluded, or ignored, by
-the retention rule.}
+\item{ExcludeResourceTags}{[Region-level retention rules only] Information about the exclusion tags used to identify resources that are to be excluded, or ignored, by the retention rule.}
 }
 \description{
 Lists the Recycle Bin retention rules in the Region.

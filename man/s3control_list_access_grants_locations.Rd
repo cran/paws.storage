@@ -15,23 +15,11 @@ s3control_list_access_grants_locations(
 \arguments{
 \item{AccountId}{[required] The Amazon Web Services account ID of the S3 Access Grants instance.}
 
-\item{NextToken}{A pagination token to request the next page of results. Pass this value
-into a subsequent \verb{List Access Grants Locations} request in order to
-retrieve the next page of results.}
+\item{NextToken}{A pagination token to request the next page of results. Pass this value into a subsequent \verb{List Access Grants Locations} request in order to retrieve the next page of results.}
 
-\item{MaxResults}{The maximum number of access grants that you would like returned in the
-\verb{List Access Grants} response. If the results include the pagination
-token \code{NextToken}, make another call using the \code{NextToken} to determine
-if there are more results.}
+\item{MaxResults}{The maximum number of access grants that you would like returned in the \verb{List Access Grants} response. If the results include the pagination token \code{NextToken}, make another call using the \code{NextToken} to determine if there are more results.}
 
-\item{LocationScope}{The S3 path to the location that you are registering. The location scope
-can be the default S3 location \verb{s3://}, the S3 path to a bucket
-\verb{s3://<bucket>}, or the S3 path to a bucket and prefix
-\verb{s3://<bucket>/<prefix>}. A prefix in S3 is a string of characters at
-the beginning of an object key name used to organize the objects that
-you store in your S3 buckets. For example, object key names that start
-with the \verb{engineering/} prefix or object key names that start with the
-\verb{marketing/campaigns/} prefix.}
+\item{LocationScope}{The S3 path to the location that you are registering. The location scope can be the default S3 location \verb{s3://}, the S3 path to a bucket \verb{s3://<bucket>}, or the S3 path to a bucket and prefix \verb{s3://<bucket>/<prefix>}. A prefix in S3 is a string of characters at the beginning of an object key name used to organize the objects that you store in your S3 buckets. For example, object key names that start with the \verb{engineering/} prefix or object key names that start with the \verb{marketing/campaigns/} prefix.}
 }
 \description{
 Returns a list of the locations registered in your S3 Access Grants instance.

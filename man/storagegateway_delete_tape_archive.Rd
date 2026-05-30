@@ -7,13 +7,9 @@
 storagegateway_delete_tape_archive(TapeARN, BypassGovernanceRetention = NULL)
 }
 \arguments{
-\item{TapeARN}{[required] The Amazon Resource Name (ARN) of the virtual tape to delete from the
-virtual tape shelf (VTS).}
+\item{TapeARN}{[required] The Amazon Resource Name (ARN) of the virtual tape to delete from the virtual tape shelf (VTS).}
 
-\item{BypassGovernanceRetention}{Set to \code{TRUE} to delete an archived tape that belongs to a custom pool
-with tape retention lock. Only archived tapes with tape retention lock
-set to \code{governance} can be deleted. Archived tapes with tape retention
-lock set to \code{compliance} can't be deleted.}
+\item{BypassGovernanceRetention}{Set to \code{TRUE} to delete an archived tape that belongs to a custom pool with tape retention lock. Only archived tapes with tape retention lock set to \code{governance} can be deleted. Archived tapes with tape retention lock set to \code{compliance} can't be deleted.}
 }
 \description{
 Deletes the specified virtual tape from the virtual tape shelf (VTS). This operation is only supported in the tape gateway type.

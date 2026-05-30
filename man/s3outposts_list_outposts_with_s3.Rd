@@ -8,11 +8,7 @@ Services account}
 s3outposts_list_outposts_with_s3(NextToken = NULL, MaxResults = NULL)
 }
 \arguments{
-\item{NextToken}{When you can get additional results from the
-\code{\link[=s3outposts_list_outposts_with_s3]{list_outposts_with_s3}} call, a
-\code{NextToken} parameter is returned in the output. You can then pass in a
-subsequent command to the \code{NextToken} parameter to continue listing
-additional Outposts.}
+\item{NextToken}{When you can get additional results from the \code{\link[=s3outposts_list_outposts_with_s3]{list_outposts_with_s3}} call, a \code{NextToken} parameter is returned in the output. You can then pass in a subsequent command to the \code{NextToken} parameter to continue listing additional Outposts.}
 
 \item{MaxResults}{The maximum number of Outposts to return. The limit is 100.}
 }

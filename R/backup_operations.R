@@ -3,6 +3,39 @@
 #' @include backup_service.R
 NULL
 
+#' Associates an MPA approval team with a backup vault
+#'
+#' @description
+#' Associates an MPA approval team with a backup vault.
+#'
+#' See [https://www.paws-r-sdk.com/docs/backup_associate_backup_vault_mpa_approval_team/](https://www.paws-r-sdk.com/docs/backup_associate_backup_vault_mpa_approval_team/) for full documentation.
+#'
+#' @param BackupVaultName &#91;required&#93; The name of the backup vault to associate with the MPA approval team.
+#' @param MpaApprovalTeamArn &#91;required&#93; The Amazon Resource Name (ARN) of the MPA approval team to associate with the backup vault.
+#' @param RequesterComment A comment provided by the requester explaining the association request.
+#'
+#' @keywords internal
+#'
+#' @rdname backup_associate_backup_vault_mpa_approval_team
+backup_associate_backup_vault_mpa_approval_team <- function(BackupVaultName, MpaApprovalTeamArn, RequesterComment = NULL) {
+  op <- new_operation(
+    name = "AssociateBackupVaultMpaApprovalTeam",
+    http_method = "PUT",
+    http_path = "/backup-vaults/{backupVaultName}/mpaApprovalTeam",
+    host_prefix = "",
+    paginator = list(),
+    stream_api = FALSE
+  )
+  input <- .backup$associate_backup_vault_mpa_approval_team_input(BackupVaultName = BackupVaultName, MpaApprovalTeamArn = MpaApprovalTeamArn, RequesterComment = RequesterComment)
+  output <- .backup$associate_backup_vault_mpa_approval_team_output()
+  config <- get_config()
+  svc <- .backup$service(config, op)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.backup$operations$associate_backup_vault_mpa_approval_team <- backup_associate_backup_vault_mpa_approval_team
+
 #' Removes the specified legal hold on a recovery point
 #'
 #' @description
@@ -43,16 +76,11 @@ backup_cancel_legal_hold <- function(LegalHoldId, CancelDescription, RetainRecor
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_create_backup_plan/](https://www.paws-r-sdk.com/docs/backup_create_backup_plan/) for full documentation.
 #'
-#' @param BackupPlan &#91;required&#93; The body of a backup plan. Includes a `BackupPlanName` and one or more
-#' sets of `Rules`.
+#' @param BackupPlan &#91;required&#93; The body of a backup plan. Includes a `BackupPlanName` and one or more sets of `Rules`.
 #' @param BackupPlanTags The tags to assign to the backup plan.
-#' @param CreatorRequestId Identifies the request and allows failed requests to be retried without
-#' the risk of running the operation twice. If the request includes a
-#' `CreatorRequestId` that matches an existing backup plan, that plan is
-#' returned. This parameter is optional.
+#' @param CreatorRequestId Identifies the request and allows failed requests to be retried without the risk of running the operation twice. If the request includes a `CreatorRequestId` that matches an existing backup plan, that plan is returned. This parameter is optional.
 #' 
-#' If used, this parameter must contain 1 to 50 alphanumeric or '-_.'
-#' characters.
+#' If used, this parameter must contain 1 to 50 alphanumeric or '-_.' characters.
 #'
 #' @keywords internal
 #'
@@ -86,12 +114,9 @@ backup_create_backup_plan <- function(BackupPlan, BackupPlanTags = NULL, Creator
 #'
 #' @param BackupPlanId &#91;required&#93; The ID of the backup plan.
 #' @param BackupSelection &#91;required&#93; The body of a request to assign a set of resources to a backup plan.
-#' @param CreatorRequestId A unique string that identifies the request and allows failed requests
-#' to be retried without the risk of running the operation twice. This
-#' parameter is optional.
+#' @param CreatorRequestId A unique string that identifies the request and allows failed requests to be retried without the risk of running the operation twice. This parameter is optional.
 #' 
-#' If used, this parameter must contain 1 to 50 alphanumeric or '-_.'
-#' characters.
+#' If used, this parameter must contain 1 to 50 alphanumeric or '-_.' characters.
 #'
 #' @keywords internal
 #'
@@ -122,20 +147,12 @@ backup_create_backup_selection <- function(BackupPlanId, BackupSelection, Creato
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_create_backup_vault/](https://www.paws-r-sdk.com/docs/backup_create_backup_vault/) for full documentation.
 #'
-#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults
-#' are identified by names that are unique to the account used to create
-#' them and the Amazon Web Services Region where they are created. They
-#' consist of letters, numbers, and hyphens.
+#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created. They consist of letters, numbers, and hyphens.
 #' @param BackupVaultTags The tags to assign to the backup vault.
-#' @param EncryptionKeyArn The server-side encryption key that is used to protect your backups; for
-#' example,
-#' `arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab`.
-#' @param CreatorRequestId A unique string that identifies the request and allows failed requests
-#' to be retried without the risk of running the operation twice. This
-#' parameter is optional.
+#' @param EncryptionKeyArn The server-side encryption key that is used to protect your backups; for example, `arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab`.
+#' @param CreatorRequestId A unique string that identifies the request and allows failed requests to be retried without the risk of running the operation twice. This parameter is optional.
 #' 
-#' If used, this parameter must contain 1 to 50 alphanumeric or '-_.'
-#' characters.
+#' If used, this parameter must contain 1 to 50 alphanumeric or '-_.' characters.
 #'
 #' @keywords internal
 #'
@@ -166,17 +183,10 @@ backup_create_backup_vault <- function(BackupVaultName, BackupVaultTags = NULL, 
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_create_framework/](https://www.paws-r-sdk.com/docs/backup_create_framework/) for full documentation.
 #'
-#' @param FrameworkName &#91;required&#93; The unique name of the framework. The name must be between 1 and 256
-#' characters, starting with a letter, and consisting of letters (a-z,
-#' A-Z), numbers (0-9), and underscores (_).
-#' @param FrameworkDescription An optional description of the framework with a maximum of 1,024
-#' characters.
-#' @param FrameworkControls &#91;required&#93; The controls that make up the framework. Each control in the list has a
-#' name, input parameters, and scope.
-#' @param IdempotencyToken A customer-chosen string that you can use to distinguish between
-#' otherwise identical calls to `CreateFrameworkInput`. Retrying a
-#' successful request with the same idempotency token results in a success
-#' message with no action taken.
+#' @param FrameworkName &#91;required&#93; The unique name of the framework. The name must be between 1 and 256 characters, starting with a letter, and consisting of letters (a-z, A-Z), numbers (0-9), and underscores (_).
+#' @param FrameworkDescription An optional description of the framework with a maximum of 1,024 characters.
+#' @param FrameworkControls &#91;required&#93; The controls that make up the framework. Each control in the list has a name, input parameters, and scope.
+#' @param IdempotencyToken A customer-chosen string that you can use to distinguish between otherwise identical calls to `CreateFrameworkInput`. Retrying a successful request with the same idempotency token results in a success message with no action taken.
 #' @param FrameworkTags The tags to assign to the framework.
 #'
 #' @keywords internal
@@ -210,15 +220,9 @@ backup_create_framework <- function(FrameworkName, FrameworkDescription = NULL, 
 #'
 #' @param Title &#91;required&#93; The title of the legal hold.
 #' @param Description &#91;required&#93; The description of the legal hold.
-#' @param IdempotencyToken This is a user-chosen string used to distinguish between otherwise
-#' identical calls. Retrying a successful request with the same idempotency
-#' token results in a success message with no action taken.
-#' @param RecoveryPointSelection The criteria to assign a set of resources, such as resource types or
-#' backup vaults.
-#' @param Tags Optional tags to include. A tag is a key-value pair you can use to
-#' manage, filter, and search for your resources. Allowed characters
-#' include UTF-8 letters, numbers, spaces, and the following
-#' characters: + - = . _ : /.
+#' @param IdempotencyToken This is a user-chosen string used to distinguish between otherwise identical calls. Retrying a successful request with the same idempotency token results in a success message with no action taken.
+#' @param RecoveryPointSelection The criteria to assign a set of resources, such as resource types or backup vaults.
+#' @param Tags Optional tags to include. A tag is a key-value pair you can use to manage, filter, and search for your resources. Allowed characters include UTF-8 letters, numbers, spaces, and the following characters: + - = . _ : /.
 #'
 #' @keywords internal
 #'
@@ -249,24 +253,21 @@ backup_create_legal_hold <- function(Title, Description, IdempotencyToken = NULL
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_create_logically_air_gapped_backup_vault/](https://www.paws-r-sdk.com/docs/backup_create_logically_air_gapped_backup_vault/) for full documentation.
 #'
-#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Logically
-#' air-gapped backup vaults are identified by names that are unique to the
-#' account used to create them and the Region where they are created.
+#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Logically air-gapped backup vaults are identified by names that are unique to the account used to create them and the Region where they are created.
 #' @param BackupVaultTags The tags to assign to the vault.
 #' @param CreatorRequestId The ID of the creation request.
 #' 
-#' This parameter is optional. If used, this parameter must contain 1 to 50
-#' alphanumeric or '-_.' characters.
-#' @param MinRetentionDays &#91;required&#93; This setting specifies the minimum retention period that the vault
-#' retains its recovery points.
+#' This parameter is optional. If used, this parameter must contain 1 to 50 alphanumeric or '-_.' characters.
+#' @param MinRetentionDays &#91;required&#93; This setting specifies the minimum retention period that the vault retains its recovery points.
 #' 
 #' The minimum value accepted is 7 days.
 #' @param MaxRetentionDays &#91;required&#93; The maximum retention period that the vault retains its recovery points.
+#' @param EncryptionKeyArn The ARN of the customer-managed KMS key to use for encrypting the logically air-gapped backup vault. If not specified, the vault will be encrypted with an Amazon Web Services-owned key managed by Amazon Web Services Backup.
 #'
 #' @keywords internal
 #'
 #' @rdname backup_create_logically_air_gapped_backup_vault
-backup_create_logically_air_gapped_backup_vault <- function(BackupVaultName, BackupVaultTags = NULL, CreatorRequestId = NULL, MinRetentionDays, MaxRetentionDays) {
+backup_create_logically_air_gapped_backup_vault <- function(BackupVaultName, BackupVaultTags = NULL, CreatorRequestId = NULL, MinRetentionDays, MaxRetentionDays, EncryptionKeyArn = NULL) {
   op <- new_operation(
     name = "CreateLogicallyAirGappedBackupVault",
     http_method = "PUT",
@@ -275,7 +276,7 @@ backup_create_logically_air_gapped_backup_vault <- function(BackupVaultName, Bac
     paginator = list(),
     stream_api = FALSE
   )
-  input <- .backup$create_logically_air_gapped_backup_vault_input(BackupVaultName = BackupVaultName, BackupVaultTags = BackupVaultTags, CreatorRequestId = CreatorRequestId, MinRetentionDays = MinRetentionDays, MaxRetentionDays = MaxRetentionDays)
+  input <- .backup$create_logically_air_gapped_backup_vault_input(BackupVaultName = BackupVaultName, BackupVaultTags = BackupVaultTags, CreatorRequestId = CreatorRequestId, MinRetentionDays = MinRetentionDays, MaxRetentionDays = MaxRetentionDays, EncryptionKeyArn = EncryptionKeyArn)
   output <- .backup$create_logically_air_gapped_backup_vault_output()
   config <- get_config()
   svc <- .backup$service(config, op)
@@ -292,27 +293,16 @@ backup_create_logically_air_gapped_backup_vault <- function(BackupVaultName, Bac
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_create_report_plan/](https://www.paws-r-sdk.com/docs/backup_create_report_plan/) for full documentation.
 #'
-#' @param ReportPlanName &#91;required&#93; The unique name of the report plan. The name must be between 1 and 256
-#' characters, starting with a letter, and consisting of letters (a-z,
-#' A-Z), numbers (0-9), and underscores (_).
-#' @param ReportPlanDescription An optional description of the report plan with a maximum of 1,024
-#' characters.
-#' @param ReportDeliveryChannel &#91;required&#93; A structure that contains information about where and how to deliver
-#' your reports, specifically your Amazon S3 bucket name, S3 key prefix,
-#' and the formats of your reports.
-#' @param ReportSetting &#91;required&#93; Identifies the report template for the report. Reports are built using a
-#' report template. The report templates are:
+#' @param ReportPlanName &#91;required&#93; The unique name of the report plan. The name must be between 1 and 256 characters, starting with a letter, and consisting of letters (a-z, A-Z), numbers (0-9), and underscores (_).
+#' @param ReportPlanDescription An optional description of the report plan with a maximum of 1,024 characters.
+#' @param ReportDeliveryChannel &#91;required&#93; A structure that contains information about where and how to deliver your reports, specifically your Amazon S3 bucket name, S3 key prefix, and the formats of your reports.
+#' @param ReportSetting &#91;required&#93; Identifies the report template for the report. Reports are built using a report template. The report templates are:
 #' 
-#' `RESOURCE_COMPLIANCE_REPORT | CONTROL_COMPLIANCE_REPORT | BACKUP_JOB_REPORT | COPY_JOB_REPORT | RESTORE_JOB_REPORT`
+#' `RESOURCE_COMPLIANCE_REPORT | CONTROL_COMPLIANCE_REPORT | BACKUP_JOB_REPORT | COPY_JOB_REPORT | RESTORE_JOB_REPORT | SCAN_JOB_REPORT `
 #' 
-#' If the report template is `RESOURCE_COMPLIANCE_REPORT` or
-#' `CONTROL_COMPLIANCE_REPORT`, this API resource also describes the report
-#' coverage by Amazon Web Services Regions and frameworks.
+#' If the report template is `RESOURCE_COMPLIANCE_REPORT` or `CONTROL_COMPLIANCE_REPORT`, this API resource also describes the report coverage by Amazon Web Services Regions and frameworks.
 #' @param ReportPlanTags The tags to assign to the report plan.
-#' @param IdempotencyToken A customer-chosen string that you can use to distinguish between
-#' otherwise identical calls to `CreateReportPlanInput`. Retrying a
-#' successful request with the same idempotency token results in a success
-#' message with no action taken.
+#' @param IdempotencyToken A customer-chosen string that you can use to distinguish between otherwise identical calls to `CreateReportPlanInput`. Retrying a successful request with the same idempotency token results in a success message with no action taken.
 #'
 #' @keywords internal
 #'
@@ -336,6 +326,43 @@ backup_create_report_plan <- function(ReportPlanName, ReportPlanDescription = NU
 }
 .backup$operations$create_report_plan <- backup_create_report_plan
 
+#' Creates a restore access backup vault that provides temporary access to
+#' recovery points in a logically air-gapped backup vault, subject to MPA
+#' approval
+#'
+#' @description
+#' Creates a restore access backup vault that provides temporary access to recovery points in a logically air-gapped backup vault, subject to MPA approval.
+#'
+#' See [https://www.paws-r-sdk.com/docs/backup_create_restore_access_backup_vault/](https://www.paws-r-sdk.com/docs/backup_create_restore_access_backup_vault/) for full documentation.
+#'
+#' @param SourceBackupVaultArn &#91;required&#93; The ARN of the source backup vault containing the recovery points to which temporary access is requested.
+#' @param BackupVaultName The name of the backup vault to associate with an MPA approval team.
+#' @param BackupVaultTags Optional tags to assign to the restore access backup vault.
+#' @param CreatorRequestId A unique string that identifies the request and allows failed requests to be retried without the risk of executing the operation twice.
+#' @param RequesterComment A comment explaining the reason for requesting restore access to the backup vault.
+#'
+#' @keywords internal
+#'
+#' @rdname backup_create_restore_access_backup_vault
+backup_create_restore_access_backup_vault <- function(SourceBackupVaultArn, BackupVaultName = NULL, BackupVaultTags = NULL, CreatorRequestId = NULL, RequesterComment = NULL) {
+  op <- new_operation(
+    name = "CreateRestoreAccessBackupVault",
+    http_method = "PUT",
+    http_path = "/restore-access-backup-vaults",
+    host_prefix = "",
+    paginator = list(),
+    stream_api = FALSE
+  )
+  input <- .backup$create_restore_access_backup_vault_input(SourceBackupVaultArn = SourceBackupVaultArn, BackupVaultName = BackupVaultName, BackupVaultTags = BackupVaultTags, CreatorRequestId = CreatorRequestId, RequesterComment = RequesterComment)
+  output <- .backup$create_restore_access_backup_vault_output()
+  config <- get_config()
+  svc <- .backup$service(config, op)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.backup$operations$create_restore_access_backup_vault <- backup_create_restore_access_backup_vault
+
 #' Creates a restore testing plan
 #'
 #' @description
@@ -343,18 +370,10 @@ backup_create_report_plan <- function(ReportPlanName, ReportPlanDescription = NU
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_create_restore_testing_plan/](https://www.paws-r-sdk.com/docs/backup_create_restore_testing_plan/) for full documentation.
 #'
-#' @param CreatorRequestId This is a unique string that identifies the request and allows failed
-#' requests to be retriedwithout the risk of running the operation twice.
-#' This parameter is optional. If used, this parameter must contain 1 to 50
-#' alphanumeric or '-_.' characters.
-#' @param RestoreTestingPlan &#91;required&#93; A restore testing plan must contain a unique `RestoreTestingPlanName`
-#' string you create and must contain a `ScheduleExpression` cron. You may
-#' optionally include a `StartWindowHours` integer and a `CreatorRequestId`
-#' string.
+#' @param CreatorRequestId This is a unique string that identifies the request and allows failed requests to be retriedwithout the risk of running the operation twice. This parameter is optional. If used, this parameter must contain 1 to 50 alphanumeric or '-_.' characters.
+#' @param RestoreTestingPlan &#91;required&#93; A restore testing plan must contain a unique `RestoreTestingPlanName` string you create and must contain a `ScheduleExpression` cron. You may optionally include a `StartWindowHours` integer and a `CreatorRequestId` string.
 #' 
-#' The `RestoreTestingPlanName` is a unique string that is the name of the
-#' restore testing plan. This cannot be changed after creation, and it must
-#' consist of only alphanumeric characters and underscores.
+#' The `RestoreTestingPlanName` is a unique string that is the name of the restore testing plan. This cannot be changed after creation, and it must consist of only alphanumeric characters and underscores.
 #' @param Tags The tags to assign to the restore testing plan.
 #'
 #' @keywords internal
@@ -387,14 +406,9 @@ backup_create_restore_testing_plan <- function(CreatorRequestId = NULL, RestoreT
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_create_restore_testing_selection/](https://www.paws-r-sdk.com/docs/backup_create_restore_testing_selection/) for full documentation.
 #'
-#' @param CreatorRequestId This is an optional unique string that identifies the request and allows
-#' failed requests to be retried without the risk of running the operation
-#' twice. If used, this parameter must contain 1 to 50 alphanumeric or
-#' '-_.' characters.
-#' @param RestoreTestingPlanName &#91;required&#93; Input the restore testing plan name that was returned from the related
-#' CreateRestoreTestingPlan request.
-#' @param RestoreTestingSelection &#91;required&#93; This consists of `RestoreTestingSelectionName`, `ProtectedResourceType`,
-#' and one of the following:
+#' @param CreatorRequestId This is an optional unique string that identifies the request and allows failed requests to be retried without the risk of running the operation twice. If used, this parameter must contain 1 to 50 alphanumeric or '-_.' characters.
+#' @param RestoreTestingPlanName &#91;required&#93; Input the restore testing plan name that was returned from the related CreateRestoreTestingPlan request.
+#' @param RestoreTestingSelection &#91;required&#93; This consists of `RestoreTestingSelectionName`, `ProtectedResourceType`, and one of the following:
 #' 
 #' -   `ProtectedResourceArns`
 #' 
@@ -402,10 +416,7 @@ backup_create_restore_testing_plan <- function(CreatorRequestId = NULL, RestoreT
 #' 
 #' Each protected resource type can have one single value.
 #' 
-#' A restore testing selection can include a wildcard value ("*") for
-#' `ProtectedResourceArns` along with `ProtectedResourceConditions`.
-#' Alternatively, you can include up to 30 specific protected resource ARNs
-#' in `ProtectedResourceArns`.
+#' A restore testing selection can include a wildcard value ("*") for `ProtectedResourceArns` along with `ProtectedResourceConditions`. Alternatively, you can include up to 30 specific protected resource ARNs in `ProtectedResourceArns`.
 #'
 #' @keywords internal
 #'
@@ -428,6 +439,41 @@ backup_create_restore_testing_selection <- function(CreatorRequestId = NULL, Res
   return(response)
 }
 .backup$operations$create_restore_testing_selection <- backup_create_restore_testing_selection
+
+#' Creates a tiering configuration
+#'
+#' @description
+#' Creates a tiering configuration.
+#'
+#' See [https://www.paws-r-sdk.com/docs/backup_create_tiering_configuration/](https://www.paws-r-sdk.com/docs/backup_create_tiering_configuration/) for full documentation.
+#'
+#' @param TieringConfiguration &#91;required&#93; A tiering configuration must contain a unique `TieringConfigurationName` string you create and must contain a `BackupVaultName` and `ResourceSelection`. You may optionally include a `CreatorRequestId` string.
+#' 
+#' The `TieringConfigurationName` is a unique string that is the name of the tiering configuration. This cannot be changed after creation, and it must consist of only alphanumeric characters and underscores.
+#' @param TieringConfigurationTags The tags to assign to the tiering configuration.
+#' @param CreatorRequestId This is a unique string that identifies the request and allows failed requests to be retried without the risk of running the operation twice. This parameter is optional. If used, this parameter must contain 1 to 50 alphanumeric or '-_.' characters.
+#'
+#' @keywords internal
+#'
+#' @rdname backup_create_tiering_configuration
+backup_create_tiering_configuration <- function(TieringConfiguration, TieringConfigurationTags = NULL, CreatorRequestId = NULL) {
+  op <- new_operation(
+    name = "CreateTieringConfiguration",
+    http_method = "PUT",
+    http_path = "/tiering-configurations",
+    host_prefix = "",
+    paginator = list(),
+    stream_api = FALSE
+  )
+  input <- .backup$create_tiering_configuration_input(TieringConfiguration = TieringConfiguration, TieringConfigurationTags = TieringConfigurationTags, CreatorRequestId = CreatorRequestId)
+  output <- .backup$create_tiering_configuration_output()
+  config <- get_config()
+  svc <- .backup$service(config, op)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.backup$operations$create_tiering_configuration <- backup_create_tiering_configuration
 
 #' Deletes a backup plan
 #'
@@ -469,8 +515,7 @@ backup_delete_backup_plan <- function(BackupPlanId) {
 #' See [https://www.paws-r-sdk.com/docs/backup_delete_backup_selection/](https://www.paws-r-sdk.com/docs/backup_delete_backup_selection/) for full documentation.
 #'
 #' @param BackupPlanId &#91;required&#93; Uniquely identifies a backup plan.
-#' @param SelectionId &#91;required&#93; Uniquely identifies the body of a request to assign a set of resources
-#' to a backup plan.
+#' @param SelectionId &#91;required&#93; Uniquely identifies the body of a request to assign a set of resources to a backup plan.
 #'
 #' @keywords internal
 #'
@@ -501,9 +546,7 @@ backup_delete_backup_selection <- function(BackupPlanId, SelectionId) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_delete_backup_vault/](https://www.paws-r-sdk.com/docs/backup_delete_backup_vault/) for full documentation.
 #'
-#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults
-#' are identified by names that are unique to the account used to create
-#' them and the Amazon Web Services Region where they are created.
+#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.
 #'
 #' @keywords internal
 #'
@@ -534,10 +577,7 @@ backup_delete_backup_vault <- function(BackupVaultName) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_delete_backup_vault_access_policy/](https://www.paws-r-sdk.com/docs/backup_delete_backup_vault_access_policy/) for full documentation.
 #'
-#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults
-#' are identified by names that are unique to the account used to create
-#' them and the Amazon Web Services Region where they are created. They
-#' consist of lowercase letters, numbers, and hyphens.
+#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created. They consist of lowercase letters, numbers, and hyphens.
 #'
 #' @keywords internal
 #'
@@ -600,9 +640,7 @@ backup_delete_backup_vault_lock_configuration <- function(BackupVaultName) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_delete_backup_vault_notifications/](https://www.paws-r-sdk.com/docs/backup_delete_backup_vault_notifications/) for full documentation.
 #'
-#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults
-#' are identified by names that are unique to the account used to create
-#' them and the Region where they are created.
+#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Region where they are created.
 #'
 #' @keywords internal
 #'
@@ -664,12 +702,8 @@ backup_delete_framework <- function(FrameworkName) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_delete_recovery_point/](https://www.paws-r-sdk.com/docs/backup_delete_recovery_point/) for full documentation.
 #'
-#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults
-#' are identified by names that are unique to the account used to create
-#' them and the Amazon Web Services Region where they are created.
-#' @param RecoveryPointArn &#91;required&#93; An Amazon Resource Name (ARN) that uniquely identifies a recovery point;
-#' for example,
-#' `arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45`.
+#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.
+#' @param RecoveryPointArn &#91;required&#93; An Amazon Resource Name (ARN) that uniquely identifies a recovery point; for example, `arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45`.
 #'
 #' @keywords internal
 #'
@@ -762,10 +796,8 @@ backup_delete_restore_testing_plan <- function(RestoreTestingPlanName) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_delete_restore_testing_selection/](https://www.paws-r-sdk.com/docs/backup_delete_restore_testing_selection/) for full documentation.
 #'
-#' @param RestoreTestingPlanName &#91;required&#93; Required unique name of the restore testing plan that contains the
-#' restore testing selection you wish to delete.
-#' @param RestoreTestingSelectionName &#91;required&#93; Required unique name of the restore testing selection you wish to
-#' delete.
+#' @param RestoreTestingPlanName &#91;required&#93; Required unique name of the restore testing plan that contains the restore testing selection you wish to delete.
+#' @param RestoreTestingSelectionName &#91;required&#93; Required unique name of the restore testing selection you wish to delete.
 #'
 #' @keywords internal
 #'
@@ -788,6 +820,38 @@ backup_delete_restore_testing_selection <- function(RestoreTestingPlanName, Rest
   return(response)
 }
 .backup$operations$delete_restore_testing_selection <- backup_delete_restore_testing_selection
+
+#' Deletes the tiering configuration specified by a tiering configuration
+#' name
+#'
+#' @description
+#' Deletes the tiering configuration specified by a tiering configuration name.
+#'
+#' See [https://www.paws-r-sdk.com/docs/backup_delete_tiering_configuration/](https://www.paws-r-sdk.com/docs/backup_delete_tiering_configuration/) for full documentation.
+#'
+#' @param TieringConfigurationName &#91;required&#93; The unique name of a tiering configuration.
+#'
+#' @keywords internal
+#'
+#' @rdname backup_delete_tiering_configuration
+backup_delete_tiering_configuration <- function(TieringConfigurationName) {
+  op <- new_operation(
+    name = "DeleteTieringConfiguration",
+    http_method = "DELETE",
+    http_path = "/tiering-configurations/{tieringConfigurationName}",
+    host_prefix = "",
+    paginator = list(),
+    stream_api = FALSE
+  )
+  input <- .backup$delete_tiering_configuration_input(TieringConfigurationName = TieringConfigurationName)
+  output <- .backup$delete_tiering_configuration_output()
+  config <- get_config()
+  svc <- .backup$service(config, op)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.backup$operations$delete_tiering_configuration <- backup_delete_tiering_configuration
 
 #' Returns backup job details for the specified BackupJobId
 #'
@@ -827,9 +891,7 @@ backup_describe_backup_job <- function(BackupJobId) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_describe_backup_vault/](https://www.paws-r-sdk.com/docs/backup_describe_backup_vault/) for full documentation.
 #'
-#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults
-#' are identified by names that are unique to the account used to create
-#' them and the Amazon Web Services Region where they are created.
+#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.
 #' @param BackupVaultAccountId The account ID of the specified backup vault.
 #'
 #' @keywords internal
@@ -916,11 +978,12 @@ backup_describe_framework <- function(FrameworkName) {
 }
 .backup$operations$describe_framework <- backup_describe_framework
 
-#' Describes whether the Amazon Web Services account is opted in to
-#' cross-account backup
+#' Describes whether the Amazon Web Services account has enabled different
+#' cross-account management options, including cross-account backup,
+#' multi-party approval, and delegated administrator
 #'
 #' @description
-#' Describes whether the Amazon Web Services account is opted in to cross-account backup. Returns an error if the account is not a member of an Organizations organization. Example: `describe-global-settings --region us-west-2`
+#' Describes whether the Amazon Web Services account has enabled different cross-account management options, including cross-account backup, multi-party approval, and delegated administrator. Returns an error if the account is not a member of an Organizations organization. Example: `describe-global-settings --region us-west-2`
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_describe_global_settings/](https://www.paws-r-sdk.com/docs/backup_describe_global_settings/) for full documentation.
 #'
@@ -957,8 +1020,7 @@ backup_describe_global_settings <- function() {
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_describe_protected_resource/](https://www.paws-r-sdk.com/docs/backup_describe_protected_resource/) for full documentation.
 #'
-#' @param ResourceArn &#91;required&#93; An Amazon Resource Name (ARN) that uniquely identifies a resource. The
-#' format of the ARN depends on the resource type.
+#' @param ResourceArn &#91;required&#93; An Amazon Resource Name (ARN) that uniquely identifies a resource. The format of the ARN depends on the resource type.
 #'
 #' @keywords internal
 #'
@@ -990,12 +1052,8 @@ backup_describe_protected_resource <- function(ResourceArn) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_describe_recovery_point/](https://www.paws-r-sdk.com/docs/backup_describe_recovery_point/) for full documentation.
 #'
-#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults
-#' are identified by names that are unique to the account used to create
-#' them and the Amazon Web Services Region where they are created.
-#' @param RecoveryPointArn &#91;required&#93; An Amazon Resource Name (ARN) that uniquely identifies a recovery point;
-#' for example,
-#' `arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45`.
+#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.
+#' @param RecoveryPointArn &#91;required&#93; An Amazon Resource Name (ARN) that uniquely identifies a recovery point; for example, `arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45`.
 #' @param BackupVaultAccountId The account ID of the specified backup vault.
 #'
 #' @keywords internal
@@ -1059,9 +1117,7 @@ backup_describe_region_settings <- function() {
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_describe_report_job/](https://www.paws-r-sdk.com/docs/backup_describe_report_job/) for full documentation.
 #'
-#' @param ReportJobId &#91;required&#93; The identifier of the report job. A unique, randomly generated, Unicode,
-#' UTF-8 encoded string that is at most 1,024 bytes long. The report job ID
-#' cannot be edited.
+#' @param ReportJobId &#91;required&#93; The identifier of the report job. A unique, randomly generated, Unicode, UTF-8 encoded string that is at most 1,024 bytes long. The report job ID cannot be edited.
 #'
 #' @keywords internal
 #'
@@ -1149,6 +1205,70 @@ backup_describe_restore_job <- function(RestoreJobId) {
 }
 .backup$operations$describe_restore_job <- backup_describe_restore_job
 
+#' Returns scan job details for the specified ScanJobID
+#'
+#' @description
+#' Returns scan job details for the specified ScanJobID.
+#'
+#' See [https://www.paws-r-sdk.com/docs/backup_describe_scan_job/](https://www.paws-r-sdk.com/docs/backup_describe_scan_job/) for full documentation.
+#'
+#' @param ScanJobId &#91;required&#93; Uniquely identifies a request to Backup to scan a resource.
+#'
+#' @keywords internal
+#'
+#' @rdname backup_describe_scan_job
+backup_describe_scan_job <- function(ScanJobId) {
+  op <- new_operation(
+    name = "DescribeScanJob",
+    http_method = "GET",
+    http_path = "/scan/jobs/{ScanJobId}",
+    host_prefix = "",
+    paginator = list(),
+    stream_api = FALSE
+  )
+  input <- .backup$describe_scan_job_input(ScanJobId = ScanJobId)
+  output <- .backup$describe_scan_job_output()
+  config <- get_config()
+  svc <- .backup$service(config, op)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.backup$operations$describe_scan_job <- backup_describe_scan_job
+
+#' Removes the association between an MPA approval team and a backup vault,
+#' disabling the MPA approval workflow for restore operations
+#'
+#' @description
+#' Removes the association between an MPA approval team and a backup vault, disabling the MPA approval workflow for restore operations.
+#'
+#' See [https://www.paws-r-sdk.com/docs/backup_disassociate_backup_vault_mpa_approval_team/](https://www.paws-r-sdk.com/docs/backup_disassociate_backup_vault_mpa_approval_team/) for full documentation.
+#'
+#' @param BackupVaultName &#91;required&#93; The name of the backup vault from which to disassociate the MPA approval team.
+#' @param RequesterComment An optional comment explaining the reason for disassociating the MPA approval team from the backup vault.
+#'
+#' @keywords internal
+#'
+#' @rdname backup_disassociate_backup_vault_mpa_approval_team
+backup_disassociate_backup_vault_mpa_approval_team <- function(BackupVaultName, RequesterComment = NULL) {
+  op <- new_operation(
+    name = "DisassociateBackupVaultMpaApprovalTeam",
+    http_method = "POST",
+    http_path = "/backup-vaults/{backupVaultName}/mpaApprovalTeam?delete",
+    host_prefix = "",
+    paginator = list(),
+    stream_api = FALSE
+  )
+  input <- .backup$disassociate_backup_vault_mpa_approval_team_input(BackupVaultName = BackupVaultName, RequesterComment = RequesterComment)
+  output <- .backup$disassociate_backup_vault_mpa_approval_team_output()
+  config <- get_config()
+  svc <- .backup$service(config, op)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.backup$operations$disassociate_backup_vault_mpa_approval_team <- backup_disassociate_backup_vault_mpa_approval_team
+
 #' Deletes the specified continuous backup recovery point from Backup and
 #' releases control of that continuous backup to the source service, such
 #' as Amazon RDS
@@ -1159,8 +1279,7 @@ backup_describe_restore_job <- function(RestoreJobId) {
 #' See [https://www.paws-r-sdk.com/docs/backup_disassociate_recovery_point/](https://www.paws-r-sdk.com/docs/backup_disassociate_recovery_point/) for full documentation.
 #'
 #' @param BackupVaultName &#91;required&#93; The unique name of an Backup vault.
-#' @param RecoveryPointArn &#91;required&#93; An Amazon Resource Name (ARN) that uniquely identifies an Backup
-#' recovery point.
+#' @param RecoveryPointArn &#91;required&#93; An Amazon Resource Name (ARN) that uniquely identifies an Backup recovery point.
 #'
 #' @keywords internal
 #'
@@ -1193,13 +1312,8 @@ backup_disassociate_recovery_point <- function(BackupVaultName, RecoveryPointArn
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_disassociate_recovery_point_from_parent/](https://www.paws-r-sdk.com/docs/backup_disassociate_recovery_point_from_parent/) for full documentation.
 #'
-#' @param BackupVaultName &#91;required&#93; The name of a logical container where the child (nested) recovery point
-#' is stored. Backup vaults are identified by names that are unique to the
-#' account used to create them and the Amazon Web Services Region where
-#' they are created.
-#' @param RecoveryPointArn &#91;required&#93; The Amazon Resource Name (ARN) that uniquely identifies the child
-#' (nested) recovery point; for example,
-#' `arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45.`
+#' @param BackupVaultName &#91;required&#93; The name of a logical container where the child (nested) recovery point is stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.
+#' @param RecoveryPointArn &#91;required&#93; The Amazon Resource Name (ARN) that uniquely identifies the child (nested) recovery point; for example, `arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45.`
 #'
 #' @keywords internal
 #'
@@ -1263,13 +1377,13 @@ backup_export_backup_plan_template <- function(BackupPlanId) {
 #' See [https://www.paws-r-sdk.com/docs/backup_get_backup_plan/](https://www.paws-r-sdk.com/docs/backup_get_backup_plan/) for full documentation.
 #'
 #' @param BackupPlanId &#91;required&#93; Uniquely identifies a backup plan.
-#' @param VersionId Unique, randomly generated, Unicode, UTF-8 encoded strings that are at
-#' most 1,024 bytes long. Version IDs cannot be edited.
+#' @param VersionId Unique, randomly generated, Unicode, UTF-8 encoded strings that are at most 1,024 bytes long. Version IDs cannot be edited.
+#' @param MaxScheduledRunsPreview Number of future scheduled backup runs to preview. When set to 0 (default), no scheduled runs preview is included in the response. Valid range is 0-10.
 #'
 #' @keywords internal
 #'
 #' @rdname backup_get_backup_plan
-backup_get_backup_plan <- function(BackupPlanId, VersionId = NULL) {
+backup_get_backup_plan <- function(BackupPlanId, VersionId = NULL, MaxScheduledRunsPreview = NULL) {
   op <- new_operation(
     name = "GetBackupPlan",
     http_method = "GET",
@@ -1278,7 +1392,7 @@ backup_get_backup_plan <- function(BackupPlanId, VersionId = NULL) {
     paginator = list(),
     stream_api = FALSE
   )
-  input <- .backup$get_backup_plan_input(BackupPlanId = BackupPlanId, VersionId = VersionId)
+  input <- .backup$get_backup_plan_input(BackupPlanId = BackupPlanId, VersionId = VersionId, MaxScheduledRunsPreview = MaxScheduledRunsPreview)
   output <- .backup$get_backup_plan_output()
   config <- get_config()
   svc <- .backup$service(config, op)
@@ -1359,8 +1473,7 @@ backup_get_backup_plan_from_template <- function(BackupPlanTemplateId) {
 #' See [https://www.paws-r-sdk.com/docs/backup_get_backup_selection/](https://www.paws-r-sdk.com/docs/backup_get_backup_selection/) for full documentation.
 #'
 #' @param BackupPlanId &#91;required&#93; Uniquely identifies a backup plan.
-#' @param SelectionId &#91;required&#93; Uniquely identifies the body of a request to assign a set of resources
-#' to a backup plan.
+#' @param SelectionId &#91;required&#93; Uniquely identifies the body of a request to assign a set of resources to a backup plan.
 #'
 #' @keywords internal
 #'
@@ -1392,9 +1505,7 @@ backup_get_backup_selection <- function(BackupPlanId, SelectionId) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_get_backup_vault_access_policy/](https://www.paws-r-sdk.com/docs/backup_get_backup_vault_access_policy/) for full documentation.
 #'
-#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults
-#' are identified by names that are unique to the account used to create
-#' them and the Amazon Web Services Region where they are created.
+#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.
 #'
 #' @keywords internal
 #'
@@ -1425,9 +1536,7 @@ backup_get_backup_vault_access_policy <- function(BackupVaultName) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_get_backup_vault_notifications/](https://www.paws-r-sdk.com/docs/backup_get_backup_vault_notifications/) for full documentation.
 #'
-#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults
-#' are identified by names that are unique to the account used to create
-#' them and the Amazon Web Services Region where they are created.
+#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.
 #'
 #' @keywords internal
 #'
@@ -1482,6 +1591,41 @@ backup_get_legal_hold <- function(LegalHoldId) {
 }
 .backup$operations$get_legal_hold <- backup_get_legal_hold
 
+#' Returns the malware scan results for a specified point in time within a
+#' continuous (point-in-time recovery) backup
+#'
+#' @description
+#' Returns the malware scan results for a specified point in time within a continuous (point-in-time recovery) backup.
+#'
+#' See [https://www.paws-r-sdk.com/docs/backup_get_pitr_malware_scan_results/](https://www.paws-r-sdk.com/docs/backup_get_pitr_malware_scan_results/) for full documentation.
+#'
+#' @param RecoveryPointArn &#91;required&#93; An ARN that uniquely identifies the target recovery point for scanning; for example, `arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45`.
+#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.
+#' @param ScanEndTime &#91;required&#93; The point in time within the continuous backup to examine for malware scan results.
+#' @param MalwareScanner &#91;required&#93; The scanning engine used for the corresponding scan job. Currently only `GUARDDUTY` is supported.
+#'
+#' @keywords internal
+#'
+#' @rdname backup_get_pitr_malware_scan_results
+backup_get_pitr_malware_scan_results <- function(RecoveryPointArn, BackupVaultName, ScanEndTime, MalwareScanner) {
+  op <- new_operation(
+    name = "GetPITRMalwareScanResults",
+    http_method = "GET",
+    http_path = "/scan/pitr-malware-scan-results",
+    host_prefix = "",
+    paginator = list(),
+    stream_api = FALSE
+  )
+  input <- .backup$get_pitr_malware_scan_results_input(RecoveryPointArn = RecoveryPointArn, BackupVaultName = BackupVaultName, ScanEndTime = ScanEndTime, MalwareScanner = MalwareScanner)
+  output <- .backup$get_pitr_malware_scan_results_output()
+  config <- get_config()
+  svc <- .backup$service(config, op)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.backup$operations$get_pitr_malware_scan_results <- backup_get_pitr_malware_scan_results
+
 #' This operation returns the metadata and details specific to the backup
 #' index associated with the specified recovery point
 #'
@@ -1490,13 +1634,10 @@ backup_get_legal_hold <- function(LegalHoldId) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_get_recovery_point_index_details/](https://www.paws-r-sdk.com/docs/backup_get_recovery_point_index_details/) for full documentation.
 #'
-#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults
-#' are identified by names that are unique to the account used to create
-#' them and the Region where they are created.
+#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Region where they are created.
 #' 
 #' Accepted characters include lowercase letters, numbers, and hyphens.
-#' @param RecoveryPointArn &#91;required&#93; An ARN that uniquely identifies a recovery point; for example,
-#' `arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45`.
+#' @param RecoveryPointArn &#91;required&#93; An ARN that uniquely identifies a recovery point; for example, `arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45`.
 #'
 #' @keywords internal
 #'
@@ -1528,12 +1669,8 @@ backup_get_recovery_point_index_details <- function(BackupVaultName, RecoveryPoi
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_get_recovery_point_restore_metadata/](https://www.paws-r-sdk.com/docs/backup_get_recovery_point_restore_metadata/) for full documentation.
 #'
-#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults
-#' are identified by names that are unique to the account used to create
-#' them and the Amazon Web Services Region where they are created.
-#' @param RecoveryPointArn &#91;required&#93; An Amazon Resource Name (ARN) that uniquely identifies a recovery point;
-#' for example,
-#' `arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45`.
+#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.
+#' @param RecoveryPointArn &#91;required&#93; An Amazon Resource Name (ARN) that uniquely identifies a recovery point; for example, `arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45`.
 #' @param BackupVaultAccountId The account ID of the specified backup vault.
 #'
 #' @keywords internal
@@ -1598,13 +1735,8 @@ backup_get_restore_job_metadata <- function(RestoreJobId) {
 #' See [https://www.paws-r-sdk.com/docs/backup_get_restore_testing_inferred_metadata/](https://www.paws-r-sdk.com/docs/backup_get_restore_testing_inferred_metadata/) for full documentation.
 #'
 #' @param BackupVaultAccountId The account ID of the specified backup vault.
-#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults
-#' are identified by names that are unique to the account used to create
-#' them and the Amazon Web ServicesRegion where they are created. They
-#' consist of letters, numbers, and hyphens.
-#' @param RecoveryPointArn &#91;required&#93; An Amazon Resource Name (ARN) that uniquely identifies a recovery point;
-#' for example,
-#' `arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45`.
+#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web ServicesRegion where they are created. They consist of letters, numbers, and hyphens.
+#' @param RecoveryPointArn &#91;required&#93; An Amazon Resource Name (ARN) that uniquely identifies a recovery point; for example, `arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45`.
 #'
 #' @keywords internal
 #'
@@ -1724,6 +1856,38 @@ backup_get_supported_resource_types <- function() {
 }
 .backup$operations$get_supported_resource_types <- backup_get_supported_resource_types
 
+#' Returns TieringConfiguration details for the specified
+#' TieringConfigurationName
+#'
+#' @description
+#' Returns `TieringConfiguration` details for the specified `TieringConfigurationName`. The details are the body of a tiering configuration in JSON format, in addition to configuration metadata.
+#'
+#' See [https://www.paws-r-sdk.com/docs/backup_get_tiering_configuration/](https://www.paws-r-sdk.com/docs/backup_get_tiering_configuration/) for full documentation.
+#'
+#' @param TieringConfigurationName &#91;required&#93; The unique name of a tiering configuration.
+#'
+#' @keywords internal
+#'
+#' @rdname backup_get_tiering_configuration
+backup_get_tiering_configuration <- function(TieringConfigurationName) {
+  op <- new_operation(
+    name = "GetTieringConfiguration",
+    http_method = "GET",
+    http_path = "/tiering-configurations/{tieringConfigurationName}",
+    host_prefix = "",
+    paginator = list(),
+    stream_api = FALSE
+  )
+  input <- .backup$get_tiering_configuration_input(TieringConfigurationName = TieringConfigurationName)
+  output <- .backup$get_tiering_configuration_output()
+  config <- get_config()
+  svc <- .backup$service(config, op)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.backup$operations$get_tiering_configuration <- backup_get_tiering_configuration
+
 #' This is a request for a summary of backup jobs created or running within
 #' the most recent 30 days
 #'
@@ -1734,57 +1898,36 @@ backup_get_supported_resource_types <- function() {
 #'
 #' @param AccountId Returns the job count for the specified account.
 #' 
-#' If the request is sent from a member account or an account not part of
-#' Amazon Web Services Organizations, jobs within requestor's account will
-#' be returned.
+#' If the request is sent from a member account or an account not part of Amazon Web Services Organizations, jobs within requestor's account will be returned.
 #' 
-#' Root, admin, and delegated administrator accounts can use the value ANY
-#' to return job counts from every account in the organization.
+#' Root, admin, and delegated administrator accounts can use the value ANY to return job counts from every account in the organization.
 #' 
-#' `AGGREGATE_ALL` aggregates job counts from all accounts within the
-#' authenticated organization, then returns the sum.
+#' `AGGREGATE_ALL` aggregates job counts from all accounts within the authenticated organization, then returns the sum.
 #' @param State This parameter returns the job count for jobs with the specified state.
 #' 
 #' The the value ANY returns count of all states.
 #' 
-#' `AGGREGATE_ALL` aggregates job counts for all states and returns the
-#' sum.
+#' `AGGREGATE_ALL` aggregates job counts for all states and returns the sum.
 #' 
-#' `Completed with issues` is a status found only in the Backup console.
-#' For API, this status refers to jobs with a state of `COMPLETED` and a
-#' `MessageCategory` with a value other than `SUCCESS`; that is, the status
-#' is completed but comes with a status message. To obtain the job count
-#' for `Completed with issues`, run two GET requests, and subtract the
-#' second, smaller number:
+#' `Completed with issues` is a status found only in the Backup console. For API, this status refers to jobs with a state of `COMPLETED` and a `MessageCategory` with a value other than `SUCCESS`; that is, the status is completed but comes with a status message. To obtain the job count for `Completed with issues`, run two GET requests, and subtract the second, smaller number:
 #' 
-#' GET
-#' /audit/backup-job-summaries?AggregationPeriod=FOURTEEN_DAYS&State=COMPLETED
+#' GET /audit/backup-job-summaries?AggregationPeriod=FOURTEEN_DAYS&State=COMPLETED
 #' 
-#' GET
-#' /audit/backup-job-summaries?AggregationPeriod=FOURTEEN_DAYS&MessageCategory=SUCCESS&State=COMPLETED
-#' @param ResourceType Returns the job count for the specified resource type. Use request
-#' [`get_supported_resource_types`][backup_get_supported_resource_types] to
-#' obtain strings for supported resource types.
+#' GET /audit/backup-job-summaries?AggregationPeriod=FOURTEEN_DAYS&MessageCategory=SUCCESS&State=COMPLETED
+#' @param ResourceType Returns the job count for the specified resource type. Use request [`get_supported_resource_types`][backup_get_supported_resource_types] to obtain strings for supported resource types.
 #' 
 #' The the value ANY returns count of all resource types.
 #' 
-#' `AGGREGATE_ALL` aggregates job counts for all resource types and returns
-#' the sum.
+#' `AGGREGATE_ALL` aggregates job counts for all resource types and returns the sum.
 #' 
-#' The type of Amazon Web Services resource to be backed up; for example,
-#' an Amazon Elastic Block Store (Amazon EBS) volume or an Amazon
-#' Relational Database Service (Amazon RDS) database.
+#' The type of Amazon Web Services resource to be backed up; for example, an Amazon Elastic Block Store (Amazon EBS) volume or an Amazon Relational Database Service (Amazon RDS) database.
 #' @param MessageCategory This parameter returns the job count for the specified message category.
 #' 
-#' Example accepted strings include `AccessDenied`, `Success`, and
-#' `InvalidParameters`. See
-#' [Monitoring](https://docs.aws.amazon.com/aws-backup/latest/devguide/monitoring.html)
-#' for a list of accepted MessageCategory strings.
+#' Example accepted strings include `AccessDenied`, `Success`, and `InvalidParameters`. See [Monitoring](https://docs.aws.amazon.com/aws-backup/latest/devguide/monitoring.html) for a list of accepted MessageCategory strings.
 #' 
 #' The the value ANY returns count of all message categories.
 #' 
-#' `AGGREGATE_ALL` aggregates job counts for all message categories and
-#' returns the sum.
+#' `AGGREGATE_ALL` aggregates job counts for all message categories and returns the sum.
 #' @param AggregationPeriod The period for the returned results.
 #' 
 #' -   `ONE_DAY` - The daily job count for the prior 14 days.
@@ -1795,10 +1938,7 @@ backup_get_supported_resource_types <- function() {
 #' @param MaxResults The maximum number of items to be returned.
 #' 
 #' The value is an integer. Range of accepted values is from 1 to 500.
-#' @param NextToken The next item following a partial list of returned resources. For
-#' example, if a request is made to return `MaxResults` number of
-#' resources, `NextToken` allows you to return more items in your list
-#' starting at the location pointed to by the next token.
+#' @param NextToken The next item following a partial list of returned resources. For example, if a request is made to return `MaxResults` number of resources, `NextToken` allows you to return more items in your list starting at the location pointed to by the next token.
 #'
 #' @keywords internal
 #'
@@ -1830,30 +1970,19 @@ backup_list_backup_job_summaries <- function(AccountId = NULL, State = NULL, Res
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_list_backup_jobs/](https://www.paws-r-sdk.com/docs/backup_list_backup_jobs/) for full documentation.
 #'
-#' @param NextToken The next item following a partial list of returned items. For example,
-#' if a request is made to return `MaxResults` number of items, `NextToken`
-#' allows you to return more items in your list starting at the location
-#' pointed to by the next token.
+#' @param NextToken The next item following a partial list of returned items. For example, if a request is made to return `MaxResults` number of items, `NextToken` allows you to return more items in your list starting at the location pointed to by the next token.
 #' @param MaxResults The maximum number of items to be returned.
-#' @param ByResourceArn Returns only backup jobs that match the specified resource Amazon
-#' Resource Name (ARN).
+#' @param ByResourceArn Returns only backup jobs that match the specified resource Amazon Resource Name (ARN).
 #' @param ByState Returns only backup jobs that are in the specified state.
 #' 
-#' `Completed with issues` is a status found only in the Backup console.
-#' For API, this status refers to jobs with a state of `COMPLETED` and a
-#' `MessageCategory` with a value other than `SUCCESS`; that is, the status
-#' is completed but comes with a status message.
+#' `Completed with issues` is a status found only in the Backup console. For API, this status refers to jobs with a state of `COMPLETED` and a `MessageCategory` with a value other than `SUCCESS`; that is, the status is completed but comes with a status message.
 #' 
-#' To obtain the job count for `Completed with issues`, run two GET
-#' requests, and subtract the second, smaller number:
+#' To obtain the job count for `Completed with issues`, run two GET requests, and subtract the second, smaller number:
 #' 
 #' GET /backup-jobs/?state=COMPLETED
 #' 
 #' GET /backup-jobs/?messageCategory=SUCCESS&state=COMPLETED
-#' @param ByBackupVaultName Returns only backup jobs that will be stored in the specified backup
-#' vault. Backup vaults are identified by names that are unique to the
-#' account used to create them and the Amazon Web Services Region where
-#' they are created.
+#' @param ByBackupVaultName Returns only backup jobs that will be stored in the specified backup vault. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.
 #' @param ByCreatedBefore Returns only backup jobs that were created before the specified date.
 #' @param ByCreatedAfter Returns only backup jobs that were created after the specified date.
 #' @param ByResourceType Returns only backup jobs for the specified resources:
@@ -1872,6 +2001,8 @@ backup_list_backup_job_summaries <- function(AccountId = NULL, State = NULL, Res
 #' 
 #' -   `EFS` for Amazon Elastic File System
 #' 
+#' -   `EKS` for Amazon Elastic Kubernetes Service
+#' 
 #' -   `FSx` for Amazon FSx
 #' 
 #' -   `Neptune` for Amazon Neptune
@@ -1882,37 +2013,28 @@ backup_list_backup_job_summaries <- function(AccountId = NULL, State = NULL, Res
 #' 
 #' -   `S3` for Amazon Simple Storage Service (Amazon S3)
 #' 
-#' -   `SAP HANA on Amazon EC2` for SAP HANA databases on Amazon Elastic
-#'     Compute Cloud instances
+#' -   `SAP HANA on Amazon EC2` for SAP HANA databases on Amazon Elastic Compute Cloud instances
 #' 
 #' -   `Storage Gateway` for Storage Gateway
 #' 
 #' -   `Timestream` for Amazon Timestream
 #' 
 #' -   `VirtualMachine` for VMware virtual machines
-#' @param ByAccountId The account ID to list the jobs from. Returns only backup jobs
-#' associated with the specified account ID.
+#' @param ByAccountId The account ID to list the jobs from. Returns only backup jobs associated with the specified account ID.
 #' 
-#' If used from an Organizations management account, passing `*` returns
-#' all jobs across the organization.
-#' @param ByCompleteAfter Returns only backup jobs completed after a date expressed in Unix format
-#' and Coordinated Universal Time (UTC).
-#' @param ByCompleteBefore Returns only backup jobs completed before a date expressed in Unix
-#' format and Coordinated Universal Time (UTC).
+#' If used from an Organizations management account, passing `*` returns all jobs across the organization.
+#' @param ByCompleteAfter Returns only backup jobs completed after a date expressed in Unix format and Coordinated Universal Time (UTC).
+#' @param ByCompleteBefore Returns only backup jobs completed before a date expressed in Unix format and Coordinated Universal Time (UTC).
 #' @param ByParentJobId This is a filter to list child (nested) jobs based on parent job ID.
-#' @param ByMessageCategory This is an optional parameter that can be used to filter out jobs with a
-#' MessageCategory which matches the value you input.
+#' @param ByMessageCategory This is an optional parameter that can be used to filter out jobs with a MessageCategory which matches the value you input.
 #' 
-#' Example strings may include `AccessDenied`, `SUCCESS`, `AGGREGATE_ALL`,
-#' and `InvalidParameters`.
+#' Example strings may include `AccessDenied`, `SUCCESS`, `AGGREGATE_ALL`, and `InvalidParameters`.
 #' 
-#' View
-#' [Monitoring](https://docs.aws.amazon.com/aws-backup/latest/devguide/monitoring.html)
+#' View [Monitoring](https://docs.aws.amazon.com/aws-backup/latest/devguide/monitoring.html)
 #' 
 #' The wildcard () returns count of all message categories.
 #' 
-#' `AGGREGATE_ALL` aggregates job counts for all message categories and
-#' returns the sum.
+#' `AGGREGATE_ALL` aggregates job counts for all message categories and returns the sum.
 #'
 #' @keywords internal
 #'
@@ -1943,10 +2065,7 @@ backup_list_backup_jobs <- function(NextToken = NULL, MaxResults = NULL, ByResou
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_list_backup_plan_templates/](https://www.paws-r-sdk.com/docs/backup_list_backup_plan_templates/) for full documentation.
 #'
-#' @param NextToken The next item following a partial list of returned items. For example,
-#' if a request is made to return `MaxResults` number of items, `NextToken`
-#' allows you to return more items in your list starting at the location
-#' pointed to by the next token.
+#' @param NextToken The next item following a partial list of returned items. For example, if a request is made to return `MaxResults` number of items, `NextToken` allows you to return more items in your list starting at the location pointed to by the next token.
 #' @param MaxResults The maximum number of items to return.
 #'
 #' @keywords internal
@@ -1981,10 +2100,7 @@ backup_list_backup_plan_templates <- function(NextToken = NULL, MaxResults = NUL
 #' See [https://www.paws-r-sdk.com/docs/backup_list_backup_plan_versions/](https://www.paws-r-sdk.com/docs/backup_list_backup_plan_versions/) for full documentation.
 #'
 #' @param BackupPlanId &#91;required&#93; Uniquely identifies a backup plan.
-#' @param NextToken The next item following a partial list of returned items. For example,
-#' if a request is made to return `MaxResults` number of items, `NextToken`
-#' allows you to return more items in your list starting at the location
-#' pointed to by the next token.
+#' @param NextToken The next item following a partial list of returned items. For example, if a request is made to return `MaxResults` number of items, `NextToken` allows you to return more items in your list starting at the location pointed to by the next token.
 #' @param MaxResults The maximum number of items to be returned.
 #'
 #' @keywords internal
@@ -2016,13 +2132,9 @@ backup_list_backup_plan_versions <- function(BackupPlanId, NextToken = NULL, Max
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_list_backup_plans/](https://www.paws-r-sdk.com/docs/backup_list_backup_plans/) for full documentation.
 #'
-#' @param NextToken The next item following a partial list of returned items. For example,
-#' if a request is made to return `MaxResults` number of items, `NextToken`
-#' allows you to return more items in your list starting at the location
-#' pointed to by the next token.
+#' @param NextToken The next item following a partial list of returned items. For example, if a request is made to return `MaxResults` number of items, `NextToken` allows you to return more items in your list starting at the location pointed to by the next token.
 #' @param MaxResults The maximum number of items to be returned.
-#' @param IncludeDeleted A Boolean value with a default value of `FALSE` that returns deleted
-#' backup plans when set to `TRUE`.
+#' @param IncludeDeleted A Boolean value with a default value of `FALSE` that returns deleted backup plans when set to `TRUE`.
 #'
 #' @keywords internal
 #'
@@ -2055,10 +2167,7 @@ backup_list_backup_plans <- function(NextToken = NULL, MaxResults = NULL, Includ
 #' See [https://www.paws-r-sdk.com/docs/backup_list_backup_selections/](https://www.paws-r-sdk.com/docs/backup_list_backup_selections/) for full documentation.
 #'
 #' @param BackupPlanId &#91;required&#93; Uniquely identifies a backup plan.
-#' @param NextToken The next item following a partial list of returned items. For example,
-#' if a request is made to return `MaxResults` number of items, `NextToken`
-#' allows you to return more items in your list starting at the location
-#' pointed to by the next token.
+#' @param NextToken The next item following a partial list of returned items. For example, if a request is made to return `MaxResults` number of items, `NextToken` allows you to return more items in your list starting at the location pointed to by the next token.
 #' @param MaxResults The maximum number of items to be returned.
 #'
 #' @keywords internal
@@ -2093,10 +2202,7 @@ backup_list_backup_selections <- function(BackupPlanId, NextToken = NULL, MaxRes
 #'
 #' @param ByVaultType This parameter will sort the list of vaults by vault type.
 #' @param ByShared This parameter will sort the list of vaults by shared vaults.
-#' @param NextToken The next item following a partial list of returned items. For example,
-#' if a request is made to return `MaxResults` number of items, `NextToken`
-#' allows you to return more items in your list starting at the location
-#' pointed to by the next token.
+#' @param NextToken The next item following a partial list of returned items. For example, if a request is made to return `MaxResults` number of items, `NextToken` allows you to return more items in your list starting at the location pointed to by the next token.
 #' @param MaxResults The maximum number of items to be returned.
 #'
 #' @keywords internal
@@ -2131,44 +2237,30 @@ backup_list_backup_vaults <- function(ByVaultType = NULL, ByShared = NULL, NextT
 #'
 #' @param AccountId Returns the job count for the specified account.
 #' 
-#' If the request is sent from a member account or an account not part of
-#' Amazon Web Services Organizations, jobs within requestor's account will
-#' be returned.
+#' If the request is sent from a member account or an account not part of Amazon Web Services Organizations, jobs within requestor's account will be returned.
 #' 
-#' Root, admin, and delegated administrator accounts can use the value ANY
-#' to return job counts from every account in the organization.
+#' Root, admin, and delegated administrator accounts can use the value ANY to return job counts from every account in the organization.
 #' 
-#' `AGGREGATE_ALL` aggregates job counts from all accounts within the
-#' authenticated organization, then returns the sum.
+#' `AGGREGATE_ALL` aggregates job counts from all accounts within the authenticated organization, then returns the sum.
 #' @param State This parameter returns the job count for jobs with the specified state.
 #' 
 #' The the value ANY returns count of all states.
 #' 
-#' `AGGREGATE_ALL` aggregates job counts for all states and returns the
-#' sum.
-#' @param ResourceType Returns the job count for the specified resource type. Use request
-#' [`get_supported_resource_types`][backup_get_supported_resource_types] to
-#' obtain strings for supported resource types.
+#' `AGGREGATE_ALL` aggregates job counts for all states and returns the sum.
+#' @param ResourceType Returns the job count for the specified resource type. Use request [`get_supported_resource_types`][backup_get_supported_resource_types] to obtain strings for supported resource types.
 #' 
 #' The the value ANY returns count of all resource types.
 #' 
-#' `AGGREGATE_ALL` aggregates job counts for all resource types and returns
-#' the sum.
+#' `AGGREGATE_ALL` aggregates job counts for all resource types and returns the sum.
 #' 
-#' The type of Amazon Web Services resource to be backed up; for example,
-#' an Amazon Elastic Block Store (Amazon EBS) volume or an Amazon
-#' Relational Database Service (Amazon RDS) database.
+#' The type of Amazon Web Services resource to be backed up; for example, an Amazon Elastic Block Store (Amazon EBS) volume or an Amazon Relational Database Service (Amazon RDS) database.
 #' @param MessageCategory This parameter returns the job count for the specified message category.
 #' 
-#' Example accepted strings include `AccessDenied`, `Success`, and
-#' `InvalidParameters`. See
-#' [Monitoring](https://docs.aws.amazon.com/aws-backup/latest/devguide/monitoring.html)
-#' for a list of accepted MessageCategory strings.
+#' Example accepted strings include `AccessDenied`, `Success`, and `InvalidParameters`. See [Monitoring](https://docs.aws.amazon.com/aws-backup/latest/devguide/monitoring.html) for a list of accepted MessageCategory strings.
 #' 
 #' The the value ANY returns count of all message categories.
 #' 
-#' `AGGREGATE_ALL` aggregates job counts for all message categories and
-#' returns the sum.
+#' `AGGREGATE_ALL` aggregates job counts for all message categories and returns the sum.
 #' @param AggregationPeriod The period for the returned results.
 #' 
 #' -   `ONE_DAY` - The daily job count for the prior 14 days.
@@ -2179,10 +2271,7 @@ backup_list_backup_vaults <- function(ByVaultType = NULL, ByShared = NULL, NextT
 #' @param MaxResults This parameter sets the maximum number of items to be returned.
 #' 
 #' The value is an integer. Range of accepted values is from 1 to 500.
-#' @param NextToken The next item following a partial list of returned resources. For
-#' example, if a request is made to return `MaxResults` number of
-#' resources, `NextToken` allows you to return more items in your list
-#' starting at the location pointed to by the next token.
+#' @param NextToken The next item following a partial list of returned resources. For example, if a request is made to return `MaxResults` number of resources, `NextToken` allows you to return more items in your list starting at the location pointed to by the next token.
 #'
 #' @keywords internal
 #'
@@ -2213,13 +2302,9 @@ backup_list_copy_job_summaries <- function(AccountId = NULL, State = NULL, Resou
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_list_copy_jobs/](https://www.paws-r-sdk.com/docs/backup_list_copy_jobs/) for full documentation.
 #'
-#' @param NextToken The next item following a partial list of returned items. For example,
-#' if a request is made to return MaxResults number of items, NextToken
-#' allows you to return more items in your list starting at the location
-#' pointed to by the next token.
+#' @param NextToken The next item following a partial list of returned items. For example, if a request is made to return MaxResults number of items, NextToken allows you to return more items in your list starting at the location pointed to by the next token.
 #' @param MaxResults The maximum number of items to be returned.
-#' @param ByResourceArn Returns only copy jobs that match the specified resource Amazon Resource
-#' Name (ARN).
+#' @param ByResourceArn Returns only copy jobs that match the specified resource Amazon Resource Name (ARN).
 #' @param ByState Returns only copy jobs that are in the specified state.
 #' @param ByCreatedBefore Returns only copy jobs that were created before the specified date.
 #' @param ByCreatedAfter Returns only copy jobs that were created after the specified date.
@@ -2239,6 +2324,8 @@ backup_list_copy_job_summaries <- function(AccountId = NULL, State = NULL, Resou
 #' 
 #' -   `EFS` for Amazon Elastic File System
 #' 
+#' -   `EKS` for Amazon Elastic Kubernetes Service
+#' 
 #' -   `FSx` for Amazon FSx
 #' 
 #' -   `Neptune` for Amazon Neptune
@@ -2249,43 +2336,33 @@ backup_list_copy_job_summaries <- function(AccountId = NULL, State = NULL, Resou
 #' 
 #' -   `S3` for Amazon Simple Storage Service (Amazon S3)
 #' 
-#' -   `SAP HANA on Amazon EC2` for SAP HANA databases on Amazon Elastic
-#'     Compute Cloud instances
+#' -   `SAP HANA on Amazon EC2` for SAP HANA databases on Amazon Elastic Compute Cloud instances
 #' 
 #' -   `Storage Gateway` for Storage Gateway
 #' 
 #' -   `Timestream` for Amazon Timestream
 #' 
 #' -   `VirtualMachine` for VMware virtual machines
-#' @param ByDestinationVaultArn An Amazon Resource Name (ARN) that uniquely identifies a source backup
-#' vault to copy from; for example,
-#' `arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault`.
-#' @param ByAccountId The account ID to list the jobs from. Returns only copy jobs associated
-#' with the specified account ID.
-#' @param ByCompleteBefore Returns only copy jobs completed before a date expressed in Unix format
-#' and Coordinated Universal Time (UTC).
-#' @param ByCompleteAfter Returns only copy jobs completed after a date expressed in Unix format
-#' and Coordinated Universal Time (UTC).
+#' @param ByDestinationVaultArn An Amazon Resource Name (ARN) that uniquely identifies a source backup vault to copy from; for example, `arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault`.
+#' @param ByAccountId The account ID to list the jobs from. Returns only copy jobs associated with the specified account ID.
+#' @param ByCompleteBefore Returns only copy jobs completed before a date expressed in Unix format and Coordinated Universal Time (UTC).
+#' @param ByCompleteAfter Returns only copy jobs completed after a date expressed in Unix format and Coordinated Universal Time (UTC).
 #' @param ByParentJobId This is a filter to list child (nested) jobs based on parent job ID.
-#' @param ByMessageCategory This is an optional parameter that can be used to filter out jobs with a
-#' MessageCategory which matches the value you input.
+#' @param ByMessageCategory This is an optional parameter that can be used to filter out jobs with a MessageCategory which matches the value you input.
 #' 
-#' Example strings may include `AccessDenied`, `SUCCESS`, `AGGREGATE_ALL`,
-#' and `INVALIDPARAMETERS`.
+#' Example strings may include `AccessDenied`, `SUCCESS`, `AGGREGATE_ALL`, and `INVALIDPARAMETERS`.
 #' 
-#' View
-#' [Monitoring](https://docs.aws.amazon.com/aws-backup/latest/devguide/monitoring.html)
-#' for a list of accepted strings.
+#' View [Monitoring](https://docs.aws.amazon.com/aws-backup/latest/devguide/monitoring.html) for a list of accepted strings.
 #' 
 #' The the value ANY returns count of all message categories.
 #' 
-#' `AGGREGATE_ALL` aggregates job counts for all message categories and
-#' returns the sum.
+#' `AGGREGATE_ALL` aggregates job counts for all message categories and returns the sum.
+#' @param BySourceRecoveryPointArn Filters copy jobs by the specified source recovery point ARN.
 #'
 #' @keywords internal
 #'
 #' @rdname backup_list_copy_jobs
-backup_list_copy_jobs <- function(NextToken = NULL, MaxResults = NULL, ByResourceArn = NULL, ByState = NULL, ByCreatedBefore = NULL, ByCreatedAfter = NULL, ByResourceType = NULL, ByDestinationVaultArn = NULL, ByAccountId = NULL, ByCompleteBefore = NULL, ByCompleteAfter = NULL, ByParentJobId = NULL, ByMessageCategory = NULL) {
+backup_list_copy_jobs <- function(NextToken = NULL, MaxResults = NULL, ByResourceArn = NULL, ByState = NULL, ByCreatedBefore = NULL, ByCreatedAfter = NULL, ByResourceType = NULL, ByDestinationVaultArn = NULL, ByAccountId = NULL, ByCompleteBefore = NULL, ByCompleteAfter = NULL, ByParentJobId = NULL, ByMessageCategory = NULL, BySourceRecoveryPointArn = NULL) {
   op <- new_operation(
     name = "ListCopyJobs",
     http_method = "GET",
@@ -2294,7 +2371,7 @@ backup_list_copy_jobs <- function(NextToken = NULL, MaxResults = NULL, ByResourc
     paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults", result_key = "CopyJobs"),
     stream_api = FALSE
   )
-  input <- .backup$list_copy_jobs_input(NextToken = NextToken, MaxResults = MaxResults, ByResourceArn = ByResourceArn, ByState = ByState, ByCreatedBefore = ByCreatedBefore, ByCreatedAfter = ByCreatedAfter, ByResourceType = ByResourceType, ByDestinationVaultArn = ByDestinationVaultArn, ByAccountId = ByAccountId, ByCompleteBefore = ByCompleteBefore, ByCompleteAfter = ByCompleteAfter, ByParentJobId = ByParentJobId, ByMessageCategory = ByMessageCategory)
+  input <- .backup$list_copy_jobs_input(NextToken = NextToken, MaxResults = MaxResults, ByResourceArn = ByResourceArn, ByState = ByState, ByCreatedBefore = ByCreatedBefore, ByCreatedAfter = ByCreatedAfter, ByResourceType = ByResourceType, ByDestinationVaultArn = ByDestinationVaultArn, ByAccountId = ByAccountId, ByCompleteBefore = ByCompleteBefore, ByCompleteAfter = ByCompleteAfter, ByParentJobId = ByParentJobId, ByMessageCategory = ByMessageCategory, BySourceRecoveryPointArn = BySourceRecoveryPointArn)
   output <- .backup$list_copy_jobs_output()
   config <- get_config()
   svc <- .backup$service(config, op)
@@ -2312,11 +2389,8 @@ backup_list_copy_jobs <- function(NextToken = NULL, MaxResults = NULL, ByResourc
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_list_frameworks/](https://www.paws-r-sdk.com/docs/backup_list_frameworks/) for full documentation.
 #'
-#' @param MaxResults The number of desired results from 1 to 1000. Optional. If unspecified,
-#' the query will return 1 MB of data.
-#' @param NextToken An identifier that was returned from the previous call to this
-#' operation, which can be used to return the next set of items in the
-#' list.
+#' @param MaxResults The number of desired results from 1 to 1000. Optional. If unspecified, the query will return 1 MB of data.
+#' @param NextToken An identifier that was returned from the previous call to this operation, which can be used to return the next set of items in the list.
 #'
 #' @keywords internal
 #'
@@ -2350,31 +2424,23 @@ backup_list_frameworks <- function(MaxResults = NULL, NextToken = NULL) {
 #'
 #' @param NextToken The next item following a partial list of returned recovery points.
 #' 
-#' For example, if a request is made to return `MaxResults` number of
-#' indexed recovery points, `NextToken` allows you to return more items in
-#' your list starting at the location pointed to by the next token.
+#' For example, if a request is made to return `MaxResults` number of indexed recovery points, `NextToken` allows you to return more items in your list starting at the location pointed to by the next token.
 #' @param MaxResults The maximum number of resource list items to be returned.
-#' @param SourceResourceArn A string of the Amazon Resource Name (ARN) that uniquely identifies the
-#' source resource.
-#' @param CreatedBefore Returns only indexed recovery points that were created before the
-#' specified date.
-#' @param CreatedAfter Returns only indexed recovery points that were created after the
-#' specified date.
-#' @param ResourceType Returns a list of indexed recovery points for the specified resource
-#' type(s).
+#' @param SourceResourceArn A string of the Amazon Resource Name (ARN) that uniquely identifies the source resource.
+#' @param CreatedBefore Returns only indexed recovery points that were created before the specified date.
+#' @param CreatedAfter Returns only indexed recovery points that were created after the specified date.
+#' @param ResourceType Returns a list of indexed recovery points for the specified resource type(s).
 #' 
 #' Accepted values include:
 #' 
 #' -   `EBS` for Amazon Elastic Block Store
 #' 
 #' -   `S3` for Amazon Simple Storage Service (Amazon S3)
-#' @param IndexStatus Include this parameter to filter the returned list by the indicated
-#' statuses.
+#' @param IndexStatus Include this parameter to filter the returned list by the indicated statuses.
 #' 
 #' Accepted values: `PENDING` | `ACTIVE` | `FAILED` | `DELETING`
 #' 
-#' A recovery point with an index that has the status of `ACTIVE` can be
-#' included in a search.
+#' A recovery point with an index that has the status of `ACTIVE` can be included in a search.
 #'
 #' @keywords internal
 #'
@@ -2405,10 +2471,7 @@ backup_list_indexed_recovery_points <- function(NextToken = NULL, MaxResults = N
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_list_legal_holds/](https://www.paws-r-sdk.com/docs/backup_list_legal_holds/) for full documentation.
 #'
-#' @param NextToken The next item following a partial list of returned resources. For
-#' example, if a request is made to return `MaxResults` number of
-#' resources, `NextToken` allows you to return more items in your list
-#' starting at the location pointed to by the next token.
+#' @param NextToken The next item following a partial list of returned resources. For example, if a request is made to return `MaxResults` number of resources, `NextToken` allows you to return more items in your list starting at the location pointed to by the next token.
 #' @param MaxResults The maximum number of resource list items to be returned.
 #'
 #' @keywords internal
@@ -2442,10 +2505,7 @@ backup_list_legal_holds <- function(NextToken = NULL, MaxResults = NULL) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_list_protected_resources/](https://www.paws-r-sdk.com/docs/backup_list_protected_resources/) for full documentation.
 #'
-#' @param NextToken The next item following a partial list of returned items. For example,
-#' if a request is made to return `MaxResults` number of items, `NextToken`
-#' allows you to return more items in your list starting at the location
-#' pointed to by the next token.
+#' @param NextToken The next item following a partial list of returned items. For example, if a request is made to return `MaxResults` number of items, `NextToken` allows you to return more items in your list starting at the location pointed to by the next token.
 #' @param MaxResults The maximum number of items to be returned.
 #'
 #' @keywords internal
@@ -2478,14 +2538,9 @@ backup_list_protected_resources <- function(NextToken = NULL, MaxResults = NULL)
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_list_protected_resources_by_backup_vault/](https://www.paws-r-sdk.com/docs/backup_list_protected_resources_by_backup_vault/) for full documentation.
 #'
-#' @param BackupVaultName &#91;required&#93; The list of protected resources by backup vault within the vault(s) you
-#' specify by name.
-#' @param BackupVaultAccountId The list of protected resources by backup vault within the vault(s) you
-#' specify by account ID.
-#' @param NextToken The next item following a partial list of returned items. For example,
-#' if a request is made to return `MaxResults` number of items, `NextToken`
-#' allows you to return more items in your list starting at the location
-#' pointed to by the next token.
+#' @param BackupVaultName &#91;required&#93; The list of protected resources by backup vault within the vault(s) you specify by name.
+#' @param BackupVaultAccountId The list of protected resources by backup vault within the vault(s) you specify by account ID.
+#' @param NextToken The next item following a partial list of returned items. For example, if a request is made to return `MaxResults` number of items, `NextToken` allows you to return more items in your list starting at the location pointed to by the next token.
 #' @param MaxResults The maximum number of items to be returned.
 #'
 #' @keywords internal
@@ -2518,20 +2573,13 @@ backup_list_protected_resources_by_backup_vault <- function(BackupVaultName, Bac
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_list_recovery_points_by_backup_vault/](https://www.paws-r-sdk.com/docs/backup_list_recovery_points_by_backup_vault/) for full documentation.
 #'
-#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults
-#' are identified by names that are unique to the account used to create
-#' them and the Amazon Web Services Region where they are created.
+#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.
 #' 
-#' Backup vault name might not be available when a supported service
-#' creates the backup.
+#' Backup vault name might not be available when a supported service creates the backup.
 #' @param BackupVaultAccountId This parameter will sort the list of recovery points by account ID.
-#' @param NextToken The next item following a partial list of returned items. For example,
-#' if a request is made to return `MaxResults` number of items, `NextToken`
-#' allows you to return more items in your list starting at the location
-#' pointed to by the next token.
+#' @param NextToken The next item following a partial list of returned items. For example, if a request is made to return `MaxResults` number of items, `NextToken` allows you to return more items in your list starting at the location pointed to by the next token.
 #' @param MaxResults The maximum number of items to be returned.
-#' @param ByResourceArn Returns only recovery points that match the specified resource Amazon
-#' Resource Name (ARN).
+#' @param ByResourceArn Returns only recovery points that match the specified resource Amazon Resource Name (ARN).
 #' @param ByResourceType Returns only recovery points that match the specified resource type(s):
 #' 
 #' -   `Aurora` for Amazon Aurora
@@ -2548,6 +2596,8 @@ backup_list_protected_resources_by_backup_vault <- function(BackupVaultName, Bac
 #' 
 #' -   `EFS` for Amazon Elastic File System
 #' 
+#' -   `EKS` for Amazon Elastic Kubernetes Service
+#' 
 #' -   `FSx` for Amazon FSx
 #' 
 #' -   `Neptune` for Amazon Neptune
@@ -2558,8 +2608,7 @@ backup_list_protected_resources_by_backup_vault <- function(BackupVaultName, Bac
 #' 
 #' -   `S3` for Amazon Simple Storage Service (Amazon S3)
 #' 
-#' -   `SAP HANA on Amazon EC2` for SAP HANA databases on Amazon Elastic
-#'     Compute Cloud instances
+#' -   `SAP HANA on Amazon EC2` for SAP HANA databases on Amazon Elastic Compute Cloud instances
 #' 
 #' -   `Storage Gateway` for Storage Gateway
 #' 
@@ -2567,12 +2616,9 @@ backup_list_protected_resources_by_backup_vault <- function(BackupVaultName, Bac
 #' 
 #' -   `VirtualMachine` for VMware virtual machines
 #' @param ByBackupPlanId Returns only recovery points that match the specified backup plan ID.
-#' @param ByCreatedBefore Returns only recovery points that were created before the specified
-#' timestamp.
-#' @param ByCreatedAfter Returns only recovery points that were created after the specified
-#' timestamp.
-#' @param ByParentRecoveryPointArn This returns only recovery points that match the specified parent
-#' (composite) recovery point Amazon Resource Name (ARN).
+#' @param ByCreatedBefore Returns only recovery points that were created before the specified timestamp.
+#' @param ByCreatedAfter Returns only recovery points that were created after the specified timestamp.
+#' @param ByParentRecoveryPointArn This returns only recovery points that match the specified parent (composite) recovery point Amazon Resource Name (ARN).
 #'
 #' @keywords internal
 #'
@@ -2605,10 +2651,7 @@ backup_list_recovery_points_by_backup_vault <- function(BackupVaultName, BackupV
 #' See [https://www.paws-r-sdk.com/docs/backup_list_recovery_points_by_legal_hold/](https://www.paws-r-sdk.com/docs/backup_list_recovery_points_by_legal_hold/) for full documentation.
 #'
 #' @param LegalHoldId &#91;required&#93; The ID of the legal hold.
-#' @param NextToken The next item following a partial list of returned resources. For
-#' example, if a request is made to return `MaxResults` number of
-#' resources, `NextToken` allows you to return more items in your list
-#' starting at the location pointed to by the next token.
+#' @param NextToken The next item following a partial list of returned resources. For example, if a request is made to return `MaxResults` number of resources, `NextToken` allows you to return more items in your list starting at the location pointed to by the next token.
 #' @param MaxResults The maximum number of resource list items to be returned.
 #'
 #' @keywords internal
@@ -2641,22 +2684,16 @@ backup_list_recovery_points_by_legal_hold <- function(LegalHoldId, NextToken = N
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_list_recovery_points_by_resource/](https://www.paws-r-sdk.com/docs/backup_list_recovery_points_by_resource/) for full documentation.
 #'
-#' @param ResourceArn &#91;required&#93; An ARN that uniquely identifies a resource. The format of the ARN
-#' depends on the resource type.
-#' @param NextToken The next item following a partial list of returned items. For example,
-#' if a request is made to return `MaxResults` number of items, `NextToken`
-#' allows you to return more items in your list starting at the location
-#' pointed to by the next token.
+#' @param ResourceArn &#91;required&#93; An ARN that uniquely identifies a resource. The format of the ARN depends on the resource type.
+#' @param NextToken The next item following a partial list of returned items. For example, if a request is made to return `MaxResults` number of items, `NextToken` allows you to return more items in your list starting at the location pointed to by the next token.
 #' @param MaxResults The maximum number of items to be returned.
 #' 
 #' Amazon RDS requires a value of at least 20.
 #' @param ManagedByAWSBackupOnly This attribute filters recovery points based on ownership.
 #' 
-#' If this is set to `TRUE`, the response will contain recovery points
-#' associated with the selected resources that are managed by Backup.
+#' If this is set to `TRUE`, the response will contain recovery points associated with the selected resources that are managed by Backup.
 #' 
-#' If this is set to `FALSE`, the response will contain all recovery points
-#' associated with the selected resource.
+#' If this is set to `FALSE`, the response will contain all recovery points associated with the selected resource.
 #' 
 #' Type: Boolean
 #'
@@ -2690,23 +2727,15 @@ backup_list_recovery_points_by_resource <- function(ResourceArn, NextToken = NUL
 #' See [https://www.paws-r-sdk.com/docs/backup_list_report_jobs/](https://www.paws-r-sdk.com/docs/backup_list_report_jobs/) for full documentation.
 #'
 #' @param ByReportPlanName Returns only report jobs with the specified report plan name.
-#' @param ByCreationBefore Returns only report jobs that were created before the date and time
-#' specified in Unix format and Coordinated Universal Time (UTC). For
-#' example, the value 1516925490 represents Friday, January 26, 2018
-#' 12:11:30 AM.
-#' @param ByCreationAfter Returns only report jobs that were created after the date and time
-#' specified in Unix format and Coordinated Universal Time (UTC). For
-#' example, the value 1516925490 represents Friday, January 26, 2018
-#' 12:11:30 AM.
-#' @param ByStatus Returns only report jobs that are in the specified status. The statuses
-#' are:
+#' @param ByCreationBefore Returns only report jobs that were created before the date and time specified in Unix format and Coordinated Universal Time (UTC). For example, the value 1516925490 represents Friday, January 26, 2018 12:11:30 AM.
+#' @param ByCreationAfter Returns only report jobs that were created after the date and time specified in Unix format and Coordinated Universal Time (UTC). For example, the value 1516925490 represents Friday, January 26, 2018 12:11:30 AM.
+#' @param ByStatus Returns only report jobs that are in the specified status. The statuses are:
 #' 
-#' `CREATED | RUNNING | COMPLETED | FAILED`
-#' @param MaxResults The number of desired results from 1 to 1000. Optional. If unspecified,
-#' the query will return 1 MB of data.
-#' @param NextToken An identifier that was returned from the previous call to this
-#' operation, which can be used to return the next set of items in the
-#' list.
+#' `CREATED | RUNNING | COMPLETED | FAILED | COMPLETED_WITH_ISSUES`
+#' 
+#' Please note that only scanning jobs finish with state completed with issues. For backup jobs this is a console interpretation of a job that finishes in completed state and has a status message.
+#' @param MaxResults The number of desired results from 1 to 1000. Optional. If unspecified, the query will return 1 MB of data.
+#' @param NextToken An identifier that was returned from the previous call to this operation, which can be used to return the next set of items in the list.
 #'
 #' @keywords internal
 #'
@@ -2737,11 +2766,8 @@ backup_list_report_jobs <- function(ByReportPlanName = NULL, ByCreationBefore = 
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_list_report_plans/](https://www.paws-r-sdk.com/docs/backup_list_report_plans/) for full documentation.
 #'
-#' @param MaxResults The number of desired results from 1 to 1000. Optional. If unspecified,
-#' the query will return 1 MB of data.
-#' @param NextToken An identifier that was returned from the previous call to this
-#' operation, which can be used to return the next set of items in the
-#' list.
+#' @param MaxResults The number of desired results from 1 to 1000. Optional. If unspecified, the query will return 1 MB of data.
+#' @param NextToken An identifier that was returned from the previous call to this operation, which can be used to return the next set of items in the list.
 #'
 #' @keywords internal
 #'
@@ -2765,6 +2791,40 @@ backup_list_report_plans <- function(MaxResults = NULL, NextToken = NULL) {
 }
 .backup$operations$list_report_plans <- backup_list_report_plans
 
+#' Returns a list of restore access backup vaults associated with a
+#' specified backup vault
+#'
+#' @description
+#' Returns a list of restore access backup vaults associated with a specified backup vault.
+#'
+#' See [https://www.paws-r-sdk.com/docs/backup_list_restore_access_backup_vaults/](https://www.paws-r-sdk.com/docs/backup_list_restore_access_backup_vaults/) for full documentation.
+#'
+#' @param BackupVaultName &#91;required&#93; The name of the backup vault for which to list associated restore access backup vaults.
+#' @param NextToken The pagination token from a previous request to retrieve the next set of results.
+#' @param MaxResults The maximum number of items to return in the response.
+#'
+#' @keywords internal
+#'
+#' @rdname backup_list_restore_access_backup_vaults
+backup_list_restore_access_backup_vaults <- function(BackupVaultName, NextToken = NULL, MaxResults = NULL) {
+  op <- new_operation(
+    name = "ListRestoreAccessBackupVaults",
+    http_method = "GET",
+    http_path = "/logically-air-gapped-backup-vaults/{backupVaultName}/restore-access-backup-vaults/",
+    host_prefix = "",
+    paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults", result_key = "RestoreAccessBackupVaults"),
+    stream_api = FALSE
+  )
+  input <- .backup$list_restore_access_backup_vaults_input(BackupVaultName = BackupVaultName, NextToken = NextToken, MaxResults = MaxResults)
+  output <- .backup$list_restore_access_backup_vaults_output()
+  config <- get_config()
+  svc <- .backup$service(config, op)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.backup$operations$list_restore_access_backup_vaults <- backup_list_restore_access_backup_vaults
+
 #' This request obtains a summary of restore jobs created or running within
 #' the the most recent 30 days
 #'
@@ -2775,33 +2835,23 @@ backup_list_report_plans <- function(MaxResults = NULL, NextToken = NULL) {
 #'
 #' @param AccountId Returns the job count for the specified account.
 #' 
-#' If the request is sent from a member account or an account not part of
-#' Amazon Web Services Organizations, jobs within requestor's account will
-#' be returned.
+#' If the request is sent from a member account or an account not part of Amazon Web Services Organizations, jobs within requestor's account will be returned.
 #' 
-#' Root, admin, and delegated administrator accounts can use the value ANY
-#' to return job counts from every account in the organization.
+#' Root, admin, and delegated administrator accounts can use the value ANY to return job counts from every account in the organization.
 #' 
-#' `AGGREGATE_ALL` aggregates job counts from all accounts within the
-#' authenticated organization, then returns the sum.
+#' `AGGREGATE_ALL` aggregates job counts from all accounts within the authenticated organization, then returns the sum.
 #' @param State This parameter returns the job count for jobs with the specified state.
 #' 
 #' The the value ANY returns count of all states.
 #' 
-#' `AGGREGATE_ALL` aggregates job counts for all states and returns the
-#' sum.
-#' @param ResourceType Returns the job count for the specified resource type. Use request
-#' [`get_supported_resource_types`][backup_get_supported_resource_types] to
-#' obtain strings for supported resource types.
+#' `AGGREGATE_ALL` aggregates job counts for all states and returns the sum.
+#' @param ResourceType Returns the job count for the specified resource type. Use request [`get_supported_resource_types`][backup_get_supported_resource_types] to obtain strings for supported resource types.
 #' 
 #' The the value ANY returns count of all resource types.
 #' 
-#' `AGGREGATE_ALL` aggregates job counts for all resource types and returns
-#' the sum.
+#' `AGGREGATE_ALL` aggregates job counts for all resource types and returns the sum.
 #' 
-#' The type of Amazon Web Services resource to be backed up; for example,
-#' an Amazon Elastic Block Store (Amazon EBS) volume or an Amazon
-#' Relational Database Service (Amazon RDS) database.
+#' The type of Amazon Web Services resource to be backed up; for example, an Amazon Elastic Block Store (Amazon EBS) volume or an Amazon Relational Database Service (Amazon RDS) database.
 #' @param AggregationPeriod The period for the returned results.
 #' 
 #' -   `ONE_DAY` - The daily job count for the prior 14 days.
@@ -2812,10 +2862,7 @@ backup_list_report_plans <- function(MaxResults = NULL, NextToken = NULL) {
 #' @param MaxResults This parameter sets the maximum number of items to be returned.
 #' 
 #' The value is an integer. Range of accepted values is from 1 to 500.
-#' @param NextToken The next item following a partial list of returned resources. For
-#' example, if a request is made to return `MaxResults` number of
-#' resources, `NextToken` allows you to return more items in your list
-#' starting at the location pointed to by the next token.
+#' @param NextToken The next item following a partial list of returned resources. For example, if a request is made to return `MaxResults` number of resources, `NextToken` allows you to return more items in your list starting at the location pointed to by the next token.
 #'
 #' @keywords internal
 #'
@@ -2847,15 +2894,10 @@ backup_list_restore_job_summaries <- function(AccountId = NULL, State = NULL, Re
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_list_restore_jobs/](https://www.paws-r-sdk.com/docs/backup_list_restore_jobs/) for full documentation.
 #'
-#' @param NextToken The next item following a partial list of returned items. For example,
-#' if a request is made to return `MaxResults` number of items, `NextToken`
-#' allows you to return more items in your list starting at the location
-#' pointed to by the next token.
+#' @param NextToken The next item following a partial list of returned items. For example, if a request is made to return `MaxResults` number of items, `NextToken` allows you to return more items in your list starting at the location pointed to by the next token.
 #' @param MaxResults The maximum number of items to be returned.
-#' @param ByAccountId The account ID to list the jobs from. Returns only restore jobs
-#' associated with the specified account ID.
-#' @param ByResourceType Include this parameter to return only restore jobs for the specified
-#' resources:
+#' @param ByAccountId The account ID to list the jobs from. Returns only restore jobs associated with the specified account ID.
+#' @param ByResourceType Include this parameter to return only restore jobs for the specified resources:
 #' 
 #' -   `Aurora` for Amazon Aurora
 #' 
@@ -2871,6 +2913,8 @@ backup_list_restore_job_summaries <- function(AccountId = NULL, State = NULL, Re
 #' 
 #' -   `EFS` for Amazon Elastic File System
 #' 
+#' -   `EKS` for Amazon Elastic Kubernetes Service
+#' 
 #' -   `FSx` for Amazon FSx
 #' 
 #' -   `Neptune` for Amazon Neptune
@@ -2881,8 +2925,7 @@ backup_list_restore_job_summaries <- function(AccountId = NULL, State = NULL, Re
 #' 
 #' -   `S3` for Amazon Simple Storage Service (Amazon S3)
 #' 
-#' -   `SAP HANA on Amazon EC2` for SAP HANA databases on Amazon Elastic
-#'     Compute Cloud instances
+#' -   `SAP HANA on Amazon EC2` for SAP HANA databases on Amazon Elastic Compute Cloud instances
 #' 
 #' -   `Storage Gateway` for Storage Gateway
 #' 
@@ -2892,17 +2935,15 @@ backup_list_restore_job_summaries <- function(AccountId = NULL, State = NULL, Re
 #' @param ByCreatedBefore Returns only restore jobs that were created before the specified date.
 #' @param ByCreatedAfter Returns only restore jobs that were created after the specified date.
 #' @param ByStatus Returns only restore jobs associated with the specified job status.
-#' @param ByCompleteBefore Returns only copy jobs completed before a date expressed in Unix format
-#' and Coordinated Universal Time (UTC).
-#' @param ByCompleteAfter Returns only copy jobs completed after a date expressed in Unix format
-#' and Coordinated Universal Time (UTC).
-#' @param ByRestoreTestingPlanArn This returns only restore testing jobs that match the specified resource
-#' Amazon Resource Name (ARN).
+#' @param ByCompleteBefore Returns only copy jobs completed before a date expressed in Unix format and Coordinated Universal Time (UTC).
+#' @param ByCompleteAfter Returns only copy jobs completed after a date expressed in Unix format and Coordinated Universal Time (UTC).
+#' @param ByRestoreTestingPlanArn This returns only restore testing jobs that match the specified resource Amazon Resource Name (ARN).
+#' @param ByParentJobId This is a filter to list child (nested) restore jobs based on parent restore job ID.
 #'
 #' @keywords internal
 #'
 #' @rdname backup_list_restore_jobs
-backup_list_restore_jobs <- function(NextToken = NULL, MaxResults = NULL, ByAccountId = NULL, ByResourceType = NULL, ByCreatedBefore = NULL, ByCreatedAfter = NULL, ByStatus = NULL, ByCompleteBefore = NULL, ByCompleteAfter = NULL, ByRestoreTestingPlanArn = NULL) {
+backup_list_restore_jobs <- function(NextToken = NULL, MaxResults = NULL, ByAccountId = NULL, ByResourceType = NULL, ByCreatedBefore = NULL, ByCreatedAfter = NULL, ByStatus = NULL, ByCompleteBefore = NULL, ByCompleteAfter = NULL, ByRestoreTestingPlanArn = NULL, ByParentJobId = NULL) {
   op <- new_operation(
     name = "ListRestoreJobs",
     http_method = "GET",
@@ -2911,7 +2952,7 @@ backup_list_restore_jobs <- function(NextToken = NULL, MaxResults = NULL, ByAcco
     paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults", result_key = "RestoreJobs"),
     stream_api = FALSE
   )
-  input <- .backup$list_restore_jobs_input(NextToken = NextToken, MaxResults = MaxResults, ByAccountId = ByAccountId, ByResourceType = ByResourceType, ByCreatedBefore = ByCreatedBefore, ByCreatedAfter = ByCreatedAfter, ByStatus = ByStatus, ByCompleteBefore = ByCompleteBefore, ByCompleteAfter = ByCompleteAfter, ByRestoreTestingPlanArn = ByRestoreTestingPlanArn)
+  input <- .backup$list_restore_jobs_input(NextToken = NextToken, MaxResults = MaxResults, ByAccountId = ByAccountId, ByResourceType = ByResourceType, ByCreatedBefore = ByCreatedBefore, ByCreatedAfter = ByCreatedAfter, ByStatus = ByStatus, ByCompleteBefore = ByCompleteBefore, ByCompleteAfter = ByCompleteAfter, ByRestoreTestingPlanArn = ByRestoreTestingPlanArn, ByParentJobId = ByParentJobId)
   output <- .backup$list_restore_jobs_output()
   config <- get_config()
   svc <- .backup$service(config, op)
@@ -2928,17 +2969,11 @@ backup_list_restore_jobs <- function(NextToken = NULL, MaxResults = NULL, ByAcco
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_list_restore_jobs_by_protected_resource/](https://www.paws-r-sdk.com/docs/backup_list_restore_jobs_by_protected_resource/) for full documentation.
 #'
-#' @param ResourceArn &#91;required&#93; Returns only restore jobs that match the specified resource Amazon
-#' Resource Name (ARN).
+#' @param ResourceArn &#91;required&#93; Returns only restore jobs that match the specified resource Amazon Resource Name (ARN).
 #' @param ByStatus Returns only restore jobs associated with the specified job status.
-#' @param ByRecoveryPointCreationDateAfter Returns only restore jobs of recovery points that were created after the
-#' specified date.
-#' @param ByRecoveryPointCreationDateBefore Returns only restore jobs of recovery points that were created before
-#' the specified date.
-#' @param NextToken The next item following a partial list of returned items. For example,
-#' if a request ismade to return `MaxResults` number of items, `NextToken`
-#' allows you to return more items in your list starting at the location
-#' pointed to by the next token.
+#' @param ByRecoveryPointCreationDateAfter Returns only restore jobs of recovery points that were created after the specified date.
+#' @param ByRecoveryPointCreationDateBefore Returns only restore jobs of recovery points that were created before the specified date.
+#' @param NextToken The next item following a partial list of returned items. For example, if a request ismade to return `MaxResults` number of items, `NextToken` allows you to return more items in your list starting at the location pointed to by the next token.
 #' @param MaxResults The maximum number of items to be returned.
 #'
 #' @keywords internal
@@ -2971,10 +3006,7 @@ backup_list_restore_jobs_by_protected_resource <- function(ResourceArn, ByStatus
 #' See [https://www.paws-r-sdk.com/docs/backup_list_restore_testing_plans/](https://www.paws-r-sdk.com/docs/backup_list_restore_testing_plans/) for full documentation.
 #'
 #' @param MaxResults The maximum number of items to be returned.
-#' @param NextToken The next item following a partial list of returned items. For example,
-#' if a request is made to return `MaxResults` number of items, `NextToken`
-#' allows you to return more items in your list starting at the location
-#' pointed to by the nexttoken.
+#' @param NextToken The next item following a partial list of returned items. For example, if a request is made to return `MaxResults` number of items, `NextToken` allows you to return more items in your list starting at the location pointed to by the nexttoken.
 #'
 #' @keywords internal
 #'
@@ -3006,12 +3038,8 @@ backup_list_restore_testing_plans <- function(MaxResults = NULL, NextToken = NUL
 #' See [https://www.paws-r-sdk.com/docs/backup_list_restore_testing_selections/](https://www.paws-r-sdk.com/docs/backup_list_restore_testing_selections/) for full documentation.
 #'
 #' @param MaxResults The maximum number of items to be returned.
-#' @param NextToken The next item following a partial list of returned items. For example,
-#' if a request is made to return `MaxResults` number of items, `NextToken`
-#' allows you to return more items in your list starting at the location
-#' pointed to by the nexttoken.
-#' @param RestoreTestingPlanName &#91;required&#93; Returns restore testing selections by the specified restore testing plan
-#' name.
+#' @param NextToken The next item following a partial list of returned items. For example, if a request is made to return `MaxResults` number of items, `NextToken` allows you to return more items in your list starting at the location pointed to by the nexttoken.
+#' @param RestoreTestingPlanName &#91;required&#93; Returns restore testing selections by the specified restore testing plan name.
 #'
 #' @keywords internal
 #'
@@ -3035,6 +3063,126 @@ backup_list_restore_testing_selections <- function(MaxResults = NULL, NextToken 
 }
 .backup$operations$list_restore_testing_selections <- backup_list_restore_testing_selections
 
+#' This is a request for a summary of scan jobs created or running within
+#' the most recent 30 days
+#'
+#' @description
+#' This is a request for a summary of scan jobs created or running within the most recent 30 days.
+#'
+#' See [https://www.paws-r-sdk.com/docs/backup_list_scan_job_summaries/](https://www.paws-r-sdk.com/docs/backup_list_scan_job_summaries/) for full documentation.
+#'
+#' @param AccountId Returns the job count for the specified account.
+#' 
+#' If the request is sent from a member account or an account not part of Amazon Web Services Organizations, jobs within requestor's account will be returned.
+#' 
+#' Root, admin, and delegated administrator accounts can use the value `ANY` to return job counts from every account in the organization.
+#' 
+#' `AGGREGATE_ALL` aggregates job counts from all accounts within the authenticated organization, then returns the sum.
+#' @param ResourceType Returns the job count for the specified resource type. Use request [`get_supported_resource_types`][backup_get_supported_resource_types] to obtain strings for supported resource types.
+#' 
+#' The the value `ANY` returns count of all resource types.
+#' 
+#' `AGGREGATE_ALL` aggregates job counts for all resource types and returns the sum.
+#' @param MalwareScanner Returns only the scan jobs for the specified malware scanner. Currently the only MalwareScanner is `GUARDDUTY`. But the field also supports `ANY`, and `AGGREGATE_ALL`.
+#' @param ScanResultStatus Returns only the scan jobs for the specified scan results.
+#' @param State Returns only the scan jobs for the specified scanning job state.
+#' @param AggregationPeriod The period for the returned results.
+#' 
+#' -   `ONE_DAY`The daily job count for the prior 1 day.
+#' 
+#' -   `SEVEN_DAYS`The daily job count for the prior 7 days.
+#' 
+#' -   `FOURTEEN_DAYS`The daily job count for the prior 14 days.
+#' @param MaxResults The maximum number of items to be returned.
+#' 
+#' The value is an integer. Range of accepted values is from 1 to 500.
+#' @param NextToken The next item following a partial list of returned items. For example, if a request is made to return `MaxResults` number of items, `NextToken` allows you to return more items in your list starting at the location pointed to by the next token.
+#'
+#' @keywords internal
+#'
+#' @rdname backup_list_scan_job_summaries
+backup_list_scan_job_summaries <- function(AccountId = NULL, ResourceType = NULL, MalwareScanner = NULL, ScanResultStatus = NULL, State = NULL, AggregationPeriod = NULL, MaxResults = NULL, NextToken = NULL) {
+  op <- new_operation(
+    name = "ListScanJobSummaries",
+    http_method = "GET",
+    http_path = "/audit/scan-job-summaries",
+    host_prefix = "",
+    paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults", result_key = "ScanJobSummaries"),
+    stream_api = FALSE
+  )
+  input <- .backup$list_scan_job_summaries_input(AccountId = AccountId, ResourceType = ResourceType, MalwareScanner = MalwareScanner, ScanResultStatus = ScanResultStatus, State = State, AggregationPeriod = AggregationPeriod, MaxResults = MaxResults, NextToken = NextToken)
+  output <- .backup$list_scan_job_summaries_output()
+  config <- get_config()
+  svc <- .backup$service(config, op)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.backup$operations$list_scan_job_summaries <- backup_list_scan_job_summaries
+
+#' Returns a list of existing scan jobs for an authenticated account for
+#' the last 30 days
+#'
+#' @description
+#' Returns a list of existing scan jobs for an authenticated account for the last 30 days.
+#'
+#' See [https://www.paws-r-sdk.com/docs/backup_list_scan_jobs/](https://www.paws-r-sdk.com/docs/backup_list_scan_jobs/) for full documentation.
+#'
+#' @param ByAccountId The account ID to list the jobs from. Returns only backup jobs associated with the specified account ID.
+#' 
+#' If used from an Amazon Web Services Organizations management account, passing `*` returns all jobs across the organization.
+#' 
+#' Pattern: `^[0-9]{12}$`
+#' @param ByBackupVaultName Returns only scan jobs that will be stored in the specified backup vault. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.
+#' 
+#' Pattern: `^[a-zA-Z0-9\-_\.]{2,50}$`
+#' @param ByCompleteAfter Returns only scan jobs completed after a date expressed in Unix format and Coordinated Universal Time (UTC).
+#' @param ByCompleteBefore Returns only backup jobs completed before a date expressed in Unix format and Coordinated Universal Time (UTC).
+#' @param ByMalwareScanner Returns only the scan jobs for the specified malware scanner. Currently only supports `GUARDDUTY`.
+#' @param ByRecoveryPointArn Returns only the scan jobs that are ran against the specified recovery point.
+#' @param ByResourceArn Returns only scan jobs that match the specified resource Amazon Resource Name (ARN).
+#' @param ByResourceType Returns restore testing selections by the specified restore testing plan name.
+#' 
+#' -   `EBS`for Amazon Elastic Block Store
+#' 
+#' -   `EC2`for Amazon Elastic Compute Cloud
+#' 
+#' -   `S3`for Amazon Simple Storage Service (Amazon S3)
+#' 
+#' Pattern: `^[a-zA-Z0-9\-_\.]{1,50}$`
+#' @param ByScanResultStatus Returns only the scan jobs for the specified scan results:
+#' 
+#' -   `THREATS_FOUND`
+#' 
+#' -   `NO_THREATS_FOUND`
+#' @param ByState Returns only the scan jobs for the specified scanning job state.
+#' @param MaxResults The maximum number of items to be returned.
+#' 
+#' Valid Range: Minimum value of 1. Maximum value of 1000.
+#' @param NextToken The next item following a partial list of returned items. For example, if a request is made to return `MaxResults` number of items, `NextToken` allows you to return more items in your list starting at the location pointed to by the next token.
+#'
+#' @keywords internal
+#'
+#' @rdname backup_list_scan_jobs
+backup_list_scan_jobs <- function(ByAccountId = NULL, ByBackupVaultName = NULL, ByCompleteAfter = NULL, ByCompleteBefore = NULL, ByMalwareScanner = NULL, ByRecoveryPointArn = NULL, ByResourceArn = NULL, ByResourceType = NULL, ByScanResultStatus = NULL, ByState = NULL, MaxResults = NULL, NextToken = NULL) {
+  op <- new_operation(
+    name = "ListScanJobs",
+    http_method = "GET",
+    http_path = "/scan/jobs",
+    host_prefix = "",
+    paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults", result_key = "ScanJobs"),
+    stream_api = FALSE
+  )
+  input <- .backup$list_scan_jobs_input(ByAccountId = ByAccountId, ByBackupVaultName = ByBackupVaultName, ByCompleteAfter = ByCompleteAfter, ByCompleteBefore = ByCompleteBefore, ByMalwareScanner = ByMalwareScanner, ByRecoveryPointArn = ByRecoveryPointArn, ByResourceArn = ByResourceArn, ByResourceType = ByResourceType, ByScanResultStatus = ByScanResultStatus, ByState = ByState, MaxResults = MaxResults, NextToken = NextToken)
+  output <- .backup$list_scan_jobs_output()
+  config <- get_config()
+  svc <- .backup$service(config, op)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.backup$operations$list_scan_jobs <- backup_list_scan_jobs
+
 #' Returns the tags assigned to the resource, such as a target recovery
 #' point, backup plan, or backup vault
 #'
@@ -3043,14 +3191,8 @@ backup_list_restore_testing_selections <- function(MaxResults = NULL, NextToken 
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_list_tags/](https://www.paws-r-sdk.com/docs/backup_list_tags/) for full documentation.
 #'
-#' @param ResourceArn &#91;required&#93; An Amazon Resource Name (ARN) that uniquely identifies a resource. The
-#' format of the ARN depends on the type of resource. Valid targets for
-#' [`list_tags`][backup_list_tags] are recovery points, backup plans, and
-#' backup vaults.
-#' @param NextToken The next item following a partial list of returned items. For example,
-#' if a request is made to return `MaxResults` number of items, `NextToken`
-#' allows you to return more items in your list starting at the location
-#' pointed to by the next token.
+#' @param ResourceArn &#91;required&#93; An Amazon Resource Name (ARN) that uniquely identifies a resource. The format of the ARN depends on the type of resource. Valid targets for [`list_tags`][backup_list_tags] are recovery points, backup plans, and backup vaults.
+#' @param NextToken The next item following a partial list of returned items. For example, if a request is made to return `MaxResults` number of items, `NextToken` allows you to return more items in your list starting at the location pointed to by the next token.
 #' @param MaxResults The maximum number of items to be returned.
 #'
 #' @keywords internal
@@ -3075,6 +3217,38 @@ backup_list_tags <- function(ResourceArn, NextToken = NULL, MaxResults = NULL) {
 }
 .backup$operations$list_tags <- backup_list_tags
 
+#' Returns a list of tiering configurations
+#'
+#' @description
+#' Returns a list of tiering configurations.
+#'
+#' See [https://www.paws-r-sdk.com/docs/backup_list_tiering_configurations/](https://www.paws-r-sdk.com/docs/backup_list_tiering_configurations/) for full documentation.
+#'
+#' @param MaxResults The maximum number of items to be returned.
+#' @param NextToken The next item following a partial list of returned items. For example, if a request is made to return `MaxResults` number of items, `NextToken` allows you to return more items in your list starting at the location pointed to by the next token.
+#'
+#' @keywords internal
+#'
+#' @rdname backup_list_tiering_configurations
+backup_list_tiering_configurations <- function(MaxResults = NULL, NextToken = NULL) {
+  op <- new_operation(
+    name = "ListTieringConfigurations",
+    http_method = "GET",
+    http_path = "/tiering-configurations/",
+    host_prefix = "",
+    paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults", result_key = "TieringConfigurations"),
+    stream_api = FALSE
+  )
+  input <- .backup$list_tiering_configurations_input(MaxResults = MaxResults, NextToken = NextToken)
+  output <- .backup$list_tiering_configurations_output()
+  config <- get_config()
+  svc <- .backup$service(config, op)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.backup$operations$list_tiering_configurations <- backup_list_tiering_configurations
+
 #' Sets a resource-based policy that is used to manage access permissions
 #' on the target backup vault
 #'
@@ -3083,9 +3257,7 @@ backup_list_tags <- function(ResourceArn, NextToken = NULL, MaxResults = NULL) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_put_backup_vault_access_policy/](https://www.paws-r-sdk.com/docs/backup_put_backup_vault_access_policy/) for full documentation.
 #'
-#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults
-#' are identified by names that are unique to the account used to create
-#' them and the Amazon Web Services Region where they are created.
+#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.
 #' @param Policy The backup vault access policy document in JSON format.
 #'
 #' @keywords internal
@@ -3118,66 +3290,26 @@ backup_put_backup_vault_access_policy <- function(BackupVaultName, Policy = NULL
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_put_backup_vault_lock_configuration/](https://www.paws-r-sdk.com/docs/backup_put_backup_vault_lock_configuration/) for full documentation.
 #'
-#' @param BackupVaultName &#91;required&#93; The Backup Vault Lock configuration that specifies the name of the
-#' backup vault it protects.
-#' @param MinRetentionDays The Backup Vault Lock configuration that specifies the minimum retention
-#' period that the vault retains its recovery points. This setting can be
-#' useful if, for example, your organization's policies require you to
-#' retain certain data for at least seven years (2555 days).
+#' @param BackupVaultName &#91;required&#93; The Backup Vault Lock configuration that specifies the name of the backup vault it protects.
+#' @param MinRetentionDays The Backup Vault Lock configuration that specifies the minimum retention period that the vault retains its recovery points. This setting can be useful if, for example, your organization's policies require you to retain certain data for at least seven years (2555 days).
 #' 
-#' This parameter is required when a vault lock is created through
-#' CloudFormation; otherwise, this parameter is optional. If this parameter
-#' is not specified, Vault Lock will not enforce a minimum retention
-#' period.
+#' This parameter is required when a vault lock is created through CloudFormation; otherwise, this parameter is optional. If this parameter is not specified, Vault Lock will not enforce a minimum retention period.
 #' 
-#' If this parameter is specified, any backup or copy job to the vault must
-#' have a lifecycle policy with a retention period equal to or longer than
-#' the minimum retention period. If the job's retention period is shorter
-#' than that minimum retention period, then the vault fails that backup or
-#' copy job, and you should either modify your lifecycle settings or use a
-#' different vault. The shortest minimum retention period you can specify
-#' is 1 day. Recovery points already saved in the vault prior to Vault Lock
-#' are not affected.
-#' @param MaxRetentionDays The Backup Vault Lock configuration that specifies the maximum retention
-#' period that the vault retains its recovery points. This setting can be
-#' useful if, for example, your organization's policies require you to
-#' destroy certain data after retaining it for four years (1460 days).
+#' If this parameter is specified, any backup or copy job to the vault must have a lifecycle policy with a retention period equal to or longer than the minimum retention period. If the job's retention period is shorter than that minimum retention period, then the vault fails that backup or copy job, and you should either modify your lifecycle settings or use a different vault. The shortest minimum retention period you can specify is 1 day. Recovery points already saved in the vault prior to Vault Lock are not affected.
+#' @param MaxRetentionDays The Backup Vault Lock configuration that specifies the maximum retention period that the vault retains its recovery points. This setting can be useful if, for example, your organization's policies require you to destroy certain data after retaining it for four years (1460 days).
 #' 
-#' If this parameter is not included, Vault Lock does not enforce a maximum
-#' retention period on the recovery points in the vault. If this parameter
-#' is included without a value, Vault Lock will not enforce a maximum
-#' retention period.
+#' If this parameter is not included, Vault Lock does not enforce a maximum retention period on the recovery points in the vault. If this parameter is included without a value, Vault Lock will not enforce a maximum retention period.
 #' 
-#' If this parameter is specified, any backup or copy job to the vault must
-#' have a lifecycle policy with a retention period equal to or shorter than
-#' the maximum retention period. If the job's retention period is longer
-#' than that maximum retention period, then the vault fails the backup or
-#' copy job, and you should either modify your lifecycle settings or use a
-#' different vault. The longest maximum retention period you can specify is
-#' 36500 days (approximately 100 years). Recovery points already saved in
-#' the vault prior to Vault Lock are not affected.
-#' @param ChangeableForDays The Backup Vault Lock configuration that specifies the number of days
-#' before the lock date. For example, setting `ChangeableForDays` to 30 on
-#' Jan. 1, 2022 at 8pm UTC will set the lock date to Jan. 31, 2022 at 8pm
-#' UTC.
+#' If this parameter is specified, any backup or copy job to the vault must have a lifecycle policy with a retention period equal to or shorter than the maximum retention period. If the job's retention period is longer than that maximum retention period, then the vault fails the backup or copy job, and you should either modify your lifecycle settings or use a different vault. The longest maximum retention period you can specify is 36500 days (approximately 100 years). Recovery points already saved in the vault prior to Vault Lock are not affected.
+#' @param ChangeableForDays The Backup Vault Lock configuration that specifies the number of days before the lock date. For example, setting `ChangeableForDays` to 30 on Jan. 1, 2022 at 8pm UTC will set the lock date to Jan. 31, 2022 at 8pm UTC.
 #' 
-#' Backup enforces a 72-hour cooling-off period before Vault Lock takes
-#' effect and becomes immutable. Therefore, you must set
-#' `ChangeableForDays` to 3 or greater.
+#' Backup enforces a 72-hour cooling-off period before Vault Lock takes effect and becomes immutable. Therefore, you must set `ChangeableForDays` to 3 or greater.
 #' 
-#' Before the lock date, you can delete Vault Lock from the vault using
-#' [`delete_backup_vault_lock_configuration`][backup_delete_backup_vault_lock_configuration]
-#' or change the Vault Lock configuration using
-#' [`put_backup_vault_lock_configuration`][backup_put_backup_vault_lock_configuration].
-#' On and after the lock date, the Vault Lock becomes immutable and cannot
-#' be changed or deleted.
+#' The maximum value you can specify is 36,500 days (approximately 100 years).
 #' 
-#' If this parameter is not specified, you can delete Vault Lock from the
-#' vault using
-#' [`delete_backup_vault_lock_configuration`][backup_delete_backup_vault_lock_configuration]
-#' or change the Vault Lock configuration using
-#' [`put_backup_vault_lock_configuration`][backup_put_backup_vault_lock_configuration]
-#' at any time.
+#' Before the lock date, you can delete Vault Lock from the vault using [`delete_backup_vault_lock_configuration`][backup_delete_backup_vault_lock_configuration] or change the Vault Lock configuration using [`put_backup_vault_lock_configuration`][backup_put_backup_vault_lock_configuration]. On and after the lock date, the Vault Lock becomes immutable and cannot be changed or deleted.
+#' 
+#' If this parameter is not specified, you can delete Vault Lock from the vault using [`delete_backup_vault_lock_configuration`][backup_delete_backup_vault_lock_configuration] or change the Vault Lock configuration using [`put_backup_vault_lock_configuration`][backup_put_backup_vault_lock_configuration] at any time.
 #'
 #' @keywords internal
 #'
@@ -3209,33 +3341,9 @@ backup_put_backup_vault_lock_configuration <- function(BackupVaultName, MinReten
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_put_backup_vault_notifications/](https://www.paws-r-sdk.com/docs/backup_put_backup_vault_notifications/) for full documentation.
 #'
-#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults
-#' are identified by names that are unique to the account used to create
-#' them and the Amazon Web Services Region where they are created.
-#' @param SNSTopicArn &#91;required&#93; The Amazon Resource Name (ARN) that specifies the topic for a backup
-#' vault’s events; for example,
-#' `arn:aws:sns:us-west-2:111122223333:MyVaultTopic`.
-#' @param BackupVaultEvents &#91;required&#93; An array of events that indicate the status of jobs to back up resources
-#' to the backup vault.
-#' 
-#' For common use cases and code samples, see [Using Amazon SNS to track
-#' Backup events](https://docs.aws.amazon.com/aws-backup/latest/devguide/).
-#' 
-#' The following events are supported:
-#' 
-#' -   `BACKUP_JOB_STARTED` | `BACKUP_JOB_COMPLETED`
-#' 
-#' -   `COPY_JOB_STARTED` | `COPY_JOB_SUCCESSFUL` | `COPY_JOB_FAILED`
-#' 
-#' -   `RESTORE_JOB_STARTED` | `RESTORE_JOB_COMPLETED` |
-#'     `RECOVERY_POINT_MODIFIED`
-#' 
-#' -   `S3_BACKUP_OBJECT_FAILED` | `S3_RESTORE_OBJECT_FAILED`
-#' 
-#' The list below includes both supported events and deprecated events that
-#' are no longer in use (for reference). Deprecated events do not return
-#' statuses or notifications. Refer to the list above for the supported
-#' events.
+#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.
+#' @param SNSTopicArn &#91;required&#93; The Amazon Resource Name (ARN) that specifies the topic for a backup vault’s events; for example, `arn:aws:sns:us-west-2:111122223333:MyVaultTopic`.
+#' @param BackupVaultEvents &#91;required&#93; An array of events that indicate the status of jobs to back up resources to the backup vault. For the list of supported events, common use cases, and code samples, see [Notification options with Backup](https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-notifications.html).
 #'
 #' @keywords internal
 #'
@@ -3269,8 +3377,7 @@ backup_put_backup_vault_notifications <- function(BackupVaultName, SNSTopicArn, 
 #'
 #' @param RestoreJobId &#91;required&#93; This is a unique identifier of a restore job within Backup.
 #' @param ValidationStatus &#91;required&#93; The status of your restore validation.
-#' @param ValidationStatusMessage This is an optional message string you can input to describe the
-#' validation status for the restore test validation.
+#' @param ValidationStatusMessage This is an optional message string you can input to describe the validation status for the restore test validation.
 #'
 #' @keywords internal
 #'
@@ -3294,6 +3401,40 @@ backup_put_restore_validation_result <- function(RestoreJobId, ValidationStatus,
 }
 .backup$operations$put_restore_validation_result <- backup_put_restore_validation_result
 
+#' Revokes access to a restore access backup vault, removing the ability to
+#' restore from its recovery points and permanently deleting the vault
+#'
+#' @description
+#' Revokes access to a restore access backup vault, removing the ability to restore from its recovery points and permanently deleting the vault.
+#'
+#' See [https://www.paws-r-sdk.com/docs/backup_revoke_restore_access_backup_vault/](https://www.paws-r-sdk.com/docs/backup_revoke_restore_access_backup_vault/) for full documentation.
+#'
+#' @param BackupVaultName &#91;required&#93; The name of the source backup vault associated with the restore access backup vault to be revoked.
+#' @param RestoreAccessBackupVaultArn &#91;required&#93; The ARN of the restore access backup vault to revoke.
+#' @param RequesterComment A comment explaining the reason for revoking access to the restore access backup vault.
+#'
+#' @keywords internal
+#'
+#' @rdname backup_revoke_restore_access_backup_vault
+backup_revoke_restore_access_backup_vault <- function(BackupVaultName, RestoreAccessBackupVaultArn, RequesterComment = NULL) {
+  op <- new_operation(
+    name = "RevokeRestoreAccessBackupVault",
+    http_method = "DELETE",
+    http_path = "/logically-air-gapped-backup-vaults/{backupVaultName}/restore-access-backup-vaults/{restoreAccessBackupVaultArn}",
+    host_prefix = "",
+    paginator = list(),
+    stream_api = FALSE
+  )
+  input <- .backup$revoke_restore_access_backup_vault_input(BackupVaultName = BackupVaultName, RestoreAccessBackupVaultArn = RestoreAccessBackupVaultArn, RequesterComment = RequesterComment)
+  output <- .backup$revoke_restore_access_backup_vault_output()
+  config <- get_config()
+  svc <- .backup$service(config, op)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.backup$operations$revoke_restore_access_backup_vault <- backup_revoke_restore_access_backup_vault
+
 #' Starts an on-demand backup job for the specified resource
 #'
 #' @description
@@ -3301,67 +3442,31 @@ backup_put_restore_validation_result <- function(RestoreJobId, ValidationStatus,
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_start_backup_job/](https://www.paws-r-sdk.com/docs/backup_start_backup_job/) for full documentation.
 #'
-#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults
-#' are identified by names that are unique to the account used to create
-#' them and the Amazon Web Services Region where they are created.
-#' @param ResourceArn &#91;required&#93; An Amazon Resource Name (ARN) that uniquely identifies a resource. The
-#' format of the ARN depends on the resource type.
-#' @param IamRoleArn &#91;required&#93; Specifies the IAM role ARN used to create the target recovery point; for
-#' example, `arn:aws:iam::123456789012:role/S3Access`.
-#' @param IdempotencyToken A customer-chosen string that you can use to distinguish between
-#' otherwise identical calls to
-#' [`start_backup_job`][backup_start_backup_job]. Retrying a successful
-#' request with the same idempotency token results in a success message
-#' with no action taken.
-#' @param StartWindowMinutes A value in minutes after a backup is scheduled before a job will be
-#' canceled if it doesn't start successfully. This value is optional, and
-#' the default is 8 hours. If this value is included, it must be at least
-#' 60 minutes to avoid errors.
+#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.
+#' @param LogicallyAirGappedBackupVaultArn The ARN of a logically air-gapped vault. ARN must be in the same account and Region. If provided, supported fully managed resources back up directly to logically air-gapped vault, while other supported resources create a temporary (billable) snapshot in backup vault, then copy it to logically air-gapped vault. Unsupported resources only back up to the specified backup vault.
+#' @param ResourceArn &#91;required&#93; An Amazon Resource Name (ARN) that uniquely identifies a resource. The format of the ARN depends on the resource type.
+#' @param IamRoleArn &#91;required&#93; Specifies the IAM role ARN used to create the target recovery point; for example, `arn:aws:iam::123456789012:role/S3Access`.
+#' @param IdempotencyToken A customer-chosen string that you can use to distinguish between otherwise identical calls to [`start_backup_job`][backup_start_backup_job]. Retrying a successful request with the same idempotency token results in a success message with no action taken.
+#' @param StartWindowMinutes A value in minutes after a backup is scheduled before a job will be canceled if it doesn't start successfully. This value is optional, and the default is 8 hours. If this value is included, it must be at least 60 minutes to avoid errors.
 #' 
 #' This parameter has a maximum value of 100 years (52,560,000 minutes).
 #' 
-#' During the start window, the backup job status remains in `CREATED`
-#' status until it has successfully begun or until the start window time
-#' has run out. If within the start window time Backup receives an error
-#' that allows the job to be retried, Backup will automatically retry to
-#' begin the job at least every 10 minutes until the backup successfully
-#' begins (the job status changes to `RUNNING`) or until the job status
-#' changes to `EXPIRED` (which is expected to occur when the start window
-#' time is over).
-#' @param CompleteWindowMinutes A value in minutes during which a successfully started backup must
-#' complete, or else Backup will cancel the job. This value is optional.
-#' This value begins counting down from when the backup was scheduled. It
-#' does not add additional time for `StartWindowMinutes`, or if the backup
-#' started later than scheduled.
+#' During the start window, the backup job status remains in `CREATED` status until it has successfully begun or until the start window time has run out. If within the start window time Backup receives an error that allows the job to be retried, Backup will automatically retry to begin the job at least every 10 minutes until the backup successfully begins (the job status changes to `RUNNING`) or until the job status changes to `EXPIRED` (which is expected to occur when the start window time is over).
+#' @param CompleteWindowMinutes A value in minutes during which a successfully started backup must complete, or else Backup will cancel the job. This value is optional. This value begins counting down from when the backup was scheduled. It does not add additional time for `StartWindowMinutes`, or if the backup started later than scheduled.
 #' 
-#' Like `StartWindowMinutes`, this parameter has a maximum value of 100
-#' years (52,560,000 minutes).
-#' @param Lifecycle The lifecycle defines when a protected resource is transitioned to cold
-#' storage and when it expires. Backup will transition and expire backups
-#' automatically according to the lifecycle that you define.
+#' Like `StartWindowMinutes`, this parameter has a maximum value of 100 years (52,560,000 minutes).
+#' @param Lifecycle The lifecycle defines when a protected resource is transitioned to cold storage and when it expires. Backup will transition and expire backups automatically according to the lifecycle that you define.
 #' 
-#' Backups transitioned to cold storage must be stored in cold storage for
-#' a minimum of 90 days. Therefore, the “retention” setting must be 90 days
-#' greater than the “transition to cold after days” setting. The
-#' “transition to cold after days” setting cannot be changed after a backup
-#' has been transitioned to cold.
+#' Backups transitioned to cold storage must be stored in cold storage for a minimum of 90 days. Therefore, the “retention” setting must be 90 days greater than the “transition to cold after days” setting. The “transition to cold after days” setting cannot be changed after a backup has been transitioned to cold.
 #' 
-#' Resource types that can transition to cold storage are listed in the
-#' [Feature availability by
-#' resource](https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-feature-availability.html#features-by-resource)
-#' table. Backup ignores this expression for other resource types.
+#' Resource types that can transition to cold storage are listed in the [Feature availability by resource](https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-feature-availability.html#features-by-resource) table. Backup ignores this expression for other resource types.
 #' 
 #' This parameter has a maximum value of 100 years (36,500 days).
 #' @param RecoveryPointTags The tags to assign to the resources.
-#' @param BackupOptions The backup option for a selected resource. This option is only available
-#' for Windows Volume Shadow Copy Service (VSS) backup jobs.
+#' @param BackupOptions The backup option for a selected resource. This option is only available for Windows Volume Shadow Copy Service (VSS) backup jobs.
 #' 
-#' Valid values: Set to `"WindowsVSS":"enabled"` to enable the `WindowsVSS`
-#' backup option and create a Windows VSS backup. Set to
-#' `"WindowsVSS""disabled"` to create a regular backup. The `WindowsVSS`
-#' option is not enabled by default.
-#' @param Index Include this parameter to enable index creation if your backup job has a
-#' resource type that supports backup indexes.
+#' Valid values: Set to `"WindowsVSS":"enabled"` to enable the `WindowsVSS` backup option and create a Windows VSS backup. Set to `"WindowsVSS""disabled"` to create a regular backup. The `WindowsVSS` option is not enabled by default.
+#' @param Index Include this parameter to enable index creation if your backup job has a resource type that supports backup indexes.
 #' 
 #' Resource types that support backup indexes include:
 #' 
@@ -3371,15 +3476,14 @@ backup_put_restore_validation_result <- function(RestoreJobId, ValidationStatus,
 #' 
 #' Index can have 1 of 2 possible values, either `ENABLED` or `DISABLED`.
 #' 
-#' To create a backup index for an eligible `ACTIVE` recovery point that
-#' does not yet have a backup index, set value to `ENABLED`.
+#' To create a backup index for an eligible `ACTIVE` recovery point that does not yet have a backup index, set value to `ENABLED`.
 #' 
 #' To delete a backup index, set value to `DISABLED`.
 #'
 #' @keywords internal
 #'
 #' @rdname backup_start_backup_job
-backup_start_backup_job <- function(BackupVaultName, ResourceArn, IamRoleArn, IdempotencyToken = NULL, StartWindowMinutes = NULL, CompleteWindowMinutes = NULL, Lifecycle = NULL, RecoveryPointTags = NULL, BackupOptions = NULL, Index = NULL) {
+backup_start_backup_job <- function(BackupVaultName, LogicallyAirGappedBackupVaultArn = NULL, ResourceArn, IamRoleArn, IdempotencyToken = NULL, StartWindowMinutes = NULL, CompleteWindowMinutes = NULL, Lifecycle = NULL, RecoveryPointTags = NULL, BackupOptions = NULL, Index = NULL) {
   op <- new_operation(
     name = "StartBackupJob",
     http_method = "PUT",
@@ -3388,7 +3492,7 @@ backup_start_backup_job <- function(BackupVaultName, ResourceArn, IamRoleArn, Id
     paginator = list(),
     stream_api = FALSE
   )
-  input <- .backup$start_backup_job_input(BackupVaultName = BackupVaultName, ResourceArn = ResourceArn, IamRoleArn = IamRoleArn, IdempotencyToken = IdempotencyToken, StartWindowMinutes = StartWindowMinutes, CompleteWindowMinutes = CompleteWindowMinutes, Lifecycle = Lifecycle, RecoveryPointTags = RecoveryPointTags, BackupOptions = BackupOptions, Index = Index)
+  input <- .backup$start_backup_job_input(BackupVaultName = BackupVaultName, LogicallyAirGappedBackupVaultArn = LogicallyAirGappedBackupVaultArn, ResourceArn = ResourceArn, IamRoleArn = IamRoleArn, IdempotencyToken = IdempotencyToken, StartWindowMinutes = StartWindowMinutes, CompleteWindowMinutes = CompleteWindowMinutes, Lifecycle = Lifecycle, RecoveryPointTags = RecoveryPointTags, BackupOptions = BackupOptions, Index = Index)
   output <- .backup$start_backup_job_output()
   config <- get_config()
   svc <- .backup$service(config, op)
@@ -3405,22 +3509,18 @@ backup_start_backup_job <- function(BackupVaultName, ResourceArn, IamRoleArn, Id
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_start_copy_job/](https://www.paws-r-sdk.com/docs/backup_start_copy_job/) for full documentation.
 #'
-#' @param RecoveryPointArn &#91;required&#93; An ARN that uniquely identifies a recovery point to use for the copy
-#' job; for example,
-#' arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45.
-#' @param SourceBackupVaultName &#91;required&#93; The name of a logical source container where backups are stored. Backup
-#' vaults are identified by names that are unique to the account used to
-#' create them and the Amazon Web Services Region where they are created.
-#' @param DestinationBackupVaultArn &#91;required&#93; An Amazon Resource Name (ARN) that uniquely identifies a destination
-#' backup vault to copy to; for example,
-#' `arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault`.
-#' @param IamRoleArn &#91;required&#93; Specifies the IAM role ARN used to copy the target recovery point; for
-#' example, `arn:aws:iam::123456789012:role/S3Access`.
-#' @param IdempotencyToken A customer-chosen string that you can use to distinguish between
-#' otherwise identical calls to [`start_copy_job`][backup_start_copy_job].
-#' Retrying a successful request with the same idempotency token results in
-#' a success message with no action taken.
-#' @param Lifecycle 
+#' @param RecoveryPointArn &#91;required&#93; An ARN that uniquely identifies a recovery point to use for the copy job; for example, arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45.
+#' @param SourceBackupVaultName &#91;required&#93; The name of a logical source container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.
+#' @param DestinationBackupVaultArn &#91;required&#93; An Amazon Resource Name (ARN) that uniquely identifies a destination backup vault to copy to; for example, `arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault`.
+#' @param IamRoleArn &#91;required&#93; Specifies the IAM role ARN used to copy the target recovery point; for example, `arn:aws:iam::123456789012:role/S3Access`.
+#' @param IdempotencyToken A customer-chosen string that you can use to distinguish between otherwise identical calls to [`start_copy_job`][backup_start_copy_job]. Retrying a successful request with the same idempotency token results in a success message with no action taken.
+#' @param Lifecycle Specifies the time period, in days, before a recovery point transitions to cold storage or is deleted.
+#' 
+#' Backups transitioned to cold storage must be stored in cold storage for a minimum of 90 days. Therefore, on the console, the retention setting must be 90 days greater than the transition to cold after days setting. The transition to cold after days setting can't be changed after a backup has been transitioned to cold.
+#' 
+#' Resource types that can transition to cold storage are listed in the [Feature availability by resource](https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-feature-availability.html#features-by-resource) table. Backup ignores this expression for other resource types.
+#' 
+#' To remove the existing lifecycle and retention periods and keep your recovery points indefinitely, specify -1 for `MoveToColdStorageAfterDays` and `DeleteAfterDays`.
 #'
 #' @keywords internal
 #'
@@ -3452,10 +3552,7 @@ backup_start_copy_job <- function(RecoveryPointArn, SourceBackupVaultName, Desti
 #' See [https://www.paws-r-sdk.com/docs/backup_start_report_job/](https://www.paws-r-sdk.com/docs/backup_start_report_job/) for full documentation.
 #'
 #' @param ReportPlanName &#91;required&#93; The unique name of a report plan.
-#' @param IdempotencyToken A customer-chosen string that you can use to distinguish between
-#' otherwise identical calls to `StartReportJobInput`. Retrying a
-#' successful request with the same idempotency token results in a success
-#' message with no action taken.
+#' @param IdempotencyToken A customer-chosen string that you can use to distinguish between otherwise identical calls to `StartReportJobInput`. Retrying a successful request with the same idempotency token results in a success message with no action taken.
 #'
 #' @keywords internal
 #'
@@ -3486,75 +3583,47 @@ backup_start_report_job <- function(ReportPlanName, IdempotencyToken = NULL) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_start_restore_job/](https://www.paws-r-sdk.com/docs/backup_start_restore_job/) for full documentation.
 #'
-#' @param RecoveryPointArn &#91;required&#93; An ARN that uniquely identifies a recovery point; for example,
-#' `arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45`.
+#' @param RecoveryPointArn &#91;required&#93; An ARN that uniquely identifies a recovery point; for example, `arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45`.
 #' @param Metadata &#91;required&#93; A set of metadata key-value pairs.
 #' 
-#' You can get configuration metadata about a resource at the time it was
-#' backed up by calling
-#' [`get_recovery_point_restore_metadata`][backup_get_recovery_point_restore_metadata].
-#' However, values in addition to those provided by
-#' [`get_recovery_point_restore_metadata`][backup_get_recovery_point_restore_metadata]
-#' might be required to restore a resource. For example, you might need to
-#' provide a new resource name if the original already exists.
+#' You can get configuration metadata about a resource at the time it was backed up by calling [`get_recovery_point_restore_metadata`][backup_get_recovery_point_restore_metadata]. However, values in addition to those provided by [`get_recovery_point_restore_metadata`][backup_get_recovery_point_restore_metadata] might be required to restore a resource. For example, you might need to provide a new resource name if the original already exists.
 #' 
-#' For more information about the metadata for each resource, see the
-#' following:
+#' For more information about the metadata for each resource, see the following:
 #' 
-#' -   [Metadata for Amazon
-#'     Aurora](https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-aur.html#aur-restore-cli)
+#' -   [Metadata for Amazon Aurora](https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-aur.html#aur-restore-cli)
 #' 
-#' -   [Metadata for Amazon
-#'     DocumentDB](https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-docdb.html#docdb-restore-cli)
+#' -   [Metadata for Amazon DocumentDB](https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-docdb.html#docdb-restore-cli)
 #' 
-#' -   [Metadata for
-#'     CloudFormation](https://docs.aws.amazon.com/aws-backup/latest/devguide/restore-application-stacks.html#restoring-cfn-cli)
+#' -   [Metadata for CloudFormation](https://docs.aws.amazon.com/aws-backup/latest/devguide/restore-application-stacks.html#restoring-cfn-cli)
 #' 
-#' -   [Metadata for Amazon
-#'     DynamoDB](https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-dynamodb.html#ddb-restore-cli)
+#' -   [Metadata for Amazon DynamoDB](https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-dynamodb.html#ddb-restore-cli)
 #' 
-#' -   [Metadata for Amazon
-#'     EBS](https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-ebs.html#ebs-restore-cli)
+#' -   [Metadata for Amazon EBS](https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-ebs.html#ebs-restore-cli)
 #' 
-#' -   [Metadata for Amazon
-#'     EC2](https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-ec2.html#restoring-ec2-cli)
+#' -   [Metadata for Amazon EC2](https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-ec2.html#restoring-ec2-cli)
 #' 
-#' -   [Metadata for Amazon
-#'     EFS](https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-efs.html#efs-restore-cli)
+#' -   [Metadata for Amazon EFS](https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-efs.html#efs-restore-cli)
 #' 
-#' -   [Metadata for Amazon
-#'     FSx](https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-fsx.html#fsx-restore-cli)
+#' -   [Metadata for Amazon EKS](https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-eks.html#eks-restore-backup-section)
 #' 
-#' -   [Metadata for Amazon
-#'     Neptune](https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-nep.html#nep-restore-cli)
+#' -   [Metadata for Amazon FSx](https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-fsx.html#fsx-restore-cli)
 #' 
-#' -   [Metadata for Amazon
-#'     RDS](https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-rds.html#rds-restore-cli)
+#' -   [Metadata for Amazon Neptune](https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-nep.html#nep-restore-cli)
 #' 
-#' -   [Metadata for Amazon
-#'     Redshift](https://docs.aws.amazon.com/aws-backup/latest/devguide/redshift-restores.html#redshift-restore-api)
+#' -   [Metadata for Amazon RDS](https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-rds.html#rds-restore-cli)
 #' 
-#' -   [Metadata for Storage
-#'     Gateway](https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-storage-gateway.html#restoring-sgw-cli)
+#' -   [Metadata for Amazon Redshift](https://docs.aws.amazon.com/aws-backup/latest/devguide/redshift-restores.html#redshift-restore-api)
 #' 
-#' -   [Metadata for Amazon
-#'     S3](https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-s3.html#s3-restore-cli)
+#' -   [Metadata for Storage Gateway](https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-storage-gateway.html#restoring-sgw-cli)
 #' 
-#' -   [Metadata for Amazon
-#'     Timestream](https://docs.aws.amazon.com/aws-backup/latest/devguide/timestream-restore.html#timestream-restore-api)
+#' -   [Metadata for Amazon S3](https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-s3.html#s3-restore-cli)
 #' 
-#' -   [Metadata for virtual
-#'     machines](https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-vm.html#vm-restore-cli)
-#' @param IamRoleArn The Amazon Resource Name (ARN) of the IAM role that Backup uses to
-#' create the target resource; for example:
-#' `arn:aws:iam::123456789012:role/S3Access`.
-#' @param IdempotencyToken A customer-chosen string that you can use to distinguish between
-#' otherwise identical calls to
-#' [`start_restore_job`][backup_start_restore_job]. Retrying a successful
-#' request with the same idempotency token results in a success message
-#' with no action taken.
-#' @param ResourceType Starts a job to restore a recovery point for one of the following
-#' resources:
+#' -   [Metadata for Amazon Timestream](https://docs.aws.amazon.com/aws-backup/latest/devguide/timestream-restore.html#timestream-restore-api)
+#' 
+#' -   [Metadata for virtual machines](https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-vm.html#vm-restore-cli)
+#' @param IamRoleArn The Amazon Resource Name (ARN) of the IAM role that Backup uses to create the target resource; for example: `arn:aws:iam::123456789012:role/S3Access`.
+#' @param IdempotencyToken A customer-chosen string that you can use to distinguish between otherwise identical calls to [`start_restore_job`][backup_start_restore_job]. Retrying a successful request with the same idempotency token results in a success message with no action taken.
+#' @param ResourceType Starts a job to restore a recovery point for one of the following resources:
 #' 
 #' -   `Aurora` - Amazon Aurora
 #' 
@@ -3569,6 +3638,8 @@ backup_start_report_job <- function(ReportPlanName, IdempotencyToken = NULL) {
 #' -   `EC2` - Amazon Elastic Compute Cloud
 #' 
 #' -   `EFS` - Amazon Elastic File System
+#' 
+#' -   `EKS` - Amazon Elastic Kubernetes Service
 #' 
 #' -   `FSx` - Amazon FSx
 #' 
@@ -3585,8 +3656,7 @@ backup_start_report_job <- function(ReportPlanName, IdempotencyToken = NULL) {
 #' -   `Timestream` - Amazon Timestream
 #' 
 #' -   `VirtualMachine` - Virtual machines
-#' @param CopySourceTagsToRestoredResource This is an optional parameter. If this equals `True`, tags included in
-#' the backup will be copied to the restored resource.
+#' @param CopySourceTagsToRestoredResource This is an optional parameter. If this equals `True`, tags included in the backup will be copied to the restored resource.
 #' 
 #' This can only be applied to backups created through Backup.
 #'
@@ -3611,6 +3681,53 @@ backup_start_restore_job <- function(RecoveryPointArn, Metadata, IamRoleArn = NU
   return(response)
 }
 .backup$operations$start_restore_job <- backup_start_restore_job
+
+#' Starts scanning jobs for specific resources
+#'
+#' @description
+#' Starts scanning jobs for specific resources.
+#'
+#' See [https://www.paws-r-sdk.com/docs/backup_start_scan_job/](https://www.paws-r-sdk.com/docs/backup_start_scan_job/) for full documentation.
+#'
+#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.
+#' 
+#' Pattern: `^[a-zA-Z0-9\-_]{2,50}$`
+#' @param ContinuousScanEndTime The point in time the scan job will scan up to for a continuous backup.
+#' @param IamRoleArn &#91;required&#93; Specifies the IAM role ARN used to create the target recovery point; for example, `arn:aws:iam::123456789012:role/S3Access`.
+#' @param IdempotencyToken A customer-chosen string that you can use to distinguish between otherwise identical calls to [`start_scan_job`][backup_start_scan_job]. Retrying a successful request with the same idempotency token results in a success message with no action taken.
+#' @param MalwareScanner &#91;required&#93; Specifies the malware scanner used during the scan job. Currently only supports `GUARDDUTY`.
+#' @param RecoveryPointArn &#91;required&#93; An Amazon Resource Name (ARN) that uniquely identifies a recovery point. This is your target recovery point for a full scan. If you are running an incremental scan, this will be your a recovery point which has been created after your base recovery point selection.
+#' @param ScanBaseRecoveryPointArn An ARN that uniquely identifies the base recovery point to be used for incremental scanning.
+#' @param ScanMode &#91;required&#93; Specifies the scan type use for the scan job.
+#' 
+#' Includes:
+#' 
+#' -   `FULL_SCAN` will scan the entire data lineage within the backup.
+#' 
+#' -   `INCREMENTAL_SCAN` will scan the data difference between the target recovery point and base recovery point ARN.
+#' @param ScannerRoleArn &#91;required&#93; Specified the IAM scanner role ARN.
+#'
+#' @keywords internal
+#'
+#' @rdname backup_start_scan_job
+backup_start_scan_job <- function(BackupVaultName, ContinuousScanEndTime = NULL, IamRoleArn, IdempotencyToken = NULL, MalwareScanner, RecoveryPointArn, ScanBaseRecoveryPointArn = NULL, ScanMode, ScannerRoleArn) {
+  op <- new_operation(
+    name = "StartScanJob",
+    http_method = "PUT",
+    http_path = "/scan/job",
+    host_prefix = "",
+    paginator = list(),
+    stream_api = FALSE
+  )
+  input <- .backup$start_scan_job_input(BackupVaultName = BackupVaultName, ContinuousScanEndTime = ContinuousScanEndTime, IamRoleArn = IamRoleArn, IdempotencyToken = IdempotencyToken, MalwareScanner = MalwareScanner, RecoveryPointArn = RecoveryPointArn, ScanBaseRecoveryPointArn = ScanBaseRecoveryPointArn, ScanMode = ScanMode, ScannerRoleArn = ScannerRoleArn)
+  output <- .backup$start_scan_job_output()
+  config <- get_config()
+  svc <- .backup$service(config, op)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.backup$operations$start_scan_job <- backup_start_scan_job
 
 #' Attempts to cancel a job to create a one-time backup of a resource
 #'
@@ -3643,26 +3760,15 @@ backup_stop_backup_job <- function(BackupJobId) {
 }
 .backup$operations$stop_backup_job <- backup_stop_backup_job
 
-#' Assigns a set of key-value pairs to a recovery point, backup plan, or
-#' backup vault identified by an Amazon Resource Name (ARN)
+#' Assigns a set of key-value pairs to a resource
 #'
 #' @description
-#' Assigns a set of key-value pairs to a recovery point, backup plan, or backup vault identified by an Amazon Resource Name (ARN).
+#' Assigns a set of key-value pairs to a resource.
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_tag_resource/](https://www.paws-r-sdk.com/docs/backup_tag_resource/) for full documentation.
 #'
-#' @param ResourceArn &#91;required&#93; An ARN that uniquely identifies a resource. The format of the ARN
-#' depends on the type of the tagged resource.
-#' 
-#' ARNs that do not include `backup` are incompatible with tagging.
-#' [`tag_resource`][backup_tag_resource] and
-#' [`untag_resource`][backup_untag_resource] with invalid ARNs will result
-#' in an error. Acceptable ARN content can include
-#' `arn:aws:backup:us-east`. Invalid ARN content may look like
-#' `arn:aws:ec2:us-east`.
-#' @param Tags &#91;required&#93; Key-value pairs that are used to help organize your resources. You can
-#' assign your own metadata to the resources you create. For clarity, this
-#' is the structure to assign tags: `[{"Key":"string","Value":"string"}]`.
+#' @param ResourceArn &#91;required&#93; The ARN that uniquely identifies the resource.
+#' @param Tags &#91;required&#93; Key-value pairs that are used to help organize your resources. You can assign your own metadata to the resources you create. For clarity, this is the structure to assign tags: `[{"Key":"string","Value":"string"}]`.
 #'
 #' @keywords internal
 #'
@@ -3694,15 +3800,9 @@ backup_tag_resource <- function(ResourceArn, Tags) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_untag_resource/](https://www.paws-r-sdk.com/docs/backup_untag_resource/) for full documentation.
 #'
-#' @param ResourceArn &#91;required&#93; An ARN that uniquely identifies a resource. The format of the ARN
-#' depends on the type of the tagged resource.
+#' @param ResourceArn &#91;required&#93; An ARN that uniquely identifies a resource. The format of the ARN depends on the type of the tagged resource.
 #' 
-#' ARNs that do not include `backup` are incompatible with tagging.
-#' [`tag_resource`][backup_tag_resource] and
-#' [`untag_resource`][backup_untag_resource] with invalid ARNs will result
-#' in an error. Acceptable ARN content can include
-#' `arn:aws:backup:us-east`. Invalid ARN content may look like
-#' `arn:aws:ec2:us-east`.
+#' ARNs that do not include `backup` are incompatible with tagging. [`tag_resource`][backup_tag_resource] and [`untag_resource`][backup_untag_resource] with invalid ARNs will result in an error. Acceptable ARN content can include `arn:aws:backup:us-east`. Invalid ARN content may look like `arn:aws:ec2:us-east`.
 #' @param TagKeyList &#91;required&#93; The keys to identify which key-value tags to remove from a resource.
 #'
 #' @keywords internal
@@ -3735,8 +3835,7 @@ backup_untag_resource <- function(ResourceArn, TagKeyList) {
 #' See [https://www.paws-r-sdk.com/docs/backup_update_backup_plan/](https://www.paws-r-sdk.com/docs/backup_update_backup_plan/) for full documentation.
 #'
 #' @param BackupPlanId &#91;required&#93; The ID of the backup plan.
-#' @param BackupPlan &#91;required&#93; The body of a backup plan. Includes a `BackupPlanName` and one or more
-#' sets of `Rules`.
+#' @param BackupPlan &#91;required&#93; The body of a backup plan. Includes a `BackupPlanName` and one or more sets of `Rules`.
 #'
 #' @keywords internal
 #'
@@ -3767,17 +3866,10 @@ backup_update_backup_plan <- function(BackupPlanId, BackupPlan) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_update_framework/](https://www.paws-r-sdk.com/docs/backup_update_framework/) for full documentation.
 #'
-#' @param FrameworkName &#91;required&#93; The unique name of a framework. This name is between 1 and 256
-#' characters, starting with a letter, and consisting of letters (a-z,
-#' A-Z), numbers (0-9), and underscores (_).
-#' @param FrameworkDescription An optional description of the framework with a maximum 1,024
-#' characters.
-#' @param FrameworkControls The controls that make up the framework. Each control in the list has a
-#' name, input parameters, and scope.
-#' @param IdempotencyToken A customer-chosen string that you can use to distinguish between
-#' otherwise identical calls to `UpdateFrameworkInput`. Retrying a
-#' successful request with the same idempotency token results in a success
-#' message with no action taken.
+#' @param FrameworkName &#91;required&#93; The unique name of a framework. This name is between 1 and 256 characters, starting with a letter, and consisting of letters (a-z, A-Z), numbers (0-9), and underscores (_).
+#' @param FrameworkDescription An optional description of the framework with a maximum 1,024 characters.
+#' @param FrameworkControls The controls that make up the framework. Each control in the list has a name, input parameters, and scope.
+#' @param IdempotencyToken A customer-chosen string that you can use to distinguish between otherwise identical calls to `UpdateFrameworkInput`. Retrying a successful request with the same idempotency token results in a success message with no action taken.
 #'
 #' @keywords internal
 #'
@@ -3801,16 +3893,22 @@ backup_update_framework <- function(FrameworkName, FrameworkDescription = NULL, 
 }
 .backup$operations$update_framework <- backup_update_framework
 
-#' Updates whether the Amazon Web Services account is opted in to
-#' cross-account backup
+#' Updates whether the Amazon Web Services account has enabled different
+#' cross-account management options, including cross-account backup,
+#' multi-party approval, and delegated administrator
 #'
 #' @description
-#' Updates whether the Amazon Web Services account is opted in to cross-account backup. Returns an error if the account is not an Organizations management account. Use the [`describe_global_settings`][backup_describe_global_settings] API to determine the current settings.
+#' Updates whether the Amazon Web Services account has enabled different cross-account management options, including cross-account backup, multi-party approval, and delegated administrator. Returns an error if the account is not an Organizations management account. Use the [`describe_global_settings`][backup_describe_global_settings] API to determine the current settings.
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_update_global_settings/](https://www.paws-r-sdk.com/docs/backup_update_global_settings/) for full documentation.
 #'
-#' @param GlobalSettings A value for `isCrossAccountBackupEnabled` and a Region. Example:
-#' `update-global-settings --global-settings isCrossAccountBackupEnabled=false --region us-west-2`.
+#' @param GlobalSettings Inputs can include:
+#' 
+#' A value for `isCrossAccountBackupEnabled`. Values can be true or false. Example: `update-global-settings --global-settings isCrossAccountBackupEnabled=false`.
+#' 
+#' A value for Multi-party approval, styled as `isMpaEnabled`. Values can be true or false. Example: `update-global-settings --global-settings isMpaEnabled=false`.
+#' 
+#' A value for Backup Service-Linked Role creation, styled as `isDelegatedAdministratorEnabled`. Values can be true or false. Example: `update-global-settings --global-settings isDelegatedAdministratorEnabled=false`.
 #'
 #' @keywords internal
 #'
@@ -3841,20 +3939,16 @@ backup_update_global_settings <- function(GlobalSettings = NULL) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_update_recovery_point_index_settings/](https://www.paws-r-sdk.com/docs/backup_update_recovery_point_index_settings/) for full documentation.
 #'
-#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults
-#' are identified by names that are unique to the account used to create
-#' them and the Region where they are created.
+#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Region where they are created.
 #' 
 #' Accepted characters include lowercase letters, numbers, and hyphens.
-#' @param RecoveryPointArn &#91;required&#93; An ARN that uniquely identifies a recovery point; for example,
-#' `arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45`.
+#' @param RecoveryPointArn &#91;required&#93; An ARN that uniquely identifies a recovery point; for example, `arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45`.
 #' @param IamRoleArn This specifies the IAM role ARN used for this operation.
 #' 
 #' For example, arn:aws:iam::123456789012:role/S3Access
 #' @param Index &#91;required&#93; Index can have 1 of 2 possible values, either `ENABLED` or `DISABLED`.
 #' 
-#' To create a backup index for an eligible `ACTIVE` recovery point that
-#' does not yet have a backup index, set value to `ENABLED`.
+#' To create a backup index for an eligible `ACTIVE` recovery point that does not yet have a backup index, set value to `ENABLED`.
 #' 
 #' To delete a backup index, set value to `DISABLED`.
 #'
@@ -3887,21 +3981,11 @@ backup_update_recovery_point_index_settings <- function(BackupVaultName, Recover
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_update_recovery_point_lifecycle/](https://www.paws-r-sdk.com/docs/backup_update_recovery_point_lifecycle/) for full documentation.
 #'
-#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults
-#' are identified by names that are unique to the account used to create
-#' them and the Amazon Web Services Region where they are created.
-#' @param RecoveryPointArn &#91;required&#93; An Amazon Resource Name (ARN) that uniquely identifies a recovery point;
-#' for example,
-#' `arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45`.
-#' @param Lifecycle The lifecycle defines when a protected resource is transitioned to cold
-#' storage and when it expires. Backup transitions and expires backups
-#' automatically according to the lifecycle that you define.
+#' @param BackupVaultName &#91;required&#93; The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.
+#' @param RecoveryPointArn &#91;required&#93; An Amazon Resource Name (ARN) that uniquely identifies a recovery point; for example, `arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45`.
+#' @param Lifecycle The lifecycle defines when a protected resource is transitioned to cold storage and when it expires. Backup transitions and expires backups automatically according to the lifecycle that you define.
 #' 
-#' Backups transitioned to cold storage must be stored in cold storage for
-#' a minimum of 90 days. Therefore, the “retention” setting must be 90 days
-#' greater than the “transition to cold after days” setting. The
-#' “transition to cold after days” setting cannot be changed after a backup
-#' has been transitioned to cold.
+#' Backups transitioned to cold storage must be stored in cold storage for a minimum of 90 days. Therefore, the “retention” setting must be 90 days greater than the “transition to cold after days” setting. The “transition to cold after days” setting cannot be changed after a backup has been transitioned to cold.
 #'
 #' @keywords internal
 #'
@@ -3932,23 +4016,10 @@ backup_update_recovery_point_lifecycle <- function(BackupVaultName, RecoveryPoin
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_update_region_settings/](https://www.paws-r-sdk.com/docs/backup_update_region_settings/) for full documentation.
 #'
-#' @param ResourceTypeOptInPreference Updates the list of services along with the opt-in preferences for the
-#' Region.
+#' @param ResourceTypeOptInPreference Updates the list of services along with the opt-in preferences for the Region.
 #' 
-#' If resource assignments are only based on tags, then service opt-in
-#' settings are applied. If a resource type is explicitly assigned to a
-#' backup plan, such as Amazon S3, Amazon EC2, or Amazon RDS, it will be
-#' included in the backup even if the opt-in is not enabled for that
-#' particular service. If both a resource type and tags are specified in a
-#' resource assignment, the resource type specified in the backup plan
-#' takes priority over the tag condition. Service opt-in settings are
-#' disregarded in this situation.
-#' @param ResourceTypeManagementPreference Enables or disables full Backup management of backups for a resource
-#' type. To enable full Backup management for DynamoDB along with [Backup's
-#' advanced DynamoDB backup
-#' features](https://docs.aws.amazon.com/aws-backup/latest/devguide/advanced-ddb-backup.html),
-#' follow the procedure to [enable advanced DynamoDB backup
-#' programmatically](https://docs.aws.amazon.com/aws-backup/latest/devguide/advanced-ddb-backup.html#advanced-ddb-backup-enable-cli).
+#' If resource assignments are only based on tags, then service opt-in settings are applied. If a resource type is explicitly assigned to a backup plan, such as Amazon S3, Amazon EC2, or Amazon RDS, it will be included in the backup even if the opt-in is not enabled for that particular service. If both a resource type and tags are specified in a resource assignment, the resource type specified in the backup plan takes priority over the tag condition. Service opt-in settings are disregarded in this situation.
+#' @param ResourceTypeManagementPreference Enables or disables full Backup management of backups for a resource type. To enable full Backup management for DynamoDB along with [Backup's advanced DynamoDB backup features](https://docs.aws.amazon.com/aws-backup/latest/devguide/advanced-ddb-backup.html), follow the procedure to [enable advanced DynamoDB backup programmatically](https://docs.aws.amazon.com/aws-backup/latest/devguide/advanced-ddb-backup.html#advanced-ddb-backup-enable-cli).
 #'
 #' @keywords internal
 #'
@@ -3979,25 +4050,15 @@ backup_update_region_settings <- function(ResourceTypeOptInPreference = NULL, Re
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_update_report_plan/](https://www.paws-r-sdk.com/docs/backup_update_report_plan/) for full documentation.
 #'
-#' @param ReportPlanName &#91;required&#93; The unique name of the report plan. This name is between 1 and 256
-#' characters, starting with a letter, and consisting of letters (a-z,
-#' A-Z), numbers (0-9), and underscores (_).
-#' @param ReportPlanDescription An optional description of the report plan with a maximum 1,024
-#' characters.
-#' @param ReportDeliveryChannel The information about where to deliver your reports, specifically your
-#' Amazon S3 bucket name, S3 key prefix, and the formats of your reports.
-#' @param ReportSetting The report template for the report. Reports are built using a report
-#' template. The report templates are:
+#' @param ReportPlanName &#91;required&#93; The unique name of the report plan. This name is between 1 and 256 characters, starting with a letter, and consisting of letters (a-z, A-Z), numbers (0-9), and underscores (_).
+#' @param ReportPlanDescription An optional description of the report plan with a maximum 1,024 characters.
+#' @param ReportDeliveryChannel The information about where to deliver your reports, specifically your Amazon S3 bucket name, S3 key prefix, and the formats of your reports.
+#' @param ReportSetting The report template for the report. Reports are built using a report template. The report templates are:
 #' 
 #' `RESOURCE_COMPLIANCE_REPORT | CONTROL_COMPLIANCE_REPORT | BACKUP_JOB_REPORT | COPY_JOB_REPORT | RESTORE_JOB_REPORT`
 #' 
-#' If the report template is `RESOURCE_COMPLIANCE_REPORT` or
-#' `CONTROL_COMPLIANCE_REPORT`, this API resource also describes the report
-#' coverage by Amazon Web Services Regions and frameworks.
-#' @param IdempotencyToken A customer-chosen string that you can use to distinguish between
-#' otherwise identical calls to `UpdateReportPlanInput`. Retrying a
-#' successful request with the same idempotency token results in a success
-#' message with no action taken.
+#' If the report template is `RESOURCE_COMPLIANCE_REPORT` or `CONTROL_COMPLIANCE_REPORT`, this API resource also describes the report coverage by Amazon Web Services Regions and frameworks.
+#' @param IdempotencyToken A customer-chosen string that you can use to distinguish between otherwise identical calls to `UpdateReportPlanInput`. Retrying a successful request with the same idempotency token results in a success message with no action taken.
 #'
 #' @keywords internal
 #'
@@ -4060,14 +4121,9 @@ backup_update_restore_testing_plan <- function(RestoreTestingPlan, RestoreTestin
 #'
 #' See [https://www.paws-r-sdk.com/docs/backup_update_restore_testing_selection/](https://www.paws-r-sdk.com/docs/backup_update_restore_testing_selection/) for full documentation.
 #'
-#' @param RestoreTestingPlanName &#91;required&#93; The restore testing plan name is required to update the indicated
-#' testing plan.
-#' @param RestoreTestingSelection &#91;required&#93; To update your restore testing selection, you can use either protected
-#' resource ARNs or conditions, but not both. That is, if your selection
-#' has `ProtectedResourceArns`, requesting an update with the parameter
-#' `ProtectedResourceConditions` will be unsuccessful.
-#' @param RestoreTestingSelectionName &#91;required&#93; The required restore testing selection name of the restore testing
-#' selection you wish to update.
+#' @param RestoreTestingPlanName &#91;required&#93; The restore testing plan name is required to update the indicated testing plan.
+#' @param RestoreTestingSelection &#91;required&#93; To update your restore testing selection, you can use either protected resource ARNs or conditions, but not both. That is, if your selection has `ProtectedResourceArns`, requesting an update with the parameter `ProtectedResourceConditions` will be unsuccessful.
+#' @param RestoreTestingSelectionName &#91;required&#93; The required restore testing selection name of the restore testing selection you wish to update.
 #'
 #' @keywords internal
 #'
@@ -4090,3 +4146,35 @@ backup_update_restore_testing_selection <- function(RestoreTestingPlanName, Rest
   return(response)
 }
 .backup$operations$update_restore_testing_selection <- backup_update_restore_testing_selection
+
+#' This request will send changes to your specified tiering configuration
+#'
+#' @description
+#' This request will send changes to your specified tiering configuration. `TieringConfigurationName` cannot be updated after it is created.
+#'
+#' See [https://www.paws-r-sdk.com/docs/backup_update_tiering_configuration/](https://www.paws-r-sdk.com/docs/backup_update_tiering_configuration/) for full documentation.
+#'
+#' @param TieringConfigurationName &#91;required&#93; The name of a tiering configuration to update.
+#' @param TieringConfiguration &#91;required&#93; Specifies the body of a tiering configuration.
+#'
+#' @keywords internal
+#'
+#' @rdname backup_update_tiering_configuration
+backup_update_tiering_configuration <- function(TieringConfigurationName, TieringConfiguration) {
+  op <- new_operation(
+    name = "UpdateTieringConfiguration",
+    http_method = "PUT",
+    http_path = "/tiering-configurations/{tieringConfigurationName}",
+    host_prefix = "",
+    paginator = list(),
+    stream_api = FALSE
+  )
+  input <- .backup$update_tiering_configuration_input(TieringConfigurationName = TieringConfigurationName, TieringConfiguration = TieringConfiguration)
+  output <- .backup$update_tiering_configuration_output()
+  config <- get_config()
+  svc <- .backup$service(config, op)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.backup$operations$update_tiering_configuration <- backup_update_tiering_configuration

@@ -16,30 +16,29 @@ fsx_copy_backup(
 )
 }
 \arguments{
-\item{ClientRequestToken}{}
+\item{ClientRequestToken}{(Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.}
 
-\item{SourceBackupId}{[required] The ID of the source backup. Specifies the ID of the backup that's being
-copied.}
+\item{SourceBackupId}{[required] The ID of the source backup. Specifies the ID of the backup that's being copied.}
 
-\item{SourceRegion}{The source Amazon Web Services Region of the backup. Specifies the
-Amazon Web Services Region from which the backup is being copied. The
-source and destination Regions must be in the same Amazon Web Services
-partition. If you don't specify a Region, \code{SourceRegion} defaults to the
-Region where the request is sent from (in-Region copy).}
+\item{SourceRegion}{The source Amazon Web Services Region of the backup. Specifies the Amazon Web Services Region from which the backup is being copied. The source and destination Regions must be in the same Amazon Web Services partition. If you don't specify a Region, \code{SourceRegion} defaults to the Region where the request is sent from (in-Region copy).}
 
-\item{KmsKeyId}{}
+\item{KmsKeyId}{Specifies the ID of the Key Management Service (KMS) key to use for encrypting data on Amazon FSx file systems, as follows:
+\itemize{
+\item Amazon FSx for Lustre \code{PERSISTENT_1} and \code{PERSISTENT_2} deployment types only.
 
-\item{CopyTags}{A Boolean flag indicating whether tags from the source backup should be
-copied to the backup copy. This value defaults to \code{false}.
+\code{SCRATCH_1} and \code{SCRATCH_2} types are encrypted using the Amazon FSx service KMS key for your account.
+\item Amazon FSx for NetApp ONTAP
+\item Amazon FSx for OpenZFS
+\item Amazon FSx for Windows File Server
+}
 
-If you set \code{CopyTags} to \code{true} and the source backup has existing tags,
-you can use the \code{Tags} parameter to create new tags, provided that the
-sum of the source backup tags and the new tags doesn't exceed 50. Both
-sets of tags are merged. If there are tag conflicts (for example, two
-tags with the same key but different values), the tags created with the
-\code{Tags} parameter take precedence.}
+If a \code{KmsKeyId} isn't specified, the Amazon FSx-managed KMS key for your account is used. For more information, see \href{https://docs.aws.amazon.com/kms/latest/APIReference/API_Encrypt.html}{Encrypt} in the \emph{Key Management Service API Reference}.}
 
-\item{Tags}{}
+\item{CopyTags}{A Boolean flag indicating whether tags from the source backup should be copied to the backup copy. This value defaults to \code{false}.
+
+If you set \code{CopyTags} to \code{true} and the source backup has existing tags, you can use the \code{Tags} parameter to create new tags, provided that the sum of the source backup tags and the new tags doesn't exceed 50. Both sets of tags are merged. If there are tag conflicts (for example, two tags with the same key but different values), the tags created with the \code{Tags} parameter take precedence.}
+
+\item{Tags}{A list of \code{Tag} values, with a maximum of 50 elements.}
 }
 \description{
 Copies an existing backup within the same Amazon Web Services account to another Amazon Web Services Region (cross-Region copy) or within the same Amazon Web Services Region (in-Region copy). You can have up to five backup copy requests in progress to a single destination Region per account.

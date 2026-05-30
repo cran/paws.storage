@@ -8,8 +8,7 @@ shares from a S3 File Gateway}
 storagegateway_describe_smb_file_shares(FileShareARNList)
 }
 \arguments{
-\item{FileShareARNList}{[required] An array containing the Amazon Resource Name (ARN) of each file share to
-be described.}
+\item{FileShareARNList}{[required] An array containing the Amazon Resource Name (ARN) of each file share to be described.}
 }
 \description{
 Gets a description for one or more Server Message Block (SMB) file shares from a S3 File Gateway. This operation is only supported for S3 File Gateways.

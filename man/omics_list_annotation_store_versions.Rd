@@ -14,11 +14,9 @@ omics_list_annotation_store_versions(
 \arguments{
 \item{name}{[required] The name of an annotation store.}
 
-\item{maxResults}{The maximum number of annotation store versions to return in one page of
-results.}
+\item{maxResults}{The maximum number of annotation store versions to return in one page of results.}
 
-\item{nextToken}{Specifies the pagination token from a previous request to retrieve the
-next page of results.}
+\item{nextToken}{Specifies the pagination token from a previous request to retrieve the next page of results.}
 
 \item{filter}{A filter to apply to the list of annotation store versions.}
 }

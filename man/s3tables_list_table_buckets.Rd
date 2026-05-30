@@ -7,18 +7,18 @@
 s3tables_list_table_buckets(
   prefix = NULL,
   continuationToken = NULL,
-  maxBuckets = NULL
+  maxBuckets = NULL,
+  type = NULL
 )
 }
 \arguments{
 \item{prefix}{The prefix of the table buckets.}
 
-\item{continuationToken}{\code{ContinuationToken} indicates to Amazon S3 that the list is being
-continued on this bucket with a token. \code{ContinuationToken} is obfuscated
-and is not a real key. You can use this \code{ContinuationToken} for
-pagination of the list results.}
+\item{continuationToken}{\code{ContinuationToken} indicates to Amazon S3 that the list is being continued on this bucket with a token. \code{ContinuationToken} is obfuscated and is not a real key. You can use this \code{ContinuationToken} for pagination of the list results.}
 
 \item{maxBuckets}{The maximum number of table buckets to return in the list.}
+
+\item{type}{The type of table buckets to filter by in the list.}
 }
 \description{
 Lists table buckets for your account. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-buckets.html}{S3 Table buckets} in the \emph{Amazon Simple Storage Service User Guide}.

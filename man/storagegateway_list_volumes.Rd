@@ -7,14 +7,11 @@
 storagegateway_list_volumes(GatewayARN = NULL, Marker = NULL, Limit = NULL)
 }
 \arguments{
-\item{GatewayARN}{}
+\item{GatewayARN}{The Amazon Resource Name (ARN) of the gateway. Use the \code{\link[=storagegateway_list_gateways]{list_gateways}} operation to return a list of gateways for your account and Amazon Web Services Region.}
 
-\item{Marker}{A string that indicates the position at which to begin the returned list
-of volumes. Obtain the marker from the response of a previous List iSCSI
-Volumes request.}
+\item{Marker}{A string that indicates the position at which to begin the returned list of volumes. Obtain the marker from the response of a previous List iSCSI Volumes request.}
 
-\item{Limit}{Specifies that the list of volumes returned be limited to the specified
-number of items.}
+\item{Limit}{Specifies that the list of volumes returned be limited to the specified number of items.}
 }
 \description{
 Lists the iSCSI stored volumes of a gateway. Results are sorted by volume ARN. The response includes only the volume ARNs. If you want additional volume information, use the \code{\link[=storagegateway_describe_storedi_scsi_volumes]{describe_storedi_scsi_volumes}} or the \code{\link[=storagegateway_describe_cachedi_scsi_volumes]{describe_cachedi_scsi_volumes}} API.

@@ -2,7 +2,8 @@
 % Please edit documentation in R/omics_operations.R
 \name{omics_list_references}
 \alias{omics_list_references}
-\title{Retrieves a list of references}
+\title{Retrieves the metadata of one or more reference genomes in a reference
+store}
 \usage{
 omics_list_references(
   referenceStoreId,
@@ -16,13 +17,12 @@ omics_list_references(
 
 \item{maxResults}{The maximum number of references to return in one page of results.}
 
-\item{nextToken}{Specify the pagination token from a previous request to retrieve the
-next page of results.}
+\item{nextToken}{Specify the pagination token from a previous request to retrieve the next page of results.}
 
 \item{filter}{A filter to apply to the list.}
 }
 \description{
-Retrieves a list of references.
+Retrieves the metadata of one or more reference genomes in a reference store.
 
 See \url{https://www.paws-r-sdk.com/docs/omics_list_references/} for full documentation.
 }

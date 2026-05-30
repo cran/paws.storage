@@ -7,23 +7,13 @@
 s3control_delete_bucket_tagging(AccountId, Bucket)
 }
 \arguments{
-\item{AccountId}{[required] The Amazon Web Services account ID of the Outposts bucket tag set to be
-removed.}
+\item{AccountId}{[required] The Amazon Web Services account ID of the Outposts bucket tag set to be removed.}
 
 \item{Bucket}{[required] The bucket ARN that has the tag set to be removed.
 
-For using this parameter with Amazon S3 on Outposts with the REST API,
-you must specify the name and the x-amz-outpost-id as well.
+For using this parameter with Amazon S3 on Outposts with the REST API, you must specify the name and the x-amz-outpost-id as well.
 
-For using this parameter with S3 on Outposts with the Amazon Web
-Services SDK and CLI, you must specify the ARN of the bucket accessed in
-the format
-\verb{arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>}.
-For example, to access the bucket \code{reports} through Outpost \code{my-outpost}
-owned by account \code{123456789012} in Region \code{us-west-2}, use the URL
-encoding of
-\code{arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/bucket/reports}.
-The value must be URL encoded.}
+For using this parameter with S3 on Outposts with the Amazon Web Services SDK and CLI, you must specify the ARN of the bucket accessed in the format \verb{arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>}. For example, to access the bucket \code{reports} through Outpost \code{my-outpost} owned by account \code{123456789012} in Region \code{us-west-2}, use the URL encoding of \code{arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/bucket/reports}. The value must be URL encoded.}
 }
 \description{
 This action deletes an Amazon S3 on Outposts bucket's tags. To delete an S3 bucket tags, see \code{\link[=s3control_delete_bucket_tagging]{delete_bucket_tagging}} in the \emph{Amazon S3 API Reference}.

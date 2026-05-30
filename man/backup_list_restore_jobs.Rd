@@ -15,22 +15,18 @@ backup_list_restore_jobs(
   ByStatus = NULL,
   ByCompleteBefore = NULL,
   ByCompleteAfter = NULL,
-  ByRestoreTestingPlanArn = NULL
+  ByRestoreTestingPlanArn = NULL,
+  ByParentJobId = NULL
 )
 }
 \arguments{
-\item{NextToken}{The next item following a partial list of returned items. For example,
-if a request is made to return \code{MaxResults} number of items, \code{NextToken}
-allows you to return more items in your list starting at the location
-pointed to by the next token.}
+\item{NextToken}{The next item following a partial list of returned items. For example, if a request is made to return \code{MaxResults} number of items, \code{NextToken} allows you to return more items in your list starting at the location pointed to by the next token.}
 
 \item{MaxResults}{The maximum number of items to be returned.}
 
-\item{ByAccountId}{The account ID to list the jobs from. Returns only restore jobs
-associated with the specified account ID.}
+\item{ByAccountId}{The account ID to list the jobs from. Returns only restore jobs associated with the specified account ID.}
 
-\item{ByResourceType}{Include this parameter to return only restore jobs for the specified
-resources:
+\item{ByResourceType}{Include this parameter to return only restore jobs for the specified resources:
 \itemize{
 \item \code{Aurora} for Amazon Aurora
 \item \code{CloudFormation} for CloudFormation
@@ -39,13 +35,13 @@ resources:
 \item \code{EBS} for Amazon Elastic Block Store
 \item \code{EC2} for Amazon Elastic Compute Cloud
 \item \code{EFS} for Amazon Elastic File System
+\item \code{EKS} for Amazon Elastic Kubernetes Service
 \item \code{FSx} for Amazon FSx
 \item \code{Neptune} for Amazon Neptune
 \item \code{RDS} for Amazon Relational Database Service
 \item \code{Redshift} for Amazon Redshift
 \item \code{S3} for Amazon Simple Storage Service (Amazon S3)
-\item \verb{SAP HANA on Amazon EC2} for SAP HANA databases on Amazon Elastic
-Compute Cloud instances
+\item \verb{SAP HANA on Amazon EC2} for SAP HANA databases on Amazon Elastic Compute Cloud instances
 \item \verb{Storage Gateway} for Storage Gateway
 \item \code{Timestream} for Amazon Timestream
 \item \code{VirtualMachine} for VMware virtual machines
@@ -57,14 +53,13 @@ Compute Cloud instances
 
 \item{ByStatus}{Returns only restore jobs associated with the specified job status.}
 
-\item{ByCompleteBefore}{Returns only copy jobs completed before a date expressed in Unix format
-and Coordinated Universal Time (UTC).}
+\item{ByCompleteBefore}{Returns only copy jobs completed before a date expressed in Unix format and Coordinated Universal Time (UTC).}
 
-\item{ByCompleteAfter}{Returns only copy jobs completed after a date expressed in Unix format
-and Coordinated Universal Time (UTC).}
+\item{ByCompleteAfter}{Returns only copy jobs completed after a date expressed in Unix format and Coordinated Universal Time (UTC).}
 
-\item{ByRestoreTestingPlanArn}{This returns only restore testing jobs that match the specified resource
-Amazon Resource Name (ARN).}
+\item{ByRestoreTestingPlanArn}{This returns only restore testing jobs that match the specified resource Amazon Resource Name (ARN).}
+
+\item{ByParentJobId}{This is a filter to list child (nested) restore jobs based on parent restore job ID.}
 }
 \description{
 Returns a list of jobs that Backup initiated to restore a saved resource, including details about the recovery process.

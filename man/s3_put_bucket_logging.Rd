@@ -2,7 +2,8 @@
 % Please edit documentation in R/s3_operations.R
 \name{s3_put_bucket_logging}
 \alias{s3_put_bucket_logging}
-\title{This operation is not supported for directory buckets}
+\title{End of support notice: As of October 1, 2025, Amazon S3 has discontinued
+support for Email Grantee Access Control Lists (ACLs)}
 \usage{
 s3_put_bucket_logging(
   Bucket,
@@ -17,30 +18,18 @@ s3_put_bucket_logging(
 
 \item{BucketLoggingStatus}{[required] Container for logging status information.}
 
-\item{ContentMD5}{The MD5 hash of the \code{\link[=s3_put_bucket_logging]{put_bucket_logging}}
-request body.
+\item{ContentMD5}{The MD5 hash of the \code{\link[=s3_put_bucket_logging]{put_bucket_logging}} request body.
 
-For requests made using the Amazon Web Services Command Line Interface
-(CLI) or Amazon Web Services SDKs, this field is calculated
-automatically.}
+For requests made using the Amazon Web Services Command Line Interface (CLI) or Amazon Web Services SDKs, this field is calculated automatically.}
 
-\item{ChecksumAlgorithm}{Indicates the algorithm used to create the checksum for the request when
-you use the SDK. This header will not provide any additional
-functionality if you don't use the SDK. When you send this header, there
-must be a corresponding \code{x-amz-checksum} or \code{x-amz-trailer} header sent.
-Otherwise, Amazon S3 fails the request with the HTTP status code
-\verb{400 Bad Request}. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity}
-in the \emph{Amazon S3 User Guide}.
+\item{ChecksumAlgorithm}{Indicates the algorithm used to create the checksum for the request when you use the SDK. This header will not provide any additional functionality if you don't use the SDK. When you send this header, there must be a corresponding \code{x-amz-checksum} or \code{x-amz-trailer} header sent. Otherwise, Amazon S3 fails the request with the HTTP status code \verb{400 Bad Request}. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity} in the \emph{Amazon S3 User Guide}.
 
-If you provide an individual checksum, Amazon S3 ignores any provided
-\code{ChecksumAlgorithm} parameter.}
+If you provide an individual checksum, Amazon S3 ignores any provided \code{ChecksumAlgorithm} parameter.}
 
-\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you
-provide does not match the actual owner of the bucket, the request fails
-with the HTTP status code \verb{403 Forbidden} (access denied).}
+\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you provide does not match the actual owner of the bucket, the request fails with the HTTP status code \verb{403 Forbidden} (access denied).}
 }
 \description{
-This operation is not supported for directory buckets.
+End of support notice: As of October 1, 2025, Amazon S3 has discontinued support for Email Grantee Access Control Lists (ACLs). If you attempt to use an Email Grantee ACL in a request after October 1, 2025, the request will receive an \verb{HTTP 405} (Method Not Allowed) error.
 
 See \url{https://www.paws-r-sdk.com/docs/s3_put_bucket_logging/} for full documentation.
 }

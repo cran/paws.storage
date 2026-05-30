@@ -7,19 +7,15 @@ NULL
 #' aliases with an existing Amazon FSx for Windows File Server file system
 #'
 #' @description
-#' Use this action to associate one or more Domain Name Server (DNS) aliases with an existing Amazon FSx for Windows File Server file system. A file system can have a maximum of 50 DNS aliases associated with it at any one time. If you try to associate a DNS alias that is already associated with the file system, FSx takes no action on that alias in the request. For more information, see [Working with DNS Aliases](https://docs.aws.amazon.com/fsx/latest/WindowsGuide/managing-dns-aliases.html) and [Walkthrough 5: Using DNS aliases to access your file system](https://docs.aws.amazon.com/fsx/latest/WindowsGuide/supported-fsx-clients.html#dns-aliases), including additional steps you must take to be able to access your file system using a DNS alias.
+#' Use this action to associate one or more Domain Name Server (DNS) aliases with an existing Amazon FSx for Windows File Server file system. A file system can have a maximum of 50 DNS aliases associated with it at any one time. If you try to associate a DNS alias that is already associated with the file system, FSx takes no action on that alias in the request. For more information, see [Working with DNS Aliases](https://docs.aws.amazon.com/fsx/latest/WindowsGuide/managing-dns-aliases.html) and [Walkthrough 5: Using DNS aliases to access your file system](https://docs.aws.amazon.com/fsx/latest/WindowsGuide/supported-fsx-clients.html), including additional steps you must take to be able to access your file system using a DNS alias.
 #'
 #' See [https://www.paws-r-sdk.com/docs/fsx_associate_file_system_aliases/](https://www.paws-r-sdk.com/docs/fsx_associate_file_system_aliases/) for full documentation.
 #'
-#' @param ClientRequestToken 
-#' @param FileSystemId &#91;required&#93; Specifies the file system with which you want to associate one or more
-#' DNS aliases.
-#' @param Aliases &#91;required&#93; An array of one or more DNS alias names to associate with the file
-#' system. The alias name has to comply with the following formatting
-#' requirements:
+#' @param ClientRequestToken (Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.
+#' @param FileSystemId &#91;required&#93; Specifies the file system with which you want to associate one or more DNS aliases.
+#' @param Aliases &#91;required&#93; An array of one or more DNS alias names to associate with the file system. The alias name has to comply with the following formatting requirements:
 #' 
-#' -   Formatted as a fully-qualified domain name (FQDN), *hostname.domain*
-#'     , for example, `accounting.corp.example.com`.
+#' -   Formatted as a fully-qualified domain name (FQDN), *hostname.domain* , for example, `accounting.corp.example.com`.
 #' 
 #' -   Can contain alphanumeric characters and the hyphen (-).
 #' 
@@ -27,10 +23,7 @@ NULL
 #' 
 #' -   Can start with a numeric.
 #' 
-#' For DNS alias names, Amazon FSx stores alphabetic characters as
-#' lowercase letters (a-z), regardless of how you specify them: as
-#' uppercase letters, lowercase letters, or the corresponding letters in
-#' escape codes.
+#' For DNS alias names, Amazon FSx stores alphabetic characters as lowercase letters (a-z), regardless of how you specify them: as uppercase letters, lowercase letters, or the corresponding letters in escape codes.
 #'
 #' @keywords internal
 #'
@@ -95,25 +88,26 @@ fsx_cancel_data_repository_task <- function(TaskId) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/fsx_copy_backup/](https://www.paws-r-sdk.com/docs/fsx_copy_backup/) for full documentation.
 #'
-#' @param ClientRequestToken 
-#' @param SourceBackupId &#91;required&#93; The ID of the source backup. Specifies the ID of the backup that's being
-#' copied.
-#' @param SourceRegion The source Amazon Web Services Region of the backup. Specifies the
-#' Amazon Web Services Region from which the backup is being copied. The
-#' source and destination Regions must be in the same Amazon Web Services
-#' partition. If you don't specify a Region, `SourceRegion` defaults to the
-#' Region where the request is sent from (in-Region copy).
-#' @param KmsKeyId 
-#' @param CopyTags A Boolean flag indicating whether tags from the source backup should be
-#' copied to the backup copy. This value defaults to `false`.
+#' @param ClientRequestToken (Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.
+#' @param SourceBackupId &#91;required&#93; The ID of the source backup. Specifies the ID of the backup that's being copied.
+#' @param SourceRegion The source Amazon Web Services Region of the backup. Specifies the Amazon Web Services Region from which the backup is being copied. The source and destination Regions must be in the same Amazon Web Services partition. If you don't specify a Region, `SourceRegion` defaults to the Region where the request is sent from (in-Region copy).
+#' @param KmsKeyId Specifies the ID of the Key Management Service (KMS) key to use for encrypting data on Amazon FSx file systems, as follows:
 #' 
-#' If you set `CopyTags` to `true` and the source backup has existing tags,
-#' you can use the `Tags` parameter to create new tags, provided that the
-#' sum of the source backup tags and the new tags doesn't exceed 50. Both
-#' sets of tags are merged. If there are tag conflicts (for example, two
-#' tags with the same key but different values), the tags created with the
-#' `Tags` parameter take precedence.
-#' @param Tags 
+#' -   Amazon FSx for Lustre `PERSISTENT_1` and `PERSISTENT_2` deployment types only.
+#' 
+#'     `SCRATCH_1` and `SCRATCH_2` types are encrypted using the Amazon FSx service KMS key for your account.
+#' 
+#' -   Amazon FSx for NetApp ONTAP
+#' 
+#' -   Amazon FSx for OpenZFS
+#' 
+#' -   Amazon FSx for Windows File Server
+#' 
+#' If a `KmsKeyId` isn't specified, the Amazon FSx-managed KMS key for your account is used. For more information, see [Encrypt](https://docs.aws.amazon.com/kms/latest/APIReference/API_Encrypt.html) in the *Key Management Service API Reference*.
+#' @param CopyTags A Boolean flag indicating whether tags from the source backup should be copied to the backup copy. This value defaults to `false`.
+#' 
+#' If you set `CopyTags` to `true` and the source backup has existing tags, you can use the `Tags` parameter to create new tags, provided that the sum of the source backup tags and the new tags doesn't exceed 50. Both sets of tags are merged. If there are tag conflicts (for example, two tags with the same key but different values), the tags created with the `Tags` parameter take precedence.
+#' @param Tags A list of `Tag` values, with a maximum of 50 elements.
 #'
 #' @keywords internal
 #'
@@ -145,36 +139,25 @@ fsx_copy_backup <- function(ClientRequestToken = NULL, SourceBackupId, SourceReg
 #'
 #' See [https://www.paws-r-sdk.com/docs/fsx_copy_snapshot_and_update_volume/](https://www.paws-r-sdk.com/docs/fsx_copy_snapshot_and_update_volume/) for full documentation.
 #'
-#' @param ClientRequestToken 
+#' @param ClientRequestToken (Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.
 #' @param VolumeId &#91;required&#93; Specifies the ID of the volume that you are copying the snapshot to.
-#' @param SourceSnapshotARN &#91;required&#93; 
-#' @param CopyStrategy Specifies the strategy to use when copying data from a snapshot to the
-#' volume.
+#' @param SourceSnapshotARN &#91;required&#93; The Amazon Resource Name (ARN) for a given resource. ARNs uniquely identify Amazon Web Services resources. We require an ARN when you need to specify a resource unambiguously across all of Amazon Web Services. For more information, see [Amazon Resource Names (ARNs)](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference-arns.html) in the *Amazon Web Services General Reference*.
+#' @param CopyStrategy Specifies the strategy to use when copying data from a snapshot to the volume.
 #' 
 #' -   `FULL_COPY` - Copies all data from the snapshot to the volume.
 #' 
-#' -   `INCREMENTAL_COPY` - Copies only the snapshot data that's changed
-#'     since the previous replication.
+#' -   `INCREMENTAL_COPY` - Copies only the snapshot data that's changed since the previous replication.
 #' 
-#' `CLONE` isn't a valid copy strategy option for the
-#' [`copy_snapshot_and_update_volume`][fsx_copy_snapshot_and_update_volume]
-#' operation.
-#' @param Options Confirms that you want to delete data on the destination volume that
-#' wasn’t there during the previous snapshot replication.
+#' `CLONE` isn't a valid copy strategy option for the [`copy_snapshot_and_update_volume`][fsx_copy_snapshot_and_update_volume] operation.
+#' @param Options Confirms that you want to delete data on the destination volume that wasn’t there during the previous snapshot replication.
 #' 
-#' Your replication will fail if you don’t include an option for a specific
-#' type of data and that data is on your destination. For example, if you
-#' don’t include `DELETE_INTERMEDIATE_SNAPSHOTS` and there are intermediate
-#' snapshots on the destination, you can’t copy the snapshot.
+#' Your replication will fail if you don’t include an option for a specific type of data and that data is on your destination. For example, if you don’t include `DELETE_INTERMEDIATE_SNAPSHOTS` and there are intermediate snapshots on the destination, you can’t copy the snapshot.
 #' 
-#' -   `DELETE_INTERMEDIATE_SNAPSHOTS` - Deletes snapshots on the
-#'     destination volume that aren’t on the source volume.
+#' -   `DELETE_INTERMEDIATE_SNAPSHOTS` - Deletes snapshots on the destination volume that aren’t on the source volume.
 #' 
-#' -   `DELETE_CLONED_VOLUMES` - Deletes snapshot clones on the destination
-#'     volume that aren't on the source volume.
+#' -   `DELETE_CLONED_VOLUMES` - Deletes snapshot clones on the destination volume that aren't on the source volume.
 #' 
-#' -   `DELETE_INTERMEDIATE_DATA` - Overwrites snapshots on the destination
-#'     volume that don’t match the source snapshot that you’re copying.
+#' -   `DELETE_INTERMEDIATE_DATA` - Overwrites snapshots on the destination volume that don’t match the source snapshot that you’re copying.
 #'
 #' @keywords internal
 #'
@@ -198,6 +181,42 @@ fsx_copy_snapshot_and_update_volume <- function(ClientRequestToken = NULL, Volum
 }
 .fsx$operations$copy_snapshot_and_update_volume <- fsx_copy_snapshot_and_update_volume
 
+#' Creates an S3 access point and attaches it to an Amazon FSx volume
+#'
+#' @description
+#' Creates an S3 access point and attaches it to an Amazon FSx volume. For FSx for OpenZFS file systems, the volume must be hosted on a high-availability file system, either Single-AZ or Multi-AZ. For more information, see [Accessing your data using Amazon S3 access points](https://docs.aws.amazon.com/fsx/latest/OpenZFSGuide/s3accesspoints-for-FSx.html). in the Amazon FSx for OpenZFS User Guide.
+#'
+#' See [https://www.paws-r-sdk.com/docs/fsx_create_and_attach_s3_access_point/](https://www.paws-r-sdk.com/docs/fsx_create_and_attach_s3_access_point/) for full documentation.
+#'
+#' @param ClientRequestToken (Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.
+#' @param Name &#91;required&#93; The name you want to assign to this S3 access point.
+#' @param Type &#91;required&#93; The type of S3 access point you want to create. Only `OpenZFS` is supported.
+#' @param OpenZFSConfiguration Specifies the configuration to use when creating and attaching an S3 access point to an FSx for OpenZFS volume.
+#' @param OntapConfiguration Specifies the FSx for ONTAP volume that the S3 access point will be attached to, and the file system user identity.
+#' @param S3AccessPoint Specifies the virtual private cloud (VPC) configuration if you're creating an access point that is restricted to a VPC. For more information, see [Creating access points restricted to a virtual private cloud](https://docs.aws.amazon.com/fsx/latest/OpenZFSGuide/access-points-vpc.html).
+#'
+#' @keywords internal
+#'
+#' @rdname fsx_create_and_attach_s3_access_point
+fsx_create_and_attach_s3_access_point <- function(ClientRequestToken = NULL, Name, Type, OpenZFSConfiguration = NULL, OntapConfiguration = NULL, S3AccessPoint = NULL) {
+  op <- new_operation(
+    name = "CreateAndAttachS3AccessPoint",
+    http_method = "POST",
+    http_path = "/",
+    host_prefix = "",
+    paginator = list(),
+    stream_api = FALSE
+  )
+  input <- .fsx$create_and_attach_s3_access_point_input(ClientRequestToken = ClientRequestToken, Name = Name, Type = Type, OpenZFSConfiguration = OpenZFSConfiguration, OntapConfiguration = OntapConfiguration, S3AccessPoint = S3AccessPoint)
+  output <- .fsx$create_and_attach_s3_access_point_output()
+  config <- get_config()
+  svc <- .fsx$service(config, op)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.fsx$operations$create_and_attach_s3_access_point <- fsx_create_and_attach_s3_access_point
+
 #' Creates a backup of an existing Amazon FSx for Windows File Server file
 #' system, Amazon FSx for Lustre file system, Amazon FSx for NetApp ONTAP
 #' volume, or Amazon FSx for OpenZFS file system
@@ -208,15 +227,8 @@ fsx_copy_snapshot_and_update_volume <- function(ClientRequestToken = NULL, Volum
 #' See [https://www.paws-r-sdk.com/docs/fsx_create_backup/](https://www.paws-r-sdk.com/docs/fsx_create_backup/) for full documentation.
 #'
 #' @param FileSystemId The ID of the file system to back up.
-#' @param ClientRequestToken (Optional) A string of up to 63 ASCII characters that Amazon FSx uses to
-#' ensure idempotent creation. This string is automatically filled on your
-#' behalf when you use the Command Line Interface (CLI) or an Amazon Web
-#' Services SDK.
-#' @param Tags (Optional) The tags to apply to the backup at backup creation. The key
-#' value of the `Name` tag appears in the console as the backup name. If
-#' you have set `CopyTagsToBackups` to `true`, and you specify one or more
-#' tags using the [`create_backup`][fsx_create_backup] operation, no
-#' existing file system tags are copied from the file system to the backup.
+#' @param ClientRequestToken (Optional) A string of up to 63 ASCII characters that Amazon FSx uses to ensure idempotent creation. This string is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.
+#' @param Tags (Optional) The tags to apply to the backup at backup creation. The key value of the `Name` tag appears in the console as the backup name. If you have set `CopyTagsToBackups` to `true`, and you specify one or more tags using the [`create_backup`][fsx_create_backup] operation, no existing file system tags are copied from the file system to the backup.
 #' @param VolumeId (Optional) The ID of the FSx for ONTAP volume to back up.
 #'
 #' @keywords internal
@@ -248,48 +260,20 @@ fsx_create_backup <- function(FileSystemId = NULL, ClientRequestToken = NULL, Ta
 #'
 #' See [https://www.paws-r-sdk.com/docs/fsx_create_data_repository_association/](https://www.paws-r-sdk.com/docs/fsx_create_data_repository_association/) for full documentation.
 #'
-#' @param FileSystemId &#91;required&#93; 
-#' @param FileSystemPath A path on the file system that points to a high-level directory (such as
-#' `/ns1/`) or subdirectory (such as `/ns1/subdir/`) that will be mapped
-#' 1-1 with `DataRepositoryPath`. The leading forward slash in the name is
-#' required. Two data repository associations cannot have overlapping file
-#' system paths. For example, if a data repository is associated with file
-#' system path `/ns1/`, then you cannot link another data repository with
-#' file system path `/ns1/ns2`.
+#' @param FileSystemId &#91;required&#93; The globally unique ID of the file system, assigned by Amazon FSx.
+#' @param FileSystemPath A path on the file system that points to a high-level directory (such as `/ns1/`) or subdirectory (such as `/ns1/subdir/`) that will be mapped 1-1 with `DataRepositoryPath`. The leading forward slash in the name is required. Two data repository associations cannot have overlapping file system paths. For example, if a data repository is associated with file system path `/ns1/`, then you cannot link another data repository with file system path `/ns1/ns2`.
 #' 
-#' This path specifies where in your file system files will be exported
-#' from or imported to. This file system directory can be linked to only
-#' one Amazon S3 bucket, and no other S3 bucket can be linked to the
-#' directory.
+#' This path specifies where in your file system files will be exported from or imported to. This file system directory can be linked to only one Amazon S3 bucket, and no other S3 bucket can be linked to the directory.
 #' 
-#' If you specify only a forward slash (`/`) as the file system path, you
-#' can link only one data repository to the file system. You can only
-#' specify "/" as the file system path for the first data repository
-#' associated with a file system.
-#' @param DataRepositoryPath &#91;required&#93; The path to the Amazon S3 data repository that will be linked to the
-#' file system. The path can be an S3 bucket or prefix in the format
-#' `s3://bucket-name/prefix/` (where `prefix` is optional). This path
-#' specifies where in the S3 data repository files will be imported from or
-#' exported to.
-#' @param BatchImportMetaDataOnCreate Set to `true` to run an import data repository task to import metadata
-#' from the data repository to the file system after the data repository
-#' association is created. Default is `false`.
-#' @param ImportedFileChunkSize For files imported from a data repository, this value determines the
-#' stripe count and maximum amount of data per file (in MiB) stored on a
-#' single physical disk. The maximum number of disks that a single file can
-#' be striped across is limited by the total number of disks that make up
-#' the file system.
+#' If you specify only a forward slash (`/`) as the file system path, you can link only one data repository to the file system. You can only specify "/" as the file system path for the first data repository associated with a file system.
+#' @param DataRepositoryPath &#91;required&#93; The path to the Amazon S3 data repository that will be linked to the file system. The path can be an S3 bucket or prefix in the format `s3://bucket-name/prefix/` (where `prefix` is optional). This path specifies where in the S3 data repository files will be imported from or exported to.
+#' @param BatchImportMetaDataOnCreate Set to `true` to run an import data repository task to import metadata from the data repository to the file system after the data repository association is created. Default is `false`.
+#' @param ImportedFileChunkSize For files imported from a data repository, this value determines the stripe count and maximum amount of data per file (in MiB) stored on a single physical disk. The maximum number of disks that a single file can be striped across is limited by the total number of disks that make up the file system.
 #' 
-#' The default chunk size is 1,024 MiB (1 GiB) and can go as high as
-#' 512,000 MiB (500 GiB). Amazon S3 objects have a maximum size of 5 TB.
-#' @param S3 The configuration for an Amazon S3 data repository linked to an Amazon
-#' FSx Lustre file system with a data repository association. The
-#' configuration defines which file events (new, changed, or deleted files
-#' or directories) are automatically imported from the linked data
-#' repository to the file system or automatically exported from the file
-#' system to the data repository.
-#' @param ClientRequestToken 
-#' @param Tags 
+#' The default chunk size is 1,024 MiB (1 GiB) and can go as high as 512,000 MiB (500 GiB). Amazon S3 objects have a maximum size of 5 TB.
+#' @param S3 The configuration for an Amazon S3 data repository linked to an Amazon FSx Lustre file system with a data repository association. The configuration defines which file events (new, changed, or deleted files or directories) are automatically imported from the linked data repository to the file system or automatically exported from the file system to the data repository.
+#' @param ClientRequestToken (Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.
+#' @param Tags A list of `Tag` values, with a maximum of 50 elements.
 #'
 #' @keywords internal
 #'
@@ -322,61 +306,28 @@ fsx_create_data_repository_association <- function(FileSystemId, FileSystemPath 
 #'
 #' @param Type &#91;required&#93; Specifies the type of data repository task to create.
 #' 
-#' -   `EXPORT_TO_REPOSITORY` tasks export from your Amazon FSx for Lustre
-#'     file system to a linked data repository.
+#' -   `EXPORT_TO_REPOSITORY` tasks export from your Amazon FSx for Lustre file system to a linked data repository.
 #' 
-#' -   `IMPORT_METADATA_FROM_REPOSITORY` tasks import metadata changes from
-#'     a linked S3 bucket to your Amazon FSx for Lustre file system.
+#' -   `IMPORT_METADATA_FROM_REPOSITORY` tasks import metadata changes from a linked S3 bucket to your Amazon FSx for Lustre file system.
 #' 
-#' -   `RELEASE_DATA_FROM_FILESYSTEM` tasks release files in your Amazon
-#'     FSx for Lustre file system that have been exported to a linked S3
-#'     bucket and that meet your specified release criteria.
+#' -   `RELEASE_DATA_FROM_FILESYSTEM` tasks release files in your Amazon FSx for Lustre file system that have been exported to a linked S3 bucket and that meet your specified release criteria.
 #' 
-#' -   `AUTO_RELEASE_DATA` tasks automatically release files from an Amazon
-#'     File Cache resource.
-#' @param Paths A list of paths for the data repository task to use when the task is
-#' processed. If a path that you provide isn't valid, the task fails. If
-#' you don't provide paths, the default behavior is to export all files to
-#' S3 (for export tasks), import all files from S3 (for import tasks), or
-#' release all exported files that meet the last accessed time criteria
-#' (for release tasks).
+#' -   `AUTO_RELEASE_DATA` tasks automatically release files from an Amazon File Cache resource.
+#' @param Paths A list of paths for the data repository task to use when the task is processed. If a path that you provide isn't valid, the task fails. If you don't provide paths, the default behavior is to export all files to S3 (for export tasks), import all files from S3 (for import tasks), or release all exported files that meet the last accessed time criteria (for release tasks).
 #' 
-#' -   For export tasks, the list contains paths on the FSx for Lustre file
-#'     system from which the files are exported to the Amazon S3 bucket.
-#'     The default path is the file system root directory. The paths you
-#'     provide need to be relative to the mount point of the file system.
-#'     If the mount point is `/mnt/fsx` and `/mnt/fsx/path1` is a directory
-#'     or file on the file system you want to export, then the path to
-#'     provide is `path1`.
+#' -   For export tasks, the list contains paths on the FSx for Lustre file system from which the files are exported to the Amazon S3 bucket. The default path is the file system root directory. The paths you provide need to be relative to the mount point of the file system. If the mount point is `/mnt/fsx` and `/mnt/fsx/path1` is a directory or file on the file system you want to export, then the path to provide is `path1`.
 #' 
-#' -   For import tasks, the list contains paths in the Amazon S3 bucket
-#'     from which POSIX metadata changes are imported to the FSx for Lustre
-#'     file system. The path can be an S3 bucket or prefix in the format
-#'     `s3://bucket-name/prefix` (where `prefix` is optional).
+#' -   For import tasks, the list contains paths in the Amazon S3 bucket from which POSIX metadata changes are imported to the FSx for Lustre file system. The path can be an S3 bucket or prefix in the format `s3://bucket-name/prefix` (where `prefix` is optional).
 #' 
-#' -   For release tasks, the list contains directory or file paths on the
-#'     FSx for Lustre file system from which to release exported files. If
-#'     a directory is specified, files within the directory are released.
-#'     If a file path is specified, only that file is released. To release
-#'     all exported files in the file system, specify a forward slash (/)
-#'     as the path.
+#' -   For release tasks, the list contains directory or file paths on the FSx for Lustre file system from which to release exported files. If a directory is specified, files within the directory are released. If a file path is specified, only that file is released. To release all exported files in the file system, specify a forward slash (/) as the path.
 #' 
-#'     A file must also meet the last accessed time criteria specified in
-#'     for the file to be released.
-#' @param FileSystemId &#91;required&#93; 
-#' @param Report &#91;required&#93; Defines whether or not Amazon FSx provides a CompletionReport once the
-#' task has completed. A CompletionReport provides a detailed report on the
-#' files that Amazon FSx processed that meet the criteria specified by the
-#' `Scope` parameter. For more information, see [Working with Task
-#' Completion
-#' Reports](https://docs.aws.amazon.com/fsx/latest/LustreGuide/task-completion-report.html).
-#' @param ClientRequestToken 
-#' @param Tags 
-#' @param CapacityToRelease Specifies the amount of data to release, in GiB, by an Amazon File Cache
-#' `AUTO_RELEASE_DATA` task that automatically releases files from the
-#' cache.
-#' @param ReleaseConfiguration The configuration that specifies the last accessed time criteria for
-#' files that will be released from an Amazon FSx for Lustre file system.
+#'     A file must also meet the last accessed time criteria specified in for the file to be released.
+#' @param FileSystemId &#91;required&#93; The globally unique ID of the file system, assigned by Amazon FSx.
+#' @param Report &#91;required&#93; Defines whether or not Amazon FSx provides a CompletionReport once the task has completed. A CompletionReport provides a detailed report on the files that Amazon FSx processed that meet the criteria specified by the `Scope` parameter. For more information, see [Working with Task Completion Reports](https://docs.aws.amazon.com/fsx/latest/LustreGuide/task-completion-report.html).
+#' @param ClientRequestToken (Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.
+#' @param Tags A list of `Tag` values, with a maximum of 50 elements.
+#' @param CapacityToRelease Specifies the amount of data to release, in GiB, by an Amazon File Cache `AUTO_RELEASE_DATA` task that automatically releases files from the cache.
+#' @param ReleaseConfiguration The configuration that specifies the last accessed time criteria for files that will be released from an Amazon FSx for Lustre file system.
 #'
 #' @keywords internal
 #'
@@ -407,50 +358,25 @@ fsx_create_data_repository_task <- function(Type, Paths = NULL, FileSystemId, Re
 #'
 #' See [https://www.paws-r-sdk.com/docs/fsx_create_file_cache/](https://www.paws-r-sdk.com/docs/fsx_create_file_cache/) for full documentation.
 #'
-#' @param ClientRequestToken An idempotency token for resource creation, in a string of up to 63
-#' ASCII characters. This token is automatically filled on your behalf when
-#' you use the Command Line Interface (CLI) or an Amazon Web Services SDK.
+#' @param ClientRequestToken An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.
 #' 
-#' By using the idempotent operation, you can retry a
-#' [`create_file_cache`][fsx_create_file_cache] operation without the risk
-#' of creating an extra cache. This approach can be useful when an initial
-#' call fails in a way that makes it unclear whether a cache was created.
-#' Examples are if a transport level timeout occurred, or your connection
-#' was reset. If you use the same client request token and the initial call
-#' created a cache, the client receives success as long as the parameters
-#' are the same.
+#' By using the idempotent operation, you can retry a [`create_file_cache`][fsx_create_file_cache] operation without the risk of creating an extra cache. This approach can be useful when an initial call fails in a way that makes it unclear whether a cache was created. Examples are if a transport level timeout occurred, or your connection was reset. If you use the same client request token and the initial call created a cache, the client receives success as long as the parameters are the same.
 #' @param FileCacheType &#91;required&#93; The type of cache that you're creating, which must be `LUSTRE`.
-#' @param FileCacheTypeVersion &#91;required&#93; Sets the Lustre version for the cache that you're creating, which must
-#' be `2.12`.
-#' @param StorageCapacity &#91;required&#93; The storage capacity of the cache in gibibytes (GiB). Valid values are
-#' 1200 GiB, 2400 GiB, and increments of 2400 GiB.
-#' @param SubnetIds &#91;required&#93; 
-#' @param SecurityGroupIds A list of IDs specifying the security groups to apply to all network
-#' interfaces created for Amazon File Cache access. This list isn't
-#' returned in later requests to describe the cache.
-#' @param Tags 
-#' @param CopyTagsToDataRepositoryAssociations A boolean flag indicating whether tags for the cache should be copied to
-#' data repository associations. This value defaults to false.
-#' @param KmsKeyId Specifies the ID of the Key Management Service (KMS) key to use for
-#' encrypting data on an Amazon File Cache. If a `KmsKeyId` isn't
-#' specified, the Amazon FSx-managed KMS key for your account is used. For
-#' more information, see
-#' [Encrypt](https://docs.aws.amazon.com/kms/latest/APIReference/API_Encrypt.html)
-#' in the *Key Management Service API Reference*.
+#' @param FileCacheTypeVersion &#91;required&#93; Sets the Lustre version for the cache that you're creating, which must be `2.12`.
+#' @param StorageCapacity &#91;required&#93; The storage capacity of the cache in gibibytes (GiB). Valid values are 1200 GiB, 2400 GiB, and increments of 2400 GiB.
+#' @param SubnetIds &#91;required&#93; A list of subnet IDs that the cache will be accessible from. You can specify only one subnet ID in a call to the [`create_file_cache`][fsx_create_file_cache] operation.
+#' @param SecurityGroupIds A list of IDs specifying the security groups to apply to all network interfaces created for Amazon File Cache access. This list isn't returned in later requests to describe the cache.
+#' @param Tags A list of `Tag` values, with a maximum of 50 elements.
+#' @param CopyTagsToDataRepositoryAssociations A boolean flag indicating whether tags for the cache should be copied to data repository associations. This value defaults to false.
+#' @param KmsKeyId Specifies the ID of the Key Management Service (KMS) key to use for encrypting data on an Amazon File Cache. If a `KmsKeyId` isn't specified, the Amazon FSx-managed KMS key for your account is used. For more information, see [Encrypt](https://docs.aws.amazon.com/kms/latest/APIReference/API_Encrypt.html) in the *Key Management Service API Reference*.
 #' @param LustreConfiguration The configuration for the Amazon File Cache resource being created.
-#' @param DataRepositoryAssociations A list of up to 8 configurations for data repository associations (DRAs)
-#' to be created during the cache creation. The DRAs link the cache to
-#' either an Amazon S3 data repository or a Network File System (NFS) data
-#' repository that supports the NFSv3 protocol.
+#' @param DataRepositoryAssociations A list of up to 8 configurations for data repository associations (DRAs) to be created during the cache creation. The DRAs link the cache to either an Amazon S3 data repository or a Network File System (NFS) data repository that supports the NFSv3 protocol.
 #' 
 #' The DRA configurations must meet the following requirements:
 #' 
-#' -   All configurations on the list must be of the same data repository
-#'     type, either all S3 or all NFS. A cache can't link to different data
-#'     repository types at the same time.
+#' -   All configurations on the list must be of the same data repository type, either all S3 or all NFS. A cache can't link to different data repository types at the same time.
 #' 
-#' -   An NFS DRA must link to an NFS file system that supports the NFSv3
-#'     protocol.
+#' -   An NFS DRA must link to an NFS file system that supports the NFSv3 protocol.
 #' 
 #' DRA automatic import and automatic export is not supported.
 #'
@@ -483,121 +409,89 @@ fsx_create_file_cache <- function(ClientRequestToken = NULL, FileCacheType, File
 #'
 #' See [https://www.paws-r-sdk.com/docs/fsx_create_file_system/](https://www.paws-r-sdk.com/docs/fsx_create_file_system/) for full documentation.
 #'
-#' @param ClientRequestToken A string of up to 63 ASCII characters that Amazon FSx uses to ensure
-#' idempotent creation. This string is automatically filled on your behalf
-#' when you use the Command Line Interface (CLI) or an Amazon Web Services
-#' SDK.
-#' @param FileSystemType &#91;required&#93; The type of Amazon FSx file system to create. Valid values are
-#' `WINDOWS`, `LUSTRE`, `ONTAP`, and `OPENZFS`.
-#' @param StorageCapacity Sets the storage capacity of the file system that you're creating, in
-#' gibibytes (GiB).
+#' @param ClientRequestToken A string of up to 63 ASCII characters that Amazon FSx uses to ensure idempotent creation. This string is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.
+#' @param FileSystemType &#91;required&#93; The type of Amazon FSx file system to create. Valid values are `WINDOWS`, `LUSTRE`, `ONTAP`, and `OPENZFS`.
+#' @param StorageCapacity Sets the storage capacity of the file system that you're creating, in gibibytes (GiB).
 #' 
-#' **FSx for Lustre file systems** - The amount of storage capacity that
-#' you can configure depends on the value that you set for `StorageType`
-#' and the Lustre `DeploymentType`, as follows:
+#' **FSx for Lustre file systems** - The amount of storage capacity that you can configure depends on the value that you set for `StorageType` and the Lustre `DeploymentType`, as follows:
 #' 
-#' -   For `SCRATCH_2`, `PERSISTENT_2`, and `PERSISTENT_1` deployment types
-#'     using SSD storage type, the valid values are 1200 GiB, 2400 GiB, and
-#'     increments of 2400 GiB.
+#' -   For `SCRATCH_2`, `PERSISTENT_2`, and `PERSISTENT_1` deployment types using SSD storage type, the valid values are 1200 GiB, 2400 GiB, and increments of 2400 GiB.
 #' 
-#' -   For `PERSISTENT_1` HDD file systems, valid values are increments of
-#'     6000 GiB for 12 MB/s/TiB file systems and increments of 1800 GiB for
-#'     40 MB/s/TiB file systems.
+#' -   For `PERSISTENT_1` HDD file systems, valid values are increments of 6000 GiB for 12 MB/s/TiB file systems and increments of 1800 GiB for 40 MB/s/TiB file systems.
 #' 
-#' -   For `SCRATCH_1` deployment type, valid values are 1200 GiB, 2400
-#'     GiB, and increments of 3600 GiB.
+#' -   For `SCRATCH_1` deployment type, valid values are 1200 GiB, 2400 GiB, and increments of 3600 GiB.
 #' 
-#' **FSx for ONTAP file systems** - The amount of storage capacity that you
-#' can configure depends on the value of the `HAPairs` property. The
-#' minimum value is calculated as 1,024 * `HAPairs` and the maximum is
-#' calculated as 524,288 * `HAPairs`.
+#' **FSx for ONTAP file systems** - The amount of storage capacity that you can configure depends on the value of the `HAPairs` property. The minimum value is calculated as 1,024 * `HAPairs` and the maximum is calculated as 524,288 * `HAPairs`.
 #' 
-#' **FSx for OpenZFS file systems** - The amount of storage capacity that
-#' you can configure is from 64 GiB up to 524,288 GiB (512 TiB).
+#' **FSx for OpenZFS file systems** - The amount of storage capacity that you can configure is from 64 GiB up to 524,288 GiB (512 TiB).
 #' 
-#' **FSx for Windows File Server file systems** - The amount of storage
-#' capacity that you can configure depends on the value that you set for
-#' `StorageType` as follows:
+#' **FSx for Windows File Server file systems** - The amount of storage capacity that you can configure depends on the value that you set for `StorageType` as follows:
 #' 
 #' -   For SSD storage, valid values are 32 GiB-65,536 GiB (64 TiB).
 #' 
 #' -   For HDD storage, valid values are 2000 GiB-65,536 GiB (64 TiB).
-#' @param StorageType Sets the storage class for the file system that you're creating. Valid
-#' values are `SSD`, `HDD`, and `INTELLIGENT_TIERING`.
+#' @param StorageType Sets the storage class for the file system that you're creating. Valid values are `SSD`, `HDD`, and `INTELLIGENT_TIERING`.
 #' 
-#' -   Set to `SSD` to use solid state drive storage. SSD is supported on
-#'     all Windows, Lustre, ONTAP, and OpenZFS deployment types.
+#' -   Set to `SSD` to use solid state drive storage. SSD is supported on all Windows, Lustre, ONTAP, and OpenZFS deployment types.
 #' 
-#' -   Set to `HDD` to use hard disk drive storage. HDD is supported on
-#'     `SINGLE_AZ_2` and `MULTI_AZ_1` Windows file system deployment types,
-#'     and on `PERSISTENT_1` Lustre file system deployment types.
+#' -   Set to `HDD` to use hard disk drive storage, which is supported on `SINGLE_AZ_2` and `MULTI_AZ_1` Windows file system deployment types, and on `PERSISTENT_1` Lustre file system deployment types.
 #' 
-#' -   Set to `INTELLIGENT_TIERING` to use fully elastic,
-#'     intelligently-tiered storage. Intelligent-Tiering is only available
-#'     for OpenZFS file systems with the Multi-AZ deployment type.
+#' -   Set to `INTELLIGENT_TIERING` to use fully elastic, intelligently-tiered storage. Intelligent-Tiering is only available for OpenZFS file systems with the Multi-AZ deployment type and for Lustre file systems with the Persistent_2 deployment type.
 #' 
-#' Default value is `SSD`. For more information, see [Storage type
-#' options](https://docs.aws.amazon.com/fsx/latest/WindowsGuide/managing-storage-configuration.html#optimize-storage-costs)
-#' in the *FSx for Windows File Server User Guide*, [Multiple storage
-#' options](https://docs.aws.amazon.com/fsx/latest/LustreGuide/what-is.html#storage-options)
-#' in the *FSx for Lustre User Guide*, and [Working with
-#' Intelligent-Tiering](https://docs.aws.amazon.com/fsx/latest/OpenZFSGuide/performance-intelligent-tiering.html)
-#' in the *Amazon FSx for OpenZFS User Guide*.
-#' @param SubnetIds &#91;required&#93; Specifies the IDs of the subnets that the file system will be accessible
-#' from. For Windows and ONTAP `MULTI_AZ_1` deployment types,provide
-#' exactly two subnet IDs, one for the preferred file server and one for
-#' the standby file server. You specify one of these subnets as the
-#' preferred subnet using the `WindowsConfiguration > PreferredSubnetID` or
-#' `OntapConfiguration > PreferredSubnetID` properties. For more
-#' information about Multi-AZ file system configuration, see [Availability
-#' and durability: Single-AZ and Multi-AZ file
-#' systems](https://docs.aws.amazon.com/fsx/latest/WindowsGuide/high-availability-multiAZ.html)
-#' in the *Amazon FSx for Windows User Guide* and [Availability and
-#' durability](https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/) in the
-#' *Amazon FSx for ONTAP User Guide*.
+#' Default value is `SSD`. For more information, see [Storage type options](https://docs.aws.amazon.com/fsx/latest/WindowsGuide/managing-storage-configuration.html#storage-type-options) in the *FSx for Windows File Server User Guide*, [FSx for Lustre storage classes](https://docs.aws.amazon.com/fsx/latest/LustreGuide/using-fsx-lustre.html#lustre-storage-classes) in the *FSx for Lustre User Guide*, and [Working with Intelligent-Tiering](https://docs.aws.amazon.com/fsx/latest/OpenZFSGuide/performance-intelligent-tiering.html) in the *Amazon FSx for OpenZFS User Guide*.
+#' @param SubnetIds &#91;required&#93; Specifies the IDs of the subnets that the file system will be accessible from. For Windows and ONTAP `MULTI_AZ_1` deployment types,provide exactly two subnet IDs, one for the preferred file server and one for the standby file server. You specify one of these subnets as the preferred subnet using the `WindowsConfiguration > PreferredSubnetID` or `OntapConfiguration > PreferredSubnetID` properties. For more information about Multi-AZ file system configuration, see [Availability and durability: Single-AZ and Multi-AZ file systems](https://docs.aws.amazon.com/fsx/latest/WindowsGuide/high-availability-multiAZ.html) in the *Amazon FSx for Windows User Guide* and [Availability and durability](https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/) in the *Amazon FSx for ONTAP User Guide*.
 #' 
-#' For Windows `SINGLE_AZ_1` and `SINGLE_AZ_2` and all Lustre deployment
-#' types, provide exactly one subnet ID. The file server is launched in
-#' that subnet's Availability Zone.
-#' @param SecurityGroupIds A list of IDs specifying the security groups to apply to all network
-#' interfaces created for file system access. This list isn't returned in
-#' later requests to describe the file system.
+#' For Windows `SINGLE_AZ_1` and `SINGLE_AZ_2` and all Lustre deployment types, provide exactly one subnet ID. The file server is launched in that subnet's Availability Zone.
+#' @param SecurityGroupIds A list of IDs specifying the security groups to apply to all network interfaces created for file system access. This list isn't returned in later requests to describe the file system.
 #' 
-#' You must specify a security group if you are creating a Multi-AZ FSx for
-#' ONTAP file system in a VPC subnet that has been shared with you.
-#' @param Tags The tags to apply to the file system that's being created. The key value
-#' of the `Name` tag appears in the console as the file system name.
-#' @param KmsKeyId 
-#' @param WindowsConfiguration The Microsoft Windows configuration for the file system that's being
-#' created.
-#' @param LustreConfiguration 
-#' @param OntapConfiguration 
-#' @param FileSystemTypeVersion For FSx for Lustre file systems, sets the Lustre version for the file
-#' system that you're creating. Valid values are `2.10`, `2.12`, and
-#' `2.15`:
+#' You must specify a security group if you are creating a Multi-AZ FSx for ONTAP file system in a VPC subnet that has been shared with you.
+#' @param Tags The tags to apply to the file system that's being created. The key value of the `Name` tag appears in the console as the file system name.
+#' @param KmsKeyId Specifies the ID of the Key Management Service (KMS) key to use for encrypting data on Amazon FSx file systems, as follows:
 #' 
-#' -   `2.10` is supported by the Scratch and Persistent_1 Lustre
-#'     deployment types.
+#' -   Amazon FSx for Lustre `PERSISTENT_1` and `PERSISTENT_2` deployment types only.
 #' 
-#' -   `2.12` is supported by all Lustre deployment types, except for
-#'     `PERSISTENT_2` with a metadata configuration mode.
+#'     `SCRATCH_1` and `SCRATCH_2` types are encrypted using the Amazon FSx service KMS key for your account.
 #' 
-#' -   `2.15` is supported by all Lustre deployment types and is
-#'     recommended for all new file systems.
+#' -   Amazon FSx for NetApp ONTAP
+#' 
+#' -   Amazon FSx for OpenZFS
+#' 
+#' -   Amazon FSx for Windows File Server
+#' 
+#' If a `KmsKeyId` isn't specified, the Amazon FSx-managed KMS key for your account is used. For more information, see [Encrypt](https://docs.aws.amazon.com/kms/latest/APIReference/API_Encrypt.html) in the *Key Management Service API Reference*.
+#' @param WindowsConfiguration The Microsoft Windows configuration for the file system that's being created.
+#' @param LustreConfiguration The Lustre configuration for the file system being created.
+#' 
+#' The following parameters are not supported for file systems with a data repository association created with .
+#' 
+#' -   `AutoImportPolicy`
+#' 
+#' -   `ExportPath`
+#' 
+#' -   `ImportedFileChunkSize`
+#' 
+#' -   `ImportPath`
+#' @param OntapConfiguration The ONTAP configuration properties of the FSx for ONTAP file system that you are creating.
+#' @param FileSystemTypeVersion For FSx for Lustre file systems, sets the Lustre version for the file system that you're creating. Valid values are `2.10`, `2.12`, and `2.15`:
+#' 
+#' -   `2.10` is supported by the Scratch and Persistent_1 Lustre deployment types.
+#' 
+#' -   `2.12` is supported by all Lustre deployment types, except for `PERSISTENT_2` with a metadata configuration mode.
+#' 
+#' -   `2.15` is supported by all Lustre deployment types and is recommended for all new file systems.
 #' 
 #' Default value is `2.10`, except for the following deployments:
 #' 
-#' -   Default value is `2.12` when `DeploymentType` is set to
-#'     `PERSISTENT_2` without a metadata configuration mode.
+#' -   Default value is `2.12` when `DeploymentType` is set to `PERSISTENT_2` without a metadata configuration mode.
 #' 
-#' -   Default value is `2.15` when `DeploymentType` is set to
-#'     `PERSISTENT_2` with a metadata configuration mode.
+#' -   Default value is `2.15` when `DeploymentType` is set to `PERSISTENT_2` with a metadata configuration mode.
 #' @param OpenZFSConfiguration The OpenZFS configuration for the file system that's being created.
+#' @param NetworkType The network type of the Amazon FSx file system that you are creating. Valid values are `IPV4` (which supports IPv4 only) and `DUAL` (for dual-stack mode, which supports both IPv4 and IPv6). The default is `IPV4`. Supported for FSx for OpenZFS, FSx for ONTAP, and FSx for Windows File Server file systems.
 #'
 #' @keywords internal
 #'
 #' @rdname fsx_create_file_system
-fsx_create_file_system <- function(ClientRequestToken = NULL, FileSystemType, StorageCapacity = NULL, StorageType = NULL, SubnetIds, SecurityGroupIds = NULL, Tags = NULL, KmsKeyId = NULL, WindowsConfiguration = NULL, LustreConfiguration = NULL, OntapConfiguration = NULL, FileSystemTypeVersion = NULL, OpenZFSConfiguration = NULL) {
+fsx_create_file_system <- function(ClientRequestToken = NULL, FileSystemType, StorageCapacity = NULL, StorageType = NULL, SubnetIds, SecurityGroupIds = NULL, Tags = NULL, KmsKeyId = NULL, WindowsConfiguration = NULL, LustreConfiguration = NULL, OntapConfiguration = NULL, FileSystemTypeVersion = NULL, OpenZFSConfiguration = NULL, NetworkType = NULL) {
   op <- new_operation(
     name = "CreateFileSystem",
     http_method = "POST",
@@ -606,7 +500,7 @@ fsx_create_file_system <- function(ClientRequestToken = NULL, FileSystemType, St
     paginator = list(),
     stream_api = FALSE
   )
-  input <- .fsx$create_file_system_input(ClientRequestToken = ClientRequestToken, FileSystemType = FileSystemType, StorageCapacity = StorageCapacity, StorageType = StorageType, SubnetIds = SubnetIds, SecurityGroupIds = SecurityGroupIds, Tags = Tags, KmsKeyId = KmsKeyId, WindowsConfiguration = WindowsConfiguration, LustreConfiguration = LustreConfiguration, OntapConfiguration = OntapConfiguration, FileSystemTypeVersion = FileSystemTypeVersion, OpenZFSConfiguration = OpenZFSConfiguration)
+  input <- .fsx$create_file_system_input(ClientRequestToken = ClientRequestToken, FileSystemType = FileSystemType, StorageCapacity = StorageCapacity, StorageType = StorageType, SubnetIds = SubnetIds, SecurityGroupIds = SecurityGroupIds, Tags = Tags, KmsKeyId = KmsKeyId, WindowsConfiguration = WindowsConfiguration, LustreConfiguration = LustreConfiguration, OntapConfiguration = OntapConfiguration, FileSystemTypeVersion = FileSystemTypeVersion, OpenZFSConfiguration = OpenZFSConfiguration, NetworkType = NetworkType)
   output <- .fsx$create_file_system_output()
   config <- get_config()
   svc <- .fsx$service(config, op)
@@ -624,71 +518,62 @@ fsx_create_file_system <- function(ClientRequestToken = NULL, FileSystemType, St
 #'
 #' See [https://www.paws-r-sdk.com/docs/fsx_create_file_system_from_backup/](https://www.paws-r-sdk.com/docs/fsx_create_file_system_from_backup/) for full documentation.
 #'
-#' @param BackupId &#91;required&#93; 
-#' @param ClientRequestToken A string of up to 63 ASCII characters that Amazon FSx uses to ensure
-#' idempotent creation. This string is automatically filled on your behalf
-#' when you use the Command Line Interface (CLI) or an Amazon Web Services
-#' SDK.
-#' @param SubnetIds &#91;required&#93; Specifies the IDs of the subnets that the file system will be accessible
-#' from. For Windows `MULTI_AZ_1` file system deployment types, provide
-#' exactly two subnet IDs, one for the preferred file server and one for
-#' the standby file server. You specify one of these subnets as the
-#' preferred subnet using the `WindowsConfiguration > PreferredSubnetID`
-#' property.
+#' @param BackupId &#91;required&#93; The ID of the source backup. Specifies the backup that you are copying.
+#' @param ClientRequestToken A string of up to 63 ASCII characters that Amazon FSx uses to ensure idempotent creation. This string is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.
+#' @param SubnetIds &#91;required&#93; Specifies the IDs of the subnets that the file system will be accessible from. For Windows `MULTI_AZ_1` file system deployment types, provide exactly two subnet IDs, one for the preferred file server and one for the standby file server. You specify one of these subnets as the preferred subnet using the `WindowsConfiguration > PreferredSubnetID` property.
 #' 
-#' Windows `SINGLE_AZ_1` and `SINGLE_AZ_2` file system deployment types,
-#' Lustre file systems, and OpenZFS file systems provide exactly one subnet
-#' ID. The file server is launched in that subnet's Availability Zone.
-#' @param SecurityGroupIds A list of IDs for the security groups that apply to the specified
-#' network interfaces created for file system access. These security groups
-#' apply to all network interfaces. This value isn't returned in later
-#' `DescribeFileSystem` requests.
-#' @param Tags The tags to be applied to the file system at file system creation. The
-#' key value of the `Name` tag appears in the console as the file system
-#' name.
+#' Windows `SINGLE_AZ_1` and `SINGLE_AZ_2` file system deployment types, Lustre file systems, and OpenZFS file systems provide exactly one subnet ID. The file server is launched in that subnet's Availability Zone.
+#' @param SecurityGroupIds A list of IDs for the security groups that apply to the specified network interfaces created for file system access. These security groups apply to all network interfaces. This value isn't returned in later `DescribeFileSystem` requests.
+#' @param Tags The tags to be applied to the file system at file system creation. The key value of the `Name` tag appears in the console as the file system name.
 #' @param WindowsConfiguration The configuration for this Microsoft Windows file system.
-#' @param LustreConfiguration 
-#' @param StorageType Sets the storage type for the Windows or OpenZFS file system that you're
-#' creating from a backup. Valid values are `SSD` and `HDD`.
+#' @param LustreConfiguration The Lustre configuration for the file system being created.
 #' 
-#' -   Set to `SSD` to use solid state drive storage. SSD is supported on
-#'     all Windows and OpenZFS deployment types.
+#' The following parameters are not supported for file systems with a data repository association created with .
 #' 
-#' -   Set to `HDD` to use hard disk drive storage. HDD is supported on
-#'     `SINGLE_AZ_2` and `MULTI_AZ_1` FSx for Windows File Server file
-#'     system deployment types.
+#' -   `AutoImportPolicy`
+#' 
+#' -   `ExportPath`
+#' 
+#' -   `ImportedFileChunkSize`
+#' 
+#' -   `ImportPath`
+#' @param StorageType Sets the storage type for the Windows, OpenZFS, or Lustre file system that you're creating from a backup. Valid values are `SSD`, `HDD`, and `INTELLIGENT_TIERING`.
+#' 
+#' -   Set to `SSD` to use solid state drive storage. SSD is supported on all Windows and OpenZFS deployment types.
+#' 
+#' -   Set to `HDD` to use hard disk drive storage. HDD is supported on `SINGLE_AZ_2` and `MULTI_AZ_1` FSx for Windows File Server file system deployment types.
+#' 
+#' -   Set to `INTELLIGENT_TIERING` to use fully elastic, intelligently-tiered storage. Intelligent-Tiering is only available for OpenZFS file systems with the Multi-AZ deployment type and for Lustre file systems with the Persistent_2 deployment type.
 #' 
 #' The default value is `SSD`.
 #' 
-#' HDD and SSD storage types have different minimum storage capacity
-#' requirements. A restored file system's storage capacity is tied to the
-#' file system that was backed up. You can create a file system that uses
-#' HDD storage from a backup of a file system that used SSD storage if the
-#' original SSD file system had a storage capacity of at least 2000 GiB.
-#' @param KmsKeyId 
-#' @param FileSystemTypeVersion Sets the version for the Amazon FSx for Lustre file system that you're
-#' creating from a backup. Valid values are `2.10`, `2.12`, and `2.15`.
+#' HDD and SSD storage types have different minimum storage capacity requirements. A restored file system's storage capacity is tied to the file system that was backed up. You can create a file system that uses HDD storage from a backup of a file system that used SSD storage if the original SSD file system had a storage capacity of at least 2000 GiB.
+#' @param KmsKeyId Specifies the ID of the Key Management Service (KMS) key to use for encrypting data on Amazon FSx file systems, as follows:
 #' 
-#' You can enter a Lustre version that is newer than the backup's
-#' `FileSystemTypeVersion` setting. If you don't enter a newer Lustre
-#' version, it defaults to the backup's setting.
+#' -   Amazon FSx for Lustre `PERSISTENT_1` and `PERSISTENT_2` deployment types only.
+#' 
+#'     `SCRATCH_1` and `SCRATCH_2` types are encrypted using the Amazon FSx service KMS key for your account.
+#' 
+#' -   Amazon FSx for NetApp ONTAP
+#' 
+#' -   Amazon FSx for OpenZFS
+#' 
+#' -   Amazon FSx for Windows File Server
+#' 
+#' If a `KmsKeyId` isn't specified, the Amazon FSx-managed KMS key for your account is used. For more information, see [Encrypt](https://docs.aws.amazon.com/kms/latest/APIReference/API_Encrypt.html) in the *Key Management Service API Reference*.
+#' @param FileSystemTypeVersion Sets the version for the Amazon FSx for Lustre file system that you're creating from a backup. Valid values are `2.10`, `2.12`, and `2.15`.
+#' 
+#' You can enter a Lustre version that is newer than the backup's `FileSystemTypeVersion` setting. If you don't enter a newer Lustre version, it defaults to the backup's setting.
 #' @param OpenZFSConfiguration The OpenZFS configuration for the file system that's being created.
-#' @param StorageCapacity Sets the storage capacity of the OpenZFS file system that you're
-#' creating from a backup, in gibibytes (GiB). Valid values are from 64 GiB
-#' up to 524,288 GiB (512 TiB). However, the value that you specify must be
-#' equal to or greater than the backup's storage capacity value. If you
-#' don't use the `StorageCapacity` parameter, the default is the backup's
-#' `StorageCapacity` value.
+#' @param StorageCapacity Sets the storage capacity of the OpenZFS file system that you're creating from a backup, in gibibytes (GiB). Valid values are from 64 GiB up to 524,288 GiB (512 TiB). However, the value that you specify must be equal to or greater than the backup's storage capacity value. If you don't use the `StorageCapacity` parameter, the default is the backup's `StorageCapacity` value.
 #' 
-#' If used to create a file system other than OpenZFS, you must provide a
-#' value that matches the backup's `StorageCapacity` value. If you provide
-#' any other value, Amazon FSx responds with an HTTP status code 400 Bad
-#' Request.
+#' If used to create a file system other than OpenZFS, you must provide a value that matches the backup's `StorageCapacity` value. If you provide any other value, Amazon FSx responds with an HTTP status code 400 Bad Request.
+#' @param NetworkType Sets the network type for the Amazon FSx for OpenZFS file system that you're creating from a backup.
 #'
 #' @keywords internal
 #'
 #' @rdname fsx_create_file_system_from_backup
-fsx_create_file_system_from_backup <- function(BackupId, ClientRequestToken = NULL, SubnetIds, SecurityGroupIds = NULL, Tags = NULL, WindowsConfiguration = NULL, LustreConfiguration = NULL, StorageType = NULL, KmsKeyId = NULL, FileSystemTypeVersion = NULL, OpenZFSConfiguration = NULL, StorageCapacity = NULL) {
+fsx_create_file_system_from_backup <- function(BackupId, ClientRequestToken = NULL, SubnetIds, SecurityGroupIds = NULL, Tags = NULL, WindowsConfiguration = NULL, LustreConfiguration = NULL, StorageType = NULL, KmsKeyId = NULL, FileSystemTypeVersion = NULL, OpenZFSConfiguration = NULL, StorageCapacity = NULL, NetworkType = NULL) {
   op <- new_operation(
     name = "CreateFileSystemFromBackup",
     http_method = "POST",
@@ -697,7 +582,7 @@ fsx_create_file_system_from_backup <- function(BackupId, ClientRequestToken = NU
     paginator = list(),
     stream_api = FALSE
   )
-  input <- .fsx$create_file_system_from_backup_input(BackupId = BackupId, ClientRequestToken = ClientRequestToken, SubnetIds = SubnetIds, SecurityGroupIds = SecurityGroupIds, Tags = Tags, WindowsConfiguration = WindowsConfiguration, LustreConfiguration = LustreConfiguration, StorageType = StorageType, KmsKeyId = KmsKeyId, FileSystemTypeVersion = FileSystemTypeVersion, OpenZFSConfiguration = OpenZFSConfiguration, StorageCapacity = StorageCapacity)
+  input <- .fsx$create_file_system_from_backup_input(BackupId = BackupId, ClientRequestToken = ClientRequestToken, SubnetIds = SubnetIds, SecurityGroupIds = SecurityGroupIds, Tags = Tags, WindowsConfiguration = WindowsConfiguration, LustreConfiguration = LustreConfiguration, StorageType = StorageType, KmsKeyId = KmsKeyId, FileSystemTypeVersion = FileSystemTypeVersion, OpenZFSConfiguration = OpenZFSConfiguration, StorageCapacity = StorageCapacity, NetworkType = NetworkType)
   output <- .fsx$create_file_system_from_backup_output()
   config <- get_config()
   svc <- .fsx$service(config, op)
@@ -714,10 +599,10 @@ fsx_create_file_system_from_backup <- function(BackupId, ClientRequestToken = NU
 #'
 #' See [https://www.paws-r-sdk.com/docs/fsx_create_snapshot/](https://www.paws-r-sdk.com/docs/fsx_create_snapshot/) for full documentation.
 #'
-#' @param ClientRequestToken 
+#' @param ClientRequestToken (Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.
 #' @param Name &#91;required&#93; The name of the snapshot.
 #' @param VolumeId &#91;required&#93; The ID of the volume that you are taking a snapshot of.
-#' @param Tags 
+#' @param Tags A list of `Tag` values, with a maximum of 50 elements.
 #'
 #' @keywords internal
 #'
@@ -749,33 +634,19 @@ fsx_create_snapshot <- function(ClientRequestToken = NULL, Name, VolumeId, Tags 
 #'
 #' See [https://www.paws-r-sdk.com/docs/fsx_create_storage_virtual_machine/](https://www.paws-r-sdk.com/docs/fsx_create_storage_virtual_machine/) for full documentation.
 #'
-#' @param ActiveDirectoryConfiguration Describes the self-managed Microsoft Active Directory to which you want
-#' to join the SVM. Joining an Active Directory provides user
-#' authentication and access control for SMB clients, including Microsoft
-#' Windows and macOS clients accessing the file system.
-#' @param ClientRequestToken 
-#' @param FileSystemId &#91;required&#93; 
+#' @param ActiveDirectoryConfiguration Describes the self-managed Microsoft Active Directory to which you want to join the SVM. Joining an Active Directory provides user authentication and access control for SMB clients, including Microsoft Windows and macOS clients accessing the file system.
+#' @param ClientRequestToken (Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.
+#' @param FileSystemId &#91;required&#93; The globally unique ID of the file system, assigned by Amazon FSx.
 #' @param Name &#91;required&#93; The name of the SVM.
-#' @param SvmAdminPassword The password to use when managing the SVM using the NetApp ONTAP CLI or
-#' REST API. If you do not specify a password, you can still use the file
-#' system's `fsxadmin` user to manage the SVM.
-#' @param Tags 
-#' @param RootVolumeSecurityStyle The security style of the root volume of the SVM. Specify one of the
-#' following values:
+#' @param SvmAdminPassword The password to use when managing the SVM using the NetApp ONTAP CLI or REST API. If you do not specify a password, you can still use the file system's `fsxadmin` user to manage the SVM.
+#' @param Tags A list of `Tag` values, with a maximum of 50 elements.
+#' @param RootVolumeSecurityStyle The security style of the root volume of the SVM. Specify one of the following values:
 #' 
-#' -   `UNIX` if the file system is managed by a UNIX administrator, the
-#'     majority of users are NFS clients, and an application accessing the
-#'     data uses a UNIX user as the service account.
+#' -   `UNIX` if the file system is managed by a UNIX administrator, the majority of users are NFS clients, and an application accessing the data uses a UNIX user as the service account.
 #' 
-#' -   `NTFS` if the file system is managed by a Microsoft Windows
-#'     administrator, the majority of users are SMB clients, and an
-#'     application accessing the data uses a Microsoft Windows user as the
-#'     service account.
+#' -   `NTFS` if the file system is managed by a Microsoft Windows administrator, the majority of users are SMB clients, and an application accessing the data uses a Microsoft Windows user as the service account.
 #' 
-#' -   `MIXED` This is an advanced setting. For more information, see
-#'     [Volume security
-#'     style](https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/) in the
-#'     Amazon FSx for NetApp ONTAP User Guide.
+#' -   `MIXED` This is an advanced setting. For more information, see [Volume security style](https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/) in the Amazon FSx for NetApp ONTAP User Guide.
 #'
 #' @keywords internal
 #'
@@ -806,12 +677,11 @@ fsx_create_storage_virtual_machine <- function(ActiveDirectoryConfiguration = NU
 #'
 #' See [https://www.paws-r-sdk.com/docs/fsx_create_volume/](https://www.paws-r-sdk.com/docs/fsx_create_volume/) for full documentation.
 #'
-#' @param ClientRequestToken 
-#' @param VolumeType &#91;required&#93; Specifies the type of volume to create; `ONTAP` and `OPENZFS` are the
-#' only valid volume types.
+#' @param ClientRequestToken (Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.
+#' @param VolumeType &#91;required&#93; Specifies the type of volume to create; `ONTAP` and `OPENZFS` are the only valid volume types.
 #' @param Name &#91;required&#93; Specifies the name of the volume that you're creating.
 #' @param OntapConfiguration Specifies the configuration to use when creating the ONTAP volume.
-#' @param Tags 
+#' @param Tags A list of `Tag` values, with a maximum of 50 elements.
 #' @param OpenZFSConfiguration Specifies the configuration to use when creating the OpenZFS volume.
 #'
 #' @keywords internal
@@ -844,11 +714,11 @@ fsx_create_volume <- function(ClientRequestToken = NULL, VolumeType, Name, Ontap
 #'
 #' See [https://www.paws-r-sdk.com/docs/fsx_create_volume_from_backup/](https://www.paws-r-sdk.com/docs/fsx_create_volume_from_backup/) for full documentation.
 #'
-#' @param BackupId &#91;required&#93; 
-#' @param ClientRequestToken 
+#' @param BackupId &#91;required&#93; The ID of the source backup. Specifies the backup that you are copying.
+#' @param ClientRequestToken (Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.
 #' @param Name &#91;required&#93; The name of the new volume you're creating.
 #' @param OntapConfiguration Specifies the configuration of the ONTAP volume that you are creating.
-#' @param Tags 
+#' @param Tags A list of `Tag` values, with a maximum of 50 elements.
 #'
 #' @keywords internal
 #'
@@ -880,9 +750,7 @@ fsx_create_volume_from_backup <- function(BackupId, ClientRequestToken = NULL, N
 #' See [https://www.paws-r-sdk.com/docs/fsx_delete_backup/](https://www.paws-r-sdk.com/docs/fsx_delete_backup/) for full documentation.
 #'
 #' @param BackupId &#91;required&#93; The ID of the backup that you want to delete.
-#' @param ClientRequestToken A string of up to 63 ASCII characters that Amazon FSx uses to ensure
-#' idempotent deletion. This parameter is automatically filled on your
-#' behalf when using the CLI or SDK.
+#' @param ClientRequestToken A string of up to 63 ASCII characters that Amazon FSx uses to ensure idempotent deletion. This parameter is automatically filled on your behalf when using the CLI or SDK.
 #'
 #' @keywords internal
 #'
@@ -915,9 +783,8 @@ fsx_delete_backup <- function(BackupId, ClientRequestToken = NULL) {
 #' See [https://www.paws-r-sdk.com/docs/fsx_delete_data_repository_association/](https://www.paws-r-sdk.com/docs/fsx_delete_data_repository_association/) for full documentation.
 #'
 #' @param AssociationId &#91;required&#93; The ID of the data repository association that you want to delete.
-#' @param ClientRequestToken 
-#' @param DeleteDataInFileSystem Set to `true` to delete the data in the file system that corresponds to
-#' the data repository association.
+#' @param ClientRequestToken (Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.
+#' @param DeleteDataInFileSystem Set to `true` to delete the data in the file system that corresponds to the data repository association.
 #'
 #' @keywords internal
 #'
@@ -949,7 +816,7 @@ fsx_delete_data_repository_association <- function(AssociationId, ClientRequestT
 #' See [https://www.paws-r-sdk.com/docs/fsx_delete_file_cache/](https://www.paws-r-sdk.com/docs/fsx_delete_file_cache/) for full documentation.
 #'
 #' @param FileCacheId &#91;required&#93; The ID of the cache that's being deleted.
-#' @param ClientRequestToken 
+#' @param ClientRequestToken (Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.
 #'
 #' @keywords internal
 #'
@@ -981,14 +848,10 @@ fsx_delete_file_cache <- function(FileCacheId, ClientRequestToken = NULL) {
 #' See [https://www.paws-r-sdk.com/docs/fsx_delete_file_system/](https://www.paws-r-sdk.com/docs/fsx_delete_file_system/) for full documentation.
 #'
 #' @param FileSystemId &#91;required&#93; The ID of the file system that you want to delete.
-#' @param ClientRequestToken A string of up to 63 ASCII characters that Amazon FSx uses to ensure
-#' idempotent deletion. This token is automatically filled on your behalf
-#' when using the Command Line Interface (CLI) or an Amazon Web Services
-#' SDK.
-#' @param WindowsConfiguration 
-#' @param LustreConfiguration 
-#' @param OpenZFSConfiguration The configuration object for the OpenZFS file system used in the
-#' [`delete_file_system`][fsx_delete_file_system] operation.
+#' @param ClientRequestToken A string of up to 63 ASCII characters that Amazon FSx uses to ensure idempotent deletion. This token is automatically filled on your behalf when using the Command Line Interface (CLI) or an Amazon Web Services SDK.
+#' @param WindowsConfiguration The configuration object for the Microsoft Windows file system used in the [`delete_file_system`][fsx_delete_file_system] operation.
+#' @param LustreConfiguration The configuration object for the Amazon FSx for Lustre file system being deleted in the [`delete_file_system`][fsx_delete_file_system] operation.
+#' @param OpenZFSConfiguration The configuration object for the OpenZFS file system used in the [`delete_file_system`][fsx_delete_file_system] operation.
 #'
 #' @keywords internal
 #'
@@ -1019,7 +882,7 @@ fsx_delete_file_system <- function(FileSystemId, ClientRequestToken = NULL, Wind
 #'
 #' See [https://www.paws-r-sdk.com/docs/fsx_delete_snapshot/](https://www.paws-r-sdk.com/docs/fsx_delete_snapshot/) for full documentation.
 #'
-#' @param ClientRequestToken 
+#' @param ClientRequestToken (Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.
 #' @param SnapshotId &#91;required&#93; The ID of the snapshot that you want to delete.
 #'
 #' @keywords internal
@@ -1051,7 +914,7 @@ fsx_delete_snapshot <- function(ClientRequestToken = NULL, SnapshotId) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/fsx_delete_storage_virtual_machine/](https://www.paws-r-sdk.com/docs/fsx_delete_storage_virtual_machine/) for full documentation.
 #'
-#' @param ClientRequestToken 
+#' @param ClientRequestToken (Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.
 #' @param StorageVirtualMachineId &#91;required&#93; The ID of the SVM that you want to delete.
 #'
 #' @keywords internal
@@ -1083,13 +946,10 @@ fsx_delete_storage_virtual_machine <- function(ClientRequestToken = NULL, Storag
 #'
 #' See [https://www.paws-r-sdk.com/docs/fsx_delete_volume/](https://www.paws-r-sdk.com/docs/fsx_delete_volume/) for full documentation.
 #'
-#' @param ClientRequestToken 
+#' @param ClientRequestToken (Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.
 #' @param VolumeId &#91;required&#93; The ID of the volume that you are deleting.
-#' @param OntapConfiguration For Amazon FSx for ONTAP volumes, specify whether to take a final backup
-#' of the volume and apply tags to the backup. To apply tags to the backup,
-#' you must have the `fsx:TagResource` permission.
-#' @param OpenZFSConfiguration For Amazon FSx for OpenZFS volumes, specify whether to delete all child
-#' volumes and snapshots.
+#' @param OntapConfiguration For Amazon FSx for ONTAP volumes, specify whether to take a final backup of the volume and apply tags to the backup. To apply tags to the backup, you must have the `fsx:TagResource` permission.
+#' @param OpenZFSConfiguration For Amazon FSx for OpenZFS volumes, specify whether to delete all child volumes and snapshots.
 #'
 #' @keywords internal
 #'
@@ -1121,19 +981,10 @@ fsx_delete_volume <- function(ClientRequestToken = NULL, VolumeId, OntapConfigur
 #'
 #' See [https://www.paws-r-sdk.com/docs/fsx_describe_backups/](https://www.paws-r-sdk.com/docs/fsx_describe_backups/) for full documentation.
 #'
-#' @param BackupIds The IDs of the backups that you want to retrieve. This parameter value
-#' overrides any filters. If any IDs aren't found, a `BackupNotFound` error
-#' occurs.
-#' @param Filters The filters structure. The supported names are `file-system-id`,
-#' `backup-type`, `file-system-type`, and `volume-id`.
-#' @param MaxResults Maximum number of backups to return in the response. This parameter
-#' value must be greater than 0. The number of items that Amazon FSx
-#' returns is the minimum of the `MaxResults` parameter specified in the
-#' request and the service's internal maximum number of items per page.
-#' @param NextToken An opaque pagination token returned from a previous
-#' [`describe_backups`][fsx_describe_backups] operation. If a token is
-#' present, the operation continues the list from where the returning call
-#' left off.
+#' @param BackupIds The IDs of the backups that you want to retrieve. This parameter value overrides any filters. If any IDs aren't found, a `BackupNotFound` error occurs.
+#' @param Filters The filters structure. The supported names are `file-system-id`, `backup-type`, `file-system-type`, and `volume-id`.
+#' @param MaxResults Maximum number of backups to return in the response. This parameter value must be greater than 0. The number of items that Amazon FSx returns is the minimum of the `MaxResults` parameter specified in the request and the service's internal maximum number of items per page.
+#' @param NextToken An opaque pagination token returned from a previous [`describe_backups`][fsx_describe_backups] operation. If a token is present, the operation continues the list from where the returning call left off.
 #'
 #' @keywords internal
 #'
@@ -1166,12 +1017,10 @@ fsx_describe_backups <- function(BackupIds = NULL, Filters = NULL, MaxResults = 
 #'
 #' See [https://www.paws-r-sdk.com/docs/fsx_describe_data_repository_associations/](https://www.paws-r-sdk.com/docs/fsx_describe_data_repository_associations/) for full documentation.
 #'
-#' @param AssociationIds IDs of the data repository associations whose descriptions you want to
-#' retrieve (String).
-#' @param Filters 
-#' @param MaxResults The maximum number of resources to return in the response. This value
-#' must be an integer greater than zero.
-#' @param NextToken 
+#' @param AssociationIds IDs of the data repository associations whose descriptions you want to retrieve (String).
+#' @param Filters A list of `Filter` elements.
+#' @param MaxResults The maximum number of resources to return in the response. This value must be an integer greater than zero.
+#' @param NextToken (Optional) Opaque pagination token returned from a previous operation (String). If present, this token indicates from what point you can continue processing the request, where the previous `NextToken` value left off.
 #'
 #' @keywords internal
 #'
@@ -1204,14 +1053,10 @@ fsx_describe_data_repository_associations <- function(AssociationIds = NULL, Fil
 #'
 #' See [https://www.paws-r-sdk.com/docs/fsx_describe_data_repository_tasks/](https://www.paws-r-sdk.com/docs/fsx_describe_data_repository_tasks/) for full documentation.
 #'
-#' @param TaskIds (Optional) IDs of the tasks whose descriptions you want to retrieve
-#' (String).
-#' @param Filters (Optional) You can use filters to narrow the
-#' [`describe_data_repository_tasks`][fsx_describe_data_repository_tasks]
-#' response to include just tasks for specific file systems, or tasks in a
-#' specific lifecycle state.
-#' @param MaxResults 
-#' @param NextToken 
+#' @param TaskIds (Optional) IDs of the tasks whose descriptions you want to retrieve (String).
+#' @param Filters (Optional) You can use filters to narrow the [`describe_data_repository_tasks`][fsx_describe_data_repository_tasks] response to include just tasks for specific file systems, or tasks in a specific lifecycle state.
+#' @param MaxResults The maximum number of resources to return in the response. This value must be an integer greater than zero.
+#' @param NextToken (Optional) Opaque pagination token returned from a previous operation (String). If present, this token indicates from what point you can continue processing the request, where the previous `NextToken` value left off.
 #'
 #' @keywords internal
 #'
@@ -1244,8 +1089,8 @@ fsx_describe_data_repository_tasks <- function(TaskIds = NULL, Filters = NULL, M
 #' See [https://www.paws-r-sdk.com/docs/fsx_describe_file_caches/](https://www.paws-r-sdk.com/docs/fsx_describe_file_caches/) for full documentation.
 #'
 #' @param FileCacheIds IDs of the caches whose descriptions you want to retrieve (String).
-#' @param MaxResults 
-#' @param NextToken 
+#' @param MaxResults The maximum number of resources to return in the response. This value must be an integer greater than zero.
+#' @param NextToken (Optional) Opaque pagination token returned from a previous operation (String). If present, this token indicates from what point you can continue processing the request, where the previous `NextToken` value left off.
 #'
 #' @keywords internal
 #'
@@ -1277,17 +1122,10 @@ fsx_describe_file_caches <- function(FileCacheIds = NULL, MaxResults = NULL, Nex
 #'
 #' See [https://www.paws-r-sdk.com/docs/fsx_describe_file_system_aliases/](https://www.paws-r-sdk.com/docs/fsx_describe_file_system_aliases/) for full documentation.
 #'
-#' @param ClientRequestToken 
-#' @param FileSystemId &#91;required&#93; The ID of the file system to return the associated DNS aliases for
-#' (String).
-#' @param MaxResults Maximum number of DNS aliases to return in the response (integer). This
-#' parameter value must be greater than 0. The number of items that Amazon
-#' FSx returns is the minimum of the `MaxResults` parameter specified in
-#' the request and the service's internal maximum number of items per page.
-#' @param NextToken Opaque pagination token returned from a previous
-#' [`describe_file_system_aliases`][fsx_describe_file_system_aliases]
-#' operation (String). If a token is included in the request, the action
-#' continues the list from where the previous returning call left off.
+#' @param ClientRequestToken (Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.
+#' @param FileSystemId &#91;required&#93; The ID of the file system to return the associated DNS aliases for (String).
+#' @param MaxResults Maximum number of DNS aliases to return in the response (integer). This parameter value must be greater than 0. The number of items that Amazon FSx returns is the minimum of the `MaxResults` parameter specified in the request and the service's internal maximum number of items per page.
+#' @param NextToken Opaque pagination token returned from a previous [`describe_file_system_aliases`][fsx_describe_file_system_aliases] operation (String). If a token is included in the request, the action continues the list from where the previous returning call left off.
 #'
 #' @keywords internal
 #'
@@ -1319,16 +1157,9 @@ fsx_describe_file_system_aliases <- function(ClientRequestToken = NULL, FileSyst
 #'
 #' See [https://www.paws-r-sdk.com/docs/fsx_describe_file_systems/](https://www.paws-r-sdk.com/docs/fsx_describe_file_systems/) for full documentation.
 #'
-#' @param FileSystemIds IDs of the file systems whose descriptions you want to retrieve
-#' (String).
-#' @param MaxResults Maximum number of file systems to return in the response (integer). This
-#' parameter value must be greater than 0. The number of items that Amazon
-#' FSx returns is the minimum of the `MaxResults` parameter specified in
-#' the request and the service's internal maximum number of items per page.
-#' @param NextToken Opaque pagination token returned from a previous
-#' [`describe_file_systems`][fsx_describe_file_systems] operation (String).
-#' If a token present, the operation continues the list from where the
-#' returning call left off.
+#' @param FileSystemIds IDs of the file systems whose descriptions you want to retrieve (String).
+#' @param MaxResults Maximum number of file systems to return in the response (integer). This parameter value must be greater than 0. The number of items that Amazon FSx returns is the minimum of the `MaxResults` parameter specified in the request and the service's internal maximum number of items per page.
+#' @param NextToken Opaque pagination token returned from a previous [`describe_file_systems`][fsx_describe_file_systems] operation (String). If a token present, the operation continues the list from where the returning call left off.
 #'
 #' @keywords internal
 #'
@@ -1351,6 +1182,40 @@ fsx_describe_file_systems <- function(FileSystemIds = NULL, MaxResults = NULL, N
   return(response)
 }
 .fsx$operations$describe_file_systems <- fsx_describe_file_systems
+
+#' Describes one or more S3 access points attached to Amazon FSx volumes
+#'
+#' @description
+#' Describes one or more S3 access points attached to Amazon FSx volumes.
+#'
+#' See [https://www.paws-r-sdk.com/docs/fsx_describe_s3_access_point_attachments/](https://www.paws-r-sdk.com/docs/fsx_describe_s3_access_point_attachments/) for full documentation.
+#'
+#' @param Names The names of the S3 access point attachments whose descriptions you want to retrieve.
+#' @param Filters Enter a filter Name and Values pair to view a select set of S3 access point attachments.
+#' @param MaxResults The maximum number of resources to return in the response. This value must be an integer greater than zero.
+#' @param NextToken (Optional) Opaque pagination token returned from a previous operation (String). If present, this token indicates from what point you can continue processing the request, where the previous `NextToken` value left off.
+#'
+#' @keywords internal
+#'
+#' @rdname fsx_describe_s3_access_point_attachments
+fsx_describe_s3_access_point_attachments <- function(Names = NULL, Filters = NULL, MaxResults = NULL, NextToken = NULL) {
+  op <- new_operation(
+    name = "DescribeS3AccessPointAttachments",
+    http_method = "POST",
+    http_path = "/",
+    host_prefix = "",
+    paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults", result_key = "S3AccessPointAttachments"),
+    stream_api = FALSE
+  )
+  input <- .fsx$describe_s3_access_point_attachments_input(Names = Names, Filters = Filters, MaxResults = MaxResults, NextToken = NextToken)
+  output <- .fsx$describe_s3_access_point_attachments_output()
+  config <- get_config()
+  svc <- .fsx$service(config, op)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.fsx$operations$describe_s3_access_point_attachments <- fsx_describe_s3_access_point_attachments
 
 #' Indicates whether participant accounts in your organization can create
 #' Amazon FSx for NetApp ONTAP Multi-AZ file systems in subnets that are
@@ -1393,17 +1258,11 @@ fsx_describe_shared_vpc_configuration <- function() {
 #'
 #' See [https://www.paws-r-sdk.com/docs/fsx_describe_snapshots/](https://www.paws-r-sdk.com/docs/fsx_describe_snapshots/) for full documentation.
 #'
-#' @param SnapshotIds The IDs of the snapshots that you want to retrieve. This parameter value
-#' overrides any filters. If any IDs aren't found, a `SnapshotNotFound`
-#' error occurs.
-#' @param Filters The filters structure. The supported names are `file-system-id` or
-#' `volume-id`.
-#' @param MaxResults 
-#' @param NextToken 
-#' @param IncludeShared Set to `false` (default) if you want to only see the snapshots owned by
-#' your Amazon Web Services account. Set to `true` if you want to see the
-#' snapshots in your account and the ones shared with you from another
-#' account.
+#' @param SnapshotIds The IDs of the snapshots that you want to retrieve. This parameter value overrides any filters. If any IDs aren't found, a `SnapshotNotFound` error occurs.
+#' @param Filters The filters structure. The supported names are `file-system-id` or `volume-id`.
+#' @param MaxResults The maximum number of resources to return in the response. This value must be an integer greater than zero.
+#' @param NextToken (Optional) Opaque pagination token returned from a previous operation (String). If present, this token indicates from what point you can continue processing the request, where the previous `NextToken` value left off.
+#' @param IncludeShared Set to `false` (default) if you want to only see the snapshots owned by your Amazon Web Services account. Set to `true` if you want to see the snapshots in your account and the ones shared with you from another account.
 #'
 #' @keywords internal
 #'
@@ -1437,8 +1296,8 @@ fsx_describe_snapshots <- function(SnapshotIds = NULL, Filters = NULL, MaxResult
 #'
 #' @param StorageVirtualMachineIds Enter the ID of one or more SVMs that you want to view.
 #' @param Filters Enter a filter name:value pair to view a select set of SVMs.
-#' @param MaxResults 
-#' @param NextToken 
+#' @param MaxResults The maximum number of resources to return in the response. This value must be an integer greater than zero.
+#' @param NextToken (Optional) Opaque pagination token returned from a previous operation (String). If present, this token indicates from what point you can continue processing the request, where the previous `NextToken` value left off.
 #'
 #' @keywords internal
 #'
@@ -1472,8 +1331,8 @@ fsx_describe_storage_virtual_machines <- function(StorageVirtualMachineIds = NUL
 #'
 #' @param VolumeIds The IDs of the volumes whose descriptions you want to retrieve.
 #' @param Filters Enter a filter `Name` and `Values` pair to view a select set of volumes.
-#' @param MaxResults 
-#' @param NextToken 
+#' @param MaxResults The maximum number of resources to return in the response. This value must be an integer greater than zero.
+#' @param NextToken (Optional) Opaque pagination token returned from a previous operation (String). If present, this token indicates from what point you can continue processing the request, where the previous `NextToken` value left off.
 #'
 #' @keywords internal
 #'
@@ -1497,6 +1356,39 @@ fsx_describe_volumes <- function(VolumeIds = NULL, Filters = NULL, MaxResults = 
 }
 .fsx$operations$describe_volumes <- fsx_describe_volumes
 
+#' Detaches an S3 access point from an Amazon FSx volume and deletes the S3
+#' access point
+#'
+#' @description
+#' Detaches an S3 access point from an Amazon FSx volume and deletes the S3 access point.
+#'
+#' See [https://www.paws-r-sdk.com/docs/fsx_detach_and_delete_s3_access_point/](https://www.paws-r-sdk.com/docs/fsx_detach_and_delete_s3_access_point/) for full documentation.
+#'
+#' @param ClientRequestToken (Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.
+#' @param Name &#91;required&#93; The name of the S3 access point attachment that you want to delete.
+#'
+#' @keywords internal
+#'
+#' @rdname fsx_detach_and_delete_s3_access_point
+fsx_detach_and_delete_s3_access_point <- function(ClientRequestToken = NULL, Name) {
+  op <- new_operation(
+    name = "DetachAndDeleteS3AccessPoint",
+    http_method = "POST",
+    http_path = "/",
+    host_prefix = "",
+    paginator = list(),
+    stream_api = FALSE
+  )
+  input <- .fsx$detach_and_delete_s3_access_point_input(ClientRequestToken = ClientRequestToken, Name = Name)
+  output <- .fsx$detach_and_delete_s3_access_point_output()
+  config <- get_config()
+  svc <- .fsx$service(config, op)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.fsx$operations$detach_and_delete_s3_access_point <- fsx_detach_and_delete_s3_access_point
+
 #' Use this action to disassociate, or remove, one or more Domain Name
 #' Service (DNS) aliases from an Amazon FSx for Windows File Server file
 #' system
@@ -1506,10 +1398,9 @@ fsx_describe_volumes <- function(VolumeIds = NULL, Filters = NULL, MaxResults = 
 #'
 #' See [https://www.paws-r-sdk.com/docs/fsx_disassociate_file_system_aliases/](https://www.paws-r-sdk.com/docs/fsx_disassociate_file_system_aliases/) for full documentation.
 #'
-#' @param ClientRequestToken 
+#' @param ClientRequestToken (Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.
 #' @param FileSystemId &#91;required&#93; Specifies the file system from which to disassociate the DNS aliases.
-#' @param Aliases &#91;required&#93; An array of one or more DNS alias names to disassociate, or remove, from
-#' the file system.
+#' @param Aliases &#91;required&#93; An array of one or more DNS alias names to disassociate, or remove, from the file system.
 #'
 #' @keywords internal
 #'
@@ -1541,14 +1432,8 @@ fsx_disassociate_file_system_aliases <- function(ClientRequestToken = NULL, File
 #' See [https://www.paws-r-sdk.com/docs/fsx_list_tags_for_resource/](https://www.paws-r-sdk.com/docs/fsx_list_tags_for_resource/) for full documentation.
 #'
 #' @param ResourceARN &#91;required&#93; The ARN of the Amazon FSx resource that will have its tags listed.
-#' @param MaxResults Maximum number of tags to return in the response (integer). This
-#' parameter value must be greater than 0. The number of items that Amazon
-#' FSx returns is the minimum of the `MaxResults` parameter specified in
-#' the request and the service's internal maximum number of items per page.
-#' @param NextToken Opaque pagination token returned from a previous
-#' [`list_tags_for_resource`][fsx_list_tags_for_resource] operation
-#' (String). If a token present, the action continues the list from where
-#' the returning call left off.
+#' @param MaxResults Maximum number of tags to return in the response (integer). This parameter value must be greater than 0. The number of items that Amazon FSx returns is the minimum of the `MaxResults` parameter specified in the request and the service's internal maximum number of items per page.
+#' @param NextToken Opaque pagination token returned from a previous [`list_tags_for_resource`][fsx_list_tags_for_resource] operation (String). If a token present, the action continues the list from where the returning call left off.
 #'
 #' @keywords internal
 #'
@@ -1579,8 +1464,8 @@ fsx_list_tags_for_resource <- function(ResourceARN, MaxResults = NULL, NextToken
 #'
 #' See [https://www.paws-r-sdk.com/docs/fsx_release_file_system_nfs_v3_locks/](https://www.paws-r-sdk.com/docs/fsx_release_file_system_nfs_v3_locks/) for full documentation.
 #'
-#' @param FileSystemId &#91;required&#93; 
-#' @param ClientRequestToken 
+#' @param FileSystemId &#91;required&#93; The globally unique ID of the file system, assigned by Amazon FSx.
+#' @param ClientRequestToken (Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.
 #'
 #' @keywords internal
 #'
@@ -1612,23 +1497,14 @@ fsx_release_file_system_nfs_v3_locks <- function(FileSystemId, ClientRequestToke
 #'
 #' See [https://www.paws-r-sdk.com/docs/fsx_restore_volume_from_snapshot/](https://www.paws-r-sdk.com/docs/fsx_restore_volume_from_snapshot/) for full documentation.
 #'
-#' @param ClientRequestToken 
+#' @param ClientRequestToken (Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.
 #' @param VolumeId &#91;required&#93; The ID of the volume that you are restoring.
-#' @param SnapshotId &#91;required&#93; The ID of the source snapshot. Specifies the snapshot that you are
-#' restoring from.
+#' @param SnapshotId &#91;required&#93; The ID of the source snapshot. Specifies the snapshot that you are restoring from.
 #' @param Options The settings used when restoring the specified volume from snapshot.
 #' 
-#' -   `DELETE_INTERMEDIATE_SNAPSHOTS` - Deletes snapshots between the
-#'     current state and the specified snapshot. If there are intermediate
-#'     snapshots and this option isn't used,
-#'     [`restore_volume_from_snapshot`][fsx_restore_volume_from_snapshot]
-#'     fails.
+#' -   `DELETE_INTERMEDIATE_SNAPSHOTS` - Deletes snapshots between the current state and the specified snapshot. If there are intermediate snapshots and this option isn't used, [`restore_volume_from_snapshot`][fsx_restore_volume_from_snapshot] fails.
 #' 
-#' -   `DELETE_CLONED_VOLUMES` - Deletes any dependent clone volumes
-#'     created from intermediate snapshots. If there are any dependent
-#'     clone volumes and this option isn't used,
-#'     [`restore_volume_from_snapshot`][fsx_restore_volume_from_snapshot]
-#'     fails.
+#' -   `DELETE_CLONED_VOLUMES` - Deletes any dependent clone volumes created from intermediate snapshots. If there are any dependent clone volumes and this option isn't used, [`restore_volume_from_snapshot`][fsx_restore_volume_from_snapshot] fails.
 #'
 #' @keywords internal
 #'
@@ -1661,8 +1537,8 @@ fsx_restore_volume_from_snapshot <- function(ClientRequestToken = NULL, VolumeId
 #'
 #' See [https://www.paws-r-sdk.com/docs/fsx_start_misconfigured_state_recovery/](https://www.paws-r-sdk.com/docs/fsx_start_misconfigured_state_recovery/) for full documentation.
 #'
-#' @param ClientRequestToken 
-#' @param FileSystemId &#91;required&#93; 
+#' @param ClientRequestToken (Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.
+#' @param FileSystemId &#91;required&#93; The globally unique ID of the file system, assigned by Amazon FSx.
 #'
 #' @keywords internal
 #'
@@ -1693,10 +1569,8 @@ fsx_start_misconfigured_state_recovery <- function(ClientRequestToken = NULL, Fi
 #'
 #' See [https://www.paws-r-sdk.com/docs/fsx_tag_resource/](https://www.paws-r-sdk.com/docs/fsx_tag_resource/) for full documentation.
 #'
-#' @param ResourceARN &#91;required&#93; The Amazon Resource Name (ARN) of the Amazon FSx resource that you want
-#' to tag.
-#' @param Tags &#91;required&#93; A list of tags for the resource. If a tag with a given key already
-#' exists, the value is replaced by the one specified in this parameter.
+#' @param ResourceARN &#91;required&#93; The Amazon Resource Name (ARN) of the Amazon FSx resource that you want to tag.
+#' @param Tags &#91;required&#93; A list of tags for the resource. If a tag with a given key already exists, the value is replaced by the one specified in this parameter.
 #'
 #' @keywords internal
 #'
@@ -1728,8 +1602,7 @@ fsx_tag_resource <- function(ResourceARN, Tags) {
 #' See [https://www.paws-r-sdk.com/docs/fsx_untag_resource/](https://www.paws-r-sdk.com/docs/fsx_untag_resource/) for full documentation.
 #'
 #' @param ResourceARN &#91;required&#93; The ARN of the Amazon FSx resource to untag.
-#' @param TagKeys &#91;required&#93; A list of keys of tags on the resource to untag. In case the tag key
-#' doesn't exist, the call will still succeed to be idempotent.
+#' @param TagKeys &#91;required&#93; A list of keys of tags on the resource to untag. In case the tag key doesn't exist, the call will still succeed to be idempotent.
 #'
 #' @keywords internal
 #'
@@ -1762,21 +1635,11 @@ fsx_untag_resource <- function(ResourceARN, TagKeys) {
 #' See [https://www.paws-r-sdk.com/docs/fsx_update_data_repository_association/](https://www.paws-r-sdk.com/docs/fsx_update_data_repository_association/) for full documentation.
 #'
 #' @param AssociationId &#91;required&#93; The ID of the data repository association that you are updating.
-#' @param ClientRequestToken 
-#' @param ImportedFileChunkSize For files imported from a data repository, this value determines the
-#' stripe count and maximum amount of data per file (in MiB) stored on a
-#' single physical disk. The maximum number of disks that a single file can
-#' be striped across is limited by the total number of disks that make up
-#' the file system.
+#' @param ClientRequestToken (Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.
+#' @param ImportedFileChunkSize For files imported from a data repository, this value determines the stripe count and maximum amount of data per file (in MiB) stored on a single physical disk. The maximum number of disks that a single file can be striped across is limited by the total number of disks that make up the file system.
 #' 
-#' The default chunk size is 1,024 MiB (1 GiB) and can go as high as
-#' 512,000 MiB (500 GiB). Amazon S3 objects have a maximum size of 5 TB.
-#' @param S3 The configuration for an Amazon S3 data repository linked to an Amazon
-#' FSx Lustre file system with a data repository association. The
-#' configuration defines which file events (new, changed, or deleted files
-#' or directories) are automatically imported from the linked data
-#' repository to the file system or automatically exported from the file
-#' system to the data repository.
+#' The default chunk size is 1,024 MiB (1 GiB) and can go as high as 512,000 MiB (500 GiB). Amazon S3 objects have a maximum size of 5 TB.
+#' @param S3 The configuration for an Amazon S3 data repository linked to an Amazon FSx Lustre file system with a data repository association. The configuration defines which file events (new, changed, or deleted files or directories) are automatically imported from the linked data repository to the file system or automatically exported from the file system to the data repository.
 #'
 #' @keywords internal
 #'
@@ -1808,7 +1671,7 @@ fsx_update_data_repository_association <- function(AssociationId, ClientRequestT
 #' See [https://www.paws-r-sdk.com/docs/fsx_update_file_cache/](https://www.paws-r-sdk.com/docs/fsx_update_file_cache/) for full documentation.
 #'
 #' @param FileCacheId &#91;required&#93; The ID of the cache that you are updating.
-#' @param ClientRequestToken 
+#' @param ClientRequestToken (Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.
 #' @param LustreConfiguration The configuration updates for an Amazon File Cache resource.
 #'
 #' @keywords internal
@@ -1842,69 +1705,38 @@ fsx_update_file_cache <- function(FileCacheId, ClientRequestToken = NULL, Lustre
 #' See [https://www.paws-r-sdk.com/docs/fsx_update_file_system/](https://www.paws-r-sdk.com/docs/fsx_update_file_system/) for full documentation.
 #'
 #' @param FileSystemId &#91;required&#93; The ID of the file system that you are updating.
-#' @param ClientRequestToken A string of up to 63 ASCII characters that Amazon FSx uses to ensure
-#' idempotent updates. This string is automatically filled on your behalf
-#' when you use the Command Line Interface (CLI) or an Amazon Web Services
-#' SDK.
-#' @param StorageCapacity Use this parameter to increase the storage capacity of an FSx for
-#' Windows File Server, FSx for Lustre, FSx for OpenZFS, or FSx for ONTAP
-#' file system. Specifies the storage capacity target value, in GiB, to
-#' increase the storage capacity for the file system that you're updating.
+#' @param ClientRequestToken A string of up to 63 ASCII characters that Amazon FSx uses to ensure idempotent updates. This string is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.
+#' @param StorageCapacity Use this parameter to increase the storage capacity of an FSx for Windows File Server, FSx for Lustre, FSx for OpenZFS, or FSx for ONTAP file system. For second-generation FSx for ONTAP file systems, you can also decrease the storage capacity. Specifies the storage capacity target value, in GiB, for the file system that you're updating.
 #' 
-#' You can't make a storage capacity increase request if there is an
-#' existing storage capacity increase request in progress.
+#' You can't make a storage capacity increase request if there is an existing storage capacity increase request in progress.
 #' 
-#' For Lustre file systems, the storage capacity target value can be the
-#' following:
+#' For Lustre file systems, the storage capacity target value can be the following:
 #' 
-#' -   For `SCRATCH_2`, `PERSISTENT_1`, and `PERSISTENT_2 SSD` deployment
-#'     types, valid values are in multiples of 2400 GiB. The value must be
-#'     greater than the current storage capacity.
+#' -   For `SCRATCH_2`, `PERSISTENT_1`, and `PERSISTENT_2 SSD` deployment types, valid values are in multiples of 2400 GiB. The value must be greater than the current storage capacity.
 #' 
-#' -   For `PERSISTENT HDD` file systems, valid values are multiples of
-#'     6000 GiB for 12-MBps throughput per TiB file systems and multiples
-#'     of 1800 GiB for 40-MBps throughput per TiB file systems. The values
-#'     must be greater than the current storage capacity.
+#' -   For `PERSISTENT HDD` file systems, valid values are multiples of 6000 GiB for 12-MBps throughput per TiB file systems and multiples of 1800 GiB for 40-MBps throughput per TiB file systems. The values must be greater than the current storage capacity.
 #' 
-#' -   For `SCRATCH_1` file systems, you can't increase the storage
-#'     capacity.
+#' -   For `SCRATCH_1` file systems, you can't increase the storage capacity.
 #' 
-#' For more information, see [Managing storage and throughput
-#' capacity](https://docs.aws.amazon.com/fsx/latest/LustreGuide/managing-storage-capacity.html)
-#' in the *FSx for Lustre User Guide*.
+#' For more information, see [Managing storage and throughput capacity](https://docs.aws.amazon.com/fsx/latest/LustreGuide/managing-storage-capacity.html) in the *FSx for Lustre User Guide*.
 #' 
-#' For FSx for OpenZFS file systems, the storage capacity target value must
-#' be at least 10 percent greater than the current storage capacity value.
-#' For more information, see [Managing storage
-#' capacity](https://docs.aws.amazon.com/fsx/latest/OpenZFSGuide/managing-storage-capacity.html)
-#' in the *FSx for OpenZFS User Guide*.
+#' For FSx for OpenZFS file systems, the storage capacity target value must be at least 10 percent greater than the current storage capacity value. For more information, see [Managing storage capacity](https://docs.aws.amazon.com/fsx/latest/OpenZFSGuide/managing-storage-capacity.html) in the *FSx for OpenZFS User Guide*.
 #' 
-#' For Windows file systems, the storage capacity target value must be at
-#' least 10 percent greater than the current storage capacity value. To
-#' increase storage capacity, the file system must have at least 16 MBps of
-#' throughput capacity. For more information, see [Managing storage
-#' capacity](https://docs.aws.amazon.com/fsx/latest/WindowsGuide/managing-storage-configuration.html#managing-storage-capacity)
-#' in the *Amazon FSxfor Windows File Server User Guide*.
+#' For Windows file systems, the storage capacity target value must be at least 10 percent greater than the current storage capacity value. To increase storage capacity, the file system must have at least 16 MBps of throughput capacity. For more information, see [Managing storage capacity](https://docs.aws.amazon.com/fsx/latest/WindowsGuide/managing-storage-configuration.html) in the *Amazon FSxfor Windows File Server User Guide*.
 #' 
-#' For ONTAP file systems, the storage capacity target value must be at
-#' least 10 percent greater than the current storage capacity value. For
-#' more information, see [Managing storage capacity and provisioned
-#' IOPS](https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/managing-storage-capacity.html)
-#' in the *Amazon FSx for NetApp ONTAP User Guide*.
-#' @param WindowsConfiguration The configuration updates for an Amazon FSx for Windows File Server file
-#' system.
-#' @param LustreConfiguration 
-#' @param OntapConfiguration 
+#' For ONTAP file systems, when increasing storage capacity, the storage capacity target value must be at least 10 percent greater than the current storage capacity value. When decreasing storage capacity on second-generation file systems, the target value must be at least 9 percent smaller than the current SSD storage capacity. For more information, see [File system storage capacity and IOPS](https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/storage-capacity-and-IOPS.html) in the Amazon FSx for NetApp ONTAP User Guide.
+#' @param WindowsConfiguration The configuration updates for an Amazon FSx for Windows File Server file system.
+#' @param LustreConfiguration The configuration object for Amazon FSx for Lustre file systems used in the [`update_file_system`][fsx_update_file_system] operation.
+#' @param OntapConfiguration The configuration updates for an Amazon FSx for NetApp ONTAP file system.
 #' @param OpenZFSConfiguration The configuration updates for an FSx for OpenZFS file system.
-#' @param StorageType 
-#' @param FileSystemTypeVersion The Lustre version you are updating an FSx for Lustre file system to.
-#' Valid values are `2.12` and `2.15`. The value you choose must be newer
-#' than the file system's current Lustre version.
+#' @param StorageType Specifies the file system's storage type.
+#' @param FileSystemTypeVersion The Lustre version you are updating an FSx for Lustre file system to. Valid values are `2.12` and `2.15`. The value you choose must be newer than the file system's current Lustre version.
+#' @param NetworkType Changes the network type of an FSx for OpenZFS file system.
 #'
 #' @keywords internal
 #'
 #' @rdname fsx_update_file_system
-fsx_update_file_system <- function(FileSystemId, ClientRequestToken = NULL, StorageCapacity = NULL, WindowsConfiguration = NULL, LustreConfiguration = NULL, OntapConfiguration = NULL, OpenZFSConfiguration = NULL, StorageType = NULL, FileSystemTypeVersion = NULL) {
+fsx_update_file_system <- function(FileSystemId, ClientRequestToken = NULL, StorageCapacity = NULL, WindowsConfiguration = NULL, LustreConfiguration = NULL, OntapConfiguration = NULL, OpenZFSConfiguration = NULL, StorageType = NULL, FileSystemTypeVersion = NULL, NetworkType = NULL) {
   op <- new_operation(
     name = "UpdateFileSystem",
     http_method = "POST",
@@ -1913,7 +1745,7 @@ fsx_update_file_system <- function(FileSystemId, ClientRequestToken = NULL, Stor
     paginator = list(),
     stream_api = FALSE
   )
-  input <- .fsx$update_file_system_input(FileSystemId = FileSystemId, ClientRequestToken = ClientRequestToken, StorageCapacity = StorageCapacity, WindowsConfiguration = WindowsConfiguration, LustreConfiguration = LustreConfiguration, OntapConfiguration = OntapConfiguration, OpenZFSConfiguration = OpenZFSConfiguration, StorageType = StorageType, FileSystemTypeVersion = FileSystemTypeVersion)
+  input <- .fsx$update_file_system_input(FileSystemId = FileSystemId, ClientRequestToken = ClientRequestToken, StorageCapacity = StorageCapacity, WindowsConfiguration = WindowsConfiguration, LustreConfiguration = LustreConfiguration, OntapConfiguration = OntapConfiguration, OpenZFSConfiguration = OpenZFSConfiguration, StorageType = StorageType, FileSystemTypeVersion = FileSystemTypeVersion, NetworkType = NetworkType)
   output <- .fsx$update_file_system_output()
   config <- get_config()
   svc <- .fsx$service(config, op)
@@ -1932,10 +1764,8 @@ fsx_update_file_system <- function(FileSystemId, ClientRequestToken = NULL, Stor
 #'
 #' See [https://www.paws-r-sdk.com/docs/fsx_update_shared_vpc_configuration/](https://www.paws-r-sdk.com/docs/fsx_update_shared_vpc_configuration/) for full documentation.
 #'
-#' @param EnableFsxRouteTableUpdatesFromParticipantAccounts Specifies whether participant accounts can create FSx for ONTAP Multi-AZ
-#' file systems in shared subnets. Set to `true` to enable or `false` to
-#' disable.
-#' @param ClientRequestToken 
+#' @param EnableFsxRouteTableUpdatesFromParticipantAccounts Specifies whether participant accounts can create FSx for ONTAP Multi-AZ file systems in shared subnets. Set to `true` to enable or `false` to disable.
+#' @param ClientRequestToken (Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.
 #'
 #' @keywords internal
 #'
@@ -1966,10 +1796,9 @@ fsx_update_shared_vpc_configuration <- function(EnableFsxRouteTableUpdatesFromPa
 #'
 #' See [https://www.paws-r-sdk.com/docs/fsx_update_snapshot/](https://www.paws-r-sdk.com/docs/fsx_update_snapshot/) for full documentation.
 #'
-#' @param ClientRequestToken 
+#' @param ClientRequestToken (Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.
 #' @param Name &#91;required&#93; The name of the snapshot to update.
-#' @param SnapshotId &#91;required&#93; The ID of the snapshot that you want to update, in the format
-#' `fsvolsnap-0123456789abcdef0`.
+#' @param SnapshotId &#91;required&#93; The ID of the snapshot that you want to update, in the format `fsvolsnap-0123456789abcdef0`.
 #'
 #' @keywords internal
 #'
@@ -2000,11 +1829,9 @@ fsx_update_snapshot <- function(ClientRequestToken = NULL, Name, SnapshotId) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/fsx_update_storage_virtual_machine/](https://www.paws-r-sdk.com/docs/fsx_update_storage_virtual_machine/) for full documentation.
 #'
-#' @param ActiveDirectoryConfiguration Specifies updates to an SVM's Microsoft Active Directory (AD)
-#' configuration.
-#' @param ClientRequestToken 
-#' @param StorageVirtualMachineId &#91;required&#93; The ID of the SVM that you want to update, in the format
-#' `svm-0123456789abcdef0`.
+#' @param ActiveDirectoryConfiguration Specifies updates to an SVM's Microsoft Active Directory (AD) configuration.
+#' @param ClientRequestToken (Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.
+#' @param StorageVirtualMachineId &#91;required&#93; The ID of the SVM that you want to update, in the format `svm-0123456789abcdef0`.
 #' @param SvmAdminPassword Specifies a new SvmAdminPassword.
 #'
 #' @keywords internal
@@ -2037,14 +1864,10 @@ fsx_update_storage_virtual_machine <- function(ActiveDirectoryConfiguration = NU
 #'
 #' See [https://www.paws-r-sdk.com/docs/fsx_update_volume/](https://www.paws-r-sdk.com/docs/fsx_update_volume/) for full documentation.
 #'
-#' @param ClientRequestToken 
-#' @param VolumeId &#91;required&#93; The ID of the volume that you want to update, in the format
-#' `fsvol-0123456789abcdef0`.
+#' @param ClientRequestToken (Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.
+#' @param VolumeId &#91;required&#93; The ID of the volume that you want to update, in the format `fsvol-0123456789abcdef0`.
 #' @param OntapConfiguration The configuration of the ONTAP volume that you are updating.
-#' @param Name The name of the OpenZFS volume. OpenZFS root volumes are automatically
-#' named `FSX`. Child volume names must be unique among their parent
-#' volume's children. The name of the volume is part of the mount string
-#' for the OpenZFS volume.
+#' @param Name The name of the OpenZFS volume. OpenZFS root volumes are automatically named `FSX`. Child volume names must be unique among their parent volume's children. The name of the volume is part of the mount string for the OpenZFS volume.
 #' @param OpenZFSConfiguration The configuration of the OpenZFS volume that you are updating.
 #'
 #' @keywords internal

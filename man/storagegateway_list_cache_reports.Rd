@@ -8,11 +8,7 @@ with your Amazon Web Services account}
 storagegateway_list_cache_reports(Marker = NULL)
 }
 \arguments{
-\item{Marker}{Opaque pagination token returned from a previous
-\code{\link[=storagegateway_list_cache_reports]{list_cache_reports}} operation. If
-present, \code{Marker} specifies where to continue the list from after a
-previous call to
-\code{\link[=storagegateway_list_cache_reports]{list_cache_reports}}. Optional.}
+\item{Marker}{Opaque pagination token returned from a previous \code{\link[=storagegateway_list_cache_reports]{list_cache_reports}} operation. If present, \code{Marker} specifies where to continue the list from after a previous call to \code{\link[=storagegateway_list_cache_reports]{list_cache_reports}}. Optional.}
 }
 \description{
 Returns a list of existing cache reports for all file shares associated with your Amazon Web Services account. This list includes all information provided by the \code{\link[=storagegateway_describe_cache_report]{describe_cache_report}} action, such as report name, status, completion progress, start time, end time, filters, and tags.

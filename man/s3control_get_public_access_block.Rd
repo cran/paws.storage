@@ -7,8 +7,7 @@
 s3control_get_public_access_block(AccountId)
 }
 \arguments{
-\item{AccountId}{[required] The account ID for the Amazon Web Services account whose
-\code{PublicAccessBlock} configuration you want to retrieve.}
+\item{AccountId}{[required] The account ID for the Amazon Web Services account whose \code{PublicAccessBlock} configuration you want to retrieve.}
 }
 \description{
 This operation is not supported by directory buckets.

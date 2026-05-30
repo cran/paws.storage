@@ -10,62 +10,28 @@ NULL
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_activate_gateway/](https://www.paws-r-sdk.com/docs/storagegateway_activate_gateway/) for full documentation.
 #'
-#' @param ActivationKey &#91;required&#93; Your gateway activation key. You can obtain the activation key by
-#' sending an HTTP GET request with redirects enabled to the gateway IP
-#' address (port 80). The redirect URL returned in the response provides
-#' you the activation key for your gateway in the query string parameter
-#' `activationKey`. It may also include other activation-related
-#' parameters, however, these are merely defaults -- the arguments you pass
-#' to the [`activate_gateway`][storagegateway_activate_gateway] API call
-#' determine the actual configuration of your gateway.
+#' @param ActivationKey &#91;required&#93; Your gateway activation key. You can obtain the activation key by sending an HTTP GET request with redirects enabled to the gateway IP address (port 80). The redirect URL returned in the response provides you the activation key for your gateway in the query string parameter `activationKey`. It may also include other activation-related parameters, however, these are merely defaults -- the arguments you pass to the [`activate_gateway`][storagegateway_activate_gateway] API call determine the actual configuration of your gateway.
 #' 
-#' For more information, see [Getting activation
-#' key](https://docs.aws.amazon.com/storagegateway/) in the *Storage
-#' Gateway User Guide*.
+#' For more information, see [Getting activation key](https://docs.aws.amazon.com/storagegateway/) in the *Storage Gateway User Guide*.
 #' @param GatewayName &#91;required&#93; The name you configured for your gateway.
-#' @param GatewayTimezone &#91;required&#93; A value that indicates the time zone you want to set for the gateway.
-#' The time zone is of the format "GMT", "GMT-hr:mm", or "GMT+hr:mm". For
-#' example, GMT indicates Greenwich Mean Time without any offset. GMT-4:00
-#' indicates the time is 4 hours behind GMT. GMT+2:00 indicates the time is
-#' 2 hours ahead of GMT. The time zone is used, for example, for scheduling
-#' snapshots and your gateway's maintenance schedule.
-#' @param GatewayRegion &#91;required&#93; A value that indicates the Amazon Web Services Region where you want to
-#' store your data. The gateway Amazon Web Services Region specified must
-#' be the same Amazon Web Services Region as the Amazon Web Services Region
-#' in your `Host` header in the request. For more information about
-#' available Amazon Web Services Regions and endpoints for Storage Gateway,
-#' see [Storage Gateway endpoints and
-#' quotas](https://docs.aws.amazon.com/general/latest/gr/sg.html) in the
-#' *Amazon Web Services General Reference*.
+#' @param GatewayTimezone &#91;required&#93; A value that indicates the time zone you want to set for the gateway. The time zone is of the format "GMT", "GMT-hr:mm", or "GMT+hr:mm". For example, GMT indicates Greenwich Mean Time without any offset. GMT-4:00 indicates the time is 4 hours behind GMT. GMT+2:00 indicates the time is 2 hours ahead of GMT. The time zone is used, for example, for scheduling snapshots and your gateway's maintenance schedule.
+#' @param GatewayRegion &#91;required&#93; A value that indicates the Amazon Web Services Region where you want to store your data. The gateway Amazon Web Services Region specified must be the same Amazon Web Services Region as the Amazon Web Services Region in your `Host` header in the request. For more information about available Amazon Web Services Regions and endpoints for Storage Gateway, see [Storage Gateway endpoints and quotas](https://docs.aws.amazon.com/general/latest/gr/sg.html) in the *Amazon Web Services General Reference*.
 #' 
-#' Valid Values: See [Storage Gateway endpoints and
-#' quotas](https://docs.aws.amazon.com/general/latest/gr/sg.html) in the
-#' *Amazon Web Services General Reference*.
-#' @param GatewayType A value that defines the type of gateway to activate. The type specified
-#' is critical to all later functions of the gateway and cannot be changed
-#' after activation. The default value is `CACHED`.
+#' Valid Values: See [Storage Gateway endpoints and quotas](https://docs.aws.amazon.com/general/latest/gr/sg.html) in the *Amazon Web Services General Reference*.
+#' @param GatewayType A value that defines the type of gateway to activate. The type specified is critical to all later functions of the gateway and cannot be changed after activation. The default value is `CACHED`.
 #' 
-#' Amazon FSx File Gateway is no longer available to new customers.
-#' Existing customers of FSx File Gateway can continue to use the service
-#' normally. For capabilities similar to FSx File Gateway, visit [this blog
-#' post](https://aws.amazon.com/blogs/storage/switch-your-file-share-access-from-amazon-fsx-file-gateway-to-amazon-fsx-for-windows-file-server/).
+#' Amazon FSx File Gateway is no longer available to new customers. Existing customers of FSx File Gateway can continue to use the service normally. For capabilities similar to FSx File Gateway, visit [this blog post](https://aws.amazon.com/blogs/storage/switch-your-file-share-access-from-amazon-fsx-file-gateway-to-amazon-fsx-for-windows-file-server/).
 #' 
 #' Valid Values: `STORED` | `CACHED` | `VTL` | `FILE_S3` | `FILE_FSX_SMB`
-#' @param TapeDriveType The value that indicates the type of tape drive to use for tape gateway.
-#' This field is optional.
+#' @param TapeDriveType The value that indicates the type of tape drive to use for tape gateway. This field is optional.
 #' 
 #' Valid Values: `IBM-ULT3580-TD5`
-#' @param MediumChangerType The value that indicates the type of medium changer to use for tape
-#' gateway. This field is optional.
+#' @param MediumChangerType The value that indicates the type of medium changer to use for tape gateway. This field is optional.
 #' 
 #' Valid Values: `STK-L700` | `AWS-Gateway-VTL` | `IBM-03584L32-0402`
-#' @param Tags A list of up to 50 tags that you can assign to the gateway. Each tag is
-#' a key-value pair.
+#' @param Tags A list of up to 50 tags that you can assign to the gateway. Each tag is a key-value pair.
 #' 
-#' Valid characters for key and value are letters, spaces, and numbers that
-#' can be represented in UTF-8 format, and the following special
-#' characters: + - = . _ : / @@. The maximum length of a tag's key is 128
-#' characters, and the maximum length for a tag's value is 256 characters.
+#' Valid characters for key and value are letters, spaces, and numbers that can be represented in UTF-8 format, and the following special characters: + - = . _ : / @@. The maximum length of a tag's key is 128 characters, and the maximum length for a tag's value is 256 characters.
 #'
 #' @keywords internal
 #'
@@ -96,11 +62,8 @@ storagegateway_activate_gateway <- function(ActivationKey, GatewayName, GatewayT
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_add_cache/](https://www.paws-r-sdk.com/docs/storagegateway_add_cache/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; 
-#' @param DiskIds &#91;required&#93; An array of strings that identify disks that are to be configured as
-#' working storage. Each string has a minimum length of 1 and maximum
-#' length of 300. You can get the disk IDs from the
-#' [`list_local_disks`][storagegateway_list_local_disks] API.
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
+#' @param DiskIds &#91;required&#93; An array of strings that identify disks that are to be configured as working storage. Each string has a minimum length of 1 and maximum length of 300. You can get the disk IDs from the [`list_local_disks`][storagegateway_list_local_disks] API.
 #'
 #' @keywords internal
 #'
@@ -132,13 +95,9 @@ storagegateway_add_cache <- function(GatewayARN, DiskIds) {
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_add_tags_to_resource/](https://www.paws-r-sdk.com/docs/storagegateway_add_tags_to_resource/) for full documentation.
 #'
 #' @param ResourceARN &#91;required&#93; The Amazon Resource Name (ARN) of the resource you want to add tags to.
-#' @param Tags &#91;required&#93; The key-value pair that represents the tag you want to add to the
-#' resource. The value can be an empty string.
+#' @param Tags &#91;required&#93; The key-value pair that represents the tag you want to add to the resource. The value can be an empty string.
 #' 
-#' Valid characters for key and value are letters, spaces, and numbers
-#' representable in UTF-8 format, and the following special characters: + -
-#' = . _ : / @@. The maximum length of a tag's key is 128 characters, and
-#' the maximum length for a tag's value is 256.
+#' Valid characters for key and value are letters, spaces, and numbers representable in UTF-8 format, and the following special characters: + - = . _ : / @@. The maximum length of a tag's key is 128 characters, and the maximum length for a tag's value is 256.
 #'
 #' @keywords internal
 #'
@@ -170,11 +129,8 @@ storagegateway_add_tags_to_resource <- function(ResourceARN, Tags) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_add_upload_buffer/](https://www.paws-r-sdk.com/docs/storagegateway_add_upload_buffer/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; 
-#' @param DiskIds &#91;required&#93; An array of strings that identify disks that are to be configured as
-#' working storage. Each string has a minimum length of 1 and maximum
-#' length of 300. You can get the disk IDs from the
-#' [`list_local_disks`][storagegateway_list_local_disks] API.
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
+#' @param DiskIds &#91;required&#93; An array of strings that identify disks that are to be configured as working storage. Each string has a minimum length of 1 and maximum length of 300. You can get the disk IDs from the [`list_local_disks`][storagegateway_list_local_disks] API.
 #'
 #' @keywords internal
 #'
@@ -206,11 +162,8 @@ storagegateway_add_upload_buffer <- function(GatewayARN, DiskIds) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_add_working_storage/](https://www.paws-r-sdk.com/docs/storagegateway_add_working_storage/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; 
-#' @param DiskIds &#91;required&#93; An array of strings that identify disks that are to be configured as
-#' working storage. Each string has a minimum length of 1 and maximum
-#' length of 300. You can get the disk IDs from the
-#' [`list_local_disks`][storagegateway_list_local_disks] API.
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
+#' @param DiskIds &#91;required&#93; An array of strings that identify disks that are to be configured as working storage. Each string has a minimum length of 1 and maximum length of 300. You can get the disk IDs from the [`list_local_disks`][storagegateway_list_local_disks] API.
 #'
 #' @keywords internal
 #'
@@ -241,19 +194,9 @@ storagegateway_add_working_storage <- function(GatewayARN, DiskIds) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_assign_tape_pool/](https://www.paws-r-sdk.com/docs/storagegateway_assign_tape_pool/) for full documentation.
 #'
-#' @param TapeARN &#91;required&#93; The unique Amazon Resource Name (ARN) of the virtual tape that you want
-#' to add to the tape pool.
-#' @param PoolId &#91;required&#93; The ID of the pool that you want to add your tape to for archiving. The
-#' tape in this pool is archived in the S3 storage class that is associated
-#' with the pool. When you use your backup application to eject the tape,
-#' the tape is archived directly into the storage class (S3 Glacier or S3
-#' Glacier Deep Archive) that corresponds to the pool.
-#' @param BypassGovernanceRetention Set permissions to bypass governance retention. If the lock type of the
-#' archived tape is `Governance`, the tape's archived age is not older than
-#' `RetentionLockInDays`, and the user does not already have
-#' `BypassGovernanceRetention`, setting this to TRUE enables the user to
-#' bypass the retention lock. This parameter is set to true by default for
-#' calls from the console.
+#' @param TapeARN &#91;required&#93; The unique Amazon Resource Name (ARN) of the virtual tape that you want to add to the tape pool.
+#' @param PoolId &#91;required&#93; The ID of the pool that you want to add your tape to for archiving. The tape in this pool is archived in the S3 storage class that is associated with the pool. When you use your backup application to eject the tape, the tape is archived directly into the storage class (S3 Glacier or S3 Glacier Deep Archive) that corresponds to the pool.
+#' @param BypassGovernanceRetention Set permissions to bypass governance retention. If the lock type of the archived tape is `Governance`, the tape's archived age is not older than `RetentionLockInDays`, and the user does not already have `BypassGovernanceRetention`, setting this to TRUE enables the user to bypass the retention lock. This parameter is set to true by default for calls from the console.
 #' 
 #' Valid values: `TRUE` | `FALSE`
 #'
@@ -286,24 +229,17 @@ storagegateway_assign_tape_pool <- function(TapeARN, PoolId, BypassGovernanceRet
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_associate_file_system/](https://www.paws-r-sdk.com/docs/storagegateway_associate_file_system/) for full documentation.
 #'
-#' @param UserName &#91;required&#93; The user name of the user credential that has permission to access the
-#' root share D$ of the Amazon FSx file system. The user account must
-#' belong to the Amazon FSx delegated admin user group.
+#' @param UserName &#91;required&#93; The user name of the user credential that has permission to access the root share D$ of the Amazon FSx file system. The user account must belong to the Amazon FSx delegated admin user group.
 #' @param Password &#91;required&#93; The password of the user credential.
-#' @param ClientToken &#91;required&#93; A unique string value that you supply that is used by the FSx File
-#' Gateway to ensure idempotent file system association creation.
-#' @param GatewayARN &#91;required&#93; 
-#' @param LocationARN &#91;required&#93; The Amazon Resource Name (ARN) of the Amazon FSx file system to
-#' associate with the FSx File Gateway.
-#' @param Tags A list of up to 50 tags that can be assigned to the file system
-#' association. Each tag is a key-value pair.
+#' @param ClientToken &#91;required&#93; A unique string value that you supply that is used by the FSx File Gateway to ensure idempotent file system association creation.
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
+#' @param LocationARN &#91;required&#93; The Amazon Resource Name (ARN) of the Amazon FSx file system to associate with the FSx File Gateway.
+#' @param Tags A list of up to 50 tags that can be assigned to the file system association. Each tag is a key-value pair.
 #' @param AuditDestinationARN The Amazon Resource Name (ARN) of the storage used for the audit logs.
-#' @param CacheAttributes 
-#' @param EndpointNetworkConfiguration Specifies the network configuration information for the gateway
-#' associated with the Amazon FSx file system.
+#' @param CacheAttributes The refresh cache information for the file share or FSx file systems.
+#' @param EndpointNetworkConfiguration Specifies the network configuration information for the gateway associated with the Amazon FSx file system.
 #' 
-#' If multiple file systems are associated with this gateway, this
-#' parameter's `IpAddresses` field is required.
+#' If multiple file systems are associated with this gateway, this parameter's `IpAddresses` field is required.
 #'
 #' @keywords internal
 #'
@@ -335,27 +271,15 @@ storagegateway_associate_file_system <- function(UserName, Password, ClientToken
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_attach_volume/](https://www.paws-r-sdk.com/docs/storagegateway_attach_volume/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway that you want to attach
-#' the volume to.
-#' @param TargetName The name of the iSCSI target used by an initiator to connect to a volume
-#' and used as a suffix for the target ARN. For example, specifying
-#' `TargetName` as *myvolume* results in the target ARN of
-#' `arn:aws:storagegateway:us-east-2:111122223333:gateway/sgw-12A3456B/target/iqn.1997-05.com.amazon:myvolume`.
-#' The target name must be unique across all volumes on a gateway.
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway that you want to attach the volume to.
+#' @param TargetName The name of the iSCSI target used by an initiator to connect to a volume and used as a suffix for the target ARN. For example, specifying `TargetName` as *myvolume* results in the target ARN of `arn:aws:storagegateway:us-east-2:111122223333:gateway/sgw-12A3456B/target/iqn.1997-05.com.amazon:myvolume`. The target name must be unique across all volumes on a gateway.
 #' 
-#' If you don't specify a value, Storage Gateway uses the value that was
-#' previously used for this volume as the new target name.
-#' @param VolumeARN &#91;required&#93; The Amazon Resource Name (ARN) of the volume to attach to the specified
-#' gateway.
-#' @param NetworkInterfaceId &#91;required&#93; The network interface of the gateway on which to expose the iSCSI
-#' target. Only IPv4 addresses are accepted. Use
-#' [`describe_gateway_information`][storagegateway_describe_gateway_information]
-#' to get a list of the network interfaces available on a gateway.
+#' If you don't specify a value, Storage Gateway uses the value that was previously used for this volume as the new target name.
+#' @param VolumeARN &#91;required&#93; The Amazon Resource Name (ARN) of the volume to attach to the specified gateway.
+#' @param NetworkInterfaceId &#91;required&#93; The network interface of the gateway on which to expose the iSCSI target. Accepts IPv4 and IPv6 addresses. Use [`describe_gateway_information`][storagegateway_describe_gateway_information] to get a list of the network interfaces available on a gateway.
 #' 
 #' Valid Values: A valid IP address.
-#' @param DiskId The unique device ID or other distinguishing data that identifies the
-#' local disk used to create the volume. This value is only required when
-#' you are attaching a stored volume.
+#' @param DiskId The unique device ID or other distinguishing data that identifies the local disk used to create the volume. This value is only required when you are attaching a stored volume.
 #'
 #' @keywords internal
 #'
@@ -387,9 +311,8 @@ storagegateway_attach_volume <- function(GatewayARN, TargetName = NULL, VolumeAR
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_cancel_archival/](https://www.paws-r-sdk.com/docs/storagegateway_cancel_archival/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; 
-#' @param TapeARN &#91;required&#93; The Amazon Resource Name (ARN) of the virtual tape you want to cancel
-#' archiving for.
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
+#' @param TapeARN &#91;required&#93; The Amazon Resource Name (ARN) of the virtual tape you want to cancel archiving for.
 #'
 #' @keywords internal
 #'
@@ -452,9 +375,8 @@ storagegateway_cancel_cache_report <- function(CacheReportARN) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_cancel_retrieval/](https://www.paws-r-sdk.com/docs/storagegateway_cancel_retrieval/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; 
-#' @param TapeARN &#91;required&#93; The Amazon Resource Name (ARN) of the virtual tape you want to cancel
-#' retrieval for.
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
+#' @param TapeARN &#91;required&#93; The Amazon Resource Name (ARN) of the virtual tape you want to cancel retrieval for.
 #'
 #' @keywords internal
 #'
@@ -485,50 +407,24 @@ storagegateway_cancel_retrieval <- function(GatewayARN, TapeARN) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_create_cachedi_scsi_volume/](https://www.paws-r-sdk.com/docs/storagegateway_create_cachedi_scsi_volume/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; 
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
 #' @param VolumeSizeInBytes &#91;required&#93; The size of the volume in bytes.
-#' @param SnapshotId The snapshot ID (e.g. "snap-1122aabb") of the snapshot to restore as the
-#' new cached volume. Specify this field if you want to create the iSCSI
-#' storage volume from a snapshot; otherwise, do not include this field. To
-#' list snapshots for your account use
-#' [DescribeSnapshots](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeSnapshots.html)
-#' in the *Amazon Elastic Compute Cloud API Reference*.
-#' @param TargetName &#91;required&#93; The name of the iSCSI target used by an initiator to connect to a volume
-#' and used as a suffix for the target ARN. For example, specifying
-#' `TargetName` as *myvolume* results in the target ARN of
-#' `arn:aws:storagegateway:us-east-2:111122223333:gateway/sgw-12A3456B/target/iqn.1997-05.com.amazon:myvolume`.
-#' The target name must be unique across all volumes on a gateway.
+#' @param SnapshotId The snapshot ID (e.g. "snap-1122aabb") of the snapshot to restore as the new cached volume. Specify this field if you want to create the iSCSI storage volume from a snapshot; otherwise, do not include this field. To list snapshots for your account use [DescribeSnapshots](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeSnapshots.html) in the *Amazon Elastic Compute Cloud API Reference*.
+#' @param TargetName &#91;required&#93; The name of the iSCSI target used by an initiator to connect to a volume and used as a suffix for the target ARN. For example, specifying `TargetName` as *myvolume* results in the target ARN of `arn:aws:storagegateway:us-east-2:111122223333:gateway/sgw-12A3456B/target/iqn.1997-05.com.amazon:myvolume`. The target name must be unique across all volumes on a gateway.
 #' 
-#' If you don't specify a value, Storage Gateway uses the value that was
-#' previously used for this volume as the new target name.
-#' @param SourceVolumeARN The ARN for an existing volume. Specifying this ARN makes the new volume
-#' into an exact copy of the specified existing volume's latest recovery
-#' point. The `VolumeSizeInBytes` value for this new volume must be equal
-#' to or larger than the size of the existing volume, in bytes.
-#' @param NetworkInterfaceId &#91;required&#93; The network interface of the gateway on which to expose the iSCSI
-#' target. Only IPv4 addresses are accepted. Use
-#' [`describe_gateway_information`][storagegateway_describe_gateway_information]
-#' to get a list of the network interfaces available on a gateway.
+#' If you don't specify a value, Storage Gateway uses the value that was previously used for this volume as the new target name.
+#' @param SourceVolumeARN The ARN for an existing volume. Specifying this ARN makes the new volume into an exact copy of the specified existing volume's latest recovery point. The `VolumeSizeInBytes` value for this new volume must be equal to or larger than the size of the existing volume, in bytes.
+#' @param NetworkInterfaceId &#91;required&#93; The network interface of the gateway on which to expose the iSCSI target. Accepts IPv4 and IPv6 addresses. Use [`describe_gateway_information`][storagegateway_describe_gateway_information] to get a list of the network interfaces available on a gateway.
 #' 
 #' Valid Values: A valid IP address.
-#' @param ClientToken &#91;required&#93; A unique identifier that you use to retry a request. If you retry a
-#' request, use the same `ClientToken` you specified in the initial
-#' request.
-#' @param KMSEncrypted Set to `true` to use Amazon S3 server-side encryption with your own KMS
-#' key, or `false` to use a key managed by Amazon S3. Optional.
+#' @param ClientToken &#91;required&#93; A unique identifier that you use to retry a request. If you retry a request, use the same `ClientToken` you specified in the initial request.
+#' @param KMSEncrypted Set to `true` to use Amazon S3 server-side encryption with your own KMS key, or `false` to use a key managed by Amazon S3. Optional.
 #' 
 #' Valid Values: `true` | `false`
-#' @param KMSKey The Amazon Resource Name (ARN) of a symmetric customer master key (CMK)
-#' used for Amazon S3 server-side encryption. Storage Gateway does not
-#' support asymmetric CMKs. This value can only be set when `KMSEncrypted`
-#' is `true`. Optional.
-#' @param Tags A list of up to 50 tags that you can assign to a cached volume. Each tag
-#' is a key-value pair.
+#' @param KMSKey The Amazon Resource Name (ARN) of a symmetric customer master key (CMK) used for Amazon S3 server-side encryption. Storage Gateway does not support asymmetric CMKs. This value can only be set when `KMSEncrypted` is `true`. Optional.
+#' @param Tags A list of up to 50 tags that you can assign to a cached volume. Each tag is a key-value pair.
 #' 
-#' Valid characters for key and value are letters, spaces, and numbers that
-#' you can represent in UTF-8 format, and the following special
-#' characters: + - = . _ : / @@. The maximum length of a tag's key is 128
-#' characters, and the maximum length for a tag's value is 256 characters.
+#' Valid characters for key and value are letters, spaces, and numbers that you can represent in UTF-8 format, and the following special characters: + - = . _ : / @@. The maximum length of a tag's key is 128 characters, and the maximum length for a tag's value is 256 characters.
 #'
 #' @keywords internal
 #'
@@ -560,52 +456,26 @@ storagegateway_create_cachedi_scsi_volume <- function(GatewayARN, VolumeSizeInBy
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_create_nfs_file_share/](https://www.paws-r-sdk.com/docs/storagegateway_create_nfs_file_share/) for full documentation.
 #'
-#' @param ClientToken &#91;required&#93; A unique string value that you supply that is used by S3 File Gateway to
-#' ensure idempotent file share creation.
+#' @param ClientToken &#91;required&#93; A unique string value that you supply that is used by S3 File Gateway to ensure idempotent file share creation.
 #' @param NFSFileShareDefaults File share default values. Optional.
-#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the S3 File Gateway on which you want
-#' to create a file share.
-#' @param EncryptionType A value that specifies the type of server-side encryption that the file
-#' share will use for the data that it stores in Amazon S3.
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the S3 File Gateway on which you want to create a file share.
+#' @param EncryptionType A value that specifies the type of server-side encryption that the file share will use for the data that it stores in Amazon S3.
 #' 
-#' We recommend using `EncryptionType` instead of `KMSEncrypted` to set the
-#' file share encryption method. You do not need to provide values for both
-#' parameters.
+#' We recommend using `EncryptionType` instead of `KMSEncrypted` to set the file share encryption method. You do not need to provide values for both parameters.
 #' 
-#' If values for both parameters exist in the same request, then the
-#' specified encryption methods must not conflict. For example, if
-#' `EncryptionType` is `SseS3`, then `KMSEncrypted` must be `false`. If
-#' `EncryptionType` is `SseKms` or `DsseKms`, then `KMSEncrypted` must be
-#' `true`.
-#' @param KMSEncrypted Optional. Set to `true` to use Amazon S3 server-side encryption with
-#' your own KMS key (SSE-KMS), or `false` to use a key managed by Amazon S3
-#' (SSE-S3). To use dual-layer encryption (DSSE-KMS), set the
-#' `EncryptionType` parameter instead.
+#' If values for both parameters exist in the same request, then the specified encryption methods must not conflict. For example, if `EncryptionType` is `SseS3`, then `KMSEncrypted` must be `false`. If `EncryptionType` is `SseKms` or `DsseKms`, then `KMSEncrypted` must be `true`.
+#' @param KMSEncrypted Optional. Set to `true` to use Amazon S3 server-side encryption with your own KMS key (SSE-KMS), or `false` to use a key managed by Amazon S3 (SSE-S3). To use dual-layer encryption (DSSE-KMS), set the `EncryptionType` parameter instead.
 #' 
-#' We recommend using `EncryptionType` instead of `KMSEncrypted` to set the
-#' file share encryption method. You do not need to provide values for both
-#' parameters.
+#' We recommend using `EncryptionType` instead of `KMSEncrypted` to set the file share encryption method. You do not need to provide values for both parameters.
 #' 
-#' If values for both parameters exist in the same request, then the
-#' specified encryption methods must not conflict. For example, if
-#' `EncryptionType` is `SseS3`, then `KMSEncrypted` must be `false`. If
-#' `EncryptionType` is `SseKms` or `DsseKms`, then `KMSEncrypted` must be
-#' `true`.
+#' If values for both parameters exist in the same request, then the specified encryption methods must not conflict. For example, if `EncryptionType` is `SseS3`, then `KMSEncrypted` must be `false`. If `EncryptionType` is `SseKms` or `DsseKms`, then `KMSEncrypted` must be `true`.
 #' 
 #' Valid Values: `true` | `false`
-#' @param KMSKey Optional. The Amazon Resource Name (ARN) of a symmetric customer master
-#' key (CMK) used for Amazon S3 server-side encryption. Storage Gateway
-#' does not support asymmetric CMKs. This value must be set if
-#' `KMSEncrypted` is `true`, or if `EncryptionType` is `SseKms` or
-#' `DsseKms`.
-#' @param Role &#91;required&#93; The ARN of the Identity and Access Management (IAM) role that an S3 File
-#' Gateway assumes when it accesses the underlying storage.
-#' @param LocationARN &#91;required&#93; A custom ARN for the backend storage used for storing data for file
-#' shares. It includes a resource ARN with an optional prefix
-#' concatenation. The prefix must end with a forward slash (/).
+#' @param KMSKey Optional. The Amazon Resource Name (ARN) of a symmetric customer master key (CMK) used for Amazon S3 server-side encryption. Storage Gateway does not support asymmetric CMKs. This value must be set if `KMSEncrypted` is `true`, or if `EncryptionType` is `SseKms` or `DsseKms`.
+#' @param Role &#91;required&#93; The ARN of the Identity and Access Management (IAM) role that an S3 File Gateway assumes when it accesses the underlying storage.
+#' @param LocationARN &#91;required&#93; A custom ARN for the backend storage used for storing data for file shares. It includes a resource ARN with an optional prefix concatenation. The prefix must end with a forward slash (/).
 #' 
-#' You can specify LocationARN as a bucket ARN, access point ARN or access
-#' point alias, as shown in the following examples.
+#' You can specify LocationARN as a bucket ARN, access point ARN or access point alias, as shown in the following examples.
 #' 
 #' Bucket ARN:
 #' 
@@ -615,25 +485,16 @@ storagegateway_create_cachedi_scsi_volume <- function(GatewayARN, VolumeSizeInBy
 #' 
 #' `arn:aws:s3:region:account-id:accesspoint/access-point-name/prefix/`
 #' 
-#' If you specify an access point, the bucket policy must be configured to
-#' delegate access control to the access point. For information, see
-#' [Delegating access control to access
-#' points](https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points-policies.html#access-points-delegating-control)
-#' in the *Amazon S3 User Guide*.
+#' If you specify an access point, the bucket policy must be configured to delegate access control to the access point. For information, see [Delegating access control to access points](https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points-policies.html#access-points-delegating-control) in the *Amazon S3 User Guide*.
 #' 
 #' Access point alias:
 #' 
 #' `test-ap-ab123cdef4gehijklmn5opqrstuvuse1a-s3alias`
-#' @param DefaultStorageClass The default storage class for objects put into an Amazon S3 bucket by
-#' the S3 File Gateway. The default value is `S3_STANDARD`. Optional.
+#' @param DefaultStorageClass The default storage class for objects put into an Amazon S3 bucket by the S3 File Gateway. The default value is `S3_STANDARD`. Optional.
 #' 
-#' Valid Values: `S3_STANDARD` | `S3_INTELLIGENT_TIERING` |
-#' `S3_STANDARD_IA` | `S3_ONEZONE_IA`
-#' @param ObjectACL A value that sets the access control list (ACL) permission for objects
-#' in the S3 bucket that a S3 File Gateway puts objects into. The default
-#' value is `private`.
-#' @param ClientList The list of clients that are allowed to access the S3 File Gateway. The
-#' list must contain either valid IP addresses or valid CIDR blocks.
+#' Valid Values: `S3_STANDARD` | `S3_INTELLIGENT_TIERING` | `S3_STANDARD_IA` | `S3_ONEZONE_IA`
+#' @param ObjectACL A value that sets the access control list (ACL) permission for objects in the S3 bucket that a S3 File Gateway puts objects into. The default value is `private`.
+#' @param ClientList The list of clients that are allowed to access the S3 File Gateway. The list must contain either valid IPv4/IPv6 addresses or valid CIDR blocks.
 #' @param Squash A value that maps a user to anonymous user.
 #' 
 #' Valid values are the following:
@@ -643,74 +504,45 @@ storagegateway_create_cachedi_scsi_volume <- function(GatewayARN, VolumeSizeInBy
 #' -   `NoSquash`: No one is mapped to anonymous user.
 #' 
 #' -   `AllSquash`: Everyone is mapped to anonymous user.
-#' @param ReadOnly A value that sets the write status of a file share. Set this value to
-#' `true` to set the write status to read-only, otherwise set to `false`.
+#' @param ReadOnly A value that sets the write status of a file share. Set this value to `true` to set the write status to read-only, otherwise set to `false`.
 #' 
 #' Valid Values: `true` | `false`
-#' @param GuessMIMETypeEnabled A value that enables guessing of the MIME type for uploaded objects
-#' based on file extensions. Set this value to `true` to enable MIME type
-#' guessing, otherwise set to `false`. The default value is `true`.
+#' @param GuessMIMETypeEnabled A value that enables guessing of the MIME type for uploaded objects based on file extensions. Set this value to `true` to enable MIME type guessing, otherwise set to `false`. The default value is `true`.
 #' 
 #' Valid Values: `true` | `false`
-#' @param RequesterPays A value that sets who pays the cost of the request and the cost
-#' associated with data download from the S3 bucket. If this value is set
-#' to `true`, the requester pays the costs; otherwise, the S3 bucket owner
-#' pays. However, the S3 bucket owner always pays the cost of storing data.
+#' @param RequesterPays A value that sets who pays the cost of the request and the cost associated with data download from the S3 bucket. If this value is set to `true`, the requester pays the costs; otherwise, the S3 bucket owner pays. However, the S3 bucket owner always pays the cost of storing data.
 #' 
-#' `RequesterPays` is a configuration for the S3 bucket that backs the file
-#' share, so make sure that the configuration on the file share is the same
-#' as the S3 bucket configuration.
+#' `RequesterPays` is a configuration for the S3 bucket that backs the file share, so make sure that the configuration on the file share is the same as the S3 bucket configuration.
 #' 
 #' Valid Values: `true` | `false`
-#' @param Tags A list of up to 50 tags that can be assigned to the NFS file share. Each
-#' tag is a key-value pair.
+#' @param Tags A list of up to 50 tags that can be assigned to the NFS file share. Each tag is a key-value pair.
 #' 
-#' Valid characters for key and value are letters, spaces, and numbers
-#' representable in UTF-8 format, and the following special characters: + -
-#' = . _ : / @@. The maximum length of a tag's key is 128 characters, and
-#' the maximum length for a tag's value is 256.
+#' Valid characters for key and value are letters, spaces, and numbers representable in UTF-8 format, and the following special characters: + - = . _ : / @@. The maximum length of a tag's key is 128 characters, and the maximum length for a tag's value is 256.
 #' @param FileShareName The name of the file share. Optional.
 #' 
-#' `FileShareName` must be set if an S3 prefix name is set in
-#' `LocationARN`, or if an access point or access point alias is used.
+#' `FileShareName` must be set if an S3 prefix name is set in `LocationARN`, or if an access point or access point alias is used.
 #' 
-#' A valid NFS file share name can only contain the following characters:
-#' `a`-`z`, `A`-`Z`, `0`-`9`, `-`, `.`, and `_`.
+#' A valid NFS file share name can only contain the following characters: `a`-`z`, `A`-`Z`, `0`-`9`, `-`, `.`, and `_`.
 #' @param CacheAttributes Specifies refresh cache information for the file share.
-#' @param NotificationPolicy The notification policy of the file share. `SettlingTimeInSeconds`
-#' controls the number of seconds to wait after the last point in time a
-#' client wrote to a file before generating an `ObjectUploaded`
-#' notification. Because clients can make many small writes to files, it's
-#' best to set this parameter for as long as possible to avoid generating
-#' multiple notifications for the same file in a small time period.
+#' @param NotificationPolicy The notification policy of the file share. `SettlingTimeInSeconds` controls the number of seconds to wait after the last point in time a client wrote to a file before generating an `ObjectUploaded` notification. Because clients can make many small writes to files, it's best to set this parameter for as long as possible to avoid generating multiple notifications for the same file in a small time period.
 #' 
-#' `SettlingTimeInSeconds` has no effect on the timing of the object
-#' uploading to Amazon S3, only the timing of the notification.
+#' `SettlingTimeInSeconds` has no effect on the timing of the object uploading to Amazon S3, only the timing of the notification.
 #' 
-#' This setting is not meant to specify an exact time at which the
-#' notification will be sent. In some cases, the gateway might require more
-#' than the specified delay time to generate and send notifications.
+#' This setting is not meant to specify an exact time at which the notification will be sent. In some cases, the gateway might require more than the specified delay time to generate and send notifications.
 #' 
-#' The following example sets `NotificationPolicy` on with
-#' `SettlingTimeInSeconds` set to 60.
+#' The following example sets `NotificationPolicy` on with `SettlingTimeInSeconds` set to 60.
 #' 
 #' `{\"Upload\": {\"SettlingTimeInSeconds\": 60}}`
 #' 
 #' The following example sets `NotificationPolicy` off.
 #' 
 #' `{}`
-#' @param VPCEndpointDNSName Specifies the DNS name for the VPC endpoint that the NFS file share uses
-#' to connect to Amazon S3.
+#' @param VPCEndpointDNSName Specifies the DNS name for the VPC endpoint that the NFS file share uses to connect to Amazon S3.
 #' 
-#' This parameter is required for NFS file shares that connect to Amazon S3
-#' through a VPC endpoint, a VPC access point, or an access point alias
-#' that points to a VPC access point.
-#' @param BucketRegion Specifies the Region of the S3 bucket where the NFS file share stores
-#' files.
+#' This parameter is required for NFS file shares that connect to Amazon S3 through a VPC endpoint, a VPC access point, or an access point alias that points to a VPC access point.
+#' @param BucketRegion Specifies the Region of the S3 bucket where the NFS file share stores files.
 #' 
-#' This parameter is required for NFS file shares that connect to Amazon S3
-#' through a VPC endpoint, a VPC access point, or an access point alias
-#' that points to a VPC access point.
+#' This parameter is required for NFS file shares that connect to Amazon S3 through a VPC endpoint, a VPC access point, or an access point alias that points to a VPC access point.
 #' @param AuditDestinationARN The Amazon Resource Name (ARN) of the storage used for audit logs.
 #'
 #' @keywords internal
@@ -743,50 +575,25 @@ storagegateway_create_nfs_file_share <- function(ClientToken, NFSFileShareDefaul
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_create_smb_file_share/](https://www.paws-r-sdk.com/docs/storagegateway_create_smb_file_share/) for full documentation.
 #'
-#' @param ClientToken &#91;required&#93; A unique string value that you supply that is used by S3 File Gateway to
-#' ensure idempotent file share creation.
+#' @param ClientToken &#91;required&#93; A unique string value that you supply that is used by S3 File Gateway to ensure idempotent file share creation.
 #' @param GatewayARN &#91;required&#93; The ARN of the S3 File Gateway on which you want to create a file share.
-#' @param EncryptionType A value that specifies the type of server-side encryption that the file
-#' share will use for the data that it stores in Amazon S3.
+#' @param EncryptionType A value that specifies the type of server-side encryption that the file share will use for the data that it stores in Amazon S3.
 #' 
-#' We recommend using `EncryptionType` instead of `KMSEncrypted` to set the
-#' file share encryption method. You do not need to provide values for both
-#' parameters.
+#' We recommend using `EncryptionType` instead of `KMSEncrypted` to set the file share encryption method. You do not need to provide values for both parameters.
 #' 
-#' If values for both parameters exist in the same request, then the
-#' specified encryption methods must not conflict. For example, if
-#' `EncryptionType` is `SseS3`, then `KMSEncrypted` must be `false`. If
-#' `EncryptionType` is `SseKms` or `DsseKms`, then `KMSEncrypted` must be
-#' `true`.
-#' @param KMSEncrypted Optional. Set to `true` to use Amazon S3 server-side encryption with
-#' your own KMS key (SSE-KMS), or `false` to use a key managed by Amazon S3
-#' (SSE-S3). To use dual-layer encryption (DSSE-KMS), set the
-#' `EncryptionType` parameter instead.
+#' If values for both parameters exist in the same request, then the specified encryption methods must not conflict. For example, if `EncryptionType` is `SseS3`, then `KMSEncrypted` must be `false`. If `EncryptionType` is `SseKms` or `DsseKms`, then `KMSEncrypted` must be `true`.
+#' @param KMSEncrypted Optional. Set to `true` to use Amazon S3 server-side encryption with your own KMS key (SSE-KMS), or `false` to use a key managed by Amazon S3 (SSE-S3). To use dual-layer encryption (DSSE-KMS), set the `EncryptionType` parameter instead.
 #' 
-#' We recommend using `EncryptionType` instead of `KMSEncrypted` to set the
-#' file share encryption method. You do not need to provide values for both
-#' parameters.
+#' We recommend using `EncryptionType` instead of `KMSEncrypted` to set the file share encryption method. You do not need to provide values for both parameters.
 #' 
-#' If values for both parameters exist in the same request, then the
-#' specified encryption methods must not conflict. For example, if
-#' `EncryptionType` is `SseS3`, then `KMSEncrypted` must be `false`. If
-#' `EncryptionType` is `SseKms` or `DsseKms`, then `KMSEncrypted` must be
-#' `true`.
+#' If values for both parameters exist in the same request, then the specified encryption methods must not conflict. For example, if `EncryptionType` is `SseS3`, then `KMSEncrypted` must be `false`. If `EncryptionType` is `SseKms` or `DsseKms`, then `KMSEncrypted` must be `true`.
 #' 
 #' Valid Values: `true` | `false`
-#' @param KMSKey Optional. The Amazon Resource Name (ARN) of a symmetric customer master
-#' key (CMK) used for Amazon S3 server-side encryption. Storage Gateway
-#' does not support asymmetric CMKs. This value must be set if
-#' `KMSEncrypted` is `true`, or if `EncryptionType` is `SseKms` or
-#' `DsseKms`.
-#' @param Role &#91;required&#93; The ARN of the Identity and Access Management (IAM) role that an S3 File
-#' Gateway assumes when it accesses the underlying storage.
-#' @param LocationARN &#91;required&#93; A custom ARN for the backend storage used for storing data for file
-#' shares. It includes a resource ARN with an optional prefix
-#' concatenation. The prefix must end with a forward slash (/).
+#' @param KMSKey Optional. The Amazon Resource Name (ARN) of a symmetric customer master key (CMK) used for Amazon S3 server-side encryption. Storage Gateway does not support asymmetric CMKs. This value must be set if `KMSEncrypted` is `true`, or if `EncryptionType` is `SseKms` or `DsseKms`.
+#' @param Role &#91;required&#93; The ARN of the Identity and Access Management (IAM) role that an S3 File Gateway assumes when it accesses the underlying storage.
+#' @param LocationARN &#91;required&#93; A custom ARN for the backend storage used for storing data for file shares. It includes a resource ARN with an optional prefix concatenation. The prefix must end with a forward slash (/).
 #' 
-#' You can specify LocationARN as a bucket ARN, access point ARN or access
-#' point alias, as shown in the following examples.
+#' You can specify LocationARN as a bucket ARN, access point ARN or access point alias, as shown in the following examples.
 #' 
 #' Bucket ARN:
 #' 
@@ -796,135 +603,73 @@ storagegateway_create_nfs_file_share <- function(ClientToken, NFSFileShareDefaul
 #' 
 #' `arn:aws:s3:region:account-id:accesspoint/access-point-name/prefix/`
 #' 
-#' If you specify an access point, the bucket policy must be configured to
-#' delegate access control to the access point. For information, see
-#' [Delegating access control to access
-#' points](https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points-policies.html#access-points-delegating-control)
-#' in the *Amazon S3 User Guide*.
+#' If you specify an access point, the bucket policy must be configured to delegate access control to the access point. For information, see [Delegating access control to access points](https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points-policies.html#access-points-delegating-control) in the *Amazon S3 User Guide*.
 #' 
 #' Access point alias:
 #' 
 #' `test-ap-ab123cdef4gehijklmn5opqrstuvuse1a-s3alias`
-#' @param DefaultStorageClass The default storage class for objects put into an Amazon S3 bucket by
-#' the S3 File Gateway. The default value is `S3_STANDARD`. Optional.
+#' @param DefaultStorageClass The default storage class for objects put into an Amazon S3 bucket by the S3 File Gateway. The default value is `S3_STANDARD`. Optional.
 #' 
-#' Valid Values: `S3_STANDARD` | `S3_INTELLIGENT_TIERING` |
-#' `S3_STANDARD_IA` | `S3_ONEZONE_IA`
-#' @param ObjectACL A value that sets the access control list (ACL) permission for objects
-#' in the S3 bucket that a S3 File Gateway puts objects into. The default
-#' value is `private`.
-#' @param ReadOnly A value that sets the write status of a file share. Set this value to
-#' `true` to set the write status to read-only, otherwise set to `false`.
+#' Valid Values: `S3_STANDARD` | `S3_INTELLIGENT_TIERING` | `S3_STANDARD_IA` | `S3_ONEZONE_IA`
+#' @param ObjectACL A value that sets the access control list (ACL) permission for objects in the S3 bucket that a S3 File Gateway puts objects into. The default value is `private`.
+#' @param ReadOnly A value that sets the write status of a file share. Set this value to `true` to set the write status to read-only, otherwise set to `false`.
 #' 
 #' Valid Values: `true` | `false`
-#' @param GuessMIMETypeEnabled A value that enables guessing of the MIME type for uploaded objects
-#' based on file extensions. Set this value to `true` to enable MIME type
-#' guessing, otherwise set to `false`. The default value is `true`.
+#' @param GuessMIMETypeEnabled A value that enables guessing of the MIME type for uploaded objects based on file extensions. Set this value to `true` to enable MIME type guessing, otherwise set to `false`. The default value is `true`.
 #' 
 #' Valid Values: `true` | `false`
-#' @param RequesterPays A value that sets who pays the cost of the request and the cost
-#' associated with data download from the S3 bucket. If this value is set
-#' to `true`, the requester pays the costs; otherwise, the S3 bucket owner
-#' pays. However, the S3 bucket owner always pays the cost of storing data.
+#' @param RequesterPays A value that sets who pays the cost of the request and the cost associated with data download from the S3 bucket. If this value is set to `true`, the requester pays the costs; otherwise, the S3 bucket owner pays. However, the S3 bucket owner always pays the cost of storing data.
 #' 
-#' `RequesterPays` is a configuration for the S3 bucket that backs the file
-#' share, so make sure that the configuration on the file share is the same
-#' as the S3 bucket configuration.
+#' `RequesterPays` is a configuration for the S3 bucket that backs the file share, so make sure that the configuration on the file share is the same as the S3 bucket configuration.
 #' 
 #' Valid Values: `true` | `false`
-#' @param SMBACLEnabled Set this value to `true` to enable access control list (ACL) on the SMB
-#' file share. Set it to `false` to map file and directory permissions to
-#' the POSIX permissions.
+#' @param SMBACLEnabled Set this value to `true` to enable access control list (ACL) on the SMB file share. Set it to `false` to map file and directory permissions to the POSIX permissions.
 #' 
-#' For more information, see [Using Windows ACLs to limit SMB file share
-#' access](https://docs.aws.amazon.com/filegateway/latest/files3/smb-acl.html)
-#' in the *Amazon S3 File Gateway User Guide*.
+#' For more information, see [Using Windows ACLs to limit SMB file share access](https://docs.aws.amazon.com/filegateway/latest/files3/smb-acl.html) in the *Amazon S3 File Gateway User Guide*.
 #' 
 #' Valid Values: `true` | `false`
-#' @param AccessBasedEnumeration The files and folders on this share will only be visible to users with
-#' read access.
-#' @param AdminUserList A list of users or groups in the Active Directory that will be granted
-#' administrator privileges on the file share. These users can do all file
-#' operations as the super-user. Acceptable formats include:
-#' `DOMAIN\\User1`, `user1`, `@@group1`, and `@@DOMAIN\\group1`.
+#' @param AccessBasedEnumeration The files and folders on this share will only be visible to users with read access.
+#' @param AdminUserList A list of users or groups in the Active Directory that will be granted administrator privileges on the file share. These users can do all file operations as the super-user. Acceptable formats include: `DOMAIN\\User1`, `user1`, `@@group1`, and `@@DOMAIN\\group1`.
 #' 
-#' Use this option very carefully, because any user in this list can do
-#' anything they like on the file share, regardless of file permissions.
-#' @param ValidUserList A list of users or groups in the Active Directory that are allowed to
-#' access the file share. A group must be prefixed with the @@ character.
-#' Acceptable formats include: `DOMAIN\\User1`, `user1`, `@@group1`, and
-#' `@@DOMAIN\\group1`. Can only be set if Authentication is set to
-#' `ActiveDirectory`.
-#' @param InvalidUserList A list of users or groups in the Active Directory that are not allowed
-#' to access the file share. A group must be prefixed with the @@ character.
-#' Acceptable formats include: `DOMAIN\\User1`, `user1`, `@@group1`, and
-#' `@@DOMAIN\\group1`. Can only be set if Authentication is set to
-#' `ActiveDirectory`.
+#' Use this option very carefully, because any user in this list can do anything they like on the file share, regardless of file permissions.
+#' @param ValidUserList A list of users or groups in the Active Directory that are allowed to access the file share. A group must be prefixed with the @@ character. Acceptable formats include: `DOMAIN\\User1`, `user1`, `@@group1`, and `@@DOMAIN\\group1`. Can only be set if Authentication is set to `ActiveDirectory`.
+#' @param InvalidUserList A list of users or groups in the Active Directory that are not allowed to access the file share. A group must be prefixed with the @@ character. Acceptable formats include: `DOMAIN\\User1`, `user1`, `@@group1`, and `@@DOMAIN\\group1`. Can only be set if Authentication is set to `ActiveDirectory`.
 #' @param AuditDestinationARN The Amazon Resource Name (ARN) of the storage used for audit logs.
-#' @param Authentication The authentication method that users use to access the file share. The
-#' default is `ActiveDirectory`.
+#' @param Authentication The authentication method that users use to access the file share. The default is `ActiveDirectory`.
 #' 
 #' Valid Values: `ActiveDirectory` | `GuestAccess`
-#' @param CaseSensitivity The case of an object name in an Amazon S3 bucket. For
-#' `ClientSpecified`, the client determines the case sensitivity. For
-#' `CaseSensitive`, the gateway determines the case sensitivity. The
-#' default value is `ClientSpecified`.
-#' @param Tags A list of up to 50 tags that can be assigned to the NFS file share. Each
-#' tag is a key-value pair.
+#' @param CaseSensitivity The case of an object name in an Amazon S3 bucket. For `ClientSpecified`, the client determines the case sensitivity. For `CaseSensitive`, the gateway determines the case sensitivity. The default value is `ClientSpecified`.
+#' @param Tags A list of up to 50 tags that can be assigned to the NFS file share. Each tag is a key-value pair.
 #' 
-#' Valid characters for key and value are letters, spaces, and numbers
-#' representable in UTF-8 format, and the following special characters: + -
-#' = . _ : / @@. The maximum length of a tag's key is 128 characters, and
-#' the maximum length for a tag's value is 256.
+#' Valid characters for key and value are letters, spaces, and numbers representable in UTF-8 format, and the following special characters: + - = . _ : / @@. The maximum length of a tag's key is 128 characters, and the maximum length for a tag's value is 256.
 #' @param FileShareName The name of the file share. Optional.
 #' 
-#' `FileShareName` must be set if an S3 prefix name is set in
-#' `LocationARN`, or if an access point or access point alias is used.
+#' `FileShareName` must be set if an S3 prefix name is set in `LocationARN`, or if an access point or access point alias is used.
 #' 
-#' A valid SMB file share name cannot contain the following characters:
-#' `[`,`]`,`#`,`;`,`<`,`>`,`:`,`\"`,`\`,`/`,`|`,`?`,`*`,`+`, or ASCII
-#' control characters `1-31`.
+#' A valid SMB file share name cannot contain the following characters: `[`,`]`,`#`,`;`,`<`,`>`,`:`,`\"`,`\`,`/`,`|`,`?`,`*`,`+`, or ASCII control characters `1-31`.
 #' @param CacheAttributes Specifies refresh cache information for the file share.
-#' @param NotificationPolicy The notification policy of the file share. `SettlingTimeInSeconds`
-#' controls the number of seconds to wait after the last point in time a
-#' client wrote to a file before generating an `ObjectUploaded`
-#' notification. Because clients can make many small writes to files, it's
-#' best to set this parameter for as long as possible to avoid generating
-#' multiple notifications for the same file in a small time period.
+#' @param NotificationPolicy The notification policy of the file share. `SettlingTimeInSeconds` controls the number of seconds to wait after the last point in time a client wrote to a file before generating an `ObjectUploaded` notification. Because clients can make many small writes to files, it's best to set this parameter for as long as possible to avoid generating multiple notifications for the same file in a small time period.
 #' 
-#' `SettlingTimeInSeconds` has no effect on the timing of the object
-#' uploading to Amazon S3, only the timing of the notification.
+#' `SettlingTimeInSeconds` has no effect on the timing of the object uploading to Amazon S3, only the timing of the notification.
 #' 
-#' This setting is not meant to specify an exact time at which the
-#' notification will be sent. In some cases, the gateway might require more
-#' than the specified delay time to generate and send notifications.
+#' This setting is not meant to specify an exact time at which the notification will be sent. In some cases, the gateway might require more than the specified delay time to generate and send notifications.
 #' 
-#' The following example sets `NotificationPolicy` on with
-#' `SettlingTimeInSeconds` set to 60.
+#' The following example sets `NotificationPolicy` on with `SettlingTimeInSeconds` set to 60.
 #' 
 #' `{\"Upload\": {\"SettlingTimeInSeconds\": 60}}`
 #' 
 #' The following example sets `NotificationPolicy` off.
 #' 
 #' `{}`
-#' @param VPCEndpointDNSName Specifies the DNS name for the VPC endpoint that the SMB file share uses
-#' to connect to Amazon S3.
+#' @param VPCEndpointDNSName Specifies the DNS name for the VPC endpoint that the SMB file share uses to connect to Amazon S3.
 #' 
-#' This parameter is required for SMB file shares that connect to Amazon S3
-#' through a VPC endpoint, a VPC access point, or an access point alias
-#' that points to a VPC access point.
-#' @param BucketRegion Specifies the Region of the S3 bucket where the SMB file share stores
-#' files.
+#' This parameter is required for SMB file shares that connect to Amazon S3 through a VPC endpoint, a VPC access point, or an access point alias that points to a VPC access point.
+#' @param BucketRegion Specifies the Region of the S3 bucket where the SMB file share stores files.
 #' 
-#' This parameter is required for SMB file shares that connect to Amazon S3
-#' through a VPC endpoint, a VPC access point, or an access point alias
-#' that points to a VPC access point.
-#' @param OplocksEnabled Specifies whether opportunistic locking is enabled for the SMB file
-#' share.
+#' This parameter is required for SMB file shares that connect to Amazon S3 through a VPC endpoint, a VPC access point, or an access point alias that points to a VPC access point.
+#' @param OplocksEnabled Specifies whether opportunistic locking is enabled for the SMB file share.
 #' 
-#' Enabling opportunistic locking on case-sensitive shares is not
-#' recommended for workloads that involve access to files with the same
-#' name in different case.
+#' Enabling opportunistic locking on case-sensitive shares is not recommended for workloads that involve access to files with the same name in different case.
 #' 
 #' Valid Values: `true` | `false`
 #'
@@ -957,20 +702,11 @@ storagegateway_create_smb_file_share <- function(ClientToken, GatewayARN, Encryp
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_create_snapshot/](https://www.paws-r-sdk.com/docs/storagegateway_create_snapshot/) for full documentation.
 #'
-#' @param VolumeARN &#91;required&#93; The Amazon Resource Name (ARN) of the volume. Use the
-#' [`list_volumes`][storagegateway_list_volumes] operation to return a list
-#' of gateway volumes.
-#' @param SnapshotDescription &#91;required&#93; Textual description of the snapshot that appears in the Amazon EC2
-#' console, Elastic Block Store snapshots panel in the **Description**
-#' field, and in the Storage Gateway snapshot **Details** pane,
-#' **Description** field.
-#' @param Tags A list of up to 50 tags that can be assigned to a snapshot. Each tag is
-#' a key-value pair.
+#' @param VolumeARN &#91;required&#93; The Amazon Resource Name (ARN) of the volume. Use the [`list_volumes`][storagegateway_list_volumes] operation to return a list of gateway volumes.
+#' @param SnapshotDescription &#91;required&#93; Textual description of the snapshot that appears in the Amazon EC2 console, Elastic Block Store snapshots panel in the **Description** field, and in the Storage Gateway snapshot **Details** pane, **Description** field.
+#' @param Tags A list of up to 50 tags that can be assigned to a snapshot. Each tag is a key-value pair.
 #' 
-#' Valid characters for key and value are letters, spaces, and numbers
-#' representable in UTF-8 format, and the following special characters: + -
-#' = . _ : / @@. The maximum length of a tag's key is 128 characters, and
-#' the maximum length for a tag's value is 256.
+#' Valid characters for key and value are letters, spaces, and numbers representable in UTF-8 format, and the following special characters: + - = . _ : / @@. The maximum length of a tag's key is 128 characters, and the maximum length for a tag's value is 256.
 #'
 #' @keywords internal
 #'
@@ -1001,20 +737,11 @@ storagegateway_create_snapshot <- function(VolumeARN, SnapshotDescription, Tags 
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_create_snapshot_from_volume_recovery_point/](https://www.paws-r-sdk.com/docs/storagegateway_create_snapshot_from_volume_recovery_point/) for full documentation.
 #'
-#' @param VolumeARN &#91;required&#93; The Amazon Resource Name (ARN) of the iSCSI volume target. Use the
-#' [`describe_storedi_scsi_volumes`][storagegateway_describe_storedi_scsi_volumes]
-#' operation to return to retrieve the TargetARN for specified VolumeARN.
-#' @param SnapshotDescription &#91;required&#93; Textual description of the snapshot that appears in the Amazon EC2
-#' console, Elastic Block Store snapshots panel in the **Description**
-#' field, and in the Storage Gateway snapshot **Details** pane,
-#' **Description** field.
-#' @param Tags A list of up to 50 tags that can be assigned to a snapshot. Each tag is
-#' a key-value pair.
+#' @param VolumeARN &#91;required&#93; The Amazon Resource Name (ARN) of the iSCSI volume target. Use the [`describe_storedi_scsi_volumes`][storagegateway_describe_storedi_scsi_volumes] operation to return to retrieve the TargetARN for specified VolumeARN.
+#' @param SnapshotDescription &#91;required&#93; Textual description of the snapshot that appears in the Amazon EC2 console, Elastic Block Store snapshots panel in the **Description** field, and in the Storage Gateway snapshot **Details** pane, **Description** field.
+#' @param Tags A list of up to 50 tags that can be assigned to a snapshot. Each tag is a key-value pair.
 #' 
-#' Valid characters for key and value are letters, spaces, and numbers
-#' representable in UTF-8 format, and the following special characters: + -
-#' = . _ : / @@. The maximum length of a tag's key is 128 characters, and
-#' the maximum length for a tag's value is 256.
+#' Valid characters for key and value are letters, spaces, and numbers representable in UTF-8 format, and the following special characters: + - = . _ : / @@. The maximum length of a tag's key is 128 characters, and the maximum length for a tag's value is 256.
 #'
 #' @keywords internal
 #'
@@ -1045,49 +772,25 @@ storagegateway_create_snapshot_from_volume_recovery_point <- function(VolumeARN,
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_create_storedi_scsi_volume/](https://www.paws-r-sdk.com/docs/storagegateway_create_storedi_scsi_volume/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; 
-#' @param DiskId &#91;required&#93; The unique identifier for the gateway local disk that is configured as a
-#' stored volume. Use [`list_local_disks`][storagegateway_list_local_disks]
-#' to list disk IDs for a gateway.
-#' @param SnapshotId The snapshot ID (e.g., "snap-1122aabb") of the snapshot to restore as
-#' the new stored volume. Specify this field if you want to create the
-#' iSCSI storage volume from a snapshot; otherwise, do not include this
-#' field. To list snapshots for your account use
-#' [DescribeSnapshots](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeSnapshots.html)
-#' in the *Amazon Elastic Compute Cloud API Reference*.
-#' @param PreserveExistingData &#91;required&#93; Set to `true` if you want to preserve the data on the local disk.
-#' Otherwise, set to `false` to create an empty volume.
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
+#' @param DiskId &#91;required&#93; The unique identifier for the gateway local disk that is configured as a stored volume. Use [`list_local_disks`][storagegateway_list_local_disks] to list disk IDs for a gateway.
+#' @param SnapshotId The snapshot ID (e.g., "snap-1122aabb") of the snapshot to restore as the new stored volume. Specify this field if you want to create the iSCSI storage volume from a snapshot; otherwise, do not include this field. To list snapshots for your account use [DescribeSnapshots](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeSnapshots.html) in the *Amazon Elastic Compute Cloud API Reference*.
+#' @param PreserveExistingData &#91;required&#93; Set to `true` if you want to preserve the data on the local disk. Otherwise, set to `false` to create an empty volume.
 #' 
 #' Valid Values: `true` | `false`
-#' @param TargetName &#91;required&#93; The name of the iSCSI target used by an initiator to connect to a volume
-#' and used as a suffix for the target ARN. For example, specifying
-#' `TargetName` as *myvolume* results in the target ARN of
-#' `arn:aws:storagegateway:us-east-2:111122223333:gateway/sgw-12A3456B/target/iqn.1997-05.com.amazon:myvolume`.
-#' The target name must be unique across all volumes on a gateway.
+#' @param TargetName &#91;required&#93; The name of the iSCSI target used by an initiator to connect to a volume and used as a suffix for the target ARN. For example, specifying `TargetName` as *myvolume* results in the target ARN of `arn:aws:storagegateway:us-east-2:111122223333:gateway/sgw-12A3456B/target/iqn.1997-05.com.amazon:myvolume`. The target name must be unique across all volumes on a gateway.
 #' 
-#' If you don't specify a value, Storage Gateway uses the value that was
-#' previously used for this volume as the new target name.
-#' @param NetworkInterfaceId &#91;required&#93; The network interface of the gateway on which to expose the iSCSI
-#' target. Only IPv4 addresses are accepted. Use
-#' [`describe_gateway_information`][storagegateway_describe_gateway_information]
-#' to get a list of the network interfaces available on a gateway.
+#' If you don't specify a value, Storage Gateway uses the value that was previously used for this volume as the new target name.
+#' @param NetworkInterfaceId &#91;required&#93; The network interface of the gateway on which to expose the iSCSI target. Accepts IPv4 and IPv6 addresses. Use [`describe_gateway_information`][storagegateway_describe_gateway_information] to get a list of the network interfaces available on a gateway.
 #' 
 #' Valid Values: A valid IP address.
-#' @param KMSEncrypted Set to `true` to use Amazon S3 server-side encryption with your own KMS
-#' key, or `false` to use a key managed by Amazon S3. Optional.
+#' @param KMSEncrypted Set to `true` to use Amazon S3 server-side encryption with your own KMS key, or `false` to use a key managed by Amazon S3. Optional.
 #' 
 #' Valid Values: `true` | `false`
-#' @param KMSKey The Amazon Resource Name (ARN) of a symmetric customer master key (CMK)
-#' used for Amazon S3 server-side encryption. Storage Gateway does not
-#' support asymmetric CMKs. This value can only be set when `KMSEncrypted`
-#' is `true`. Optional.
-#' @param Tags A list of up to 50 tags that can be assigned to a stored volume. Each
-#' tag is a key-value pair.
+#' @param KMSKey The Amazon Resource Name (ARN) of a symmetric customer master key (CMK) used for Amazon S3 server-side encryption. Storage Gateway does not support asymmetric CMKs. This value can only be set when `KMSEncrypted` is `true`. Optional.
+#' @param Tags A list of up to 50 tags that can be assigned to a stored volume. Each tag is a key-value pair.
 #' 
-#' Valid characters for key and value are letters, spaces, and numbers
-#' representable in UTF-8 format, and the following special characters: + -
-#' = . _ : / @@. The maximum length of a tag's key is 128 characters, and
-#' the maximum length for a tag's value is 256.
+#' Valid characters for key and value are letters, spaces, and numbers representable in UTF-8 format, and the following special characters: + - = . _ : / @@. The maximum length of a tag's key is 128 characters, and the maximum length for a tag's value is 256.
 #'
 #' @keywords internal
 #'
@@ -1119,25 +822,12 @@ storagegateway_create_storedi_scsi_volume <- function(GatewayARN, DiskId, Snapsh
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_create_tape_pool/](https://www.paws-r-sdk.com/docs/storagegateway_create_tape_pool/) for full documentation.
 #'
 #' @param PoolName &#91;required&#93; The name of the new custom tape pool.
-#' @param StorageClass &#91;required&#93; The storage class that is associated with the new custom pool. When you
-#' use your backup application to eject the tape, the tape is archived
-#' directly into the storage class (S3 Glacier or S3 Glacier Deep Archive)
-#' that corresponds to the pool.
-#' @param RetentionLockType Tape retention lock can be configured in two modes. When configured in
-#' governance mode, Amazon Web Services accounts with specific IAM
-#' permissions are authorized to remove the tape retention lock from
-#' archived virtual tapes. When configured in compliance mode, the tape
-#' retention lock cannot be removed by any user, including the root Amazon
-#' Web Services account.
-#' @param RetentionLockTimeInDays Tape retention lock time is set in days. Tape retention lock can be
-#' enabled for up to 100 years (36,500 days).
-#' @param Tags A list of up to 50 tags that can be assigned to tape pool. Each tag is a
-#' key-value pair.
+#' @param StorageClass &#91;required&#93; The storage class that is associated with the new custom pool. When you use your backup application to eject the tape, the tape is archived directly into the storage class (S3 Glacier or S3 Glacier Deep Archive) that corresponds to the pool.
+#' @param RetentionLockType Tape retention lock can be configured in two modes. When configured in governance mode, Amazon Web Services accounts with specific IAM permissions are authorized to remove the tape retention lock from archived virtual tapes. When configured in compliance mode, the tape retention lock cannot be removed by any user, including the root Amazon Web Services account.
+#' @param RetentionLockTimeInDays Tape retention lock time is set in days. Tape retention lock can be enabled for up to 100 years (36,500 days).
+#' @param Tags A list of up to 50 tags that can be assigned to tape pool. Each tag is a key-value pair.
 #' 
-#' Valid characters for key and value are letters, spaces, and numbers
-#' representable in UTF-8 format, and the following special characters: + -
-#' = . _ : / @@. The maximum length of a tag's key is 128 characters, and
-#' the maximum length for a tag's value is 256.
+#' Valid characters for key and value are letters, spaces, and numbers representable in UTF-8 format, and the following special characters: + - = . _ : / @@. The maximum length of a tag's key is 128 characters, and the maximum length for a tag's value is 256.
 #'
 #' @keywords internal
 #'
@@ -1168,39 +858,22 @@ storagegateway_create_tape_pool <- function(PoolName, StorageClass, RetentionLoc
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_create_tape_with_barcode/](https://www.paws-r-sdk.com/docs/storagegateway_create_tape_with_barcode/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; The unique Amazon Resource Name (ARN) that represents the gateway to
-#' associate the virtual tape with. Use the
-#' [`list_gateways`][storagegateway_list_gateways] operation to return a
-#' list of gateways for your account and Amazon Web Services Region.
+#' @param GatewayARN &#91;required&#93; The unique Amazon Resource Name (ARN) that represents the gateway to associate the virtual tape with. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
 #' @param TapeSizeInBytes &#91;required&#93; The size, in bytes, of the virtual tape that you want to create.
 #' 
 #' The size must be aligned by gigabyte (1024*1024*1024 bytes).
 #' @param TapeBarcode &#91;required&#93; The barcode that you want to assign to the tape.
 #' 
-#' Barcodes cannot be reused. This includes barcodes used for tapes that
-#' have been deleted.
-#' @param KMSEncrypted Set to `true` to use Amazon S3 server-side encryption with your own KMS
-#' key, or `false` to use a key managed by Amazon S3. Optional.
+#' Barcodes cannot be reused. This includes barcodes used for tapes that have been deleted.
+#' @param KMSEncrypted Set to `true` to use Amazon S3 server-side encryption with your own KMS key, or `false` to use a key managed by Amazon S3. Optional.
 #' 
 #' Valid Values: `true` | `false`
-#' @param KMSKey The Amazon Resource Name (ARN) of a symmetric customer master key (CMK)
-#' used for Amazon S3 server-side encryption. Storage Gateway does not
-#' support asymmetric CMKs. This value can only be set when `KMSEncrypted`
-#' is `true`. Optional.
-#' @param PoolId The ID of the pool that you want to add your tape to for archiving. The
-#' tape in this pool is archived in the S3 storage class that is associated
-#' with the pool. When you use your backup application to eject the tape,
-#' the tape is archived directly into the storage class (S3 Glacier or S3
-#' Deep Archive) that corresponds to the pool.
-#' @param Worm Set to `TRUE` if the tape you are creating is to be configured as a
-#' write-once-read-many (WORM) tape.
-#' @param Tags A list of up to 50 tags that can be assigned to a virtual tape that has
-#' a barcode. Each tag is a key-value pair.
+#' @param KMSKey The Amazon Resource Name (ARN) of a symmetric customer master key (CMK) used for Amazon S3 server-side encryption. Storage Gateway does not support asymmetric CMKs. This value can only be set when `KMSEncrypted` is `true`. Optional.
+#' @param PoolId The ID of the pool that you want to add your tape to for archiving. The tape in this pool is archived in the S3 storage class that is associated with the pool. When you use your backup application to eject the tape, the tape is archived directly into the storage class (S3 Glacier or S3 Deep Archive) that corresponds to the pool.
+#' @param Worm Set to `TRUE` if the tape you are creating is to be configured as a write-once-read-many (WORM) tape.
+#' @param Tags A list of up to 50 tags that can be assigned to a virtual tape that has a barcode. Each tag is a key-value pair.
 #' 
-#' Valid characters for key and value are letters, spaces, and numbers
-#' representable in UTF-8 format, and the following special characters: + -
-#' = . _ : / @@. The maximum length of a tag's key is 128 characters, and
-#' the maximum length for a tag's value is 256.
+#' Valid characters for key and value are letters, spaces, and numbers representable in UTF-8 format, and the following special characters: + - = . _ : / @@. The maximum length of a tag's key is 128 characters, and the maximum length for a tag's value is 256.
 #'
 #' @keywords internal
 #'
@@ -1231,46 +904,26 @@ storagegateway_create_tape_with_barcode <- function(GatewayARN, TapeSizeInBytes,
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_create_tapes/](https://www.paws-r-sdk.com/docs/storagegateway_create_tapes/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; The unique Amazon Resource Name (ARN) that represents the gateway to
-#' associate the virtual tapes with. Use the
-#' [`list_gateways`][storagegateway_list_gateways] operation to return a
-#' list of gateways for your account and Amazon Web Services Region.
+#' @param GatewayARN &#91;required&#93; The unique Amazon Resource Name (ARN) that represents the gateway to associate the virtual tapes with. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
 #' @param TapeSizeInBytes &#91;required&#93; The size, in bytes, of the virtual tapes that you want to create.
 #' 
 #' The size must be aligned by gigabyte (1024*1024*1024 bytes).
-#' @param ClientToken &#91;required&#93; A unique identifier that you use to retry a request. If you retry a
-#' request, use the same `ClientToken` you specified in the initial
-#' request.
+#' @param ClientToken &#91;required&#93; A unique identifier that you use to retry a request. If you retry a request, use the same `ClientToken` you specified in the initial request.
 #' 
 #' Using the same `ClientToken` prevents creating the tape multiple times.
 #' @param NumTapesToCreate &#91;required&#93; The number of virtual tapes that you want to create.
-#' @param TapeBarcodePrefix &#91;required&#93; A prefix that you append to the barcode of the virtual tape you are
-#' creating. This prefix makes the barcode unique.
+#' @param TapeBarcodePrefix &#91;required&#93; A prefix that you append to the barcode of the virtual tape you are creating. This prefix makes the barcode unique.
 #' 
-#' The prefix must be 1-4 characters in length and must be one of the
-#' uppercase letters from A to Z.
-#' @param KMSEncrypted Set to `true` to use Amazon S3 server-side encryption with your own KMS
-#' key, or `false` to use a key managed by Amazon S3. Optional.
+#' The prefix must be 1-4 characters in length and must be one of the uppercase letters from A to Z.
+#' @param KMSEncrypted Set to `true` to use Amazon S3 server-side encryption with your own KMS key, or `false` to use a key managed by Amazon S3. Optional.
 #' 
 #' Valid Values: `true` | `false`
-#' @param KMSKey The Amazon Resource Name (ARN) of a symmetric customer master key (CMK)
-#' used for Amazon S3 server-side encryption. Storage Gateway does not
-#' support asymmetric CMKs. This value can only be set when `KMSEncrypted`
-#' is `true`. Optional.
-#' @param PoolId The ID of the pool that you want to add your tape to for archiving. The
-#' tape in this pool is archived in the S3 storage class that is associated
-#' with the pool. When you use your backup application to eject the tape,
-#' the tape is archived directly into the storage class (S3 Glacier or S3
-#' Glacier Deep Archive) that corresponds to the pool.
-#' @param Worm Set to `TRUE` if the tape you are creating is to be configured as a
-#' write-once-read-many (WORM) tape.
-#' @param Tags A list of up to 50 tags that can be assigned to a virtual tape. Each tag
-#' is a key-value pair.
+#' @param KMSKey The Amazon Resource Name (ARN) of a symmetric customer master key (CMK) used for Amazon S3 server-side encryption. Storage Gateway does not support asymmetric CMKs. This value can only be set when `KMSEncrypted` is `true`. Optional.
+#' @param PoolId The ID of the pool that you want to add your tape to for archiving. The tape in this pool is archived in the S3 storage class that is associated with the pool. When you use your backup application to eject the tape, the tape is archived directly into the storage class (S3 Glacier or S3 Glacier Deep Archive) that corresponds to the pool.
+#' @param Worm Set to `TRUE` if the tape you are creating is to be configured as a write-once-read-many (WORM) tape.
+#' @param Tags A list of up to 50 tags that can be assigned to a virtual tape. Each tag is a key-value pair.
 #' 
-#' Valid characters for key and value are letters, spaces, and numbers
-#' representable in UTF-8 format, and the following special characters: + -
-#' = . _ : / @@. The maximum length of a tag's key is 128 characters, and
-#' the maximum length for a tag's value is 256.
+#' Valid characters for key and value are letters, spaces, and numbers representable in UTF-8 format, and the following special characters: + - = . _ : / @@. The maximum length of a tag's key is 128 characters, and the maximum length for a tag's value is 256.
 #'
 #' @keywords internal
 #'
@@ -1301,7 +954,7 @@ storagegateway_create_tapes <- function(GatewayARN, TapeSizeInBytes, ClientToken
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_delete_automatic_tape_creation_policy/](https://www.paws-r-sdk.com/docs/storagegateway_delete_automatic_tape_creation_policy/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; 
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
 #'
 #' @keywords internal
 #'
@@ -1332,9 +985,8 @@ storagegateway_delete_automatic_tape_creation_policy <- function(GatewayARN) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_delete_bandwidth_rate_limit/](https://www.paws-r-sdk.com/docs/storagegateway_delete_bandwidth_rate_limit/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; 
-#' @param BandwidthType &#91;required&#93; One of the BandwidthType values that indicates the gateway bandwidth
-#' rate limit to delete.
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
+#' @param BandwidthType &#91;required&#93; One of the BandwidthType values that indicates the gateway bandwidth rate limit to delete.
 #' 
 #' Valid Values: `UPLOAD` | `DOWNLOAD` | `ALL`
 #'
@@ -1400,9 +1052,7 @@ storagegateway_delete_cache_report <- function(CacheReportARN) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_delete_chap_credentials/](https://www.paws-r-sdk.com/docs/storagegateway_delete_chap_credentials/) for full documentation.
 #'
-#' @param TargetARN &#91;required&#93; The Amazon Resource Name (ARN) of the iSCSI volume target. Use the
-#' [`describe_storedi_scsi_volumes`][storagegateway_describe_storedi_scsi_volumes]
-#' operation to return to retrieve the TargetARN for specified VolumeARN.
+#' @param TargetARN &#91;required&#93; The Amazon Resource Name (ARN) of the iSCSI volume target. Use the [`describe_storedi_scsi_volumes`][storagegateway_describe_storedi_scsi_volumes] operation to return to retrieve the TargetARN for specified VolumeARN.
 #' @param InitiatorName &#91;required&#93; The iSCSI initiator that connects to the target.
 #'
 #' @keywords internal
@@ -1435,11 +1085,7 @@ storagegateway_delete_chap_credentials <- function(TargetARN, InitiatorName) {
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_delete_file_share/](https://www.paws-r-sdk.com/docs/storagegateway_delete_file_share/) for full documentation.
 #'
 #' @param FileShareARN &#91;required&#93; The Amazon Resource Name (ARN) of the file share to be deleted.
-#' @param ForceDelete If this value is set to `true`, the operation deletes a file share
-#' immediately and aborts all data uploads to Amazon Web Services.
-#' Otherwise, the file share is not deleted until all data is uploaded to
-#' Amazon Web Services. This process aborts the data upload process, and
-#' the file share enters the `FORCE_DELETING` status.
+#' @param ForceDelete If this value is set to `true`, the operation deletes a file share immediately and aborts all data uploads to Amazon Web Services. Otherwise, the file share is not deleted until all data is uploaded to Amazon Web Services. This process aborts the data upload process, and the file share enters the `FORCE_DELETING` status.
 #' 
 #' Valid Values: `true` | `false`
 #'
@@ -1472,7 +1118,7 @@ storagegateway_delete_file_share <- function(FileShareARN, ForceDelete = NULL) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_delete_gateway/](https://www.paws-r-sdk.com/docs/storagegateway_delete_gateway/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; 
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
 #'
 #' @keywords internal
 #'
@@ -1534,15 +1180,9 @@ storagegateway_delete_snapshot_schedule <- function(VolumeARN) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_delete_tape/](https://www.paws-r-sdk.com/docs/storagegateway_delete_tape/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; The unique Amazon Resource Name (ARN) of the gateway that the virtual
-#' tape to delete is associated with. Use the
-#' [`list_gateways`][storagegateway_list_gateways] operation to return a
-#' list of gateways for your account and Amazon Web Services Region.
+#' @param GatewayARN &#91;required&#93; The unique Amazon Resource Name (ARN) of the gateway that the virtual tape to delete is associated with. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
 #' @param TapeARN &#91;required&#93; The Amazon Resource Name (ARN) of the virtual tape to delete.
-#' @param BypassGovernanceRetention Set to `TRUE` to delete an archived tape that belongs to a custom pool
-#' with tape retention lock. Only archived tapes with tape retention lock
-#' set to `governance` can be deleted. Archived tapes with tape retention
-#' lock set to `compliance` can't be deleted.
+#' @param BypassGovernanceRetention Set to `TRUE` to delete an archived tape that belongs to a custom pool with tape retention lock. Only archived tapes with tape retention lock set to `governance` can be deleted. Archived tapes with tape retention lock set to `compliance` can't be deleted.
 #'
 #' @keywords internal
 #'
@@ -1573,12 +1213,8 @@ storagegateway_delete_tape <- function(GatewayARN, TapeARN, BypassGovernanceRete
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_delete_tape_archive/](https://www.paws-r-sdk.com/docs/storagegateway_delete_tape_archive/) for full documentation.
 #'
-#' @param TapeARN &#91;required&#93; The Amazon Resource Name (ARN) of the virtual tape to delete from the
-#' virtual tape shelf (VTS).
-#' @param BypassGovernanceRetention Set to `TRUE` to delete an archived tape that belongs to a custom pool
-#' with tape retention lock. Only archived tapes with tape retention lock
-#' set to `governance` can be deleted. Archived tapes with tape retention
-#' lock set to `compliance` can't be deleted.
+#' @param TapeARN &#91;required&#93; The Amazon Resource Name (ARN) of the virtual tape to delete from the virtual tape shelf (VTS).
+#' @param BypassGovernanceRetention Set to `TRUE` to delete an archived tape that belongs to a custom pool with tape retention lock. Only archived tapes with tape retention lock set to `governance` can be deleted. Archived tapes with tape retention lock set to `compliance` can't be deleted.
 #'
 #' @keywords internal
 #'
@@ -1641,9 +1277,7 @@ storagegateway_delete_tape_pool <- function(PoolARN) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_delete_volume/](https://www.paws-r-sdk.com/docs/storagegateway_delete_volume/) for full documentation.
 #'
-#' @param VolumeARN &#91;required&#93; The Amazon Resource Name (ARN) of the volume. Use the
-#' [`list_volumes`][storagegateway_list_volumes] operation to return a list
-#' of gateway volumes.
+#' @param VolumeARN &#91;required&#93; The Amazon Resource Name (ARN) of the volume. Use the [`list_volumes`][storagegateway_list_volumes] operation to return a list of gateway volumes.
 #'
 #' @keywords internal
 #'
@@ -1675,7 +1309,7 @@ storagegateway_delete_volume <- function(VolumeARN) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_describe_availability_monitor_test/](https://www.paws-r-sdk.com/docs/storagegateway_describe_availability_monitor_test/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; 
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
 #'
 #' @keywords internal
 #'
@@ -1706,7 +1340,7 @@ storagegateway_describe_availability_monitor_test <- function(GatewayARN) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_describe_bandwidth_rate_limit/](https://www.paws-r-sdk.com/docs/storagegateway_describe_bandwidth_rate_limit/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; 
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
 #'
 #' @keywords internal
 #'
@@ -1737,7 +1371,7 @@ storagegateway_describe_bandwidth_rate_limit <- function(GatewayARN) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_describe_bandwidth_rate_limit_schedule/](https://www.paws-r-sdk.com/docs/storagegateway_describe_bandwidth_rate_limit_schedule/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; 
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
 #'
 #' @keywords internal
 #'
@@ -1768,7 +1402,7 @@ storagegateway_describe_bandwidth_rate_limit_schedule <- function(GatewayARN) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_describe_cache/](https://www.paws-r-sdk.com/docs/storagegateway_describe_cache/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; 
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
 #'
 #' @keywords internal
 #'
@@ -1831,11 +1465,7 @@ storagegateway_describe_cache_report <- function(CacheReportARN) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_describe_cachedi_scsi_volumes/](https://www.paws-r-sdk.com/docs/storagegateway_describe_cachedi_scsi_volumes/) for full documentation.
 #'
-#' @param VolumeARNs &#91;required&#93; An array of strings where each string represents the Amazon Resource
-#' Name (ARN) of a cached volume. All of the specified cached volumes must
-#' be from the same gateway. Use
-#' [`list_volumes`][storagegateway_list_volumes] to get volume ARNs for a
-#' gateway.
+#' @param VolumeARNs &#91;required&#93; An array of strings where each string represents the Amazon Resource Name (ARN) of a cached volume. All of the specified cached volumes must be from the same gateway. Use [`list_volumes`][storagegateway_list_volumes] to get volume ARNs for a gateway.
 #'
 #' @keywords internal
 #'
@@ -1868,9 +1498,7 @@ storagegateway_describe_cachedi_scsi_volumes <- function(VolumeARNs) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_describe_chap_credentials/](https://www.paws-r-sdk.com/docs/storagegateway_describe_chap_credentials/) for full documentation.
 #'
-#' @param TargetARN &#91;required&#93; The Amazon Resource Name (ARN) of the iSCSI volume target. Use the
-#' [`describe_storedi_scsi_volumes`][storagegateway_describe_storedi_scsi_volumes]
-#' operation to return to retrieve the TargetARN for specified VolumeARN.
+#' @param TargetARN &#91;required&#93; The Amazon Resource Name (ARN) of the iSCSI volume target. Use the [`describe_storedi_scsi_volumes`][storagegateway_describe_storedi_scsi_volumes] operation to return to retrieve the TargetARN for specified VolumeARN.
 #'
 #' @keywords internal
 #'
@@ -1901,8 +1529,7 @@ storagegateway_describe_chap_credentials <- function(TargetARN) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_describe_file_system_associations/](https://www.paws-r-sdk.com/docs/storagegateway_describe_file_system_associations/) for full documentation.
 #'
-#' @param FileSystemAssociationARNList &#91;required&#93; An array containing the Amazon Resource Name (ARN) of each file system
-#' association to be described.
+#' @param FileSystemAssociationARNList &#91;required&#93; An array containing the Amazon Resource Name (ARN) of each file system association to be described.
 #'
 #' @keywords internal
 #'
@@ -1934,7 +1561,7 @@ storagegateway_describe_file_system_associations <- function(FileSystemAssociati
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_describe_gateway_information/](https://www.paws-r-sdk.com/docs/storagegateway_describe_gateway_information/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; 
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
 #'
 #' @keywords internal
 #'
@@ -1967,7 +1594,7 @@ storagegateway_describe_gateway_information <- function(GatewayARN) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_describe_maintenance_start_time/](https://www.paws-r-sdk.com/docs/storagegateway_describe_maintenance_start_time/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; 
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
 #'
 #' @keywords internal
 #'
@@ -1999,8 +1626,7 @@ storagegateway_describe_maintenance_start_time <- function(GatewayARN) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_describe_nfs_file_shares/](https://www.paws-r-sdk.com/docs/storagegateway_describe_nfs_file_shares/) for full documentation.
 #'
-#' @param FileShareARNList &#91;required&#93; An array containing the Amazon Resource Name (ARN) of each file share to
-#' be described.
+#' @param FileShareARNList &#91;required&#93; An array containing the Amazon Resource Name (ARN) of each file share to be described.
 #'
 #' @keywords internal
 #'
@@ -2032,8 +1658,7 @@ storagegateway_describe_nfs_file_shares <- function(FileShareARNList) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_describe_smb_file_shares/](https://www.paws-r-sdk.com/docs/storagegateway_describe_smb_file_shares/) for full documentation.
 #'
-#' @param FileShareARNList &#91;required&#93; An array containing the Amazon Resource Name (ARN) of each file share to
-#' be described.
+#' @param FileShareARNList &#91;required&#93; An array containing the Amazon Resource Name (ARN) of each file share to be described.
 #'
 #' @keywords internal
 #'
@@ -2065,7 +1690,7 @@ storagegateway_describe_smb_file_shares <- function(FileShareARNList) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_describe_smb_settings/](https://www.paws-r-sdk.com/docs/storagegateway_describe_smb_settings/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; 
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
 #'
 #' @keywords internal
 #'
@@ -2096,9 +1721,7 @@ storagegateway_describe_smb_settings <- function(GatewayARN) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_describe_snapshot_schedule/](https://www.paws-r-sdk.com/docs/storagegateway_describe_snapshot_schedule/) for full documentation.
 #'
-#' @param VolumeARN &#91;required&#93; The Amazon Resource Name (ARN) of the volume. Use the
-#' [`list_volumes`][storagegateway_list_volumes] operation to return a list
-#' of gateway volumes.
+#' @param VolumeARN &#91;required&#93; The Amazon Resource Name (ARN) of the volume. Use the [`list_volumes`][storagegateway_list_volumes] operation to return a list of gateway volumes.
 #'
 #' @keywords internal
 #'
@@ -2129,11 +1752,7 @@ storagegateway_describe_snapshot_schedule <- function(VolumeARN) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_describe_storedi_scsi_volumes/](https://www.paws-r-sdk.com/docs/storagegateway_describe_storedi_scsi_volumes/) for full documentation.
 #'
-#' @param VolumeARNs &#91;required&#93; An array of strings where each string represents the Amazon Resource
-#' Name (ARN) of a stored volume. All of the specified stored volumes must
-#' be from the same gateway. Use
-#' [`list_volumes`][storagegateway_list_volumes] to get volume ARNs for a
-#' gateway.
+#' @param VolumeARNs &#91;required&#93; An array of strings where each string represents the Amazon Resource Name (ARN) of a stored volume. All of the specified stored volumes must be from the same gateway. Use [`list_volumes`][storagegateway_list_volumes] to get volume ARNs for a gateway.
 #'
 #' @keywords internal
 #'
@@ -2165,12 +1784,9 @@ storagegateway_describe_storedi_scsi_volumes <- function(VolumeARNs) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_describe_tape_archives/](https://www.paws-r-sdk.com/docs/storagegateway_describe_tape_archives/) for full documentation.
 #'
-#' @param TapeARNs Specifies one or more unique Amazon Resource Names (ARNs) that represent
-#' the virtual tapes you want to describe.
-#' @param Marker An opaque string that indicates the position at which to begin
-#' describing virtual tapes.
-#' @param Limit Specifies that the number of virtual tapes described be limited to the
-#' specified number.
+#' @param TapeARNs Specifies one or more unique Amazon Resource Names (ARNs) that represent the virtual tapes you want to describe.
+#' @param Marker An opaque string that indicates the position at which to begin describing virtual tapes.
+#' @param Limit Specifies that the number of virtual tapes described be limited to the specified number.
 #'
 #' @keywords internal
 #'
@@ -2202,11 +1818,9 @@ storagegateway_describe_tape_archives <- function(TapeARNs = NULL, Marker = NULL
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_describe_tape_recovery_points/](https://www.paws-r-sdk.com/docs/storagegateway_describe_tape_recovery_points/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; 
-#' @param Marker An opaque string that indicates the position at which to begin
-#' describing the virtual tape recovery points.
-#' @param Limit Specifies that the number of virtual tape recovery points that are
-#' described be limited to the specified number.
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
+#' @param Marker An opaque string that indicates the position at which to begin describing the virtual tape recovery points.
+#' @param Limit Specifies that the number of virtual tape recovery points that are described be limited to the specified number.
 #'
 #' @keywords internal
 #'
@@ -2238,18 +1852,12 @@ storagegateway_describe_tape_recovery_points <- function(GatewayARN, Marker = NU
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_describe_tapes/](https://www.paws-r-sdk.com/docs/storagegateway_describe_tapes/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; 
-#' @param TapeARNs Specifies one or more unique Amazon Resource Names (ARNs) that represent
-#' the virtual tapes you want to describe. If this parameter is not
-#' specified, Tape gateway returns a description of all virtual tapes
-#' associated with the specified gateway.
-#' @param Marker A marker value, obtained in a previous call to
-#' [`describe_tapes`][storagegateway_describe_tapes]. This marker indicates
-#' which page of results to retrieve.
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
+#' @param TapeARNs Specifies one or more unique Amazon Resource Names (ARNs) that represent the virtual tapes you want to describe. If this parameter is not specified, Tape gateway returns a description of all virtual tapes associated with the specified gateway.
+#' @param Marker A marker value, obtained in a previous call to [`describe_tapes`][storagegateway_describe_tapes]. This marker indicates which page of results to retrieve.
 #' 
 #' If not specified, the first page of results is retrieved.
-#' @param Limit Specifies that the number of virtual tapes described be limited to the
-#' specified number.
+#' @param Limit Specifies that the number of virtual tapes described be limited to the specified number.
 #' 
 #' Amazon Web Services may impose its own limit, if this field is not set.
 #'
@@ -2282,7 +1890,7 @@ storagegateway_describe_tapes <- function(GatewayARN, TapeARNs = NULL, Marker = 
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_describe_upload_buffer/](https://www.paws-r-sdk.com/docs/storagegateway_describe_upload_buffer/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; 
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
 #'
 #' @keywords internal
 #'
@@ -2314,17 +1922,12 @@ storagegateway_describe_upload_buffer <- function(GatewayARN) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_describe_vtl_devices/](https://www.paws-r-sdk.com/docs/storagegateway_describe_vtl_devices/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; 
-#' @param VTLDeviceARNs An array of strings, where each string represents the Amazon Resource
-#' Name (ARN) of a VTL device.
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
+#' @param VTLDeviceARNs An array of strings, where each string represents the Amazon Resource Name (ARN) of a VTL device.
 #' 
-#' All of the specified VTL devices must be from the same gateway. If no
-#' VTL devices are specified, the result will contain all devices on the
-#' specified gateway.
-#' @param Marker An opaque string that indicates the position at which to begin
-#' describing the VTL devices.
-#' @param Limit Specifies that the number of VTL devices described be limited to the
-#' specified number.
+#' All of the specified VTL devices must be from the same gateway. If no VTL devices are specified, the result will contain all devices on the specified gateway.
+#' @param Marker An opaque string that indicates the position at which to begin describing the VTL devices.
+#' @param Limit Specifies that the number of VTL devices described be limited to the specified number.
 #'
 #' @keywords internal
 #'
@@ -2355,7 +1958,7 @@ storagegateway_describe_vtl_devices <- function(GatewayARN, VTLDeviceARNs = NULL
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_describe_working_storage/](https://www.paws-r-sdk.com/docs/storagegateway_describe_working_storage/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; 
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
 #'
 #' @keywords internal
 #'
@@ -2388,10 +1991,7 @@ storagegateway_describe_working_storage <- function(GatewayARN) {
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_detach_volume/](https://www.paws-r-sdk.com/docs/storagegateway_detach_volume/) for full documentation.
 #'
 #' @param VolumeARN &#91;required&#93; The Amazon Resource Name (ARN) of the volume to detach from the gateway.
-#' @param ForceDetach Set to `true` to forcibly remove the iSCSI connection of the target
-#' volume and detach the volume. The default is `false`. If this value is
-#' set to `false`, you must manually disconnect the iSCSI connection from
-#' the target volume.
+#' @param ForceDetach Set to `true` to forcibly remove the iSCSI connection of the target volume and detach the volume. The default is `false`. If this value is set to `false`, you must manually disconnect the iSCSI connection from the target volume.
 #' 
 #' Valid Values: `true` | `false`
 #'
@@ -2424,7 +2024,7 @@ storagegateway_detach_volume <- function(VolumeARN, ForceDetach = NULL) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_disable_gateway/](https://www.paws-r-sdk.com/docs/storagegateway_disable_gateway/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; 
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
 #'
 #' @keywords internal
 #'
@@ -2455,13 +2055,8 @@ storagegateway_disable_gateway <- function(GatewayARN) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_disassociate_file_system/](https://www.paws-r-sdk.com/docs/storagegateway_disassociate_file_system/) for full documentation.
 #'
-#' @param FileSystemAssociationARN &#91;required&#93; The Amazon Resource Name (ARN) of the file system association to be
-#' deleted.
-#' @param ForceDelete If this value is set to true, the operation disassociates an Amazon FSx
-#' file system immediately. It ends all data uploads to the file system,
-#' and the file system association enters the `FORCE_DELETING` status. If
-#' this value is set to false, the Amazon FSx file system does not
-#' disassociate until all data is uploaded.
+#' @param FileSystemAssociationARN &#91;required&#93; The Amazon Resource Name (ARN) of the file system association to be deleted.
+#' @param ForceDelete If this value is set to true, the operation disassociates an Amazon FSx file system immediately. It ends all data uploads to the file system, and the file system association enters the `FORCE_DELETING` status. If this value is set to false, the Amazon FSx file system does not disassociate until all data is uploaded.
 #'
 #' @keywords internal
 #'
@@ -2485,6 +2080,47 @@ storagegateway_disassociate_file_system <- function(FileSystemAssociationARN, Fo
 }
 .storagegateway$operations$disassociate_file_system <- storagegateway_disassociate_file_system
 
+#' Starts a process that cleans the specified file share's cache of file
+#' entries that are failing upload to Amazon S3
+#'
+#' @description
+#' Starts a process that cleans the specified file share's cache of file entries that are failing upload to Amazon S3. This API operation reports success if the request is received with valid arguments, and there are no other cache clean operations currently in-progress for the specified file share. After a successful request, the cache clean operation occurs asynchronously and reports progress using CloudWatch logs and notifications.
+#'
+#' See [https://www.paws-r-sdk.com/docs/storagegateway_evict_files_failing_upload/](https://www.paws-r-sdk.com/docs/storagegateway_evict_files_failing_upload/) for full documentation.
+#'
+#' @param FileShareARN &#91;required&#93; The Amazon Resource Name (ARN) of the file share for which you want to start the cache clean operation.
+#' @param ForceRemove Specifies whether cache entries with full or partial file data currently stored on the gateway will be forcibly removed by the cache clean operation.
+#' 
+#' Valid arguments:
+#' 
+#' -   `False` - The cache clean operation skips cache entries failing upload if they are associated with data currently stored on the gateway. This preserves the cached data.
+#' 
+#' -   `True` - The cache clean operation removes cache entries failing upload even if they are associated with data currently stored on the gateway. This deletes the cached data.
+#' 
+#'     If `ForceRemove` is set to `True`, the cache clean operation will delete file data from the gateway which might otherwise be recoverable.
+#'
+#' @keywords internal
+#'
+#' @rdname storagegateway_evict_files_failing_upload
+storagegateway_evict_files_failing_upload <- function(FileShareARN, ForceRemove = NULL) {
+  op <- new_operation(
+    name = "EvictFilesFailingUpload",
+    http_method = "POST",
+    http_path = "/",
+    host_prefix = "",
+    paginator = list(),
+    stream_api = FALSE
+  )
+  input <- .storagegateway$evict_files_failing_upload_input(FileShareARN = FileShareARN, ForceRemove = ForceRemove)
+  output <- .storagegateway$evict_files_failing_upload_output()
+  config <- get_config()
+  svc <- .storagegateway$service(config, op)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.storagegateway$operations$evict_files_failing_upload <- storagegateway_evict_files_failing_upload
+
 #' Adds a file gateway to an Active Directory domain
 #'
 #' @description
@@ -2492,26 +2128,17 @@ storagegateway_disassociate_file_system <- function(FileSystemAssociationARN, Fo
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_join_domain/](https://www.paws-r-sdk.com/docs/storagegateway_join_domain/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the
-#' [`list_gateways`][storagegateway_list_gateways] operation to return a
-#' list of gateways for your account and Amazon Web Services Region.
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
 #' @param DomainName &#91;required&#93; The name of the domain that you want the gateway to join.
-#' @param OrganizationalUnit The organizational unit (OU) is a container in an Active Directory that
-#' can hold users, groups, computers, and other OUs and this parameter
-#' specifies the OU that the gateway will join within the AD domain.
-#' @param DomainControllers List of IPv4 addresses, NetBIOS names, or host names of your domain
-#' server. If you need to specify the port number include it after the
-#' colon (“:”). For example, `mydc.mydomain.com:389`.
-#' @param TimeoutInSeconds Specifies the time in seconds, in which the
-#' [`join_domain`][storagegateway_join_domain] operation must complete. The
-#' default is 20 seconds.
-#' @param UserName &#91;required&#93; Sets the user name of user who has permission to add the gateway to the
-#' Active Directory domain. The domain user account should be enabled to
-#' join computers to the domain. For example, you can use the domain
-#' administrator account or an account with delegated permissions to join
-#' computers to the domain.
-#' @param Password &#91;required&#93; Sets the password of the user who has permission to add the gateway to
-#' the Active Directory domain.
+#' @param OrganizationalUnit The organizational unit (OU) is a container in an Active Directory that can hold users, groups, computers, and other OUs and this parameter specifies the OU that the gateway will join within the AD domain.
+#' @param DomainControllers List of IP addresses, NetBIOS names, or host names of your domain server. If you need to specify the port number include it after the colon (“:”). For example, `mydc.mydomain.com:389`.
+#' 
+#' S3 File Gateway supports IPv6 addresses in addition to IPv4 and other existing formats.
+#' 
+#' FSx File Gateway does not support IPv6.
+#' @param TimeoutInSeconds Specifies the time in seconds, in which the [`join_domain`][storagegateway_join_domain] operation must complete. The default is 20 seconds.
+#' @param UserName &#91;required&#93; Sets the user name of user who has permission to add the gateway to the Active Directory domain. The domain user account should be enabled to join computers to the domain. For example, you can use the domain administrator account or an account with delegated permissions to join computers to the domain.
+#' @param Password &#91;required&#93; Sets the password of the user who has permission to add the gateway to the Active Directory domain.
 #'
 #' @keywords internal
 #'
@@ -2542,7 +2169,7 @@ storagegateway_join_domain <- function(GatewayARN, DomainName, OrganizationalUni
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_list_automatic_tape_creation_policies/](https://www.paws-r-sdk.com/docs/storagegateway_list_automatic_tape_creation_policies/) for full documentation.
 #'
-#' @param GatewayARN 
+#' @param GatewayARN The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
 #'
 #' @keywords internal
 #'
@@ -2574,11 +2201,7 @@ storagegateway_list_automatic_tape_creation_policies <- function(GatewayARN = NU
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_list_cache_reports/](https://www.paws-r-sdk.com/docs/storagegateway_list_cache_reports/) for full documentation.
 #'
-#' @param Marker Opaque pagination token returned from a previous
-#' [`list_cache_reports`][storagegateway_list_cache_reports] operation. If
-#' present, `Marker` specifies where to continue the list from after a
-#' previous call to
-#' [`list_cache_reports`][storagegateway_list_cache_reports]. Optional.
+#' @param Marker Opaque pagination token returned from a previous [`list_cache_reports`][storagegateway_list_cache_reports] operation. If present, `Marker` specifies where to continue the list from after a previous call to [`list_cache_reports`][storagegateway_list_cache_reports]. Optional.
 #'
 #' @keywords internal
 #'
@@ -2589,7 +2212,7 @@ storagegateway_list_cache_reports <- function(Marker = NULL) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list(),
+    paginator = list(input_token = "Marker", output_token = "Marker", result_key = "CacheReportList"),
     stream_api = FALSE
   )
   input <- .storagegateway$list_cache_reports_input(Marker = Marker)
@@ -2611,14 +2234,9 @@ storagegateway_list_cache_reports <- function(Marker = NULL) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_list_file_shares/](https://www.paws-r-sdk.com/docs/storagegateway_list_file_shares/) for full documentation.
 #'
-#' @param GatewayARN The Amazon Resource Name (ARN) of the gateway whose file shares you want
-#' to list. If this field is not present, all file shares under your
-#' account are listed.
-#' @param Limit The maximum number of file shares to return in the response. The value
-#' must be an integer with a value greater than zero. Optional.
-#' @param Marker Opaque pagination token returned from a previous ListFileShares
-#' operation. If present, `Marker` specifies where to continue the list
-#' from after a previous call to ListFileShares. Optional.
+#' @param GatewayARN The Amazon Resource Name (ARN) of the gateway whose file shares you want to list. If this field is not present, all file shares under your account are listed.
+#' @param Limit The maximum number of file shares to return in the response. The value must be an integer with a value greater than zero. Optional.
+#' @param Marker Opaque pagination token returned from a previous ListFileShares operation. If present, `Marker` specifies where to continue the list from after a previous call to ListFileShares. Optional.
 #'
 #' @keywords internal
 #'
@@ -2649,16 +2267,9 @@ storagegateway_list_file_shares <- function(GatewayARN = NULL, Limit = NULL, Mar
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_list_file_system_associations/](https://www.paws-r-sdk.com/docs/storagegateway_list_file_system_associations/) for full documentation.
 #'
-#' @param GatewayARN 
-#' @param Limit The maximum number of file system associations to return in the
-#' response. If present, `Limit` must be an integer with a value greater
-#' than zero. Optional.
-#' @param Marker Opaque pagination token returned from a previous
-#' [`list_file_system_associations`][storagegateway_list_file_system_associations]
-#' operation. If present, `Marker` specifies where to continue the list
-#' from after a previous call to
-#' [`list_file_system_associations`][storagegateway_list_file_system_associations].
-#' Optional.
+#' @param GatewayARN The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
+#' @param Limit The maximum number of file system associations to return in the response. If present, `Limit` must be an integer with a value greater than zero. Optional.
+#' @param Marker Opaque pagination token returned from a previous [`list_file_system_associations`][storagegateway_list_file_system_associations] operation. If present, `Marker` specifies where to continue the list from after a previous call to [`list_file_system_associations`][storagegateway_list_file_system_associations]. Optional.
 #'
 #' @keywords internal
 #'
@@ -2690,10 +2301,8 @@ storagegateway_list_file_system_associations <- function(GatewayARN = NULL, Limi
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_list_gateways/](https://www.paws-r-sdk.com/docs/storagegateway_list_gateways/) for full documentation.
 #'
-#' @param Marker An opaque string that indicates the position at which to begin the
-#' returned list of gateways.
-#' @param Limit Specifies that the list of gateways returned be limited to the specified
-#' number of items.
+#' @param Marker An opaque string that indicates the position at which to begin the returned list of gateways.
+#' @param Limit Specifies that the list of gateways returned be limited to the specified number of items.
 #'
 #' @keywords internal
 #'
@@ -2724,7 +2333,7 @@ storagegateway_list_gateways <- function(Marker = NULL, Limit = NULL) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_list_local_disks/](https://www.paws-r-sdk.com/docs/storagegateway_list_local_disks/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; 
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
 #'
 #' @keywords internal
 #'
@@ -2755,12 +2364,9 @@ storagegateway_list_local_disks <- function(GatewayARN) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_list_tags_for_resource/](https://www.paws-r-sdk.com/docs/storagegateway_list_tags_for_resource/) for full documentation.
 #'
-#' @param ResourceARN &#91;required&#93; The Amazon Resource Name (ARN) of the resource for which you want to
-#' list tags.
-#' @param Marker An opaque string that indicates the position at which to begin returning
-#' the list of tags.
-#' @param Limit Specifies that the list of tags returned be limited to the specified
-#' number of items.
+#' @param ResourceARN &#91;required&#93; The Amazon Resource Name (ARN) of the resource for which you want to list tags.
+#' @param Marker An opaque string that indicates the position at which to begin returning the list of tags.
+#' @param Limit Specifies that the list of tags returned be limited to the specified number of items.
 #'
 #' @keywords internal
 #'
@@ -2791,13 +2397,9 @@ storagegateway_list_tags_for_resource <- function(ResourceARN, Marker = NULL, Li
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_list_tape_pools/](https://www.paws-r-sdk.com/docs/storagegateway_list_tape_pools/) for full documentation.
 #'
-#' @param PoolARNs The Amazon Resource Name (ARN) of each of the custom tape pools you want
-#' to list. If you don't specify a custom tape pool ARN, the response lists
-#' all custom tape pools.
-#' @param Marker A string that indicates the position at which to begin the returned list
-#' of tape pools.
-#' @param Limit An optional number limit for the tape pools in the list returned by this
-#' call.
+#' @param PoolARNs The Amazon Resource Name (ARN) of each of the custom tape pools you want to list. If you don't specify a custom tape pool ARN, the response lists all custom tape pools.
+#' @param Marker A string that indicates the position at which to begin the returned list of tape pools.
+#' @param Limit An optional number limit for the tape pools in the list returned by this call.
 #'
 #' @keywords internal
 #'
@@ -2829,11 +2431,9 @@ storagegateway_list_tape_pools <- function(PoolARNs = NULL, Marker = NULL, Limit
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_list_tapes/](https://www.paws-r-sdk.com/docs/storagegateway_list_tapes/) for full documentation.
 #'
-#' @param TapeARNs 
-#' @param Marker A string that indicates the position at which to begin the returned list
-#' of tapes.
-#' @param Limit An optional number limit for the tapes in the list returned by this
-#' call.
+#' @param TapeARNs The Amazon Resource Name (ARN) of each of the tapes you want to list. If you don't specify a tape ARN, the response lists all tapes in both your VTL and VTS.
+#' @param Marker A string that indicates the position at which to begin the returned list of tapes.
+#' @param Limit An optional number limit for the tapes in the list returned by this call.
 #'
 #' @keywords internal
 #'
@@ -2864,9 +2464,7 @@ storagegateway_list_tapes <- function(TapeARNs = NULL, Marker = NULL, Limit = NU
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_list_volume_initiators/](https://www.paws-r-sdk.com/docs/storagegateway_list_volume_initiators/) for full documentation.
 #'
-#' @param VolumeARN &#91;required&#93; The Amazon Resource Name (ARN) of the volume. Use the
-#' [`list_volumes`][storagegateway_list_volumes] operation to return a list
-#' of gateway volumes for the gateway.
+#' @param VolumeARN &#91;required&#93; The Amazon Resource Name (ARN) of the volume. Use the [`list_volumes`][storagegateway_list_volumes] operation to return a list of gateway volumes for the gateway.
 #'
 #' @keywords internal
 #'
@@ -2897,7 +2495,7 @@ storagegateway_list_volume_initiators <- function(VolumeARN) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_list_volume_recovery_points/](https://www.paws-r-sdk.com/docs/storagegateway_list_volume_recovery_points/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; 
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
 #'
 #' @keywords internal
 #'
@@ -2928,12 +2526,9 @@ storagegateway_list_volume_recovery_points <- function(GatewayARN) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_list_volumes/](https://www.paws-r-sdk.com/docs/storagegateway_list_volumes/) for full documentation.
 #'
-#' @param GatewayARN 
-#' @param Marker A string that indicates the position at which to begin the returned list
-#' of volumes. Obtain the marker from the response of a previous List iSCSI
-#' Volumes request.
-#' @param Limit Specifies that the list of volumes returned be limited to the specified
-#' number of items.
+#' @param GatewayARN The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
+#' @param Marker A string that indicates the position at which to begin the returned list of volumes. Obtain the marker from the response of a previous List iSCSI Volumes request.
+#' @param Limit Specifies that the list of volumes returned be limited to the specified number of items.
 #'
 #' @keywords internal
 #'
@@ -2965,7 +2560,7 @@ storagegateway_list_volumes <- function(GatewayARN = NULL, Marker = NULL, Limit 
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_notify_when_uploaded/](https://www.paws-r-sdk.com/docs/storagegateway_notify_when_uploaded/) for full documentation.
 #'
-#' @param FileShareARN &#91;required&#93; 
+#' @param FileShareARN &#91;required&#93; The Amazon Resource Name (ARN) of the file share.
 #'
 #' @keywords internal
 #'
@@ -2997,20 +2592,10 @@ storagegateway_notify_when_uploaded <- function(FileShareARN) {
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_refresh_cache/](https://www.paws-r-sdk.com/docs/storagegateway_refresh_cache/) for full documentation.
 #'
 #' @param FileShareARN &#91;required&#93; The Amazon Resource Name (ARN) of the file share you want to refresh.
-#' @param FolderList A comma-separated list of the paths of folders to refresh in the cache.
-#' The default is \[`"/"`\]. The default refreshes objects and folders at
-#' the root of the Amazon S3 bucket. If `Recursive` is set to `true`, the
-#' entire S3 bucket that the file share has access to is refreshed.
+#' @param FolderList A comma-separated list of the paths of folders to refresh in the cache. The default is \[`"/"`\]. The default refreshes objects and folders at the root of the Amazon S3 bucket. If `Recursive` is set to `true`, the entire S3 bucket that the file share has access to is refreshed.
 #' 
-#' Do not include `/` when specifying folder names. For example, you would
-#' specify `samplefolder` rather than `samplefolder/`.
-#' @param Recursive A value that specifies whether to recursively refresh folders in the
-#' cache. The refresh includes folders that were in the cache the last time
-#' the gateway listed the folder's contents. If this value set to `true`,
-#' each folder that is listed in `FolderList` is recursively updated.
-#' Otherwise, subfolders listed in `FolderList` are not refreshed. Only
-#' objects that are in folders listed directly under `FolderList` are found
-#' and used for the update. The default is `true`.
+#' Do not include `/` when specifying folder names. For example, you would specify `samplefolder` rather than `samplefolder/`.
+#' @param Recursive A value that specifies whether to recursively refresh folders in the cache. The refresh includes folders that were in the cache the last time the gateway listed the folder's contents. If this value set to `true`, each folder that is listed in `FolderList` is recursively updated. Otherwise, subfolders listed in `FolderList` are not refreshed. Only objects that are in folders listed directly under `FolderList` are found and used for the update. The default is `true`.
 #' 
 #' Valid Values: `true` | `false`
 #'
@@ -3043,10 +2628,8 @@ storagegateway_refresh_cache <- function(FileShareARN, FolderList = NULL, Recurs
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_remove_tags_from_resource/](https://www.paws-r-sdk.com/docs/storagegateway_remove_tags_from_resource/) for full documentation.
 #'
-#' @param ResourceARN &#91;required&#93; The Amazon Resource Name (ARN) of the resource you want to remove the
-#' tags from.
-#' @param TagKeys &#91;required&#93; The keys of the tags you want to remove from the specified resource. A
-#' tag is composed of a key-value pair.
+#' @param ResourceARN &#91;required&#93; The Amazon Resource Name (ARN) of the resource you want to remove the tags from.
+#' @param TagKeys &#91;required&#93; The keys of the tags you want to remove from the specified resource. A tag is composed of a key-value pair.
 #'
 #' @keywords internal
 #'
@@ -3078,7 +2661,7 @@ storagegateway_remove_tags_from_resource <- function(ResourceARN, TagKeys) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_reset_cache/](https://www.paws-r-sdk.com/docs/storagegateway_reset_cache/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; 
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
 #'
 #' @keywords internal
 #'
@@ -3110,15 +2693,10 @@ storagegateway_reset_cache <- function(GatewayARN) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_retrieve_tape_archive/](https://www.paws-r-sdk.com/docs/storagegateway_retrieve_tape_archive/) for full documentation.
 #'
-#' @param TapeARN &#91;required&#93; The Amazon Resource Name (ARN) of the virtual tape you want to retrieve
-#' from the virtual tape shelf (VTS).
-#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway you want to retrieve the
-#' virtual tape to. Use the [`list_gateways`][storagegateway_list_gateways]
-#' operation to return a list of gateways for your account and Amazon Web
-#' Services Region.
+#' @param TapeARN &#91;required&#93; The Amazon Resource Name (ARN) of the virtual tape you want to retrieve from the virtual tape shelf (VTS).
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway you want to retrieve the virtual tape to. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
 #' 
-#' You retrieve archived virtual tapes to only one gateway and the gateway
-#' must be a tape gateway.
+#' You retrieve archived virtual tapes to only one gateway and the gateway must be a tape gateway.
 #'
 #' @keywords internal
 #'
@@ -3149,9 +2727,8 @@ storagegateway_retrieve_tape_archive <- function(TapeARN, GatewayARN) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_retrieve_tape_recovery_point/](https://www.paws-r-sdk.com/docs/storagegateway_retrieve_tape_recovery_point/) for full documentation.
 #'
-#' @param TapeARN &#91;required&#93; The Amazon Resource Name (ARN) of the virtual tape for which you want to
-#' retrieve the recovery point.
-#' @param GatewayARN &#91;required&#93; 
+#' @param TapeARN &#91;required&#93; The Amazon Resource Name (ARN) of the virtual tape for which you want to retrieve the recovery point.
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
 #'
 #' @keywords internal
 #'
@@ -3182,7 +2759,7 @@ storagegateway_retrieve_tape_recovery_point <- function(TapeARN, GatewayARN) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_set_local_console_password/](https://www.paws-r-sdk.com/docs/storagegateway_set_local_console_password/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; 
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
 #' @param LocalConsolePassword &#91;required&#93; The password you want to set for your VM local console.
 #'
 #' @keywords internal
@@ -3214,8 +2791,7 @@ storagegateway_set_local_console_password <- function(GatewayARN, LocalConsolePa
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_set_smb_guest_password/](https://www.paws-r-sdk.com/docs/storagegateway_set_smb_guest_password/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the S3 File Gateway the SMB file share
-#' is associated with.
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the S3 File Gateway the SMB file share is associated with.
 #' @param Password &#91;required&#93; The password that you want to set for your SMB server.
 #'
 #' @keywords internal
@@ -3247,7 +2823,7 @@ storagegateway_set_smb_guest_password <- function(GatewayARN, Password) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_shutdown_gateway/](https://www.paws-r-sdk.com/docs/storagegateway_shutdown_gateway/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; 
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
 #'
 #' @keywords internal
 #'
@@ -3279,7 +2855,7 @@ storagegateway_shutdown_gateway <- function(GatewayARN) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_start_availability_monitor_test/](https://www.paws-r-sdk.com/docs/storagegateway_start_availability_monitor_test/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; 
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
 #'
 #' @keywords internal
 #'
@@ -3311,34 +2887,19 @@ storagegateway_start_availability_monitor_test <- function(GatewayARN) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_start_cache_report/](https://www.paws-r-sdk.com/docs/storagegateway_start_cache_report/) for full documentation.
 #'
-#' @param FileShareARN &#91;required&#93; 
+#' @param FileShareARN &#91;required&#93; The Amazon Resource Name (ARN) of the file share.
 #' @param Role &#91;required&#93; The ARN of the IAM role used when saving the cache report to Amazon S3.
-#' @param LocationARN &#91;required&#93; The ARN of the Amazon S3 bucket where the cache report will be saved.
+#' @param LocationARN &#91;required&#93; The ARN of the Amazon S3 bucket where you want to save the cache report.
 #' 
-#' We do not recommend saving the cache report to the same Amazon S3 bucket
-#' for which you are generating the report.
+#' We do not recommend saving the cache report to the same Amazon S3 bucket for which you are generating the report.
 #' 
 #' This field does not accept access point ARNs.
-#' @param BucketRegion &#91;required&#93; The Amazon Web Services Region of the Amazon S3 bucket associated with
-#' the file share for which you want to generate the cache report.
-#' @param VPCEndpointDNSName The DNS name of the VPC endpoint associated with the Amazon S3 where you
-#' want to save the cache report. Optional.
-#' @param InclusionFilters The list of filters and parameters that determine which files are
-#' included in the report. You must specify at least one value for
-#' `InclusionFilters` or `ExclusionFilters` in a
-#' [`start_cache_report`][storagegateway_start_cache_report] request.
-#' @param ExclusionFilters The list of filters and parameters that determine which files are
-#' excluded from the report. You must specify at least one value for
-#' `InclusionFilters` or `ExclusionFilters` in a
-#' [`start_cache_report`][storagegateway_start_cache_report] request.
-#' @param ClientToken &#91;required&#93; A unique identifier that you use to ensure idempotent report generation
-#' if you need to retry an unsuccessful
-#' [`start_cache_report`][storagegateway_start_cache_report] request. If
-#' you retry a request, use the same `ClientToken` you specified in the
-#' initial request.
-#' @param Tags A list of up to 50 key/value tags that you can assign to the cache
-#' report. Using tags can help you categorize your reports and more easily
-#' locate them in search results.
+#' @param BucketRegion &#91;required&#93; The Amazon Web Services Region of the Amazon S3 bucket where you want to save the cache report.
+#' @param VPCEndpointDNSName The DNS name of the VPC endpoint associated with the Amazon S3 where you want to save the cache report. Optional.
+#' @param InclusionFilters The list of filters and parameters that determine which files are included in the report. You must specify at least one value for `InclusionFilters` or `ExclusionFilters` in a [`start_cache_report`][storagegateway_start_cache_report] request.
+#' @param ExclusionFilters The list of filters and parameters that determine which files are excluded from the report. You must specify at least one value for `InclusionFilters` or `ExclusionFilters` in a [`start_cache_report`][storagegateway_start_cache_report] request.
+#' @param ClientToken &#91;required&#93; A unique identifier that you use to ensure idempotent report generation if you need to retry an unsuccessful [`start_cache_report`][storagegateway_start_cache_report] request. If you retry a request, use the same `ClientToken` you specified in the initial request.
+#' @param Tags A list of up to 50 key/value tags that you can assign to the cache report. Using tags can help you categorize your reports and more easily locate them in search results.
 #'
 #' @keywords internal
 #'
@@ -3369,7 +2930,7 @@ storagegateway_start_cache_report <- function(FileShareARN, Role, LocationARN, B
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_start_gateway/](https://www.paws-r-sdk.com/docs/storagegateway_start_gateway/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; 
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
 #'
 #' @keywords internal
 #'
@@ -3400,10 +2961,8 @@ storagegateway_start_gateway <- function(GatewayARN) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_update_automatic_tape_creation_policy/](https://www.paws-r-sdk.com/docs/storagegateway_update_automatic_tape_creation_policy/) for full documentation.
 #'
-#' @param AutomaticTapeCreationRules &#91;required&#93; An automatic tape creation policy consists of a list of automatic tape
-#' creation rules. The rules determine when and how to automatically create
-#' new tapes.
-#' @param GatewayARN &#91;required&#93; 
+#' @param AutomaticTapeCreationRules &#91;required&#93; An automatic tape creation policy consists of a list of automatic tape creation rules. The rules determine when and how to automatically create new tapes.
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
 #'
 #' @keywords internal
 #'
@@ -3434,7 +2993,7 @@ storagegateway_update_automatic_tape_creation_policy <- function(AutomaticTapeCr
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_update_bandwidth_rate_limit/](https://www.paws-r-sdk.com/docs/storagegateway_update_bandwidth_rate_limit/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; 
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
 #' @param AverageUploadRateLimitInBitsPerSec The average upload bandwidth rate limit in bits per second.
 #' @param AverageDownloadRateLimitInBitsPerSec The average download bandwidth rate limit in bits per second.
 #'
@@ -3467,10 +3026,8 @@ storagegateway_update_bandwidth_rate_limit <- function(GatewayARN, AverageUpload
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_update_bandwidth_rate_limit_schedule/](https://www.paws-r-sdk.com/docs/storagegateway_update_bandwidth_rate_limit_schedule/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; 
-#' @param BandwidthRateLimitIntervals &#91;required&#93; An array containing bandwidth rate limit schedule intervals for a
-#' gateway. When no bandwidth rate limit intervals have been scheduled, the
-#' array is empty.
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
+#' @param BandwidthRateLimitIntervals &#91;required&#93; An array containing bandwidth rate limit schedule intervals for a gateway. When no bandwidth rate limit intervals have been scheduled, the array is empty.
 #'
 #' @keywords internal
 #'
@@ -3502,16 +3059,12 @@ storagegateway_update_bandwidth_rate_limit_schedule <- function(GatewayARN, Band
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_update_chap_credentials/](https://www.paws-r-sdk.com/docs/storagegateway_update_chap_credentials/) for full documentation.
 #'
-#' @param TargetARN &#91;required&#93; The Amazon Resource Name (ARN) of the iSCSI volume target. Use the
-#' [`describe_storedi_scsi_volumes`][storagegateway_describe_storedi_scsi_volumes]
-#' operation to return the TargetARN for specified VolumeARN.
-#' @param SecretToAuthenticateInitiator &#91;required&#93; The secret key that the initiator (for example, the Windows client) must
-#' provide to participate in mutual CHAP with the target.
+#' @param TargetARN &#91;required&#93; The Amazon Resource Name (ARN) of the iSCSI volume target. Use the [`describe_storedi_scsi_volumes`][storagegateway_describe_storedi_scsi_volumes] operation to return the TargetARN for specified VolumeARN.
+#' @param SecretToAuthenticateInitiator &#91;required&#93; The secret key that the initiator (for example, the Windows client) must provide to participate in mutual CHAP with the target.
 #' 
 #' The secret key must be between 12 and 16 bytes when encoded in UTF-8.
 #' @param InitiatorName &#91;required&#93; The iSCSI initiator that connects to the target.
-#' @param SecretToAuthenticateTarget The secret key that the target must provide to participate in mutual
-#' CHAP with the initiator (e.g. Windows client).
+#' @param SecretToAuthenticateTarget The secret key that the target must provide to participate in mutual CHAP with the initiator (e.g. Windows client).
 #' 
 #' Byte constraints: Minimum bytes of 12. Maximum bytes of 16.
 #' 
@@ -3546,14 +3099,11 @@ storagegateway_update_chap_credentials <- function(TargetARN, SecretToAuthentica
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_update_file_system_association/](https://www.paws-r-sdk.com/docs/storagegateway_update_file_system_association/) for full documentation.
 #'
-#' @param FileSystemAssociationARN &#91;required&#93; The Amazon Resource Name (ARN) of the file system association that you
-#' want to update.
-#' @param UserName The user name of the user credential that has permission to access the
-#' root share D$ of the Amazon FSx file system. The user account must
-#' belong to the Amazon FSx delegated admin user group.
+#' @param FileSystemAssociationARN &#91;required&#93; The Amazon Resource Name (ARN) of the file system association that you want to update.
+#' @param UserName The user name of the user credential that has permission to access the root share D$ of the Amazon FSx file system. The user account must belong to the Amazon FSx delegated admin user group.
 #' @param Password The password of the user credential.
 #' @param AuditDestinationARN The Amazon Resource Name (ARN) of the storage used for the audit logs.
-#' @param CacheAttributes 
+#' @param CacheAttributes The refresh cache information for the file share or FSx file systems.
 #'
 #' @keywords internal
 #'
@@ -3585,19 +3135,13 @@ storagegateway_update_file_system_association <- function(FileSystemAssociationA
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_update_gateway_information/](https://www.paws-r-sdk.com/docs/storagegateway_update_gateway_information/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; 
-#' @param GatewayName 
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
+#' @param GatewayName The name you configured for your gateway.
 #' @param GatewayTimezone A value that indicates the time zone of the gateway.
-#' @param CloudWatchLogGroupARN The Amazon Resource Name (ARN) of the Amazon CloudWatch log group that
-#' you want to use to monitor and log events in the gateway.
+#' @param CloudWatchLogGroupARN The Amazon Resource Name (ARN) of the Amazon CloudWatch log group that you want to use to monitor and log events in the gateway.
 #' 
-#' For more information, see [What is Amazon CloudWatch
-#' Logs?](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html)
-#' @param GatewayCapacity Specifies the size of the gateway's metadata cache. This setting impacts
-#' gateway performance and hardware recommendations. For more information,
-#' see [Performance guidance for gateways with multiple file
-#' shares](https://docs.aws.amazon.com/filegateway/latest/files3/Performance.html#performance-multiple-file-shares)
-#' in the *Amazon S3 File Gateway User Guide*.
+#' For more information, see [What is Amazon CloudWatch Logs?](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html)
+#' @param GatewayCapacity Specifies the size of the gateway's metadata cache. This setting impacts gateway performance and hardware recommendations. For more information, see [Performance guidance for gateways with multiple file shares](https://docs.aws.amazon.com/filegateway/latest/files3/Performance.html) in the *Amazon S3 File Gateway User Guide*.
 #'
 #' @keywords internal
 #'
@@ -3628,7 +3172,7 @@ storagegateway_update_gateway_information <- function(GatewayARN, GatewayName = 
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_update_gateway_software_now/](https://www.paws-r-sdk.com/docs/storagegateway_update_gateway_software_now/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; 
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
 #'
 #' @keywords internal
 #'
@@ -3661,33 +3205,18 @@ storagegateway_update_gateway_software_now <- function(GatewayARN) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_update_maintenance_start_time/](https://www.paws-r-sdk.com/docs/storagegateway_update_maintenance_start_time/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; 
-#' @param HourOfDay The hour component of the maintenance start time represented as *hh*,
-#' where *hh* is the hour (00 to 23). The hour of the day is in the time
-#' zone of the gateway.
-#' @param MinuteOfHour The minute component of the maintenance start time represented as *mm*,
-#' where *mm* is the minute (00 to 59). The minute of the hour is in the
-#' time zone of the gateway.
-#' @param DayOfWeek The day of the week component of the maintenance start time week
-#' represented as an ordinal number from 0 to 6, where 0 represents Sunday
-#' and 6 represents Saturday.
-#' @param DayOfMonth The day of the month component of the maintenance start time represented
-#' as an ordinal number from 1 to 28, where 1 represents the first day of
-#' the month. It is not possible to set the maintenance schedule to start
-#' on days 29 through 31.
-#' @param SoftwareUpdatePreferences A set of variables indicating the software update preferences for the
-#' gateway.
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
+#' @param HourOfDay The hour component of the maintenance start time represented as *hh*, where *hh* is the hour (00 to 23). The hour of the day is in the time zone of the gateway.
+#' @param MinuteOfHour The minute component of the maintenance start time represented as *mm*, where *mm* is the minute (00 to 59). The minute of the hour is in the time zone of the gateway.
+#' @param DayOfWeek The day of the week component of the maintenance start time week represented as an ordinal number from 0 to 6, where 0 represents Sunday and 6 represents Saturday.
+#' @param DayOfMonth The day of the month component of the maintenance start time represented as an ordinal number from 1 to 28, where 1 represents the first day of the month. It is not possible to set the maintenance schedule to start on days 29 through 31.
+#' @param SoftwareUpdatePreferences A set of variables indicating the software update preferences for the gateway.
 #' 
 #' Includes `AutomaticUpdatePolicy` field with the following inputs:
 #' 
 #' `ALL_VERSIONS` - Enables regular gateway maintenance updates.
 #' 
-#' `EMERGENCY_VERSIONS_ONLY` - Disables regular gateway maintenance
-#' updates. The gateway will still receive emergency version updates on
-#' rare occasions if necessary to remedy highly critical security or
-#' durability issues. You will be notified before an emergency version
-#' update is applied. These updates are applied during your gateway's
-#' scheduled maintenance window.
+#' `EMERGENCY_VERSIONS_ONLY` - Disables regular gateway maintenance updates. The gateway will still receive emergency version updates on rare occasions if necessary to remedy highly critical security or durability issues. You will be notified before an emergency version update is applied. These updates are applied during your gateway's scheduled maintenance window.
 #'
 #' @keywords internal
 #'
@@ -3719,50 +3248,25 @@ storagegateway_update_maintenance_start_time <- function(GatewayARN, HourOfDay =
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_update_nfs_file_share/](https://www.paws-r-sdk.com/docs/storagegateway_update_nfs_file_share/) for full documentation.
 #'
 #' @param FileShareARN &#91;required&#93; The Amazon Resource Name (ARN) of the file share to be updated.
-#' @param EncryptionType A value that specifies the type of server-side encryption that the file
-#' share will use for the data that it stores in Amazon S3.
+#' @param EncryptionType A value that specifies the type of server-side encryption that the file share will use for the data that it stores in Amazon S3.
 #' 
-#' We recommend using `EncryptionType` instead of `KMSEncrypted` to set the
-#' file share encryption method. You do not need to provide values for both
-#' parameters.
+#' We recommend using `EncryptionType` instead of `KMSEncrypted` to set the file share encryption method. You do not need to provide values for both parameters.
 #' 
-#' If values for both parameters exist in the same request, then the
-#' specified encryption methods must not conflict. For example, if
-#' `EncryptionType` is `SseS3`, then `KMSEncrypted` must be `false`. If
-#' `EncryptionType` is `SseKms` or `DsseKms`, then `KMSEncrypted` must be
-#' `true`.
-#' @param KMSEncrypted Optional. Set to `true` to use Amazon S3 server-side encryption with
-#' your own KMS key (SSE-KMS), or `false` to use a key managed by Amazon S3
-#' (SSE-S3). To use dual-layer encryption (DSSE-KMS), set the
-#' `EncryptionType` parameter instead.
+#' If values for both parameters exist in the same request, then the specified encryption methods must not conflict. For example, if `EncryptionType` is `SseS3`, then `KMSEncrypted` must be `false`. If `EncryptionType` is `SseKms` or `DsseKms`, then `KMSEncrypted` must be `true`.
+#' @param KMSEncrypted Optional. Set to `true` to use Amazon S3 server-side encryption with your own KMS key (SSE-KMS), or `false` to use a key managed by Amazon S3 (SSE-S3). To use dual-layer encryption (DSSE-KMS), set the `EncryptionType` parameter instead.
 #' 
-#' We recommend using `EncryptionType` instead of `KMSEncrypted` to set the
-#' file share encryption method. You do not need to provide values for both
-#' parameters.
+#' We recommend using `EncryptionType` instead of `KMSEncrypted` to set the file share encryption method. You do not need to provide values for both parameters.
 #' 
-#' If values for both parameters exist in the same request, then the
-#' specified encryption methods must not conflict. For example, if
-#' `EncryptionType` is `SseS3`, then `KMSEncrypted` must be `false`. If
-#' `EncryptionType` is `SseKms` or `DsseKms`, then `KMSEncrypted` must be
-#' `true`.
+#' If values for both parameters exist in the same request, then the specified encryption methods must not conflict. For example, if `EncryptionType` is `SseS3`, then `KMSEncrypted` must be `false`. If `EncryptionType` is `SseKms` or `DsseKms`, then `KMSEncrypted` must be `true`.
 #' 
 #' Valid Values: `true` | `false`
-#' @param KMSKey Optional. The Amazon Resource Name (ARN) of a symmetric customer master
-#' key (CMK) used for Amazon S3 server-side encryption. Storage Gateway
-#' does not support asymmetric CMKs. This value must be set if
-#' `KMSEncrypted` is `true`, or if `EncryptionType` is `SseKms` or
-#' `DsseKms`.
+#' @param KMSKey Optional. The Amazon Resource Name (ARN) of a symmetric customer master key (CMK) used for Amazon S3 server-side encryption. Storage Gateway does not support asymmetric CMKs. This value must be set if `KMSEncrypted` is `true`, or if `EncryptionType` is `SseKms` or `DsseKms`.
 #' @param NFSFileShareDefaults The default values for the file share. Optional.
-#' @param DefaultStorageClass The default storage class for objects put into an Amazon S3 bucket by
-#' the S3 File Gateway. The default value is `S3_STANDARD`. Optional.
+#' @param DefaultStorageClass The default storage class for objects put into an Amazon S3 bucket by the S3 File Gateway. The default value is `S3_STANDARD`. Optional.
 #' 
-#' Valid Values: `S3_STANDARD` | `S3_INTELLIGENT_TIERING` |
-#' `S3_STANDARD_IA` | `S3_ONEZONE_IA`
-#' @param ObjectACL A value that sets the access control list (ACL) permission for objects
-#' in the S3 bucket that a S3 File Gateway puts objects into. The default
-#' value is `private`.
-#' @param ClientList The list of clients that are allowed to access the S3 File Gateway. The
-#' list must contain either valid IP addresses or valid CIDR blocks.
+#' Valid Values: `S3_STANDARD` | `S3_INTELLIGENT_TIERING` | `S3_STANDARD_IA` | `S3_ONEZONE_IA`
+#' @param ObjectACL A value that sets the access control list (ACL) permission for objects in the S3 bucket that a S3 File Gateway puts objects into. The default value is `private`.
+#' @param ClientList The list of clients that are allowed to access the S3 File Gateway. The list must contain either valid IPv4/IPv6 addresses or valid CIDR blocks.
 #' @param Squash The user mapped to anonymous user.
 #' 
 #' Valid values are the following:
@@ -3772,49 +3276,30 @@ storagegateway_update_maintenance_start_time <- function(GatewayARN, HourOfDay =
 #' -   `NoSquash`: No one is mapped to anonymous user.
 #' 
 #' -   `AllSquash`: Everyone is mapped to anonymous user.
-#' @param ReadOnly A value that sets the write status of a file share. Set this value to
-#' `true` to set the write status to read-only, otherwise set to `false`.
+#' @param ReadOnly A value that sets the write status of a file share. Set this value to `true` to set the write status to read-only, otherwise set to `false`.
 #' 
 #' Valid Values: `true` | `false`
-#' @param GuessMIMETypeEnabled A value that enables guessing of the MIME type for uploaded objects
-#' based on file extensions. Set this value to `true` to enable MIME type
-#' guessing, otherwise set to `false`. The default value is `true`.
+#' @param GuessMIMETypeEnabled A value that enables guessing of the MIME type for uploaded objects based on file extensions. Set this value to `true` to enable MIME type guessing, otherwise set to `false`. The default value is `true`.
 #' 
 #' Valid Values: `true` | `false`
-#' @param RequesterPays A value that sets who pays the cost of the request and the cost
-#' associated with data download from the S3 bucket. If this value is set
-#' to `true`, the requester pays the costs; otherwise, the S3 bucket owner
-#' pays. However, the S3 bucket owner always pays the cost of storing data.
+#' @param RequesterPays A value that sets who pays the cost of the request and the cost associated with data download from the S3 bucket. If this value is set to `true`, the requester pays the costs; otherwise, the S3 bucket owner pays. However, the S3 bucket owner always pays the cost of storing data.
 #' 
-#' `RequesterPays` is a configuration for the S3 bucket that backs the file
-#' share, so make sure that the configuration on the file share is the same
-#' as the S3 bucket configuration.
+#' `RequesterPays` is a configuration for the S3 bucket that backs the file share, so make sure that the configuration on the file share is the same as the S3 bucket configuration.
 #' 
 #' Valid Values: `true` | `false`
 #' @param FileShareName The name of the file share. Optional.
 #' 
-#' `FileShareName` must be set if an S3 prefix name is set in
-#' `LocationARN`, or if an access point or access point alias is used.
+#' `FileShareName` must be set if an S3 prefix name is set in `LocationARN`, or if an access point or access point alias is used.
 #' 
-#' A valid NFS file share name can only contain the following characters:
-#' `a`-`z`, `A`-`Z`, `0`-`9`, `-`, `.`, and `_`.
+#' A valid NFS file share name can only contain the following characters: `a`-`z`, `A`-`Z`, `0`-`9`, `-`, `.`, and `_`.
 #' @param CacheAttributes Specifies refresh cache information for the file share.
-#' @param NotificationPolicy The notification policy of the file share. `SettlingTimeInSeconds`
-#' controls the number of seconds to wait after the last point in time a
-#' client wrote to a file before generating an `ObjectUploaded`
-#' notification. Because clients can make many small writes to files, it's
-#' best to set this parameter for as long as possible to avoid generating
-#' multiple notifications for the same file in a small time period.
+#' @param NotificationPolicy The notification policy of the file share. `SettlingTimeInSeconds` controls the number of seconds to wait after the last point in time a client wrote to a file before generating an `ObjectUploaded` notification. Because clients can make many small writes to files, it's best to set this parameter for as long as possible to avoid generating multiple notifications for the same file in a small time period.
 #' 
-#' `SettlingTimeInSeconds` has no effect on the timing of the object
-#' uploading to Amazon S3, only the timing of the notification.
+#' `SettlingTimeInSeconds` has no effect on the timing of the object uploading to Amazon S3, only the timing of the notification.
 #' 
-#' This setting is not meant to specify an exact time at which the
-#' notification will be sent. In some cases, the gateway might require more
-#' than the specified delay time to generate and send notifications.
+#' This setting is not meant to specify an exact time at which the notification will be sent. In some cases, the gateway might require more than the specified delay time to generate and send notifications.
 #' 
-#' The following example sets `NotificationPolicy` on with
-#' `SettlingTimeInSeconds` set to 60.
+#' The following example sets `NotificationPolicy` on with `SettlingTimeInSeconds` set to 60.
 #' 
 #' `{\"Upload\": {\"SettlingTimeInSeconds\": 60}}`
 #' 
@@ -3852,136 +3337,68 @@ storagegateway_update_nfs_file_share <- function(FileShareARN, EncryptionType = 
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_update_smb_file_share/](https://www.paws-r-sdk.com/docs/storagegateway_update_smb_file_share/) for full documentation.
 #'
-#' @param FileShareARN &#91;required&#93; The Amazon Resource Name (ARN) of the SMB file share that you want to
-#' update.
-#' @param EncryptionType A value that specifies the type of server-side encryption that the file
-#' share will use for the data that it stores in Amazon S3.
+#' @param FileShareARN &#91;required&#93; The Amazon Resource Name (ARN) of the SMB file share that you want to update.
+#' @param EncryptionType A value that specifies the type of server-side encryption that the file share will use for the data that it stores in Amazon S3.
 #' 
-#' We recommend using `EncryptionType` instead of `KMSEncrypted` to set the
-#' file share encryption method. You do not need to provide values for both
-#' parameters.
+#' We recommend using `EncryptionType` instead of `KMSEncrypted` to set the file share encryption method. You do not need to provide values for both parameters.
 #' 
-#' If values for both parameters exist in the same request, then the
-#' specified encryption methods must not conflict. For example, if
-#' `EncryptionType` is `SseS3`, then `KMSEncrypted` must be `false`. If
-#' `EncryptionType` is `SseKms` or `DsseKms`, then `KMSEncrypted` must be
-#' `true`.
-#' @param KMSEncrypted Optional. Set to `true` to use Amazon S3 server-side encryption with
-#' your own KMS key (SSE-KMS), or `false` to use a key managed by Amazon S3
-#' (SSE-S3). To use dual-layer encryption (DSSE-KMS), set the
-#' `EncryptionType` parameter instead.
+#' If values for both parameters exist in the same request, then the specified encryption methods must not conflict. For example, if `EncryptionType` is `SseS3`, then `KMSEncrypted` must be `false`. If `EncryptionType` is `SseKms` or `DsseKms`, then `KMSEncrypted` must be `true`.
+#' @param KMSEncrypted Optional. Set to `true` to use Amazon S3 server-side encryption with your own KMS key (SSE-KMS), or `false` to use a key managed by Amazon S3 (SSE-S3). To use dual-layer encryption (DSSE-KMS), set the `EncryptionType` parameter instead.
 #' 
-#' We recommend using `EncryptionType` instead of `KMSEncrypted` to set the
-#' file share encryption method. You do not need to provide values for both
-#' parameters.
+#' We recommend using `EncryptionType` instead of `KMSEncrypted` to set the file share encryption method. You do not need to provide values for both parameters.
 #' 
-#' If values for both parameters exist in the same request, then the
-#' specified encryption methods must not conflict. For example, if
-#' `EncryptionType` is `SseS3`, then `KMSEncrypted` must be `false`. If
-#' `EncryptionType` is `SseKms` or `DsseKms`, then `KMSEncrypted` must be
-#' `true`.
+#' If values for both parameters exist in the same request, then the specified encryption methods must not conflict. For example, if `EncryptionType` is `SseS3`, then `KMSEncrypted` must be `false`. If `EncryptionType` is `SseKms` or `DsseKms`, then `KMSEncrypted` must be `true`.
 #' 
 #' Valid Values: `true` | `false`
-#' @param KMSKey Optional. The Amazon Resource Name (ARN) of a symmetric customer master
-#' key (CMK) used for Amazon S3 server-side encryption. Storage Gateway
-#' does not support asymmetric CMKs. This value must be set if
-#' `KMSEncrypted` is `true`, or if `EncryptionType` is `SseKms` or
-#' `DsseKms`.
-#' @param DefaultStorageClass The default storage class for objects put into an Amazon S3 bucket by
-#' the S3 File Gateway. The default value is `S3_STANDARD`. Optional.
+#' @param KMSKey Optional. The Amazon Resource Name (ARN) of a symmetric customer master key (CMK) used for Amazon S3 server-side encryption. Storage Gateway does not support asymmetric CMKs. This value must be set if `KMSEncrypted` is `true`, or if `EncryptionType` is `SseKms` or `DsseKms`.
+#' @param DefaultStorageClass The default storage class for objects put into an Amazon S3 bucket by the S3 File Gateway. The default value is `S3_STANDARD`. Optional.
 #' 
-#' Valid Values: `S3_STANDARD` | `S3_INTELLIGENT_TIERING` |
-#' `S3_STANDARD_IA` | `S3_ONEZONE_IA`
-#' @param ObjectACL A value that sets the access control list (ACL) permission for objects
-#' in the S3 bucket that a S3 File Gateway puts objects into. The default
-#' value is `private`.
-#' @param ReadOnly A value that sets the write status of a file share. Set this value to
-#' `true` to set write status to read-only, otherwise set to `false`.
+#' Valid Values: `S3_STANDARD` | `S3_INTELLIGENT_TIERING` | `S3_STANDARD_IA` | `S3_ONEZONE_IA`
+#' @param ObjectACL A value that sets the access control list (ACL) permission for objects in the S3 bucket that a S3 File Gateway puts objects into. The default value is `private`.
+#' @param ReadOnly A value that sets the write status of a file share. Set this value to `true` to set write status to read-only, otherwise set to `false`.
 #' 
 #' Valid Values: `true` | `false`
-#' @param GuessMIMETypeEnabled A value that enables guessing of the MIME type for uploaded objects
-#' based on file extensions. Set this value to `true` to enable MIME type
-#' guessing, otherwise set to `false`. The default value is `true`.
+#' @param GuessMIMETypeEnabled A value that enables guessing of the MIME type for uploaded objects based on file extensions. Set this value to `true` to enable MIME type guessing, otherwise set to `false`. The default value is `true`.
 #' 
 #' Valid Values: `true` | `false`
-#' @param RequesterPays A value that sets who pays the cost of the request and the cost
-#' associated with data download from the S3 bucket. If this value is set
-#' to `true`, the requester pays the costs; otherwise, the S3 bucket owner
-#' pays. However, the S3 bucket owner always pays the cost of storing data.
+#' @param RequesterPays A value that sets who pays the cost of the request and the cost associated with data download from the S3 bucket. If this value is set to `true`, the requester pays the costs; otherwise, the S3 bucket owner pays. However, the S3 bucket owner always pays the cost of storing data.
 #' 
-#' `RequesterPays` is a configuration for the S3 bucket that backs the file
-#' share, so make sure that the configuration on the file share is the same
-#' as the S3 bucket configuration.
+#' `RequesterPays` is a configuration for the S3 bucket that backs the file share, so make sure that the configuration on the file share is the same as the S3 bucket configuration.
 #' 
 #' Valid Values: `true` | `false`
-#' @param SMBACLEnabled Set this value to `true` to enable access control list (ACL) on the SMB
-#' file share. Set it to `false` to map file and directory permissions to
-#' the POSIX permissions.
+#' @param SMBACLEnabled Set this value to `true` to enable access control list (ACL) on the SMB file share. Set it to `false` to map file and directory permissions to the POSIX permissions.
 #' 
-#' For more information, see [Using Windows ACLs to limit SMB file share
-#' access](https://docs.aws.amazon.com/filegateway/latest/files3/smb-acl.html)
-#' in the *Amazon S3 File Gateway User Guide*.
+#' For more information, see [Using Windows ACLs to limit SMB file share access](https://docs.aws.amazon.com/filegateway/latest/files3/smb-acl.html) in the *Amazon S3 File Gateway User Guide*.
 #' 
 #' Valid Values: `true` | `false`
-#' @param AccessBasedEnumeration The files and folders on this share will only be visible to users with
-#' read access.
-#' @param AdminUserList A list of users or groups in the Active Directory that have
-#' administrator rights to the file share. A group must be prefixed with
-#' the @@ character. Acceptable formats include: `DOMAIN\\User1`, `user1`,
-#' `@@group1`, and `@@DOMAIN\\group1`. Can only be set if Authentication is
-#' set to `ActiveDirectory`.
-#' @param ValidUserList A list of users or groups in the Active Directory that are allowed to
-#' access the file share. A group must be prefixed with the @@ character.
-#' Acceptable formats include: `DOMAIN\\User1`, `user1`, `@@group1`, and
-#' `@@DOMAIN\\group1`. Can only be set if Authentication is set to
-#' `ActiveDirectory`.
-#' @param InvalidUserList A list of users or groups in the Active Directory that are not allowed
-#' to access the file share. A group must be prefixed with the @@ character.
-#' Acceptable formats include: `DOMAIN\\User1`, `user1`, `@@group1`, and
-#' `@@DOMAIN\\group1`. Can only be set if Authentication is set to
-#' `ActiveDirectory`.
+#' @param AccessBasedEnumeration The files and folders on this share will only be visible to users with read access.
+#' @param AdminUserList A list of users or groups in the Active Directory that have administrator rights to the file share. A group must be prefixed with the @@ character. Acceptable formats include: `DOMAIN\\User1`, `user1`, `@@group1`, and `@@DOMAIN\\group1`. Can only be set if Authentication is set to `ActiveDirectory`.
+#' @param ValidUserList A list of users or groups in the Active Directory that are allowed to access the file share. A group must be prefixed with the @@ character. Acceptable formats include: `DOMAIN\\User1`, `user1`, `@@group1`, and `@@DOMAIN\\group1`. Can only be set if Authentication is set to `ActiveDirectory`.
+#' @param InvalidUserList A list of users or groups in the Active Directory that are not allowed to access the file share. A group must be prefixed with the @@ character. Acceptable formats include: `DOMAIN\\User1`, `user1`, `@@group1`, and `@@DOMAIN\\group1`. Can only be set if Authentication is set to `ActiveDirectory`.
 #' @param AuditDestinationARN The Amazon Resource Name (ARN) of the storage used for audit logs.
-#' @param CaseSensitivity The case of an object name in an Amazon S3 bucket. For
-#' `ClientSpecified`, the client determines the case sensitivity. For
-#' `CaseSensitive`, the gateway determines the case sensitivity. The
-#' default value is `ClientSpecified`.
+#' @param CaseSensitivity The case of an object name in an Amazon S3 bucket. For `ClientSpecified`, the client determines the case sensitivity. For `CaseSensitive`, the gateway determines the case sensitivity. The default value is `ClientSpecified`.
 #' @param FileShareName The name of the file share. Optional.
 #' 
-#' `FileShareName` must be set if an S3 prefix name is set in
-#' `LocationARN`, or if an access point or access point alias is used.
+#' `FileShareName` must be set if an S3 prefix name is set in `LocationARN`, or if an access point or access point alias is used.
 #' 
-#' A valid SMB file share name cannot contain the following characters:
-#' `[`,`]`,`#`,`;`,`<`,`>`,`:`,`\"`,`\`,`/`,`|`,`?`,`*`,`+`, or ASCII
-#' control characters `1-31`.
+#' A valid SMB file share name cannot contain the following characters: `[`,`]`,`#`,`;`,`<`,`>`,`:`,`\"`,`\`,`/`,`|`,`?`,`*`,`+`, or ASCII control characters `1-31`.
 #' @param CacheAttributes Specifies refresh cache information for the file share.
-#' @param NotificationPolicy The notification policy of the file share. `SettlingTimeInSeconds`
-#' controls the number of seconds to wait after the last point in time a
-#' client wrote to a file before generating an `ObjectUploaded`
-#' notification. Because clients can make many small writes to files, it's
-#' best to set this parameter for as long as possible to avoid generating
-#' multiple notifications for the same file in a small time period.
+#' @param NotificationPolicy The notification policy of the file share. `SettlingTimeInSeconds` controls the number of seconds to wait after the last point in time a client wrote to a file before generating an `ObjectUploaded` notification. Because clients can make many small writes to files, it's best to set this parameter for as long as possible to avoid generating multiple notifications for the same file in a small time period.
 #' 
-#' `SettlingTimeInSeconds` has no effect on the timing of the object
-#' uploading to Amazon S3, only the timing of the notification.
+#' `SettlingTimeInSeconds` has no effect on the timing of the object uploading to Amazon S3, only the timing of the notification.
 #' 
-#' This setting is not meant to specify an exact time at which the
-#' notification will be sent. In some cases, the gateway might require more
-#' than the specified delay time to generate and send notifications.
+#' This setting is not meant to specify an exact time at which the notification will be sent. In some cases, the gateway might require more than the specified delay time to generate and send notifications.
 #' 
-#' The following example sets `NotificationPolicy` on with
-#' `SettlingTimeInSeconds` set to 60.
+#' The following example sets `NotificationPolicy` on with `SettlingTimeInSeconds` set to 60.
 #' 
 #' `{\"Upload\": {\"SettlingTimeInSeconds\": 60}}`
 #' 
 #' The following example sets `NotificationPolicy` off.
 #' 
 #' `{}`
-#' @param OplocksEnabled Specifies whether opportunistic locking is enabled for the SMB file
-#' share.
+#' @param OplocksEnabled Specifies whether opportunistic locking is enabled for the SMB file share.
 #' 
-#' Enabling opportunistic locking on case-sensitive shares is not
-#' recommended for workloads that involve access to files with the same
-#' name in different case.
+#' Enabling opportunistic locking on case-sensitive shares is not recommended for workloads that involve access to files with the same name in different case.
 #' 
 #' Valid Values: `true` | `false`
 #'
@@ -4015,7 +3432,7 @@ storagegateway_update_smb_file_share <- function(FileShareARN, EncryptionType = 
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_update_smb_file_share_visibility/](https://www.paws-r-sdk.com/docs/storagegateway_update_smb_file_share_visibility/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; 
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
 #' @param FileSharesVisible &#91;required&#93; The shares on this gateway appear when listing shares.
 #'
 #' @keywords internal
@@ -4048,9 +3465,8 @@ storagegateway_update_smb_file_share_visibility <- function(GatewayARN, FileShar
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_update_smb_local_groups/](https://www.paws-r-sdk.com/docs/storagegateway_update_smb_local_groups/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; 
-#' @param SMBLocalGroups &#91;required&#93; A list of Active Directory users and groups that you want to grant
-#' special permissions for SMB file shares on the gateway.
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
+#' @param SMBLocalGroups &#91;required&#93; A list of Active Directory users and groups that you want to grant special permissions for SMB file shares on the gateway.
 #'
 #' @keywords internal
 #'
@@ -4081,30 +3497,16 @@ storagegateway_update_smb_local_groups <- function(GatewayARN, SMBLocalGroups) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_update_smb_security_strategy/](https://www.paws-r-sdk.com/docs/storagegateway_update_smb_security_strategy/) for full documentation.
 #'
-#' @param GatewayARN &#91;required&#93; 
+#' @param GatewayARN &#91;required&#93; The Amazon Resource Name (ARN) of the gateway. Use the [`list_gateways`][storagegateway_list_gateways] operation to return a list of gateways for your account and Amazon Web Services Region.
 #' @param SMBSecurityStrategy &#91;required&#93; Specifies the type of security strategy.
 #' 
-#' `ClientSpecified`: If you choose this option, requests are established
-#' based on what is negotiated by the client. This option is recommended
-#' when you want to maximize compatibility across different clients in your
-#' environment. Supported only for S3 File Gateway.
+#' `ClientSpecified`: If you choose this option, requests are established based on what is negotiated by the client. This option is recommended when you want to maximize compatibility across different clients in your environment. Supported only for S3 File Gateway.
 #' 
-#' `MandatorySigning`: If you choose this option, File Gateway only allows
-#' connections from SMBv2 or SMBv3 clients that have signing enabled. This
-#' option works with SMB clients on Microsoft Windows Vista, Windows Server
-#' 2008 or newer.
+#' `MandatorySigning`: If you choose this option, File Gateway only allows connections from SMBv2 or SMBv3 clients that have signing enabled. This option works with SMB clients on Microsoft Windows Vista, Windows Server 2008 or newer.
 #' 
-#' `MandatoryEncryption`: If you choose this option, File Gateway only
-#' allows connections from SMBv3 clients that have encryption enabled. This
-#' option is recommended for environments that handle sensitive data. This
-#' option works with SMB clients on Microsoft Windows 8, Windows Server
-#' 2012 or newer.
+#' `MandatoryEncryption`: If you choose this option, File Gateway only allows connections from SMBv3 clients that have encryption enabled. This option is recommended for environments that handle sensitive data. This option works with SMB clients on Microsoft Windows 8, Windows Server 2012 or newer.
 #' 
-#' `MandatoryEncryptionNoAes128`: If you choose this option, File Gateway
-#' only allows connections from SMBv3 clients that use 256-bit AES
-#' encryption algorithms. 128-bit algorithms are not allowed. This option
-#' is recommended for environments that handle sensitive data. It works
-#' with SMB clients on Microsoft Windows 8, Windows Server 2012, or later.
+#' `MandatoryEncryptionNoAes128`: If you choose this option, File Gateway only allows connections from SMBv3 clients that use 256-bit AES encryption algorithms. 128-bit algorithms are not allowed. This option is recommended for environments that handle sensitive data. It works with SMB clients on Microsoft Windows 8, Windows Server 2012, or later.
 #'
 #' @keywords internal
 #'
@@ -4135,22 +3537,13 @@ storagegateway_update_smb_security_strategy <- function(GatewayARN, SMBSecurityS
 #'
 #' See [https://www.paws-r-sdk.com/docs/storagegateway_update_snapshot_schedule/](https://www.paws-r-sdk.com/docs/storagegateway_update_snapshot_schedule/) for full documentation.
 #'
-#' @param VolumeARN &#91;required&#93; The Amazon Resource Name (ARN) of the volume. Use the
-#' [`list_volumes`][storagegateway_list_volumes] operation to return a list
-#' of gateway volumes.
-#' @param StartAt &#91;required&#93; The hour of the day at which the snapshot schedule begins represented as
-#' *hh*, where *hh* is the hour (0 to 23). The hour of the day is in the
-#' time zone of the gateway.
+#' @param VolumeARN &#91;required&#93; The Amazon Resource Name (ARN) of the volume. Use the [`list_volumes`][storagegateway_list_volumes] operation to return a list of gateway volumes.
+#' @param StartAt &#91;required&#93; The hour of the day at which the snapshot schedule begins represented as *hh*, where *hh* is the hour (0 to 23). The hour of the day is in the time zone of the gateway.
 #' @param RecurrenceInHours &#91;required&#93; Frequency of snapshots. Specify the number of hours between snapshots.
-#' @param Description Optional description of the snapshot that overwrites the existing
-#' description.
-#' @param Tags A list of up to 50 tags that can be assigned to a snapshot. Each tag is
-#' a key-value pair.
+#' @param Description Optional description of the snapshot that overwrites the existing description.
+#' @param Tags A list of up to 50 tags that can be assigned to a snapshot. Each tag is a key-value pair.
 #' 
-#' Valid characters for key and value are letters, spaces, and numbers
-#' representable in UTF-8 format, and the following special characters: + -
-#' = . _ : / @@. The maximum length of a tag's key is 128 characters, and
-#' the maximum length for a tag's value is 256.
+#' Valid characters for key and value are letters, spaces, and numbers representable in UTF-8 format, and the following special characters: + - = . _ : / @@. The maximum length of a tag's key is 128 characters, and the maximum length for a tag's value is 256.
 #'
 #' @keywords internal
 #'

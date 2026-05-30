@@ -14,31 +14,19 @@ storagegateway_attach_volume(
 )
 }
 \arguments{
-\item{GatewayARN}{[required] The Amazon Resource Name (ARN) of the gateway that you want to attach
-the volume to.}
+\item{GatewayARN}{[required] The Amazon Resource Name (ARN) of the gateway that you want to attach the volume to.}
 
-\item{TargetName}{The name of the iSCSI target used by an initiator to connect to a volume
-and used as a suffix for the target ARN. For example, specifying
-\code{TargetName} as \emph{myvolume} results in the target ARN of
-\verb{arn:aws:storagegateway:us-east-2:111122223333:gateway/sgw-12A3456B/target/iqn.1997-05.com.amazon:myvolume}.
-The target name must be unique across all volumes on a gateway.
+\item{TargetName}{The name of the iSCSI target used by an initiator to connect to a volume and used as a suffix for the target ARN. For example, specifying \code{TargetName} as \emph{myvolume} results in the target ARN of \verb{arn:aws:storagegateway:us-east-2:111122223333:gateway/sgw-12A3456B/target/iqn.1997-05.com.amazon:myvolume}. The target name must be unique across all volumes on a gateway.
 
-If you don't specify a value, Storage Gateway uses the value that was
-previously used for this volume as the new target name.}
+If you don't specify a value, Storage Gateway uses the value that was previously used for this volume as the new target name.}
 
-\item{VolumeARN}{[required] The Amazon Resource Name (ARN) of the volume to attach to the specified
-gateway.}
+\item{VolumeARN}{[required] The Amazon Resource Name (ARN) of the volume to attach to the specified gateway.}
 
-\item{NetworkInterfaceId}{[required] The network interface of the gateway on which to expose the iSCSI
-target. Only IPv4 addresses are accepted. Use
-\code{\link[=storagegateway_describe_gateway_information]{describe_gateway_information}}
-to get a list of the network interfaces available on a gateway.
+\item{NetworkInterfaceId}{[required] The network interface of the gateway on which to expose the iSCSI target. Accepts IPv4 and IPv6 addresses. Use \code{\link[=storagegateway_describe_gateway_information]{describe_gateway_information}} to get a list of the network interfaces available on a gateway.
 
 Valid Values: A valid IP address.}
 
-\item{DiskId}{The unique device ID or other distinguishing data that identifies the
-local disk used to create the volume. This value is only required when
-you are attaching a stored volume.}
+\item{DiskId}{The unique device ID or other distinguishing data that identifies the local disk used to create the volume. This value is only required when you are attaching a stored volume.}
 }
 \description{
 Connects a volume to an iSCSI connection and then attaches the volume to the specified gateway. Detaching and attaching a volume enables you to recover your data from one gateway to a different gateway without creating a snapshot. It also makes it easier to move your volumes from an on-premises gateway to a gateway hosted on an Amazon EC2 instance.

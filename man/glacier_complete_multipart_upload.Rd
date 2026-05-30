@@ -2,9 +2,9 @@
 % Please edit documentation in R/glacier_operations.R
 \name{glacier_complete_multipart_upload}
 \alias{glacier_complete_multipart_upload}
-\title{You call this operation to inform Amazon S3 Glacier (Glacier) that all
-the archive parts have been uploaded and that Glacier can now assemble
-the archive from the uploaded parts}
+\title{You call this operation to inform Amazon Glacier (Glacier) that all the
+archive parts have been uploaded and that Glacier can now assemble the
+archive from the uploaded parts}
 \usage{
 glacier_complete_multipart_upload(
   accountId,
@@ -15,27 +15,18 @@ glacier_complete_multipart_upload(
 )
 }
 \arguments{
-\item{accountId}{[required] The \code{AccountId} value is the AWS account ID of the account that owns the
-vault. You can either specify an AWS account ID or optionally a single
-'\code{-}' (hyphen), in which case Amazon S3 Glacier uses the AWS account ID
-associated with the credentials used to sign the request. If you use an
-account ID, do not include any hyphens ('-') in the ID.}
+\item{accountId}{[required] The \code{AccountId} value is the AWS account ID of the account that owns the vault. You can either specify an AWS account ID or optionally a single '\code{-}' (hyphen), in which case Amazon Glacier uses the AWS account ID associated with the credentials used to sign the request. If you use an account ID, do not include any hyphens ('-') in the ID.}
 
 \item{vaultName}{[required] The name of the vault.}
 
 \item{uploadId}{[required] The upload ID of the multipart upload.}
 
-\item{archiveSize}{The total size, in bytes, of the entire archive. This value should be
-the sum of all the sizes of the individual parts that you uploaded.}
+\item{archiveSize}{The total size, in bytes, of the entire archive. This value should be the sum of all the sizes of the individual parts that you uploaded.}
 
-\item{checksum}{The SHA256 tree hash of the entire archive. It is the tree hash of
-SHA256 tree hash of the individual parts. If the value you specify in
-the request does not match the SHA256 tree hash of the final assembled
-archive as computed by Amazon S3 Glacier (Glacier), Glacier returns an
-error and the request fails.}
+\item{checksum}{The SHA256 tree hash of the entire archive. It is the tree hash of SHA256 tree hash of the individual parts. If the value you specify in the request does not match the SHA256 tree hash of the final assembled archive as computed by Amazon Glacier (Glacier), Glacier returns an error and the request fails.}
 }
 \description{
-You call this operation to inform Amazon S3 Glacier (Glacier) that all the archive parts have been uploaded and that Glacier can now assemble the archive from the uploaded parts. After assembling and saving the archive to the vault, Glacier returns the URI path of the newly created archive resource. Using the URI path, you can then access the archive. After you upload an archive, you should save the archive ID returned to retrieve the archive at a later point. You can also get the vault inventory to obtain a list of archive IDs in a vault. For more information, see \code{\link[=glacier_initiate_job]{initiate_job}}.
+You call this operation to inform Amazon Glacier (Glacier) that all the archive parts have been uploaded and that Glacier can now assemble the archive from the uploaded parts. After assembling and saving the archive to the vault, Glacier returns the URI path of the newly created archive resource. Using the URI path, you can then access the archive. After you upload an archive, you should save the archive ID returned to retrieve the archive at a later point. You can also get the vault inventory to obtain a list of archive IDs in a vault. For more information, see \code{\link[=glacier_initiate_job]{initiate_job}}.
 
 See \url{https://www.paws-r-sdk.com/docs/glacier_complete_multipart_upload/} for full documentation.
 }

@@ -17,17 +17,11 @@ backup_create_legal_hold(
 
 \item{Description}{[required] The description of the legal hold.}
 
-\item{IdempotencyToken}{This is a user-chosen string used to distinguish between otherwise
-identical calls. Retrying a successful request with the same idempotency
-token results in a success message with no action taken.}
+\item{IdempotencyToken}{This is a user-chosen string used to distinguish between otherwise identical calls. Retrying a successful request with the same idempotency token results in a success message with no action taken.}
 
-\item{RecoveryPointSelection}{The criteria to assign a set of resources, such as resource types or
-backup vaults.}
+\item{RecoveryPointSelection}{The criteria to assign a set of resources, such as resource types or backup vaults.}
 
-\item{Tags}{Optional tags to include. A tag is a key-value pair you can use to
-manage, filter, and search for your resources. Allowed characters
-include UTF-8 letters, numbers, spaces, and the following
-characters: + - = . _ : /.}
+\item{Tags}{Optional tags to include. A tag is a key-value pair you can use to manage, filter, and search for your resources. Allowed characters include UTF-8 letters, numbers, spaces, and the following characters: + - = . _ : /.}
 }
 \description{
 Creates a legal hold on a recovery point (backup). A legal hold is a restraint on altering or deleting a backup until an authorized user cancels the legal hold. Any actions to delete or disassociate a recovery point will fail with an error if one or more active legal holds are on the recovery point.

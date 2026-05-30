@@ -12,14 +12,11 @@ backup_update_recovery_point_index_settings(
 )
 }
 \arguments{
-\item{BackupVaultName}{[required] The name of a logical container where backups are stored. Backup vaults
-are identified by names that are unique to the account used to create
-them and the Region where they are created.
+\item{BackupVaultName}{[required] The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Region where they are created.
 
 Accepted characters include lowercase letters, numbers, and hyphens.}
 
-\item{RecoveryPointArn}{[required] An ARN that uniquely identifies a recovery point; for example,
-\verb{arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45}.}
+\item{RecoveryPointArn}{[required] An ARN that uniquely identifies a recovery point; for example, \verb{arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45}.}
 
 \item{IamRoleArn}{This specifies the IAM role ARN used for this operation.
 
@@ -27,8 +24,7 @@ For example, arn:aws:iam::123456789012:role/S3Access}
 
 \item{Index}{[required] Index can have 1 of 2 possible values, either \code{ENABLED} or \code{DISABLED}.
 
-To create a backup index for an eligible \code{ACTIVE} recovery point that
-does not yet have a backup index, set value to \code{ENABLED}.
+To create a backup index for an eligible \code{ACTIVE} recovery point that does not yet have a backup index, set value to \code{ENABLED}.
 
 To delete a backup index, set value to \code{DISABLED}.}
 }

@@ -14,11 +14,7 @@ glacier_upload_multipart_part(
 )
 }
 \arguments{
-\item{accountId}{[required] The \code{AccountId} value is the AWS account ID of the account that owns the
-vault. You can either specify an AWS account ID or optionally a single
-'\code{-}' (hyphen), in which case Amazon S3 Glacier uses the AWS account ID
-associated with the credentials used to sign the request. If you use an
-account ID, do not include any hyphens ('-') in the ID.}
+\item{accountId}{[required] The \code{AccountId} value is the AWS account ID of the account that owns the vault. You can either specify an AWS account ID or optionally a single '\code{-}' (hyphen), in which case Amazon Glacier uses the AWS account ID associated with the credentials used to sign the request. If you use an account ID, do not include any hyphens ('-') in the ID.}
 
 \item{vaultName}{[required] The name of the vault.}
 
@@ -26,10 +22,7 @@ account ID, do not include any hyphens ('-') in the ID.}
 
 \item{checksum}{The SHA256 tree hash of the data being uploaded.}
 
-\item{range}{Identifies the range of bytes in the assembled archive that will be
-uploaded in this part. Amazon S3 Glacier uses this information to
-assemble the archive in the proper sequence. The format of this header
-follows RFC 2616. An example header is Content-Range:bytes 0-4194303/*.}
+\item{range}{Identifies the range of bytes in the assembled archive that will be uploaded in this part. Amazon Glacier uses this information to assemble the archive in the proper sequence. The format of this header follows RFC 2616. An example header is Content-Range:bytes 0-4194303/*.}
 
 \item{body}{The data to upload.}
 }

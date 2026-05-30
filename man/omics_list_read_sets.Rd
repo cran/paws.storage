@@ -2,7 +2,8 @@
 % Please edit documentation in R/omics_operations.R
 \name{omics_list_read_sets}
 \alias{omics_list_read_sets}
-\title{Retrieves a list of read sets}
+\title{Retrieves a list of read sets from a sequence store ID and returns the
+metadata in JSON format}
 \usage{
 omics_list_read_sets(
   sequenceStoreId,
@@ -16,13 +17,12 @@ omics_list_read_sets(
 
 \item{maxResults}{The maximum number of read sets to return in one page of results.}
 
-\item{nextToken}{Specify the pagination token from a previous request to retrieve the
-next page of results.}
+\item{nextToken}{Specify the pagination token from a previous request to retrieve the next page of results.}
 
 \item{filter}{A filter to apply to the list.}
 }
 \description{
-Retrieves a list of read sets.
+Retrieves a list of read sets from a sequence store ID and returns the metadata in JSON format.
 
 See \url{https://www.paws-r-sdk.com/docs/omics_list_read_sets/} for full documentation.
 }

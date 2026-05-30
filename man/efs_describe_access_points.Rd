@@ -13,19 +13,13 @@ efs_describe_access_points(
 )
 }
 \arguments{
-\item{MaxResults}{(Optional) When retrieving all access points for a file system, you can
-optionally specify the \code{MaxItems} parameter to limit the number of
-objects returned in a response. The default value is 100.}
+\item{MaxResults}{(Optional) When retrieving all access points for a file system, you can optionally specify the \code{MaxItems} parameter to limit the number of objects returned in a response. The default value is 100.}
 
-\item{NextToken}{\code{NextToken} is present if the response is paginated. You can use
-\code{NextMarker} in the subsequent request to fetch the next page of access
-point descriptions.}
+\item{NextToken}{\code{NextToken} is present if the response is paginated. You can use \code{NextMarker} in the subsequent request to fetch the next page of access point descriptions.}
 
-\item{AccessPointId}{(Optional) Specifies an EFS access point to describe in the response;
-mutually exclusive with \code{FileSystemId}.}
+\item{AccessPointId}{(Optional) Specifies an EFS access point to describe in the response; mutually exclusive with \code{FileSystemId}.}
 
-\item{FileSystemId}{(Optional) If you provide a \code{FileSystemId}, EFS returns all access
-points for that file system; mutually exclusive with \code{AccessPointId}.}
+\item{FileSystemId}{(Optional) If you provide a \code{FileSystemId}, EFS returns all access points for that file system; mutually exclusive with \code{AccessPointId}.}
 }
 \description{
 Returns the description of a specific Amazon EFS access point if the \code{AccessPointId} is provided. If you provide an EFS \code{FileSystemId}, it returns descriptions of all access points for that file system. You can provide either an \code{AccessPointId} or a \code{FileSystemId} in the request, but not both.

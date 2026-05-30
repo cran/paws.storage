@@ -2,7 +2,8 @@
 % Please edit documentation in R/s3_operations.R
 \name{s3_create_multipart_upload}
 \alias{s3_create_multipart_upload}
-\title{This action initiates a multipart upload and returns an upload ID}
+\title{End of support notice: As of October 1, 2025, Amazon S3 has discontinued
+support for Email Grantee Access Control Lists (ACLs)}
 \usage{
 s3_create_multipart_upload(
   ACL = NULL,
@@ -39,70 +40,31 @@ s3_create_multipart_upload(
 )
 }
 \arguments{
-\item{ACL}{The canned ACL to apply to the object. Amazon S3 supports a set of
-predefined ACLs, known as \emph{canned ACLs}. Each canned ACL has a
-predefined set of grantees and permissions. For more information, see
-\href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/acl-overview.html#CannedACL}{Canned ACL}
-in the \emph{Amazon S3 User Guide}.
+\item{ACL}{The canned ACL to apply to the object. Amazon S3 supports a set of predefined ACLs, known as \emph{canned ACLs}. Each canned ACL has a predefined set of grantees and permissions. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/acl-overview.html#CannedACL}{Canned ACL} in the \emph{Amazon S3 User Guide}.
 
-By default, all objects are private. Only the owner has full access
-control. When uploading an object, you can grant access permissions to
-individual Amazon Web Services accounts or to predefined groups defined
-by Amazon S3. These permissions are then added to the access control
-list (ACL) on the new object. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/acl-overview.html}{Using ACLs}.
-One way to grant the permissions using the request headers is to specify
-a canned ACL with the \code{x-amz-acl} request header.
+By default, all objects are private. Only the owner has full access control. When uploading an object, you can grant access permissions to individual Amazon Web Services accounts or to predefined groups defined by Amazon S3. These permissions are then added to the access control list (ACL) on the new object. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/acl-overview.html}{Using ACLs}. One way to grant the permissions using the request headers is to specify a canned ACL with the \code{x-amz-acl} request header.
 \itemize{
 \item This functionality is not supported for directory buckets.
 \item This functionality is not supported for Amazon S3 on Outposts.
 }}
 
-\item{Bucket}{[required] The name of the bucket where the multipart upload is initiated and where
-the object is uploaded.
+\item{Bucket}{[required] The name of the bucket where the multipart upload is initiated and where the object is uploaded.
 
-\strong{Directory buckets} - When you use this operation with a directory
-bucket, you must use virtual-hosted-style requests in the format
-\code{ Bucket-name.s3express-zone-id.region-code.amazonaws.com}. Path-style
-requests are not supported. Directory bucket names must be unique in the
-chosen Zone (Availability Zone or Local Zone). Bucket names must follow
-the format \code{ bucket-base-name--zone-id--x-s3} (for example,
-\code{ amzn-s3-demo-bucket--usw2-az1--x-s3}). For information about bucket
-naming restrictions, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-bucket-naming-rules.html}{Directory bucket naming rules}
-in the \emph{Amazon S3 User Guide}.
+\strong{Directory buckets} - When you use this operation with a directory bucket, you must use virtual-hosted-style requests in the format \code{ Bucket-name.s3express-zone-id.region-code.amazonaws.com}. Path-style requests are not supported. Directory bucket names must be unique in the chosen Zone (Availability Zone or Local Zone). Bucket names must follow the format \code{ bucket-base-name--zone-id--x-s3} (for example, \code{ amzn-s3-demo-bucket--usw2-az1--x-s3}). For information about bucket naming restrictions, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-bucket-naming-rules.html}{Directory bucket naming rules} in the \emph{Amazon S3 User Guide}.
 
-\strong{Access points} - When you use this action with an access point, you
-must provide the alias of the access point in place of the bucket name
-or specify the access point ARN. When using the access point ARN, you
-must direct requests to the access point hostname. The access point
-hostname takes the form
-\emph{AccessPointName}-\emph{AccountId}.s3-accesspoint.\emph{Region}.amazonaws.com.
-When using this action with an access point through the Amazon Web
-Services SDKs, you provide the access point ARN in place of the bucket
-name. For more information about access point ARNs, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-access-points.html}{Using access points}
-in the \emph{Amazon S3 User Guide}.
+\strong{Access points} - When you use this action with an access point for general purpose buckets, you must provide the alias of the access point in place of the bucket name or specify the access point ARN. When you use this action with an access point for directory buckets, you must provide the access point name in place of the bucket name. When using the access point ARN, you must direct requests to the access point hostname. The access point hostname takes the form \emph{AccessPointName}-\emph{AccountId}.s3-accesspoint.\emph{Region}.amazonaws.com. When using this action with an access point through the Amazon Web Services SDKs, you provide the access point ARN in place of the bucket name. For more information about access point ARNs, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-access-points.html}{Using access points} in the \emph{Amazon S3 User Guide}.
 
-Access points and Object Lambda access points are not supported by
-directory buckets.
+Object Lambda access points are not supported by directory buckets.
 
-\strong{S3 on Outposts} - When you use this action with S3 on Outposts, you
-must direct requests to the S3 on Outposts hostname. The S3 on Outposts
-hostname takes the form
-\code{ AccessPointName-AccountId.outpostID.s3-outposts.Region.amazonaws.com}.
-When you use this action with S3 on Outposts, the destination bucket
-must be the Outposts access point ARN or the access point alias. For
-more information about S3 on Outposts, see \href{https://docs.aws.amazon.com/AmazonS3/latest/s3-outposts/S3onOutposts.html}{What is S3 on Outposts?}
-in the \emph{Amazon S3 User Guide}.}
+\strong{S3 on Outposts} - When you use this action with S3 on Outposts, you must direct requests to the S3 on Outposts hostname. The S3 on Outposts hostname takes the form \code{ AccessPointName-AccountId.outpostID.s3-outposts.Region.amazonaws.com}. When you use this action with S3 on Outposts, the destination bucket must be the Outposts access point ARN or the access point alias. For more information about S3 on Outposts, see \href{https://docs.aws.amazon.com/AmazonS3/latest/s3-outposts/S3onOutposts.html}{What is S3 on Outposts?} in the \emph{Amazon S3 User Guide}.}
 
 \item{CacheControl}{Specifies caching behavior along the request/reply chain.}
 
 \item{ContentDisposition}{Specifies presentational information for the object.}
 
-\item{ContentEncoding}{Specifies what content encodings have been applied to the object and
-thus what decoding mechanisms must be applied to obtain the media-type
-referenced by the Content-Type header field.
+\item{ContentEncoding}{Specifies what content encodings have been applied to the object and thus what decoding mechanisms must be applied to obtain the media-type referenced by the Content-Type header field.
 
-For directory buckets, only the \code{aws-chunked} value is supported in this
-header field.}
+For directory buckets, only the \code{aws-chunked} value is supported in this header field.}
 
 \item{ContentLanguage}{The language that the content is in.}
 
@@ -110,27 +72,17 @@ header field.}
 
 \item{Expires}{The date and time at which the object is no longer cacheable.}
 
-\item{GrantFullControl}{Specify access permissions explicitly to give the grantee READ,
-READ_ACP, and WRITE_ACP permissions on the object.
+\item{GrantFullControl}{Specify access permissions explicitly to give the grantee READ, READ_ACP, and WRITE_ACP permissions on the object.
 
-By default, all objects are private. Only the owner has full access
-control. When uploading an object, you can use this header to explicitly
-grant access permissions to specific Amazon Web Services accounts or
-groups. This header maps to specific permissions that Amazon S3 supports
-in an ACL. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/acl-overview.html}{Access Control List (ACL) Overview}
-in the \emph{Amazon S3 User Guide}.
+By default, all objects are private. Only the owner has full access control. When uploading an object, you can use this header to explicitly grant access permissions to specific Amazon Web Services accounts or groups. This header maps to specific permissions that Amazon S3 supports in an ACL. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/acl-overview.html}{Access Control List (ACL) Overview} in the \emph{Amazon S3 User Guide}.
 
-You specify each grantee as a type=value pair, where the type is one of
-the following:
+You specify each grantee as a type=value pair, where the type is one of the following:
 \itemize{
-\item \code{id} – if the value specified is the canonical user ID of an Amazon
-Web Services account
+\item \code{id} – if the value specified is the canonical user ID of an Amazon Web Services account
 \item \code{uri} – if you are granting permissions to a predefined group
-\item \code{emailAddress} – if the value specified is the email address of an
-Amazon Web Services account
+\item \code{emailAddress} – if the value specified is the email address of an Amazon Web Services account
 
-Using email addresses to specify a grantee is only supported in the
-following Amazon Web Services Regions:
+Using email addresses to specify a grantee is only supported in the following Amazon Web Services Regions:
 \itemize{
 \item US East (N. Virginia)
 \item US West (N. California)
@@ -142,14 +94,10 @@ following Amazon Web Services Regions:
 \item South America (São Paulo)
 }
 
-For a list of all the Amazon S3 supported Regions and endpoints, see
-\href{https://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region}{Regions and Endpoints}
-in the Amazon Web Services General Reference.
+For a list of all the Amazon S3 supported Regions and endpoints, see \href{https://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region}{Regions and Endpoints} in the Amazon Web Services General Reference.
 }
 
-For example, the following \code{x-amz-grant-read} header grants the Amazon
-Web Services accounts identified by account IDs permissions to read
-object data and its metadata:
+For example, the following \code{x-amz-grant-read} header grants the Amazon Web Services accounts identified by account IDs permissions to read object data and its metadata:
 
 \verb{x-amz-grant-read: id="11112222333", id="444455556666" }
 \itemize{
@@ -157,27 +105,17 @@ object data and its metadata:
 \item This functionality is not supported for Amazon S3 on Outposts.
 }}
 
-\item{GrantRead}{Specify access permissions explicitly to allow grantee to read the
-object data and its metadata.
+\item{GrantRead}{Specify access permissions explicitly to allow grantee to read the object data and its metadata.
 
-By default, all objects are private. Only the owner has full access
-control. When uploading an object, you can use this header to explicitly
-grant access permissions to specific Amazon Web Services accounts or
-groups. This header maps to specific permissions that Amazon S3 supports
-in an ACL. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/acl-overview.html}{Access Control List (ACL) Overview}
-in the \emph{Amazon S3 User Guide}.
+By default, all objects are private. Only the owner has full access control. When uploading an object, you can use this header to explicitly grant access permissions to specific Amazon Web Services accounts or groups. This header maps to specific permissions that Amazon S3 supports in an ACL. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/acl-overview.html}{Access Control List (ACL) Overview} in the \emph{Amazon S3 User Guide}.
 
-You specify each grantee as a type=value pair, where the type is one of
-the following:
+You specify each grantee as a type=value pair, where the type is one of the following:
 \itemize{
-\item \code{id} – if the value specified is the canonical user ID of an Amazon
-Web Services account
+\item \code{id} – if the value specified is the canonical user ID of an Amazon Web Services account
 \item \code{uri} – if you are granting permissions to a predefined group
-\item \code{emailAddress} – if the value specified is the email address of an
-Amazon Web Services account
+\item \code{emailAddress} – if the value specified is the email address of an Amazon Web Services account
 
-Using email addresses to specify a grantee is only supported in the
-following Amazon Web Services Regions:
+Using email addresses to specify a grantee is only supported in the following Amazon Web Services Regions:
 \itemize{
 \item US East (N. Virginia)
 \item US West (N. California)
@@ -189,14 +127,10 @@ following Amazon Web Services Regions:
 \item South America (São Paulo)
 }
 
-For a list of all the Amazon S3 supported Regions and endpoints, see
-\href{https://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region}{Regions and Endpoints}
-in the Amazon Web Services General Reference.
+For a list of all the Amazon S3 supported Regions and endpoints, see \href{https://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region}{Regions and Endpoints} in the Amazon Web Services General Reference.
 }
 
-For example, the following \code{x-amz-grant-read} header grants the Amazon
-Web Services accounts identified by account IDs permissions to read
-object data and its metadata:
+For example, the following \code{x-amz-grant-read} header grants the Amazon Web Services accounts identified by account IDs permissions to read object data and its metadata:
 
 \verb{x-amz-grant-read: id="11112222333", id="444455556666" }
 \itemize{
@@ -204,27 +138,17 @@ object data and its metadata:
 \item This functionality is not supported for Amazon S3 on Outposts.
 }}
 
-\item{GrantReadACP}{Specify access permissions explicitly to allows grantee to read the
-object ACL.
+\item{GrantReadACP}{Specify access permissions explicitly to allows grantee to read the object ACL.
 
-By default, all objects are private. Only the owner has full access
-control. When uploading an object, you can use this header to explicitly
-grant access permissions to specific Amazon Web Services accounts or
-groups. This header maps to specific permissions that Amazon S3 supports
-in an ACL. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/acl-overview.html}{Access Control List (ACL) Overview}
-in the \emph{Amazon S3 User Guide}.
+By default, all objects are private. Only the owner has full access control. When uploading an object, you can use this header to explicitly grant access permissions to specific Amazon Web Services accounts or groups. This header maps to specific permissions that Amazon S3 supports in an ACL. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/acl-overview.html}{Access Control List (ACL) Overview} in the \emph{Amazon S3 User Guide}.
 
-You specify each grantee as a type=value pair, where the type is one of
-the following:
+You specify each grantee as a type=value pair, where the type is one of the following:
 \itemize{
-\item \code{id} – if the value specified is the canonical user ID of an Amazon
-Web Services account
+\item \code{id} – if the value specified is the canonical user ID of an Amazon Web Services account
 \item \code{uri} – if you are granting permissions to a predefined group
-\item \code{emailAddress} – if the value specified is the email address of an
-Amazon Web Services account
+\item \code{emailAddress} – if the value specified is the email address of an Amazon Web Services account
 
-Using email addresses to specify a grantee is only supported in the
-following Amazon Web Services Regions:
+Using email addresses to specify a grantee is only supported in the following Amazon Web Services Regions:
 \itemize{
 \item US East (N. Virginia)
 \item US West (N. California)
@@ -236,14 +160,10 @@ following Amazon Web Services Regions:
 \item South America (São Paulo)
 }
 
-For a list of all the Amazon S3 supported Regions and endpoints, see
-\href{https://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region}{Regions and Endpoints}
-in the Amazon Web Services General Reference.
+For a list of all the Amazon S3 supported Regions and endpoints, see \href{https://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region}{Regions and Endpoints} in the Amazon Web Services General Reference.
 }
 
-For example, the following \code{x-amz-grant-read} header grants the Amazon
-Web Services accounts identified by account IDs permissions to read
-object data and its metadata:
+For example, the following \code{x-amz-grant-read} header grants the Amazon Web Services accounts identified by account IDs permissions to read object data and its metadata:
 
 \verb{x-amz-grant-read: id="11112222333", id="444455556666" }
 \itemize{
@@ -251,27 +171,17 @@ object data and its metadata:
 \item This functionality is not supported for Amazon S3 on Outposts.
 }}
 
-\item{GrantWriteACP}{Specify access permissions explicitly to allows grantee to allow grantee
-to write the ACL for the applicable object.
+\item{GrantWriteACP}{Specify access permissions explicitly to allows grantee to allow grantee to write the ACL for the applicable object.
 
-By default, all objects are private. Only the owner has full access
-control. When uploading an object, you can use this header to explicitly
-grant access permissions to specific Amazon Web Services accounts or
-groups. This header maps to specific permissions that Amazon S3 supports
-in an ACL. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/acl-overview.html}{Access Control List (ACL) Overview}
-in the \emph{Amazon S3 User Guide}.
+By default, all objects are private. Only the owner has full access control. When uploading an object, you can use this header to explicitly grant access permissions to specific Amazon Web Services accounts or groups. This header maps to specific permissions that Amazon S3 supports in an ACL. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/acl-overview.html}{Access Control List (ACL) Overview} in the \emph{Amazon S3 User Guide}.
 
-You specify each grantee as a type=value pair, where the type is one of
-the following:
+You specify each grantee as a type=value pair, where the type is one of the following:
 \itemize{
-\item \code{id} – if the value specified is the canonical user ID of an Amazon
-Web Services account
+\item \code{id} – if the value specified is the canonical user ID of an Amazon Web Services account
 \item \code{uri} – if you are granting permissions to a predefined group
-\item \code{emailAddress} – if the value specified is the email address of an
-Amazon Web Services account
+\item \code{emailAddress} – if the value specified is the email address of an Amazon Web Services account
 
-Using email addresses to specify a grantee is only supported in the
-following Amazon Web Services Regions:
+Using email addresses to specify a grantee is only supported in the following Amazon Web Services Regions:
 \itemize{
 \item US East (N. Virginia)
 \item US West (N. California)
@@ -283,14 +193,10 @@ following Amazon Web Services Regions:
 \item South America (São Paulo)
 }
 
-For a list of all the Amazon S3 supported Regions and endpoints, see
-\href{https://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region}{Regions and Endpoints}
-in the Amazon Web Services General Reference.
+For a list of all the Amazon S3 supported Regions and endpoints, see \href{https://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region}{Regions and Endpoints} in the Amazon Web Services General Reference.
 }
 
-For example, the following \code{x-amz-grant-read} header grants the Amazon
-Web Services accounts identified by account IDs permissions to read
-object data and its metadata:
+For example, the following \code{x-amz-grant-read} header grants the Amazon Web Services accounts identified by account IDs permissions to read object data and its metadata:
 
 \verb{x-amz-grant-read: id="11112222333", id="444455556666" }
 \itemize{
@@ -302,154 +208,63 @@ object data and its metadata:
 
 \item{Metadata}{A map of metadata to store with the object in S3.}
 
-\item{ServerSideEncryption}{The server-side encryption algorithm used when you store this object in
-Amazon S3 (for example, \code{AES256}, \code{aws:kms}).
+\item{ServerSideEncryption}{The server-side encryption algorithm used when you store this object in Amazon S3 or Amazon FSx.
 \itemize{
-\item \strong{Directory buckets} - For directory buckets, there are only two
-supported options for server-side encryption: server-side encryption
-with Amazon S3 managed keys (SSE-S3) (\code{AES256}) and server-side
-encryption with KMS keys (SSE-KMS) (\code{aws:kms}). We recommend that
-the bucket's default encryption uses the desired encryption
-configuration and you don't override the bucket default encryption
-in your \code{\link[=s3_create_session]{create_session}} requests or \code{PUT}
-object requests. Then, new objects are automatically encrypted with
-the desired encryption settings. For more information, see
-\href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/}{Protecting data with server-side encryption}
-in the \emph{Amazon S3 User Guide}. For more information about the
-encryption overriding behaviors in directory buckets, see
-\href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-specifying-kms-encryption.html}{Specifying server-side encryption with KMS for new object uploads}.
+\item \strong{Directory buckets} - For directory buckets, there are only two supported options for server-side encryption: server-side encryption with Amazon S3 managed keys (SSE-S3) (\code{AES256}) and server-side encryption with KMS keys (SSE-KMS) (\code{aws:kms}). We recommend that the bucket's default encryption uses the desired encryption configuration and you don't override the bucket default encryption in your \code{\link[=s3_create_session]{create_session}} requests or \code{PUT} object requests. Then, new objects are automatically encrypted with the desired encryption settings. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/}{Protecting data with server-side encryption} in the \emph{Amazon S3 User Guide}. For more information about the encryption overriding behaviors in directory buckets, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-specifying-kms-encryption.html}{Specifying server-side encryption with KMS for new object uploads}.
 
-In the Zonal endpoint API calls (except
-\code{\link[=s3_copy_object]{copy_object}} and
-\code{\link[=s3_upload_part_copy]{upload_part_copy}}) using the REST API, the
-encryption request headers must match the encryption settings that
-are specified in the \code{\link[=s3_create_session]{create_session}} request.
-You can't override the values of the encryption settings
-(\code{x-amz-server-side-encryption},
-\code{x-amz-server-side-encryption-aws-kms-key-id},
-\code{x-amz-server-side-encryption-context}, and
-\code{x-amz-server-side-encryption-bucket-key-enabled}) that are
-specified in the \code{\link[=s3_create_session]{create_session}} request. You
-don't need to explicitly specify these encryption settings values in
-Zonal endpoint API calls, and Amazon S3 will use the encryption
-settings values from the \code{\link[=s3_create_session]{create_session}}
-request to protect new objects in the directory bucket.
+In the Zonal endpoint API calls (except \code{\link[=s3_copy_object]{copy_object}} and \code{\link[=s3_upload_part_copy]{upload_part_copy}}) using the REST API, the encryption request headers must match the encryption settings that are specified in the \code{\link[=s3_create_session]{create_session}} request. You can't override the values of the encryption settings (\code{x-amz-server-side-encryption}, \code{x-amz-server-side-encryption-aws-kms-key-id}, \code{x-amz-server-side-encryption-context}, and \code{x-amz-server-side-encryption-bucket-key-enabled}) that are specified in the \code{\link[=s3_create_session]{create_session}} request. You don't need to explicitly specify these encryption settings values in Zonal endpoint API calls, and Amazon S3 will use the encryption settings values from the \code{\link[=s3_create_session]{create_session}} request to protect new objects in the directory bucket.
 
-When you use the CLI or the Amazon Web Services SDKs, for
-\code{\link[=s3_create_session]{create_session}}, the session token refreshes
-automatically to avoid service interruptions when a session expires.
-The CLI or the Amazon Web Services SDKs use the bucket's default
-encryption configuration for the
-\code{\link[=s3_create_session]{create_session}} request. It's not supported to
-override the encryption settings values in the
-\code{\link[=s3_create_session]{create_session}} request. So in the Zonal
-endpoint API calls (except \code{\link[=s3_copy_object]{copy_object}} and
-\code{\link[=s3_upload_part_copy]{upload_part_copy}}), the encryption request
-headers must match the default encryption configuration of the
-directory bucket.
+When you use the CLI or the Amazon Web Services SDKs, for \code{\link[=s3_create_session]{create_session}}, the session token refreshes automatically to avoid service interruptions when a session expires. The CLI or the Amazon Web Services SDKs use the bucket's default encryption configuration for the \code{\link[=s3_create_session]{create_session}} request. It's not supported to override the encryption settings values in the \code{\link[=s3_create_session]{create_session}} request. So in the Zonal endpoint API calls (except \code{\link[=s3_copy_object]{copy_object}} and \code{\link[=s3_upload_part_copy]{upload_part_copy}}), the encryption request headers must match the default encryption configuration of the directory bucket.
+\item \strong{S3 access points for Amazon FSx} - When accessing data stored in Amazon FSx file systems using S3 access points, the only valid server side encryption option is \code{aws:fsx}. All Amazon FSx file systems have encryption configured by default and are encrypted at rest. Data is automatically encrypted before being written to the file system, and automatically decrypted as it is read. These processes are handled transparently by Amazon FSx.
 }}
 
-\item{StorageClass}{By default, Amazon S3 uses the STANDARD Storage Class to store newly
-created objects. The STANDARD storage class provides high durability and
-high availability. Depending on performance needs, you can specify a
-different Storage Class. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html}{Storage Classes}
-in the \emph{Amazon S3 User Guide}.
+\item{StorageClass}{By default, Amazon S3 uses the STANDARD Storage Class to store newly created objects. The STANDARD storage class provides high durability and high availability. Depending on performance needs, you can specify a different Storage Class. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html}{Storage Classes} in the \emph{Amazon S3 User Guide}.
 \itemize{
-\item For directory buckets, only the S3 Express One Zone storage class is
-supported to store newly created objects.
+\item Directory buckets only support \code{EXPRESS_ONEZONE} (the S3 Express One Zone storage class) in Availability Zones and \code{ONEZONE_IA} (the S3 One Zone-Infrequent Access storage class) in Dedicated Local Zones.
 \item Amazon S3 on Outposts only uses the OUTPOSTS Storage Class.
 }}
 
-\item{WebsiteRedirectLocation}{If the bucket is configured as a website, redirects requests for this
-object to another object in the same bucket or to an external URL.
-Amazon S3 stores the value of this header in the object metadata.
+\item{WebsiteRedirectLocation}{If the bucket is configured as a website, redirects requests for this object to another object in the same bucket or to an external URL. Amazon S3 stores the value of this header in the object metadata.
 
 This functionality is not supported for directory buckets.}
 
-\item{SSECustomerAlgorithm}{Specifies the algorithm to use when encrypting the object (for example,
-AES256).
+\item{SSECustomerAlgorithm}{Specifies the algorithm to use when encrypting the object (for example, AES256).
 
 This functionality is not supported for directory buckets.}
 
-\item{SSECustomerKey}{Specifies the customer-provided encryption key for Amazon S3 to use in
-encrypting data. This value is used to store the object and then it is
-discarded; Amazon S3 does not store the encryption key. The key must be
-appropriate for use with the algorithm specified in the
-\code{x-amz-server-side-encryption-customer-algorithm} header.
+\item{SSECustomerKey}{Specifies the customer-provided encryption key for Amazon S3 to use in encrypting data. This value is used to store the object and then it is discarded; Amazon S3 does not store the encryption key. The key must be appropriate for use with the algorithm specified in the \code{x-amz-server-side-encryption-customer-algorithm} header.
 
 This functionality is not supported for directory buckets.}
 
-\item{SSECustomerKeyMD5}{Specifies the 128-bit MD5 digest of the customer-provided encryption key
-according to RFC 1321. Amazon S3 uses this header for a message
-integrity check to ensure that the encryption key was transmitted
-without error.
+\item{SSECustomerKeyMD5}{Specifies the 128-bit MD5 digest of the customer-provided encryption key according to RFC 1321. Amazon S3 uses this header for a message integrity check to ensure that the encryption key was transmitted without error.
 
 This functionality is not supported for directory buckets.}
 
-\item{SSEKMSKeyId}{Specifies the KMS key ID (Key ID, Key ARN, or Key Alias) to use for
-object encryption. If the KMS key doesn't exist in the same account
-that's issuing the command, you must use the full Key ARN not the Key
-ID.
+\item{SSEKMSKeyId}{Specifies the KMS key ID (Key ID, Key ARN, or Key Alias) to use for object encryption. If the KMS key doesn't exist in the same account that's issuing the command, you must use the full Key ARN not the Key ID.
 
-\strong{General purpose buckets} - If you specify
-\code{x-amz-server-side-encryption} with \code{aws:kms} or \code{aws:kms:dsse}, this
-header specifies the ID (Key ID, Key ARN, or Key Alias) of the KMS key
-to use. If you specify \code{x-amz-server-side-encryption:aws:kms} or
-\code{x-amz-server-side-encryption:aws:kms:dsse}, but do not provide
-\code{x-amz-server-side-encryption-aws-kms-key-id}, Amazon S3 uses the Amazon
-Web Services managed key (\code{aws/s3}) to protect the data.
+\strong{General purpose buckets} - If you specify \code{x-amz-server-side-encryption} with \code{aws:kms} or \code{aws:kms:dsse}, this header specifies the ID (Key ID, Key ARN, or Key Alias) of the KMS key to use. If you specify \code{x-amz-server-side-encryption:aws:kms} or \code{x-amz-server-side-encryption:aws:kms:dsse}, but do not provide \code{x-amz-server-side-encryption-aws-kms-key-id}, Amazon S3 uses the Amazon Web Services managed key (\code{aws/s3}) to protect the data.
 
-\strong{Directory buckets} - To encrypt data using SSE-KMS, it's recommended
-to specify the \code{x-amz-server-side-encryption} header to \code{aws:kms}. Then,
-the \code{x-amz-server-side-encryption-aws-kms-key-id} header implicitly uses
-the bucket's default KMS customer managed key ID. If you want to
-explicitly set the \code{ x-amz-server-side-encryption-aws-kms-key-id}
-header, it must match the bucket's default customer managed key (using
-key ID or ARN, not alias). Your SSE-KMS configuration can only support 1
-\href{https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-cmk}{customer managed key}
-per directory bucket's lifetime. The \href{https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-cmk}{Amazon Web Services managed key}
-(\code{aws/s3}) isn't supported. Incorrect key specification results in an
-HTTP \verb{400 Bad Request} error.}
+\strong{Directory buckets} - To encrypt data using SSE-KMS, it's recommended to specify the \code{x-amz-server-side-encryption} header to \code{aws:kms}. Then, the \code{x-amz-server-side-encryption-aws-kms-key-id} header implicitly uses the bucket's default KMS customer managed key ID. If you want to explicitly set the \code{ x-amz-server-side-encryption-aws-kms-key-id} header, it must match the bucket's default customer managed key (using key ID or ARN, not alias). Your SSE-KMS configuration can only support 1 \href{https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-cmk}{customer managed key} per directory bucket's lifetime. The \href{https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-cmk}{Amazon Web Services managed key} (\code{aws/s3}) isn't supported. Incorrect key specification results in an HTTP \verb{400 Bad Request} error.}
 
-\item{SSEKMSEncryptionContext}{Specifies the Amazon Web Services KMS Encryption Context to use for
-object encryption. The value of this header is a Base64 encoded string
-of a UTF-8 encoded JSON, which contains the encryption context as
-key-value pairs.
+\item{SSEKMSEncryptionContext}{Specifies the Amazon Web Services KMS Encryption Context to use for object encryption. The value of this header is a Base64 encoded string of a UTF-8 encoded JSON, which contains the encryption context as key-value pairs.
 
-\strong{Directory buckets} - You can optionally provide an explicit
-encryption context value. The value must match the default encryption
-context - the bucket Amazon Resource Name (ARN). An additional
-encryption context value is not supported.}
+\strong{Directory buckets} - You can optionally provide an explicit encryption context value. The value must match the default encryption context - the bucket Amazon Resource Name (ARN). An additional encryption context value is not supported.}
 
-\item{BucketKeyEnabled}{Specifies whether Amazon S3 should use an S3 Bucket Key for object
-encryption with server-side encryption using Key Management Service
-(KMS) keys (SSE-KMS).
+\item{BucketKeyEnabled}{Specifies whether Amazon S3 should use an S3 Bucket Key for object encryption with server-side encryption using Key Management Service (KMS) keys (SSE-KMS).
 
-\strong{General purpose buckets} - Setting this header to \code{true} causes
-Amazon S3 to use an S3 Bucket Key for object encryption with SSE-KMS.
-Also, specifying this header with a PUT action doesn't affect
-bucket-level settings for S3 Bucket Key.
+\strong{General purpose buckets} - Setting this header to \code{true} causes Amazon S3 to use an S3 Bucket Key for object encryption with SSE-KMS. Also, specifying this header with a PUT action doesn't affect bucket-level settings for S3 Bucket Key.
 
-\strong{Directory buckets} - S3 Bucket Keys are always enabled for \code{GET} and
-\code{PUT} operations in a directory bucket and can’t be disabled. S3 Bucket
-Keys aren't supported, when you copy SSE-KMS encrypted objects from
-general purpose buckets to directory buckets, from directory buckets to
-general purpose buckets, or between directory buckets, through
-\code{\link[=s3_copy_object]{copy_object}},
-\code{\link[=s3_upload_part_copy]{upload_part_copy}}, \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-buckets-objects-Batch-Ops.html}{the Copy operation in Batch Operations},
-or \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-import-job.html}{the import jobs}.
-In this case, Amazon S3 makes a call to KMS every time a copy request is
-made for a KMS-encrypted object.}
+\strong{Directory buckets} - S3 Bucket Keys are always enabled for \code{GET} and \code{PUT} operations in a directory bucket and can’t be disabled. S3 Bucket Keys aren't supported, when you copy SSE-KMS encrypted objects from general purpose buckets to directory buckets, from directory buckets to general purpose buckets, or between directory buckets, through \code{\link[=s3_copy_object]{copy_object}}, \code{\link[=s3_upload_part_copy]{upload_part_copy}}, \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-buckets-objects-Batch-Ops.html}{the Copy operation in Batch Operations}, or \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-import-job.html}{the import jobs}. In this case, Amazon S3 makes a call to KMS every time a copy request is made for a KMS-encrypted object.}
 
-\item{RequestPayer}{}
-
-\item{Tagging}{The tag-set for the object. The tag-set must be encoded as URL Query
-parameters.
+\item{RequestPayer}{Confirms that the requester knows that they will be charged for the request. Bucket owners need not specify this parameter in their requests. If either the source or destination S3 bucket has Requester Pays enabled, the requester will pay for the corresponding charges. For information about downloading objects from Requester Pays buckets, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/ObjectsinRequesterPaysBuckets.html}{Downloading Objects in Requester Pays Buckets} in the \emph{Amazon S3 User Guide}.
 
 This functionality is not supported for directory buckets.}
 
-\item{ObjectLockMode}{Specifies the Object Lock mode that you want to apply to the uploaded
-object.
+\item{Tagging}{The tag-set for the object. The tag-set must be encoded as URL Query parameters.
+
+This functionality is not supported for directory buckets.}
+
+\item{ObjectLockMode}{Specifies the Object Lock mode that you want to apply to the uploaded object.
 
 This functionality is not supported for directory buckets.}
 
@@ -461,19 +276,14 @@ This functionality is not supported for directory buckets.}
 
 This functionality is not supported for directory buckets.}
 
-\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you
-provide does not match the actual owner of the bucket, the request fails
-with the HTTP status code \verb{403 Forbidden} (access denied).}
+\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you provide does not match the actual owner of the bucket, the request fails with the HTTP status code \verb{403 Forbidden} (access denied).}
 
-\item{ChecksumAlgorithm}{Indicates the algorithm that you want Amazon S3 to use to create the
-checksum for the object. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity}
-in the \emph{Amazon S3 User Guide}.}
+\item{ChecksumAlgorithm}{Indicates the algorithm that you want Amazon S3 to use to create the checksum for the object. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity} in the \emph{Amazon S3 User Guide}.}
 
-\item{ChecksumType}{Indicates the checksum type that you want Amazon S3 to use to calculate
-the object’s checksum value. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity in the Amazon S3 User Guide}.}
+\item{ChecksumType}{Indicates the checksum type that you want Amazon S3 to use to calculate the object’s checksum value. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity in the Amazon S3 User Guide}.}
 }
 \description{
-This action initiates a multipart upload and returns an upload ID. This upload ID is used to associate all of the parts in the specific multipart upload. You specify this upload ID in each of your subsequent upload part requests (see \code{\link[=s3_upload_part]{upload_part}}). You also include this upload ID in the final request to either complete or abort the multipart upload request. For more information about multipart uploads, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html}{Multipart Upload Overview} in the \emph{Amazon S3 User Guide}.
+End of support notice: As of October 1, 2025, Amazon S3 has discontinued support for Email Grantee Access Control Lists (ACLs). If you attempt to use an Email Grantee ACL in a request after October 1, 2025, the request will receive an \verb{HTTP 405} (Method Not Allowed) error.
 
 See \url{https://www.paws-r-sdk.com/docs/s3_create_multipart_upload/} for full documentation.
 }

@@ -7,8 +7,7 @@
 s3control_delete_job_tagging(AccountId, JobId)
 }
 \arguments{
-\item{AccountId}{[required] The Amazon Web Services account ID associated with the S3 Batch
-Operations job.}
+\item{AccountId}{[required] The Amazon Web Services account ID associated with the S3 Batch Operations job.}
 
 \item{JobId}{[required] The ID for the S3 Batch Operations job whose tags you want to delete.}
 }

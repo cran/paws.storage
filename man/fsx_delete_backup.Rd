@@ -9,9 +9,7 @@ fsx_delete_backup(BackupId, ClientRequestToken = NULL)
 \arguments{
 \item{BackupId}{[required] The ID of the backup that you want to delete.}
 
-\item{ClientRequestToken}{A string of up to 63 ASCII characters that Amazon FSx uses to ensure
-idempotent deletion. This parameter is automatically filled on your
-behalf when using the CLI or SDK.}
+\item{ClientRequestToken}{A string of up to 63 ASCII characters that Amazon FSx uses to ensure idempotent deletion. This parameter is automatically filled on your behalf when using the CLI or SDK.}
 }
 \description{
 Deletes an Amazon FSx backup. After deletion, the backup no longer exists, and its data is gone.

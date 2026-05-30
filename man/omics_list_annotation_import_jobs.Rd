@@ -2,7 +2,8 @@
 % Please edit documentation in R/omics_operations.R
 \name{omics_list_annotation_import_jobs}
 \alias{omics_list_annotation_import_jobs}
-\title{Retrieves a list of annotation import jobs}
+\title{Amazon Web Services HealthOmics variant stores and annotation stores are
+no longer open to new customers}
 \usage{
 omics_list_annotation_import_jobs(
   maxResults = NULL,
@@ -16,13 +17,12 @@ omics_list_annotation_import_jobs(
 
 \item{ids}{IDs of annotation import jobs to retrieve.}
 
-\item{nextToken}{Specifies the pagination token from a previous request to retrieve the
-next page of results.}
+\item{nextToken}{Specifies the pagination token from a previous request to retrieve the next page of results.}
 
 \item{filter}{A filter to apply to the list.}
 }
 \description{
-Retrieves a list of annotation import jobs.
+Amazon Web Services HealthOmics variant stores and annotation stores are no longer open to new customers. Existing customers can continue to use the service as normal. For more information, see \href{https://docs.aws.amazon.com/omics/latest/dev/variant-store-availability-change.html}{Amazon Web Services HealthOmics variant store and annotation store availability change}.
 
 See \url{https://www.paws-r-sdk.com/docs/omics_list_annotation_import_jobs/} for full documentation.
 }

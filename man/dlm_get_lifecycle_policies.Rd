@@ -29,11 +29,9 @@ Tags are strings in the format \code{key=value}.}
 
 Tags are strings in the format \code{key=value}.
 
-These user-defined tags are added in addition to the Amazon Web
-Services-added lifecycle tags.}
+These user-defined tags are added in addition to the Amazon Web Services-added lifecycle tags.}
 
-\item{DefaultPolicyType}{\strong{[Default policies only]} Specifies the type of default policy to
-get. Specify one of the following:
+\item{DefaultPolicyType}{\strong{[Default policies only]} Specifies the type of default policy to get. Specify one of the following:
 \itemize{
 \item \code{VOLUME} - To get only the default policy for EBS snapshots
 \item \code{INSTANCE} - To get only the default policy for EBS-backed AMIs

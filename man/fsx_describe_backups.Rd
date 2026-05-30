@@ -13,22 +13,13 @@ fsx_describe_backups(
 )
 }
 \arguments{
-\item{BackupIds}{The IDs of the backups that you want to retrieve. This parameter value
-overrides any filters. If any IDs aren't found, a \code{BackupNotFound} error
-occurs.}
+\item{BackupIds}{The IDs of the backups that you want to retrieve. This parameter value overrides any filters. If any IDs aren't found, a \code{BackupNotFound} error occurs.}
 
-\item{Filters}{The filters structure. The supported names are \code{file-system-id},
-\code{backup-type}, \code{file-system-type}, and \code{volume-id}.}
+\item{Filters}{The filters structure. The supported names are \code{file-system-id}, \code{backup-type}, \code{file-system-type}, and \code{volume-id}.}
 
-\item{MaxResults}{Maximum number of backups to return in the response. This parameter
-value must be greater than 0. The number of items that Amazon FSx
-returns is the minimum of the \code{MaxResults} parameter specified in the
-request and the service's internal maximum number of items per page.}
+\item{MaxResults}{Maximum number of backups to return in the response. This parameter value must be greater than 0. The number of items that Amazon FSx returns is the minimum of the \code{MaxResults} parameter specified in the request and the service's internal maximum number of items per page.}
 
-\item{NextToken}{An opaque pagination token returned from a previous
-\code{\link[=fsx_describe_backups]{describe_backups}} operation. If a token is
-present, the operation continues the list from where the returning call
-left off.}
+\item{NextToken}{An opaque pagination token returned from a previous \code{\link[=fsx_describe_backups]{describe_backups}} operation. If a token is present, the operation continues the list from where the returning call left off.}
 }
 \description{
 Returns the description of a specific Amazon FSx backup, if a \code{BackupIds} value is provided for that backup. Otherwise, it returns all backups owned by your Amazon Web Services account in the Amazon Web Services Region of the endpoint that you're calling.

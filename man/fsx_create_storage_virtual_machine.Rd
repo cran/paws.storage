@@ -16,36 +16,23 @@ fsx_create_storage_virtual_machine(
 )
 }
 \arguments{
-\item{ActiveDirectoryConfiguration}{Describes the self-managed Microsoft Active Directory to which you want
-to join the SVM. Joining an Active Directory provides user
-authentication and access control for SMB clients, including Microsoft
-Windows and macOS clients accessing the file system.}
+\item{ActiveDirectoryConfiguration}{Describes the self-managed Microsoft Active Directory to which you want to join the SVM. Joining an Active Directory provides user authentication and access control for SMB clients, including Microsoft Windows and macOS clients accessing the file system.}
 
-\item{ClientRequestToken}{}
+\item{ClientRequestToken}{(Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.}
 
-\item{FileSystemId}{[required]}
+\item{FileSystemId}{[required] The globally unique ID of the file system, assigned by Amazon FSx.}
 
 \item{Name}{[required] The name of the SVM.}
 
-\item{SvmAdminPassword}{The password to use when managing the SVM using the NetApp ONTAP CLI or
-REST API. If you do not specify a password, you can still use the file
-system's \code{fsxadmin} user to manage the SVM.}
+\item{SvmAdminPassword}{The password to use when managing the SVM using the NetApp ONTAP CLI or REST API. If you do not specify a password, you can still use the file system's \code{fsxadmin} user to manage the SVM.}
 
-\item{Tags}{}
+\item{Tags}{A list of \code{Tag} values, with a maximum of 50 elements.}
 
-\item{RootVolumeSecurityStyle}{The security style of the root volume of the SVM. Specify one of the
-following values:
+\item{RootVolumeSecurityStyle}{The security style of the root volume of the SVM. Specify one of the following values:
 \itemize{
-\item \code{UNIX} if the file system is managed by a UNIX administrator, the
-majority of users are NFS clients, and an application accessing the
-data uses a UNIX user as the service account.
-\item \code{NTFS} if the file system is managed by a Microsoft Windows
-administrator, the majority of users are SMB clients, and an
-application accessing the data uses a Microsoft Windows user as the
-service account.
-\item \code{MIXED} This is an advanced setting. For more information, see
-\href{https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/}{Volume security style} in the
-Amazon FSx for NetApp ONTAP User Guide.
+\item \code{UNIX} if the file system is managed by a UNIX administrator, the majority of users are NFS clients, and an application accessing the data uses a UNIX user as the service account.
+\item \code{NTFS} if the file system is managed by a Microsoft Windows administrator, the majority of users are SMB clients, and an application accessing the data uses a Microsoft Windows user as the service account.
+\item \code{MIXED} This is an advanced setting. For more information, see \href{https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/}{Volume security style} in the Amazon FSx for NetApp ONTAP User Guide.
 }}
 }
 \description{

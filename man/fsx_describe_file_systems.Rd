@@ -12,18 +12,11 @@ fsx_describe_file_systems(
 )
 }
 \arguments{
-\item{FileSystemIds}{IDs of the file systems whose descriptions you want to retrieve
-(String).}
+\item{FileSystemIds}{IDs of the file systems whose descriptions you want to retrieve (String).}
 
-\item{MaxResults}{Maximum number of file systems to return in the response (integer). This
-parameter value must be greater than 0. The number of items that Amazon
-FSx returns is the minimum of the \code{MaxResults} parameter specified in
-the request and the service's internal maximum number of items per page.}
+\item{MaxResults}{Maximum number of file systems to return in the response (integer). This parameter value must be greater than 0. The number of items that Amazon FSx returns is the minimum of the \code{MaxResults} parameter specified in the request and the service's internal maximum number of items per page.}
 
-\item{NextToken}{Opaque pagination token returned from a previous
-\code{\link[=fsx_describe_file_systems]{describe_file_systems}} operation (String).
-If a token present, the operation continues the list from where the
-returning call left off.}
+\item{NextToken}{Opaque pagination token returned from a previous \code{\link[=fsx_describe_file_systems]{describe_file_systems}} operation (String). If a token present, the operation continues the list from where the returning call left off.}
 }
 \description{
 Returns the description of specific Amazon FSx file systems, if a \code{FileSystemIds} value is provided for that file system. Otherwise, it returns descriptions of all file systems owned by your Amazon Web Services account in the Amazon Web Services Region of the endpoint that you're calling.

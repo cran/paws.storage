@@ -10,11 +10,9 @@ backup_delete_restore_testing_selection(
 )
 }
 \arguments{
-\item{RestoreTestingPlanName}{[required] Required unique name of the restore testing plan that contains the
-restore testing selection you wish to delete.}
+\item{RestoreTestingPlanName}{[required] Required unique name of the restore testing plan that contains the restore testing selection you wish to delete.}
 
-\item{RestoreTestingSelectionName}{[required] Required unique name of the restore testing selection you wish to
-delete.}
+\item{RestoreTestingSelectionName}{[required] Required unique name of the restore testing selection you wish to delete.}
 }
 \description{
 Input the Restore Testing Plan name and Restore Testing Selection name.

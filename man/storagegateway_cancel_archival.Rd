@@ -8,10 +8,9 @@ after the archiving process is initiated}
 storagegateway_cancel_archival(GatewayARN, TapeARN)
 }
 \arguments{
-\item{GatewayARN}{[required]}
+\item{GatewayARN}{[required] The Amazon Resource Name (ARN) of the gateway. Use the \code{\link[=storagegateway_list_gateways]{list_gateways}} operation to return a list of gateways for your account and Amazon Web Services Region.}
 
-\item{TapeARN}{[required] The Amazon Resource Name (ARN) of the virtual tape you want to cancel
-archiving for.}
+\item{TapeARN}{[required] The Amazon Resource Name (ARN) of the virtual tape you want to cancel archiving for.}
 }
 \description{
 Cancels archiving of a virtual tape to the virtual tape shelf (VTS) after the archiving process is initiated. This operation is only supported in the tape gateway type.

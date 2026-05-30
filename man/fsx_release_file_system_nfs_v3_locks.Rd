@@ -7,9 +7,9 @@
 fsx_release_file_system_nfs_v3_locks(FileSystemId, ClientRequestToken = NULL)
 }
 \arguments{
-\item{FileSystemId}{[required]}
+\item{FileSystemId}{[required] The globally unique ID of the file system, assigned by Amazon FSx.}
 
-\item{ClientRequestToken}{}
+\item{ClientRequestToken}{(Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.}
 }
 \description{
 Releases the file system lock from an Amazon FSx for OpenZFS file system.

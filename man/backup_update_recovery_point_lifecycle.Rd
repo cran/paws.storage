@@ -11,23 +11,13 @@ backup_update_recovery_point_lifecycle(
 )
 }
 \arguments{
-\item{BackupVaultName}{[required] The name of a logical container where backups are stored. Backup vaults
-are identified by names that are unique to the account used to create
-them and the Amazon Web Services Region where they are created.}
+\item{BackupVaultName}{[required] The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.}
 
-\item{RecoveryPointArn}{[required] An Amazon Resource Name (ARN) that uniquely identifies a recovery point;
-for example,
-\verb{arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45}.}
+\item{RecoveryPointArn}{[required] An Amazon Resource Name (ARN) that uniquely identifies a recovery point; for example, \verb{arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45}.}
 
-\item{Lifecycle}{The lifecycle defines when a protected resource is transitioned to cold
-storage and when it expires. Backup transitions and expires backups
-automatically according to the lifecycle that you define.
+\item{Lifecycle}{The lifecycle defines when a protected resource is transitioned to cold storage and when it expires. Backup transitions and expires backups automatically according to the lifecycle that you define.
 
-Backups transitioned to cold storage must be stored in cold storage for
-a minimum of 90 days. Therefore, the “retention” setting must be 90 days
-greater than the “transition to cold after days” setting. The
-“transition to cold after days” setting cannot be changed after a backup
-has been transitioned to cold.}
+Backups transitioned to cold storage must be stored in cold storage for a minimum of 90 days. Therefore, the “retention” setting must be 90 days greater than the “transition to cold after days” setting. The “transition to cold after days” setting cannot be changed after a backup has been transitioned to cold.}
 }
 \description{
 Sets the transition lifecycle of a recovery point.

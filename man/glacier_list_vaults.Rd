@@ -7,19 +7,11 @@
 glacier_list_vaults(accountId, marker = NULL, limit = NULL)
 }
 \arguments{
-\item{accountId}{[required] The \code{AccountId} value is the AWS account ID. This value must match the
-AWS account ID associated with the credentials used to sign the request.
-You can either specify an AWS account ID or optionally a single '\code{-}'
-(hyphen), in which case Amazon Glacier uses the AWS account ID
-associated with the credentials used to sign the request. If you specify
-your account ID, do not include any hyphens ('-') in the ID.}
+\item{accountId}{[required] The \code{AccountId} value is the AWS account ID. This value must match the AWS account ID associated with the credentials used to sign the request. You can either specify an AWS account ID or optionally a single '\code{-}' (hyphen), in which case Amazon Glacier uses the AWS account ID associated with the credentials used to sign the request. If you specify your account ID, do not include any hyphens ('-') in the ID.}
 
-\item{marker}{A string used for pagination. The marker specifies the vault ARN after
-which the listing of vaults should begin.}
+\item{marker}{A string used for pagination. The marker specifies the vault ARN after which the listing of vaults should begin.}
 
-\item{limit}{The maximum number of vaults to be returned. The default limit is 10.
-The number of vaults returned might be fewer than the specified limit,
-but the number of returned vaults never exceeds the limit.}
+\item{limit}{The maximum number of vaults to be returned. The default limit is 10. The number of vaults returned might be fewer than the specified limit, but the number of returned vaults never exceeds the limit.}
 }
 \description{
 This operation lists all vaults owned by the calling user's account. The list returned in the response is ASCII-sorted by vault name.

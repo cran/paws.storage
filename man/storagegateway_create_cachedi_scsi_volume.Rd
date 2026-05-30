@@ -18,59 +18,33 @@ storagegateway_create_cachedi_scsi_volume(
 )
 }
 \arguments{
-\item{GatewayARN}{[required]}
+\item{GatewayARN}{[required] The Amazon Resource Name (ARN) of the gateway. Use the \code{\link[=storagegateway_list_gateways]{list_gateways}} operation to return a list of gateways for your account and Amazon Web Services Region.}
 
 \item{VolumeSizeInBytes}{[required] The size of the volume in bytes.}
 
-\item{SnapshotId}{The snapshot ID (e.g. "snap-1122aabb") of the snapshot to restore as the
-new cached volume. Specify this field if you want to create the iSCSI
-storage volume from a snapshot; otherwise, do not include this field. To
-list snapshots for your account use
-\href{https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeSnapshots.html}{DescribeSnapshots}
-in the \emph{Amazon Elastic Compute Cloud API Reference}.}
+\item{SnapshotId}{The snapshot ID (e.g. "snap-1122aabb") of the snapshot to restore as the new cached volume. Specify this field if you want to create the iSCSI storage volume from a snapshot; otherwise, do not include this field. To list snapshots for your account use \href{https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeSnapshots.html}{DescribeSnapshots} in the \emph{Amazon Elastic Compute Cloud API Reference}.}
 
-\item{TargetName}{[required] The name of the iSCSI target used by an initiator to connect to a volume
-and used as a suffix for the target ARN. For example, specifying
-\code{TargetName} as \emph{myvolume} results in the target ARN of
-\verb{arn:aws:storagegateway:us-east-2:111122223333:gateway/sgw-12A3456B/target/iqn.1997-05.com.amazon:myvolume}.
-The target name must be unique across all volumes on a gateway.
+\item{TargetName}{[required] The name of the iSCSI target used by an initiator to connect to a volume and used as a suffix for the target ARN. For example, specifying \code{TargetName} as \emph{myvolume} results in the target ARN of \verb{arn:aws:storagegateway:us-east-2:111122223333:gateway/sgw-12A3456B/target/iqn.1997-05.com.amazon:myvolume}. The target name must be unique across all volumes on a gateway.
 
-If you don't specify a value, Storage Gateway uses the value that was
-previously used for this volume as the new target name.}
+If you don't specify a value, Storage Gateway uses the value that was previously used for this volume as the new target name.}
 
-\item{SourceVolumeARN}{The ARN for an existing volume. Specifying this ARN makes the new volume
-into an exact copy of the specified existing volume's latest recovery
-point. The \code{VolumeSizeInBytes} value for this new volume must be equal
-to or larger than the size of the existing volume, in bytes.}
+\item{SourceVolumeARN}{The ARN for an existing volume. Specifying this ARN makes the new volume into an exact copy of the specified existing volume's latest recovery point. The \code{VolumeSizeInBytes} value for this new volume must be equal to or larger than the size of the existing volume, in bytes.}
 
-\item{NetworkInterfaceId}{[required] The network interface of the gateway on which to expose the iSCSI
-target. Only IPv4 addresses are accepted. Use
-\code{\link[=storagegateway_describe_gateway_information]{describe_gateway_information}}
-to get a list of the network interfaces available on a gateway.
+\item{NetworkInterfaceId}{[required] The network interface of the gateway on which to expose the iSCSI target. Accepts IPv4 and IPv6 addresses. Use \code{\link[=storagegateway_describe_gateway_information]{describe_gateway_information}} to get a list of the network interfaces available on a gateway.
 
 Valid Values: A valid IP address.}
 
-\item{ClientToken}{[required] A unique identifier that you use to retry a request. If you retry a
-request, use the same \code{ClientToken} you specified in the initial
-request.}
+\item{ClientToken}{[required] A unique identifier that you use to retry a request. If you retry a request, use the same \code{ClientToken} you specified in the initial request.}
 
-\item{KMSEncrypted}{Set to \code{true} to use Amazon S3 server-side encryption with your own KMS
-key, or \code{false} to use a key managed by Amazon S3. Optional.
+\item{KMSEncrypted}{Set to \code{true} to use Amazon S3 server-side encryption with your own KMS key, or \code{false} to use a key managed by Amazon S3. Optional.
 
 Valid Values: \code{true} | \code{false}}
 
-\item{KMSKey}{The Amazon Resource Name (ARN) of a symmetric customer master key (CMK)
-used for Amazon S3 server-side encryption. Storage Gateway does not
-support asymmetric CMKs. This value can only be set when \code{KMSEncrypted}
-is \code{true}. Optional.}
+\item{KMSKey}{The Amazon Resource Name (ARN) of a symmetric customer master key (CMK) used for Amazon S3 server-side encryption. Storage Gateway does not support asymmetric CMKs. This value can only be set when \code{KMSEncrypted} is \code{true}. Optional.}
 
-\item{Tags}{A list of up to 50 tags that you can assign to a cached volume. Each tag
-is a key-value pair.
+\item{Tags}{A list of up to 50 tags that you can assign to a cached volume. Each tag is a key-value pair.
 
-Valid characters for key and value are letters, spaces, and numbers that
-you can represent in UTF-8 format, and the following special
-characters: + - = . _ : / @. The maximum length of a tag's key is 128
-characters, and the maximum length for a tag's value is 256 characters.}
+Valid characters for key and value are letters, spaces, and numbers that you can represent in UTF-8 format, and the following special characters: + - = . _ : / @. The maximum length of a tag's key is 128 characters, and the maximum length for a tag's value is 256 characters.}
 }
 \description{
 Creates a cached volume on a specified cached volume gateway. This operation is only supported in the cached volume gateway type.

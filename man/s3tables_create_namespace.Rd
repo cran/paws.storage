@@ -7,8 +7,7 @@
 s3tables_create_namespace(tableBucketARN, namespace)
 }
 \arguments{
-\item{tableBucketARN}{[required] The Amazon Resource Name (ARN) of the table bucket to create the
-namespace in.}
+\item{tableBucketARN}{[required] The Amazon Resource Name (ARN) of the table bucket to create the namespace in.}
 
 \item{namespace}{[required] A name for the namespace.}
 }

@@ -48,14 +48,9 @@ to the client. The available operations are listed in the
 Operations section.
 }
 \description{
-With Amazon Data Lifecycle Manager, you can manage the lifecycle of your
-Amazon Web Services resources. You create lifecycle policies, which are
-used to automate operations on the specified resources.
+With Amazon Data Lifecycle Manager, you can manage the lifecycle of your Amazon Web Services resources. You create lifecycle policies, which are used to automate operations on the specified resources.
 
-Amazon Data Lifecycle Manager supports Amazon EBS volumes and snapshots.
-For information about using Amazon Data Lifecycle Manager with Amazon
-EBS, see \href{https://docs.aws.amazon.com/ebs/latest/userguide/snapshot-lifecycle.html}{Amazon Data Lifecycle Manager}
-in the \emph{Amazon EC2 User Guide}.
+Amazon Data Lifecycle Manager supports Amazon EBS volumes and snapshots. For information about using Amazon Data Lifecycle Manager with Amazon EBS, see \href{https://docs.aws.amazon.com/ebs/latest/userguide/snapshot-lifecycle.html}{Amazon Data Lifecycle Manager} in the \emph{Amazon EC2 User Guide}.
 }
 \section{Service syntax}{
 

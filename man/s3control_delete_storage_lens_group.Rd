@@ -9,8 +9,7 @@ s3control_delete_storage_lens_group(Name, AccountId)
 \arguments{
 \item{Name}{[required] The name of the Storage Lens group that you're trying to delete.}
 
-\item{AccountId}{[required] The Amazon Web Services account ID used to create the Storage Lens group
-that you're trying to delete.}
+\item{AccountId}{[required] The Amazon Web Services account ID used to create the Storage Lens group that you're trying to delete.}
 }
 \description{
 Deletes an existing S3 Storage Lens group.

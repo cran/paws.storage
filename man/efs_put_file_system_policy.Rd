@@ -11,23 +11,11 @@ efs_put_file_system_policy(
 )
 }
 \arguments{
-\item{FileSystemId}{[required] The ID of the EFS file system that you want to create or update the
-\code{FileSystemPolicy} for.}
+\item{FileSystemId}{[required] The ID of the EFS file system that you want to create or update the \code{FileSystemPolicy} for.}
 
-\item{Policy}{[required] The \code{FileSystemPolicy} that you're creating. Accepts a JSON formatted
-policy definition. EFS file system policies have a 20,000 character
-limit. To find out more about the elements that make up a file system
-policy, see \href{https://docs.aws.amazon.com/efs/latest/ug/security_iam_service-with-iam.html#security_iam_service-with-iam-resource-based-policies}{Resource-based policies within Amazon EFS}.}
+\item{Policy}{[required] The \code{FileSystemPolicy} that you're creating. Accepts a JSON formatted policy definition. EFS file system policies have a 20,000 character limit. To find out more about the elements that make up a file system policy, see \href{https://docs.aws.amazon.com/efs/latest/ug/security_iam_service-with-iam.html#security_iam_service-with-iam-resource-based-policies}{Resource-based policies within Amazon EFS}.}
 
-\item{BypassPolicyLockoutSafetyCheck}{(Optional) A boolean that specifies whether or not to bypass the
-\code{FileSystemPolicy} lockout safety check. The lockout safety check
-determines whether the policy in the request will lock out, or prevent,
-the IAM principal that is making the request from making future
-\code{\link[=efs_put_file_system_policy]{put_file_system_policy}} requests on this
-file system. Set \code{BypassPolicyLockoutSafetyCheck} to \code{True} only when
-you intend to prevent the IAM principal that is making the request from
-making subsequent \code{\link[=efs_put_file_system_policy]{put_file_system_policy}}
-requests on this file system. The default value is \code{False}.}
+\item{BypassPolicyLockoutSafetyCheck}{(Optional) A boolean that specifies whether or not to bypass the \code{FileSystemPolicy} lockout safety check. The lockout safety check determines whether the policy in the request will lock out, or prevent, the IAM principal that is making the request from making future \code{\link[=efs_put_file_system_policy]{put_file_system_policy}} requests on this file system. Set \code{BypassPolicyLockoutSafetyCheck} to \code{True} only when you intend to prevent the IAM principal that is making the request from making subsequent \code{\link[=efs_put_file_system_policy]{put_file_system_policy}} requests on this file system. The default value is \code{False}.}
 }
 \description{
 Applies an Amazon EFS \code{FileSystemPolicy} to an Amazon EFS file system. A file system policy is an IAM resource-based policy and can contain multiple policy statements. A file system always has exactly one file system policy, which can be the default policy or an explicit policy set or updated using this API operation. EFS file system policies have a 20,000 character limit. When an explicit policy is set, it overrides the default policy. For more information about the default file system policy, see \href{https://docs.aws.amazon.com/efs/latest/ug/iam-access-control-nfs-efs.html#default-filesystempolicy}{Default EFS file system policy}.

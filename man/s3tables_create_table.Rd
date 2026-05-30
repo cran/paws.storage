@@ -5,11 +5,19 @@
 \title{Creates a new table associated with the given namespace in a table
 bucket}
 \usage{
-s3tables_create_table(tableBucketARN, namespace, name, format, metadata = NULL)
+s3tables_create_table(
+  tableBucketARN,
+  namespace,
+  name,
+  format,
+  metadata = NULL,
+  encryptionConfiguration = NULL,
+  storageClassConfiguration = NULL,
+  tags = NULL
+)
 }
 \arguments{
-\item{tableBucketARN}{[required] The Amazon Resource Name (ARN) of the table bucket to create the table
-in.}
+\item{tableBucketARN}{[required] The Amazon Resource Name (ARN) of the table bucket to create the table in.}
 
 \item{namespace}{[required] The namespace to associated with the table.}
 
@@ -18,6 +26,16 @@ in.}
 \item{format}{[required] The format for the table.}
 
 \item{metadata}{The metadata for the table.}
+
+\item{encryptionConfiguration}{The encryption configuration to use for the table. This configuration specifies the encryption algorithm and, if using SSE-KMS, the KMS key to use for encrypting the table.
+
+If you choose SSE-KMS encryption you must grant the S3 Tables maintenance principal access to your KMS key. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-kms-permissions.html}{Permissions requirements for S3 Tables SSE-KMS encryption}.}
+
+\item{storageClassConfiguration}{The storage class configuration for the table. If not specified, the table inherits the storage class configuration from its table bucket. Specify this parameter to override the bucket's default storage class for this table.}
+
+\item{tags}{A map of user-defined tags that you would like to apply to the table that you are creating. A tag is a key-value pair that you apply to your resources. Tags can help you organize, track costs for, and control access to resources. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/tagging.html}{Tagging for cost allocation or attribute-based access control (ABAC)}.
+
+You must have the \code{s3tables:TagResource} permission in addition to \code{s3tables:CreateTable} permission to create a table with tags.}
 }
 \description{
 Creates a new table associated with the given namespace in a table bucket. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-create.html}{Creating an Amazon S3 table} in the \emph{Amazon Simple Storage Service User Guide}.

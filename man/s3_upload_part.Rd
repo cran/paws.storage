@@ -15,6 +15,11 @@ s3_upload_part(
   ChecksumCRC64NVME = NULL,
   ChecksumSHA1 = NULL,
   ChecksumSHA256 = NULL,
+  ChecksumSHA512 = NULL,
+  ChecksumMD5 = NULL,
+  ChecksumXXHASH64 = NULL,
+  ChecksumXXHASH3 = NULL,
+  ChecksumXXHASH128 = NULL,
   Key,
   PartNumber,
   UploadId,
@@ -30,126 +35,69 @@ s3_upload_part(
 
 \item{Bucket}{[required] The name of the bucket to which the multipart upload was initiated.
 
-\strong{Directory buckets} - When you use this operation with a directory
-bucket, you must use virtual-hosted-style requests in the format
-\code{ Bucket-name.s3express-zone-id.region-code.amazonaws.com}. Path-style
-requests are not supported. Directory bucket names must be unique in the
-chosen Zone (Availability Zone or Local Zone). Bucket names must follow
-the format \code{ bucket-base-name--zone-id--x-s3} (for example,
-\code{ amzn-s3-demo-bucket--usw2-az1--x-s3}). For information about bucket
-naming restrictions, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-bucket-naming-rules.html}{Directory bucket naming rules}
-in the \emph{Amazon S3 User Guide}.
+\strong{Directory buckets} - When you use this operation with a directory bucket, you must use virtual-hosted-style requests in the format \code{ Bucket-name.s3express-zone-id.region-code.amazonaws.com}. Path-style requests are not supported. Directory bucket names must be unique in the chosen Zone (Availability Zone or Local Zone). Bucket names must follow the format \code{ bucket-base-name--zone-id--x-s3} (for example, \code{ amzn-s3-demo-bucket--usw2-az1--x-s3}). For information about bucket naming restrictions, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-bucket-naming-rules.html}{Directory bucket naming rules} in the \emph{Amazon S3 User Guide}.
 
-\strong{Access points} - When you use this action with an access point, you
-must provide the alias of the access point in place of the bucket name
-or specify the access point ARN. When using the access point ARN, you
-must direct requests to the access point hostname. The access point
-hostname takes the form
-\emph{AccessPointName}-\emph{AccountId}.s3-accesspoint.\emph{Region}.amazonaws.com.
-When using this action with an access point through the Amazon Web
-Services SDKs, you provide the access point ARN in place of the bucket
-name. For more information about access point ARNs, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-access-points.html}{Using access points}
-in the \emph{Amazon S3 User Guide}.
+\strong{Access points} - When you use this action with an access point for general purpose buckets, you must provide the alias of the access point in place of the bucket name or specify the access point ARN. When you use this action with an access point for directory buckets, you must provide the access point name in place of the bucket name. When using the access point ARN, you must direct requests to the access point hostname. The access point hostname takes the form \emph{AccessPointName}-\emph{AccountId}.s3-accesspoint.\emph{Region}.amazonaws.com. When using this action with an access point through the Amazon Web Services SDKs, you provide the access point ARN in place of the bucket name. For more information about access point ARNs, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-access-points.html}{Using access points} in the \emph{Amazon S3 User Guide}.
 
-Access points and Object Lambda access points are not supported by
-directory buckets.
+Object Lambda access points are not supported by directory buckets.
 
-\strong{S3 on Outposts} - When you use this action with S3 on Outposts, you
-must direct requests to the S3 on Outposts hostname. The S3 on Outposts
-hostname takes the form
-\code{ AccessPointName-AccountId.outpostID.s3-outposts.Region.amazonaws.com}.
-When you use this action with S3 on Outposts, the destination bucket
-must be the Outposts access point ARN or the access point alias. For
-more information about S3 on Outposts, see \href{https://docs.aws.amazon.com/AmazonS3/latest/s3-outposts/S3onOutposts.html}{What is S3 on Outposts?}
-in the \emph{Amazon S3 User Guide}.}
+\strong{S3 on Outposts} - When you use this action with S3 on Outposts, you must direct requests to the S3 on Outposts hostname. The S3 on Outposts hostname takes the form \code{ AccessPointName-AccountId.outpostID.s3-outposts.Region.amazonaws.com}. When you use this action with S3 on Outposts, the destination bucket must be the Outposts access point ARN or the access point alias. For more information about S3 on Outposts, see \href{https://docs.aws.amazon.com/AmazonS3/latest/s3-outposts/S3onOutposts.html}{What is S3 on Outposts?} in the \emph{Amazon S3 User Guide}.}
 
-\item{ContentLength}{Size of the body in bytes. This parameter is useful when the size of the
-body cannot be determined automatically.}
+\item{ContentLength}{Size of the body in bytes. This parameter is useful when the size of the body cannot be determined automatically.}
 
-\item{ContentMD5}{The Base64 encoded 128-bit MD5 digest of the part data. This parameter
-is auto-populated when using the command from the CLI. This parameter is
-required if object lock parameters are specified.
+\item{ContentMD5}{The Base64 encoded 128-bit MD5 digest of the part data. This parameter is auto-populated when using the command from the CLI. This parameter is required if object lock parameters are specified.
 
 This functionality is not supported for directory buckets.}
 
-\item{ChecksumAlgorithm}{Indicates the algorithm used to create the checksum for the object when
-you use the SDK. This header will not provide any additional
-functionality if you don't use the SDK. When you send this header, there
-must be a corresponding \code{x-amz-checksum} or \code{x-amz-trailer} header sent.
-Otherwise, Amazon S3 fails the request with the HTTP status code
-\verb{400 Bad Request}. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity}
-in the \emph{Amazon S3 User Guide}.
+\item{ChecksumAlgorithm}{Indicates the algorithm used to create the checksum for the object when you use the SDK. This header will not provide any additional functionality if you don't use the SDK. When you send this header, there must be a corresponding \code{x-amz-checksum} or \code{x-amz-trailer} header sent. Otherwise, Amazon S3 fails the request with the HTTP status code \verb{400 Bad Request}. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity} in the \emph{Amazon S3 User Guide}.
 
-If you provide an individual checksum, Amazon S3 ignores any provided
-\code{ChecksumAlgorithm} parameter.
+If you provide an individual checksum, Amazon S3 ignores any provided \code{ChecksumAlgorithm} parameter.
 
-This checksum algorithm must be the same for all parts and it match the
-checksum value supplied in the
-\code{\link[=s3_create_multipart_upload]{create_multipart_upload}} request.}
+This checksum algorithm must be the same for all parts and it match the checksum value supplied in the \code{\link[=s3_create_multipart_upload]{create_multipart_upload}} request.}
 
-\item{ChecksumCRC32}{This header can be used as a data integrity check to verify that the
-data received is the same data that was originally sent. This header
-specifies the Base64 encoded, 32-bit \code{CRC32} checksum of the object. For
-more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity}
-in the \emph{Amazon S3 User Guide}.}
+\item{ChecksumCRC32}{This header can be used as a data integrity check to verify that the data received is the same data that was originally sent. This header specifies the Base64 encoded, 32-bit \code{CRC32} checksum of the object. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity} in the \emph{Amazon S3 User Guide}.}
 
-\item{ChecksumCRC32C}{This header can be used as a data integrity check to verify that the
-data received is the same data that was originally sent. This header
-specifies the Base64 encoded, 32-bit \code{CRC32C} checksum of the object.
-For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity}
-in the \emph{Amazon S3 User Guide}.}
+\item{ChecksumCRC32C}{This header can be used as a data integrity check to verify that the data received is the same data that was originally sent. This header specifies the Base64 encoded, 32-bit \code{CRC32C} checksum of the object. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity} in the \emph{Amazon S3 User Guide}.}
 
-\item{ChecksumCRC64NVME}{This header can be used as a data integrity check to verify that the
-data received is the same data that was originally sent. This header
-specifies the Base64 encoded, 64-bit \code{CRC64NVME} checksum of the part.
-For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity}
-in the \emph{Amazon S3 User Guide}.}
+\item{ChecksumCRC64NVME}{This header can be used as a data integrity check to verify that the data received is the same data that was originally sent. This header specifies the Base64 encoded, 64-bit \code{CRC64NVME} checksum of the part. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity} in the \emph{Amazon S3 User Guide}.}
 
-\item{ChecksumSHA1}{This header can be used as a data integrity check to verify that the
-data received is the same data that was originally sent. This header
-specifies the Base64 encoded, 160-bit \code{SHA1} digest of the object. For
-more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity}
-in the \emph{Amazon S3 User Guide}.}
+\item{ChecksumSHA1}{This header can be used as a data integrity check to verify that the data received is the same data that was originally sent. This header specifies the Base64 encoded, 160-bit \code{SHA1} digest of the object. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity} in the \emph{Amazon S3 User Guide}.}
 
-\item{ChecksumSHA256}{This header can be used as a data integrity check to verify that the
-data received is the same data that was originally sent. This header
-specifies the Base64 encoded, 256-bit \code{SHA256} digest of the object. For
-more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity}
-in the \emph{Amazon S3 User Guide}.}
+\item{ChecksumSHA256}{This header can be used as a data integrity check to verify that the data received is the same data that was originally sent. This header specifies the Base64 encoded, 256-bit \code{SHA256} digest of the object. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity} in the \emph{Amazon S3 User Guide}.}
+
+\item{ChecksumSHA512}{This header can be used as a data integrity check to verify that the data received is the same data that was originally sent. This header specifies the Base64 encoded, 512-bit \code{SHA512} digest of the part. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity} in the \emph{Amazon S3 User Guide}.}
+
+\item{ChecksumMD5}{This header can be used as a data integrity check to verify that the data received is the same data that was originally sent. This header specifies the Base64 encoded, 128-bit \code{MD5} digest of the part. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity} in the \emph{Amazon S3 User Guide}.}
+
+\item{ChecksumXXHASH64}{This header can be used as a data integrity check to verify that the data received is the same data that was originally sent. This header specifies the Base64 encoded, 64-bit \code{XXHASH64} checksum of the part. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity} in the \emph{Amazon S3 User Guide}.}
+
+\item{ChecksumXXHASH3}{This header can be used as a data integrity check to verify that the data received is the same data that was originally sent. This header specifies the Base64 encoded, 64-bit \code{XXHASH3} checksum of the part. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity} in the \emph{Amazon S3 User Guide}.}
+
+\item{ChecksumXXHASH128}{This header can be used as a data integrity check to verify that the data received is the same data that was originally sent. This header specifies the Base64 encoded, 128-bit \code{XXHASH128} checksum of the part. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity} in the \emph{Amazon S3 User Guide}.}
 
 \item{Key}{[required] Object key for which the multipart upload was initiated.}
 
-\item{PartNumber}{[required] Part number of part being uploaded. This is a positive integer between 1
-and 10,000.}
+\item{PartNumber}{[required] Part number of part being uploaded. This is a positive integer between 1 and 10,000.}
 
 \item{UploadId}{[required] Upload ID identifying the multipart upload whose part is being uploaded.}
 
-\item{SSECustomerAlgorithm}{Specifies the algorithm to use when encrypting the object (for example,
-AES256).
+\item{SSECustomerAlgorithm}{Specifies the algorithm to use when encrypting the object (for example, AES256).
 
 This functionality is not supported for directory buckets.}
 
-\item{SSECustomerKey}{Specifies the customer-provided encryption key for Amazon S3 to use in
-encrypting data. This value is used to store the object and then it is
-discarded; Amazon S3 does not store the encryption key. The key must be
-appropriate for use with the algorithm specified in the
-\verb{x-amz-server-side-encryption-customer-algorithm header}. This must be
-the same encryption key specified in the initiate multipart upload
-request.
+\item{SSECustomerKey}{Specifies the customer-provided encryption key for Amazon S3 to use in encrypting data. This value is used to store the object and then it is discarded; Amazon S3 does not store the encryption key. The key must be appropriate for use with the algorithm specified in the \verb{x-amz-server-side-encryption-customer-algorithm header}. This must be the same encryption key specified in the initiate multipart upload request.
 
 This functionality is not supported for directory buckets.}
 
-\item{SSECustomerKeyMD5}{Specifies the 128-bit MD5 digest of the encryption key according to RFC
-1321. Amazon S3 uses this header for a message integrity check to ensure
-that the encryption key was transmitted without error.
+\item{SSECustomerKeyMD5}{Specifies the 128-bit MD5 digest of the encryption key according to RFC 1321. Amazon S3 uses this header for a message integrity check to ensure that the encryption key was transmitted without error.
 
 This functionality is not supported for directory buckets.}
 
-\item{RequestPayer}{}
+\item{RequestPayer}{Confirms that the requester knows that they will be charged for the request. Bucket owners need not specify this parameter in their requests. If either the source or destination S3 bucket has Requester Pays enabled, the requester will pay for the corresponding charges. For information about downloading objects from Requester Pays buckets, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/ObjectsinRequesterPaysBuckets.html}{Downloading Objects in Requester Pays Buckets} in the \emph{Amazon S3 User Guide}.
 
-\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you
-provide does not match the actual owner of the bucket, the request fails
-with the HTTP status code \verb{403 Forbidden} (access denied).}
+This functionality is not supported for directory buckets.}
+
+\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you provide does not match the actual owner of the bucket, the request fails with the HTTP status code \verb{403 Forbidden} (access denied).}
 }
 \description{
 Uploads a part in a multipart upload.

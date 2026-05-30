@@ -12,8 +12,7 @@ s3outposts_list_shared_endpoints(
 )
 }
 \arguments{
-\item{NextToken}{If a previous response from this operation included a \code{NextToken} value,
-you can provide that value here to retrieve the next page of results.}
+\item{NextToken}{If a previous response from this operation included a \code{NextToken} value, you can provide that value here to retrieve the next page of results.}
 
 \item{MaxResults}{The maximum number of endpoints that will be returned in the response.}
 

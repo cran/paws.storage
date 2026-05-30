@@ -13,14 +13,9 @@ s3control_list_access_grants_instances(
 \arguments{
 \item{AccountId}{[required] The Amazon Web Services account ID of the S3 Access Grants instance.}
 
-\item{NextToken}{A pagination token to request the next page of results. Pass this value
-into a subsequent \verb{List Access Grants Instances} request in order to
-retrieve the next page of results.}
+\item{NextToken}{A pagination token to request the next page of results. Pass this value into a subsequent \verb{List Access Grants Instances} request in order to retrieve the next page of results.}
 
-\item{MaxResults}{The maximum number of access grants that you would like returned in the
-\verb{List Access Grants} response. If the results include the pagination
-token \code{NextToken}, make another call using the \code{NextToken} to determine
-if there are more results.}
+\item{MaxResults}{The maximum number of access grants that you would like returned in the \verb{List Access Grants} response. If the results include the pagination token \code{NextToken}, make another call using the \code{NextToken} to determine if there are more results.}
 }
 \description{
 Returns a list of S3 Access Grants instances. An S3 Access Grants instance serves as a logical grouping for your individual access grants. You can only have one S3 Access Grants instance per Region per account.

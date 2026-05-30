@@ -45,20 +45,15 @@ finspacedata_associate_user_to_permission_group <- function(permissionGroupId, u
 #' See [https://www.paws-r-sdk.com/docs/finspacedata_create_changeset/](https://www.paws-r-sdk.com/docs/finspacedata_create_changeset/) for full documentation.
 #'
 #' @param clientToken A token that ensures idempotency. This token expires in 10 minutes.
-#' @param datasetId &#91;required&#93; The unique identifier for the FinSpace Dataset where the Changeset will
-#' be created.
+#' @param datasetId &#91;required&#93; The unique identifier for the FinSpace Dataset where the Changeset will be created.
 #' @param changeType &#91;required&#93; The option to indicate how a Changeset will be applied to a Dataset.
 #' 
-#' -   `REPLACE` – Changeset will be considered as a replacement to all
-#'     prior loaded Changesets.
+#' -   `REPLACE` – Changeset will be considered as a replacement to all prior loaded Changesets.
 #' 
-#' -   `APPEND` – Changeset will be considered as an addition to the end of
-#'     all prior loaded Changesets.
+#' -   `APPEND` – Changeset will be considered as an addition to the end of all prior loaded Changesets.
 #' 
-#' -   `MODIFY` – Changeset is considered as a replacement to a specific
-#'     prior ingested Changeset.
-#' @param sourceParams &#91;required&#93; Options that define the location of the data being ingested
-#' (`s3SourcePath`) and the source of the changeset (`sourceType`).
+#' -   `MODIFY` – Changeset is considered as a replacement to a specific prior ingested Changeset.
+#' @param sourceParams &#91;required&#93; Options that define the location of the data being ingested (`s3SourcePath`) and the source of the changeset (`sourceType`).
 #' 
 #' Both `s3SourcePath` and `sourceType` are required attributes.
 #' 
@@ -66,15 +61,8 @@ finspacedata_associate_user_to_permission_group <- function(permissionGroupId, u
 #' 
 #' ` "sourceParams": { "s3SourcePath": "s3://finspace-landing-us-east-2-bk7gcfvitndqa6ebnvys4d/scratch/wr5hh8pwkpqqkxa4sxrmcw/ingestion/equity.csv", "sourceType": "S3" } `
 #' 
-#' The S3 path that you specify must allow the FinSpace role access. To do
-#' that, you first need to configure the IAM policy on S3 bucket. For more
-#' information, see [Loading data from an Amazon S3 Bucket using the
-#' FinSpace
-#' API](https://docs.aws.amazon.com/finspace/latest/data-api/fs-using-the-finspace-api.html#access-s3-buckets)
-#' section.
-#' @param formatParams &#91;required&#93; Options that define the structure of the source file(s) including the
-#' format type (`formatType`), header row (`withHeader`), data separation
-#' character (`separator`) and the type of compression (`compression`).
+#' The S3 path that you specify must allow the FinSpace role access. To do that, you first need to configure the IAM policy on S3 bucket. For more information, see [Loading data from an Amazon S3 Bucket using the FinSpace API](https://docs.aws.amazon.com/finspace/latest/data-api/fs-using-the-finspace-api.html#access-s3-buckets) section.
+#' @param formatParams &#91;required&#93; Options that define the structure of the source file(s) including the format type (`formatType`), header row (`withHeader`), data separation character (`separator`) and the type of compression (`compression`).
 #' 
 #' `formatType` is a required attribute and can have the following values:
 #' 
@@ -90,15 +78,11 @@ finspacedata_associate_user_to_permission_group <- function(permissionGroupId, u
 #' 
 #' ` "formatParams": { "formatType": "CSV", "withHeader": "true", "separator": ",", "compression":"None" } `
 #' 
-#' Note that if you only provide `formatType` as `CSV`, the rest of the
-#' attributes will automatically default to CSV values as following:
+#' Note that if you only provide `formatType` as `CSV`, the rest of the attributes will automatically default to CSV values as following:
 #' 
 #' ` { "withHeader": "true", "separator": "," } `
 #' 
-#' For more information about supported file formats, see [Supported Data
-#' Types and File
-#' Formats](https://docs.aws.amazon.com/finspace/latest/userguide/supported-data-types.html)
-#' in the FinSpace User Guide.
+#' For more information about supported file formats, see [Supported Data Types and File Formats](https://docs.aws.amazon.com/finspace/latest/userguide/supported-data-types.html) in the FinSpace User Guide.
 #'
 #' @keywords internal
 #'
@@ -134,9 +118,7 @@ finspacedata_create_changeset <- function(clientToken = NULL, datasetId, changeT
 #' @param autoUpdate Flag to indicate Dataview should be updated automatically.
 #' @param sortColumns Columns to be used for sorting the data.
 #' @param partitionColumns Ordered set of column names used to partition data.
-#' @param asOfTimestamp Beginning time to use for the Dataview. The value is determined as epoch
-#' time in milliseconds. For example, the value for Monday, November 1,
-#' 2021 12:00:00 PM UTC is specified as 1635768000000.
+#' @param asOfTimestamp Beginning time to use for the Dataview. The value is determined as epoch time in milliseconds. For example, the value for Monday, November 1, 2021 12:00:00 PM UTC is specified as 1635768000000.
 #' @param destinationTypeParams &#91;required&#93; Options that define the destination type for the Dataview.
 #'
 #' @keywords internal
@@ -213,34 +195,23 @@ finspacedata_create_dataset <- function(clientToken = NULL, datasetTitle, kind, 
 #'
 #' @param name &#91;required&#93; The name of the permission group.
 #' @param description A brief description for the permission group.
-#' @param applicationPermissions &#91;required&#93; The option to indicate FinSpace application permissions that are granted
-#' to a specific group.
+#' @param applicationPermissions &#91;required&#93; The option to indicate FinSpace application permissions that are granted to a specific group.
 #' 
-#' When assigning application permissions, be aware that the permission
-#' `ManageUsersAndGroups` allows users to grant themselves or others access
-#' to any functionality in their FinSpace environment's application. It
-#' should only be granted to trusted users.
+#' When assigning application permissions, be aware that the permission `ManageUsersAndGroups` allows users to grant themselves or others access to any functionality in their FinSpace environment's application. It should only be granted to trusted users.
 #' 
-#' -   [`create_dataset`][finspacedata_create_dataset] – Group members can
-#'     create new datasets.
+#' -   [`create_dataset`][finspacedata_create_dataset] – Group members can create new datasets.
 #' 
-#' -   `ManageClusters` – Group members can manage Apache Spark clusters
-#'     from FinSpace notebooks.
+#' -   `ManageClusters` – Group members can manage Apache Spark clusters from FinSpace notebooks.
 #' 
-#' -   `ManageUsersAndGroups` – Group members can manage users and
-#'     permission groups. This is a privileged permission that allows users
-#'     to grant themselves or others access to any functionality in the
-#'     application. It should only be granted to trusted users.
+#' -   `ManageUsersAndGroups` – Group members can manage users and permission groups. This is a privileged permission that allows users to grant themselves or others access to any functionality in the application. It should only be granted to trusted users.
 #' 
 #' -   `ManageAttributeSets` – Group members can manage attribute sets.
 #' 
 #' -   `ViewAuditData` – Group members can view audit data.
 #' 
-#' -   `AccessNotebooks` – Group members will have access to FinSpace
-#'     notebooks.
+#' -   `AccessNotebooks` – Group members will have access to FinSpace notebooks.
 #' 
-#' -   `GetTemporaryCredentials` – Group members can get temporary API
-#'     credentials.
+#' -   `GetTemporaryCredentials` – Group members can get temporary API credentials.
 #' @param clientToken A token that ensures idempotency. This token expires in 10 minutes.
 #'
 #' @keywords internal
@@ -272,31 +243,20 @@ finspacedata_create_permission_group <- function(name, description = NULL, appli
 #'
 #' See [https://www.paws-r-sdk.com/docs/finspacedata_create_user/](https://www.paws-r-sdk.com/docs/finspacedata_create_user/) for full documentation.
 #'
-#' @param emailAddress &#91;required&#93; The email address of the user that you want to register. The email
-#' address serves as a uniquer identifier for each user and cannot be
-#' changed after it's created.
-#' @param type &#91;required&#93; The option to indicate the type of user. Use one of the following
-#' options to specify this parameter:
+#' @param emailAddress &#91;required&#93; The email address of the user that you want to register. The email address serves as a uniquer identifier for each user and cannot be changed after it's created.
+#' @param type &#91;required&#93; The option to indicate the type of user. Use one of the following options to specify this parameter:
 #' 
-#' -   `SUPER_USER` – A user with permission to all the functionality and
-#'     data in FinSpace.
+#' -   `SUPER_USER` – A user with permission to all the functionality and data in FinSpace.
 #' 
-#' -   `APP_USER` – A user with specific permissions in FinSpace. The users
-#'     are assigned permissions by adding them to a permission group.
+#' -   `APP_USER` – A user with specific permissions in FinSpace. The users are assigned permissions by adding them to a permission group.
 #' @param firstName The first name of the user that you want to register.
 #' @param lastName The last name of the user that you want to register.
-#' @param apiAccess The option to indicate whether the user can use the
-#' [`get_programmatic_access_credentials`][finspacedata_get_programmatic_access_credentials]
-#' API to obtain credentials that can then be used to access other FinSpace
-#' Data API operations.
+#' @param apiAccess The option to indicate whether the user can use the [`get_programmatic_access_credentials`][finspacedata_get_programmatic_access_credentials] API to obtain credentials that can then be used to access other FinSpace Data API operations.
 #' 
 #' -   `ENABLED` – The user has permissions to use the APIs.
 #' 
 #' -   `DISABLED` – The user does not have permissions to use any APIs.
-#' @param apiAccessPrincipalArn The ARN identifier of an AWS user or role that is allowed to call the
-#' [`get_programmatic_access_credentials`][finspacedata_get_programmatic_access_credentials]
-#' API to obtain a credentials token for a specific FinSpace user. This
-#' must be an IAM role within your FinSpace account.
+#' @param apiAccessPrincipalArn The ARN identifier of an AWS user or role that is allowed to call the [`get_programmatic_access_credentials`][finspacedata_get_programmatic_access_credentials] API to obtain a credentials token for a specific FinSpace user. This must be an IAM role within your FinSpace account.
 #' @param clientToken A token that ensures idempotency. This token expires in 10 minutes.
 #'
 #' @keywords internal
@@ -490,8 +450,7 @@ finspacedata_enable_user <- function(userId, clientToken = NULL) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/finspacedata_get_changeset/](https://www.paws-r-sdk.com/docs/finspacedata_get_changeset/) for full documentation.
 #'
-#' @param datasetId &#91;required&#93; The unique identifier for the FinSpace Dataset where the Changeset is
-#' created.
+#' @param datasetId &#91;required&#93; The unique identifier for the FinSpace Dataset where the Changeset is created.
 #' @param changesetId &#91;required&#93; The unique identifier of the Changeset for which to get data.
 #'
 #' @keywords internal
@@ -716,13 +675,9 @@ finspacedata_get_user <- function(userId) {
 #'
 #' @param locationType Specify the type of the working location.
 #' 
-#' -   `SAGEMAKER` – Use the Amazon S3 location as a temporary location to
-#'     store data content when working with FinSpace Notebooks that run on
-#'     SageMaker studio.
+#' -   `SAGEMAKER` – Use the Amazon S3 location as a temporary location to store data content when working with FinSpace Notebooks that run on SageMaker studio.
 #' 
-#' -   `INGESTION` – Use the Amazon S3 location as a staging location to
-#'     copy your data content and then use the location with the Changeset
-#'     creation operation.
+#' -   `INGESTION` – Use the Amazon S3 location as a staging location to copy your data content and then use the location with the Changeset creation operation.
 #'
 #' @keywords internal
 #'
@@ -753,8 +708,7 @@ finspacedata_get_working_location <- function(locationType = NULL) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/finspacedata_list_changesets/](https://www.paws-r-sdk.com/docs/finspacedata_list_changesets/) for full documentation.
 #'
-#' @param datasetId &#91;required&#93; The unique identifier for the FinSpace Dataset to which the Changeset
-#' belongs.
+#' @param datasetId &#91;required&#93; The unique identifier for the FinSpace Dataset to which the Changeset belongs.
 #' @param maxResults The maximum number of results per page.
 #' @param nextToken A token that indicates where a results page should begin.
 #'
@@ -983,8 +937,7 @@ finspacedata_list_users_by_permission_group <- function(permissionGroupId, nextT
 #'
 #' See [https://www.paws-r-sdk.com/docs/finspacedata_reset_user_password/](https://www.paws-r-sdk.com/docs/finspacedata_reset_user_password/) for full documentation.
 #'
-#' @param userId &#91;required&#93; The unique identifier of the user that a temporary password is requested
-#' for.
+#' @param userId &#91;required&#93; The unique identifier of the user that a temporary password is requested for.
 #' @param clientToken A token that ensures idempotency. This token expires in 10 minutes.
 #'
 #' @keywords internal
@@ -1017,11 +970,9 @@ finspacedata_reset_user_password <- function(userId, clientToken = NULL) {
 #' See [https://www.paws-r-sdk.com/docs/finspacedata_update_changeset/](https://www.paws-r-sdk.com/docs/finspacedata_update_changeset/) for full documentation.
 #'
 #' @param clientToken A token that ensures idempotency. This token expires in 10 minutes.
-#' @param datasetId &#91;required&#93; The unique identifier for the FinSpace Dataset in which the Changeset is
-#' created.
+#' @param datasetId &#91;required&#93; The unique identifier for the FinSpace Dataset in which the Changeset is created.
 #' @param changesetId &#91;required&#93; The unique identifier for the Changeset to update.
-#' @param sourceParams &#91;required&#93; Options that define the location of the data being ingested
-#' (`s3SourcePath`) and the source of the changeset (`sourceType`).
+#' @param sourceParams &#91;required&#93; Options that define the location of the data being ingested (`s3SourcePath`) and the source of the changeset (`sourceType`).
 #' 
 #' Both `s3SourcePath` and `sourceType` are required attributes.
 #' 
@@ -1029,14 +980,8 @@ finspacedata_reset_user_password <- function(userId, clientToken = NULL) {
 #' 
 #' ` "sourceParams": { "s3SourcePath": "s3://finspace-landing-us-east-2-bk7gcfvitndqa6ebnvys4d/scratch/wr5hh8pwkpqqkxa4sxrmcw/ingestion/equity.csv", "sourceType": "S3" } `
 #' 
-#' The S3 path that you specify must allow the FinSpace role access. To do
-#' that, you first need to configure the IAM policy on S3 bucket. For more
-#' information, see [Loading data from an Amazon S3 Bucket using the
-#' FinSpace
-#' API](https://docs.aws.amazon.com/finspace/latest/data-api/fs-using-the-finspace-api.html#access-s3-buckets)section.
-#' @param formatParams &#91;required&#93; Options that define the structure of the source file(s) including the
-#' format type (`formatType`), header row (`withHeader`), data separation
-#' character (`separator`) and the type of compression (`compression`).
+#' The S3 path that you specify must allow the FinSpace role access. To do that, you first need to configure the IAM policy on S3 bucket. For more information, see [Loading data from an Amazon S3 Bucket using the FinSpace API](https://docs.aws.amazon.com/finspace/latest/data-api/fs-using-the-finspace-api.html#access-s3-buckets)section.
+#' @param formatParams &#91;required&#93; Options that define the structure of the source file(s) including the format type (`formatType`), header row (`withHeader`), data separation character (`separator`) and the type of compression (`compression`).
 #' 
 #' `formatType` is a required attribute and can have the following values:
 #' 
@@ -1052,15 +997,11 @@ finspacedata_reset_user_password <- function(userId, clientToken = NULL) {
 #' 
 #' ` "formatParams": { "formatType": "CSV", "withHeader": "true", "separator": ",", "compression":"None" } `
 #' 
-#' Note that if you only provide `formatType` as `CSV`, the rest of the
-#' attributes will automatically default to CSV values as following:
+#' Note that if you only provide `formatType` as `CSV`, the rest of the attributes will automatically default to CSV values as following:
 #' 
 #' ` { "withHeader": "true", "separator": "," } `
 #' 
-#' For more information about supported file formats, see [Supported Data
-#' Types and File
-#' Formats](https://docs.aws.amazon.com/finspace/latest/userguide/supported-data-types.html)
-#' in the FinSpace User Guide.
+#' For more information about supported file formats, see [Supported Data Types and File Formats](https://docs.aws.amazon.com/finspace/latest/userguide/supported-data-types.html) in the FinSpace User Guide.
 #'
 #' @keywords internal
 #'
@@ -1135,34 +1076,23 @@ finspacedata_update_dataset <- function(clientToken = NULL, datasetId, datasetTi
 #' @param permissionGroupId &#91;required&#93; The unique identifier for the permission group to update.
 #' @param name The name of the permission group.
 #' @param description A brief description for the permission group.
-#' @param applicationPermissions The permissions that are granted to a specific group for accessing the
-#' FinSpace application.
+#' @param applicationPermissions The permissions that are granted to a specific group for accessing the FinSpace application.
 #' 
-#' When assigning application permissions, be aware that the permission
-#' `ManageUsersAndGroups` allows users to grant themselves or others access
-#' to any functionality in their FinSpace environment's application. It
-#' should only be granted to trusted users.
+#' When assigning application permissions, be aware that the permission `ManageUsersAndGroups` allows users to grant themselves or others access to any functionality in their FinSpace environment's application. It should only be granted to trusted users.
 #' 
-#' -   [`create_dataset`][finspacedata_create_dataset] – Group members can
-#'     create new datasets.
+#' -   [`create_dataset`][finspacedata_create_dataset] – Group members can create new datasets.
 #' 
-#' -   `ManageClusters` – Group members can manage Apache Spark clusters
-#'     from FinSpace notebooks.
+#' -   `ManageClusters` – Group members can manage Apache Spark clusters from FinSpace notebooks.
 #' 
-#' -   `ManageUsersAndGroups` – Group members can manage users and
-#'     permission groups. This is a privileged permission that allows users
-#'     to grant themselves or others access to any functionality in the
-#'     application. It should only be granted to trusted users.
+#' -   `ManageUsersAndGroups` – Group members can manage users and permission groups. This is a privileged permission that allows users to grant themselves or others access to any functionality in the application. It should only be granted to trusted users.
 #' 
 #' -   `ManageAttributeSets` – Group members can manage attribute sets.
 #' 
 #' -   `ViewAuditData` – Group members can view audit data.
 #' 
-#' -   `AccessNotebooks` – Group members will have access to FinSpace
-#'     notebooks.
+#' -   `AccessNotebooks` – Group members will have access to FinSpace notebooks.
 #' 
-#' -   `GetTemporaryCredentials` – Group members can get temporary API
-#'     credentials.
+#' -   `GetTemporaryCredentials` – Group members can get temporary API credentials.
 #' @param clientToken A token that ensures idempotency. This token expires in 10 minutes.
 #'
 #' @keywords internal
@@ -1197,25 +1127,17 @@ finspacedata_update_permission_group <- function(permissionGroupId, name = NULL,
 #' @param userId &#91;required&#93; The unique identifier for the user that you want to update.
 #' @param type The option to indicate the type of user.
 #' 
-#' -   `SUPER_USER`– A user with permission to all the functionality and
-#'     data in FinSpace.
+#' -   `SUPER_USER`– A user with permission to all the functionality and data in FinSpace.
 #' 
-#' -   `APP_USER` – A user with specific permissions in FinSpace. The users
-#'     are assigned permissions by adding them to a permission group.
+#' -   `APP_USER` – A user with specific permissions in FinSpace. The users are assigned permissions by adding them to a permission group.
 #' @param firstName The first name of the user.
 #' @param lastName The last name of the user.
-#' @param apiAccess The option to indicate whether the user can use the
-#' [`get_programmatic_access_credentials`][finspacedata_get_programmatic_access_credentials]
-#' API to obtain credentials that can then be used to access other FinSpace
-#' Data API operations.
+#' @param apiAccess The option to indicate whether the user can use the [`get_programmatic_access_credentials`][finspacedata_get_programmatic_access_credentials] API to obtain credentials that can then be used to access other FinSpace Data API operations.
 #' 
 #' -   `ENABLED` – The user has permissions to use the APIs.
 #' 
 #' -   `DISABLED` – The user does not have permissions to use any APIs.
-#' @param apiAccessPrincipalArn The ARN identifier of an AWS user or role that is allowed to call the
-#' [`get_programmatic_access_credentials`][finspacedata_get_programmatic_access_credentials]
-#' API to obtain a credentials token for a specific FinSpace user. This
-#' must be an IAM role within your FinSpace account.
+#' @param apiAccessPrincipalArn The ARN identifier of an AWS user or role that is allowed to call the [`get_programmatic_access_credentials`][finspacedata_get_programmatic_access_credentials] API to obtain a credentials token for a specific FinSpace user. This must be an IAM role within your FinSpace account.
 #' @param clientToken A token that ensures idempotency. This token expires in 10 minutes.
 #'
 #' @keywords internal

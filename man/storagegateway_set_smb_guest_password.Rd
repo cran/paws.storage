@@ -7,8 +7,7 @@
 storagegateway_set_smb_guest_password(GatewayARN, Password)
 }
 \arguments{
-\item{GatewayARN}{[required] The Amazon Resource Name (ARN) of the S3 File Gateway the SMB file share
-is associated with.}
+\item{GatewayARN}{[required] The Amazon Resource Name (ARN) of the S3 File Gateway the SMB file share is associated with.}
 
 \item{Password}{[required] The password that you want to set for your SMB server.}
 }

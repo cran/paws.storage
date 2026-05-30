@@ -11,8 +11,7 @@ omics_delete_annotation_store_versions(name, versions, force = NULL)
 
 \item{versions}{[required] The versions of an annotation store to be deleted.}
 
-\item{force}{Forces the deletion of an annotation store version when imports are
-in-progress..}
+\item{force}{Forces the deletion of an annotation store version when imports are in-progress..}
 }
 \description{
 Deletes one or multiple versions of an annotation store.

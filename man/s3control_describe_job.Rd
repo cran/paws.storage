@@ -8,8 +8,7 @@ job}
 s3control_describe_job(AccountId, JobId)
 }
 \arguments{
-\item{AccountId}{[required] The Amazon Web Services account ID associated with the S3 Batch
-Operations job.}
+\item{AccountId}{[required] The Amazon Web Services account ID associated with the S3 Batch Operations job.}
 
 \item{JobId}{[required] The ID for the job whose information you want to retrieve.}
 }

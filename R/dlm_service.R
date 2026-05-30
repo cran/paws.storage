@@ -5,15 +5,9 @@ NULL
 #' Amazon Data Lifecycle Manager
 #'
 #' @description
-#' With Amazon Data Lifecycle Manager, you can manage the lifecycle of your
-#' Amazon Web Services resources. You create lifecycle policies, which are
-#' used to automate operations on the specified resources.
+#' With Amazon Data Lifecycle Manager, you can manage the lifecycle of your Amazon Web Services resources. You create lifecycle policies, which are used to automate operations on the specified resources.
 #' 
-#' Amazon Data Lifecycle Manager supports Amazon EBS volumes and snapshots.
-#' For information about using Amazon Data Lifecycle Manager with Amazon
-#' EBS, see [Amazon Data Lifecycle
-#' Manager](https://docs.aws.amazon.com/ebs/latest/userguide/snapshot-lifecycle.html)
-#' in the *Amazon EC2 User Guide*.
+#' Amazon Data Lifecycle Manager supports Amazon EBS volumes and snapshots. For information about using Amazon Data Lifecycle Manager with Amazon EBS, see [Amazon Data Lifecycle Manager](https://docs.aws.amazon.com/ebs/latest/userguide/snapshot-lifecycle.html) in the *Amazon EC2 User Guide*.
 #'
 #' @param
 #' config
@@ -137,7 +131,7 @@ dlm <- function(config = list(), credentials = list(), endpoint = NULL, region =
 
 .dlm$metadata <- list(
   service_name = "dlm",
-  endpoints = list("^(us|eu|ap|sa|ca|me|af|il|mx)\\-\\w+\\-\\d+$" = list(endpoint = "dlm.{region}.amazonaws.com", global = FALSE), "^cn\\-\\w+\\-\\d+$" = list(endpoint = "dlm.{region}.amazonaws.com.cn", global = FALSE), "^us\\-gov\\-\\w+\\-\\d+$" = list(endpoint = "dlm.{region}.amazonaws.com", global = FALSE), "^us\\-iso\\-\\w+\\-\\d+$" = list(endpoint = "dlm.{region}.c2s.ic.gov", global = FALSE), "^us\\-isob\\-\\w+\\-\\d+$" = list(endpoint = "dlm.{region}.sc2s.sgov.gov", global = FALSE), "^eu\\-isoe\\-\\w+\\-\\d+$" = list(endpoint = "dlm.{region}.cloud.adc-e.uk", global = FALSE), "^us\\-isof\\-\\w+\\-\\d+$" = list(endpoint = "dlm.{region}.csp.hci.ic.gov", global = FALSE)),
+  endpoints = list("^(us|eu|ap|sa|ca|me|af|il|mx)\\-\\w+\\-\\d+$" = list(endpoint = "dlm.{region}.amazonaws.com", global = FALSE), "^cn\\-\\w+\\-\\d+$" = list(endpoint = "dlm.{region}.amazonaws.com.cn", global = FALSE), "^us\\-gov\\-\\w+\\-\\d+$" = list(endpoint = "dlm.{region}.amazonaws.com", global = FALSE), "^us\\-iso\\-\\w+\\-\\d+$" = list(endpoint = "dlm.{region}.c2s.ic.gov", global = FALSE), "^us\\-isob\\-\\w+\\-\\d+$" = list(endpoint = "dlm.{region}.sc2s.sgov.gov", global = FALSE), "^eu\\-isoe\\-\\w+\\-\\d+$" = list(endpoint = "dlm.{region}.cloud.adc-e.uk", global = FALSE), "^us\\-isof\\-\\w+\\-\\d+$" = list(endpoint = "dlm.{region}.csp.hci.ic.gov", global = FALSE), "^eusc\\-(de)\\-\\w+\\-\\d+$" = list(endpoint = "dlm.{region}.amazonaws.eu", global = FALSE)),
   service_id = "DLM",
   api_version = "2018-01-12",
   signing_name = "dlm",

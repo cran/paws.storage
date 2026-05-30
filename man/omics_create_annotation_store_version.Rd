@@ -13,11 +13,9 @@ omics_create_annotation_store_version(
 )
 }
 \arguments{
-\item{name}{[required] The name of an annotation store version from which versions are being
-created.}
+\item{name}{[required] The name of an annotation store version from which versions are being created.}
 
-\item{versionName}{[required] The name given to an annotation store version to distinguish it from
-other versions.}
+\item{versionName}{[required] The name given to an annotation store version to distinguish it from other versions.}
 
 \item{description}{The description of an annotation store version.}
 

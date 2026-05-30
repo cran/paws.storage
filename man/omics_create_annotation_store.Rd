@@ -2,7 +2,8 @@
 % Please edit documentation in R/omics_operations.R
 \name{omics_create_annotation_store}
 \alias{omics_create_annotation_store}
-\title{Creates an annotation store}
+\title{Amazon Web Services HealthOmics variant stores and annotation stores are
+no longer open to new customers}
 \usage{
 omics_create_annotation_store(
   reference = NULL,
@@ -24,8 +25,7 @@ omics_create_annotation_store(
 
 \item{tags}{Tags for the store.}
 
-\item{versionName}{The name given to an annotation store version to distinguish it from
-other versions.}
+\item{versionName}{The name given to an annotation store version to distinguish it from other versions.}
 
 \item{sseConfig}{Server-side encryption (SSE) settings for the store.}
 
@@ -34,7 +34,7 @@ other versions.}
 \item{storeOptions}{File parsing options for the annotation store.}
 }
 \description{
-Creates an annotation store.
+Amazon Web Services HealthOmics variant stores and annotation stores are no longer open to new customers. Existing customers can continue to use the service as normal. For more information, see \href{https://docs.aws.amazon.com/omics/latest/dev/variant-store-availability-change.html}{Amazon Web Services HealthOmics variant store and annotation store availability change}.
 
 See \url{https://www.paws-r-sdk.com/docs/omics_create_annotation_store/} for full documentation.
 }

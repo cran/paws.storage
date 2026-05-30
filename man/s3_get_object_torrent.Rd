@@ -12,16 +12,15 @@ s3_get_object_torrent(
 )
 }
 \arguments{
-\item{Bucket}{[required] The name of the bucket containing the object for which to get the
-torrent files.}
+\item{Bucket}{[required] The name of the bucket containing the object for which to get the torrent files.}
 
 \item{Key}{[required] The object key for which to get the information.}
 
-\item{RequestPayer}{}
+\item{RequestPayer}{Confirms that the requester knows that they will be charged for the request. Bucket owners need not specify this parameter in their requests. If either the source or destination S3 bucket has Requester Pays enabled, the requester will pay for the corresponding charges. For information about downloading objects from Requester Pays buckets, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/ObjectsinRequesterPaysBuckets.html}{Downloading Objects in Requester Pays Buckets} in the \emph{Amazon S3 User Guide}.
 
-\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you
-provide does not match the actual owner of the bucket, the request fails
-with the HTTP status code \verb{403 Forbidden} (access denied).}
+This functionality is not supported for directory buckets.}
+
+\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you provide does not match the actual owner of the bucket, the request fails with the HTTP status code \verb{403 Forbidden} (access denied).}
 }
 \description{
 This operation is not supported for directory buckets.

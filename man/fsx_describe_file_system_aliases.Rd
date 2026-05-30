@@ -13,20 +13,13 @@ fsx_describe_file_system_aliases(
 )
 }
 \arguments{
-\item{ClientRequestToken}{}
+\item{ClientRequestToken}{(Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.}
 
-\item{FileSystemId}{[required] The ID of the file system to return the associated DNS aliases for
-(String).}
+\item{FileSystemId}{[required] The ID of the file system to return the associated DNS aliases for (String).}
 
-\item{MaxResults}{Maximum number of DNS aliases to return in the response (integer). This
-parameter value must be greater than 0. The number of items that Amazon
-FSx returns is the minimum of the \code{MaxResults} parameter specified in
-the request and the service's internal maximum number of items per page.}
+\item{MaxResults}{Maximum number of DNS aliases to return in the response (integer). This parameter value must be greater than 0. The number of items that Amazon FSx returns is the minimum of the \code{MaxResults} parameter specified in the request and the service's internal maximum number of items per page.}
 
-\item{NextToken}{Opaque pagination token returned from a previous
-\code{\link[=fsx_describe_file_system_aliases]{describe_file_system_aliases}}
-operation (String). If a token is included in the request, the action
-continues the list from where the previous returning call left off.}
+\item{NextToken}{Opaque pagination token returned from a previous \code{\link[=fsx_describe_file_system_aliases]{describe_file_system_aliases}} operation (String). If a token is included in the request, the action continues the list from where the previous returning call left off.}
 }
 \description{
 Returns the DNS aliases that are associated with the specified Amazon FSx for Windows File Server file system. A history of all DNS aliases that have been associated with and disassociated from the file system is available in the list of AdministrativeAction provided in the \code{\link[=fsx_describe_file_systems]{describe_file_systems}} operation response.

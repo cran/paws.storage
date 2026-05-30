@@ -17,123 +17,95 @@ fsx_create_file_system(
   LustreConfiguration = NULL,
   OntapConfiguration = NULL,
   FileSystemTypeVersion = NULL,
-  OpenZFSConfiguration = NULL
+  OpenZFSConfiguration = NULL,
+  NetworkType = NULL
 )
 }
 \arguments{
-\item{ClientRequestToken}{A string of up to 63 ASCII characters that Amazon FSx uses to ensure
-idempotent creation. This string is automatically filled on your behalf
-when you use the Command Line Interface (CLI) or an Amazon Web Services
-SDK.}
+\item{ClientRequestToken}{A string of up to 63 ASCII characters that Amazon FSx uses to ensure idempotent creation. This string is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.}
 
-\item{FileSystemType}{[required] The type of Amazon FSx file system to create. Valid values are
-\code{WINDOWS}, \code{LUSTRE}, \code{ONTAP}, and \code{OPENZFS}.}
+\item{FileSystemType}{[required] The type of Amazon FSx file system to create. Valid values are \code{WINDOWS}, \code{LUSTRE}, \code{ONTAP}, and \code{OPENZFS}.}
 
-\item{StorageCapacity}{Sets the storage capacity of the file system that you're creating, in
-gibibytes (GiB).
+\item{StorageCapacity}{Sets the storage capacity of the file system that you're creating, in gibibytes (GiB).
 
-\strong{FSx for Lustre file systems} - The amount of storage capacity that
-you can configure depends on the value that you set for \code{StorageType}
-and the Lustre \code{DeploymentType}, as follows:
+\strong{FSx for Lustre file systems} - The amount of storage capacity that you can configure depends on the value that you set for \code{StorageType} and the Lustre \code{DeploymentType}, as follows:
 \itemize{
-\item For \code{SCRATCH_2}, \code{PERSISTENT_2}, and \code{PERSISTENT_1} deployment types
-using SSD storage type, the valid values are 1200 GiB, 2400 GiB, and
-increments of 2400 GiB.
-\item For \code{PERSISTENT_1} HDD file systems, valid values are increments of
-6000 GiB for 12 MB/s/TiB file systems and increments of 1800 GiB for
-40 MB/s/TiB file systems.
-\item For \code{SCRATCH_1} deployment type, valid values are 1200 GiB, 2400
-GiB, and increments of 3600 GiB.
+\item For \code{SCRATCH_2}, \code{PERSISTENT_2}, and \code{PERSISTENT_1} deployment types using SSD storage type, the valid values are 1200 GiB, 2400 GiB, and increments of 2400 GiB.
+\item For \code{PERSISTENT_1} HDD file systems, valid values are increments of 6000 GiB for 12 MB/s/TiB file systems and increments of 1800 GiB for 40 MB/s/TiB file systems.
+\item For \code{SCRATCH_1} deployment type, valid values are 1200 GiB, 2400 GiB, and increments of 3600 GiB.
 }
 
-\strong{FSx for ONTAP file systems} - The amount of storage capacity that you
-can configure depends on the value of the \code{HAPairs} property. The
-minimum value is calculated as 1,024 * \code{HAPairs} and the maximum is
-calculated as 524,288 * \code{HAPairs}.
+\strong{FSx for ONTAP file systems} - The amount of storage capacity that you can configure depends on the value of the \code{HAPairs} property. The minimum value is calculated as 1,024 * \code{HAPairs} and the maximum is calculated as 524,288 * \code{HAPairs}.
 
-\strong{FSx for OpenZFS file systems} - The amount of storage capacity that
-you can configure is from 64 GiB up to 524,288 GiB (512 TiB).
+\strong{FSx for OpenZFS file systems} - The amount of storage capacity that you can configure is from 64 GiB up to 524,288 GiB (512 TiB).
 
-\strong{FSx for Windows File Server file systems} - The amount of storage
-capacity that you can configure depends on the value that you set for
-\code{StorageType} as follows:
+\strong{FSx for Windows File Server file systems} - The amount of storage capacity that you can configure depends on the value that you set for \code{StorageType} as follows:
 \itemize{
 \item For SSD storage, valid values are 32 GiB-65,536 GiB (64 TiB).
 \item For HDD storage, valid values are 2000 GiB-65,536 GiB (64 TiB).
 }}
 
-\item{StorageType}{Sets the storage class for the file system that you're creating. Valid
-values are \code{SSD}, \code{HDD}, and \code{INTELLIGENT_TIERING}.
+\item{StorageType}{Sets the storage class for the file system that you're creating. Valid values are \code{SSD}, \code{HDD}, and \code{INTELLIGENT_TIERING}.
 \itemize{
-\item Set to \code{SSD} to use solid state drive storage. SSD is supported on
-all Windows, Lustre, ONTAP, and OpenZFS deployment types.
-\item Set to \code{HDD} to use hard disk drive storage. HDD is supported on
-\code{SINGLE_AZ_2} and \code{MULTI_AZ_1} Windows file system deployment types,
-and on \code{PERSISTENT_1} Lustre file system deployment types.
-\item Set to \code{INTELLIGENT_TIERING} to use fully elastic,
-intelligently-tiered storage. Intelligent-Tiering is only available
-for OpenZFS file systems with the Multi-AZ deployment type.
+\item Set to \code{SSD} to use solid state drive storage. SSD is supported on all Windows, Lustre, ONTAP, and OpenZFS deployment types.
+\item Set to \code{HDD} to use hard disk drive storage, which is supported on \code{SINGLE_AZ_2} and \code{MULTI_AZ_1} Windows file system deployment types, and on \code{PERSISTENT_1} Lustre file system deployment types.
+\item Set to \code{INTELLIGENT_TIERING} to use fully elastic, intelligently-tiered storage. Intelligent-Tiering is only available for OpenZFS file systems with the Multi-AZ deployment type and for Lustre file systems with the Persistent_2 deployment type.
 }
 
-Default value is \code{SSD}. For more information, see \href{https://docs.aws.amazon.com/fsx/latest/WindowsGuide/managing-storage-configuration.html#optimize-storage-costs}{Storage type options}
-in the \emph{FSx for Windows File Server User Guide}, \href{https://docs.aws.amazon.com/fsx/latest/LustreGuide/what-is.html#storage-options}{Multiple storage options}
-in the \emph{FSx for Lustre User Guide}, and \href{https://docs.aws.amazon.com/fsx/latest/OpenZFSGuide/performance-intelligent-tiering.html}{Working with Intelligent-Tiering}
-in the \emph{Amazon FSx for OpenZFS User Guide}.}
+Default value is \code{SSD}. For more information, see \href{https://docs.aws.amazon.com/fsx/latest/WindowsGuide/managing-storage-configuration.html#storage-type-options}{Storage type options} in the \emph{FSx for Windows File Server User Guide}, \href{https://docs.aws.amazon.com/fsx/latest/LustreGuide/using-fsx-lustre.html#lustre-storage-classes}{FSx for Lustre storage classes} in the \emph{FSx for Lustre User Guide}, and \href{https://docs.aws.amazon.com/fsx/latest/OpenZFSGuide/performance-intelligent-tiering.html}{Working with Intelligent-Tiering} in the \emph{Amazon FSx for OpenZFS User Guide}.}
 
-\item{SubnetIds}{[required] Specifies the IDs of the subnets that the file system will be accessible
-from. For Windows and ONTAP \code{MULTI_AZ_1} deployment types,provide
-exactly two subnet IDs, one for the preferred file server and one for
-the standby file server. You specify one of these subnets as the
-preferred subnet using the \code{WindowsConfiguration > PreferredSubnetID} or
-\code{OntapConfiguration > PreferredSubnetID} properties. For more
-information about Multi-AZ file system configuration, see \href{https://docs.aws.amazon.com/fsx/latest/WindowsGuide/high-availability-multiAZ.html}{Availability and durability: Single-AZ and Multi-AZ file systems}
-in the \emph{Amazon FSx for Windows User Guide} and \href{https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/}{Availability and durability} in the
-\emph{Amazon FSx for ONTAP User Guide}.
+\item{SubnetIds}{[required] Specifies the IDs of the subnets that the file system will be accessible from. For Windows and ONTAP \code{MULTI_AZ_1} deployment types,provide exactly two subnet IDs, one for the preferred file server and one for the standby file server. You specify one of these subnets as the preferred subnet using the \code{WindowsConfiguration > PreferredSubnetID} or \code{OntapConfiguration > PreferredSubnetID} properties. For more information about Multi-AZ file system configuration, see \href{https://docs.aws.amazon.com/fsx/latest/WindowsGuide/high-availability-multiAZ.html}{Availability and durability: Single-AZ and Multi-AZ file systems} in the \emph{Amazon FSx for Windows User Guide} and \href{https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/}{Availability and durability} in the \emph{Amazon FSx for ONTAP User Guide}.
 
-For Windows \code{SINGLE_AZ_1} and \code{SINGLE_AZ_2} and all Lustre deployment
-types, provide exactly one subnet ID. The file server is launched in
-that subnet's Availability Zone.}
+For Windows \code{SINGLE_AZ_1} and \code{SINGLE_AZ_2} and all Lustre deployment types, provide exactly one subnet ID. The file server is launched in that subnet's Availability Zone.}
 
-\item{SecurityGroupIds}{A list of IDs specifying the security groups to apply to all network
-interfaces created for file system access. This list isn't returned in
-later requests to describe the file system.
+\item{SecurityGroupIds}{A list of IDs specifying the security groups to apply to all network interfaces created for file system access. This list isn't returned in later requests to describe the file system.
 
-You must specify a security group if you are creating a Multi-AZ FSx for
-ONTAP file system in a VPC subnet that has been shared with you.}
+You must specify a security group if you are creating a Multi-AZ FSx for ONTAP file system in a VPC subnet that has been shared with you.}
 
-\item{Tags}{The tags to apply to the file system that's being created. The key value
-of the \code{Name} tag appears in the console as the file system name.}
+\item{Tags}{The tags to apply to the file system that's being created. The key value of the \code{Name} tag appears in the console as the file system name.}
 
-\item{KmsKeyId}{}
-
-\item{WindowsConfiguration}{The Microsoft Windows configuration for the file system that's being
-created.}
-
-\item{LustreConfiguration}{}
-
-\item{OntapConfiguration}{}
-
-\item{FileSystemTypeVersion}{For FSx for Lustre file systems, sets the Lustre version for the file
-system that you're creating. Valid values are \code{2.10}, \code{2.12}, and
-\code{2.15}:
+\item{KmsKeyId}{Specifies the ID of the Key Management Service (KMS) key to use for encrypting data on Amazon FSx file systems, as follows:
 \itemize{
-\item \code{2.10} is supported by the Scratch and Persistent_1 Lustre
-deployment types.
-\item \code{2.12} is supported by all Lustre deployment types, except for
-\code{PERSISTENT_2} with a metadata configuration mode.
-\item \code{2.15} is supported by all Lustre deployment types and is
-recommended for all new file systems.
+\item Amazon FSx for Lustre \code{PERSISTENT_1} and \code{PERSISTENT_2} deployment types only.
+
+\code{SCRATCH_1} and \code{SCRATCH_2} types are encrypted using the Amazon FSx service KMS key for your account.
+\item Amazon FSx for NetApp ONTAP
+\item Amazon FSx for OpenZFS
+\item Amazon FSx for Windows File Server
+}
+
+If a \code{KmsKeyId} isn't specified, the Amazon FSx-managed KMS key for your account is used. For more information, see \href{https://docs.aws.amazon.com/kms/latest/APIReference/API_Encrypt.html}{Encrypt} in the \emph{Key Management Service API Reference}.}
+
+\item{WindowsConfiguration}{The Microsoft Windows configuration for the file system that's being created.}
+
+\item{LustreConfiguration}{The Lustre configuration for the file system being created.
+
+The following parameters are not supported for file systems with a data repository association created with .
+\itemize{
+\item \code{AutoImportPolicy}
+\item \code{ExportPath}
+\item \code{ImportedFileChunkSize}
+\item \code{ImportPath}
+}}
+
+\item{OntapConfiguration}{The ONTAP configuration properties of the FSx for ONTAP file system that you are creating.}
+
+\item{FileSystemTypeVersion}{For FSx for Lustre file systems, sets the Lustre version for the file system that you're creating. Valid values are \code{2.10}, \code{2.12}, and \code{2.15}:
+\itemize{
+\item \code{2.10} is supported by the Scratch and Persistent_1 Lustre deployment types.
+\item \code{2.12} is supported by all Lustre deployment types, except for \code{PERSISTENT_2} with a metadata configuration mode.
+\item \code{2.15} is supported by all Lustre deployment types and is recommended for all new file systems.
 }
 
 Default value is \code{2.10}, except for the following deployments:
 \itemize{
-\item Default value is \code{2.12} when \code{DeploymentType} is set to
-\code{PERSISTENT_2} without a metadata configuration mode.
-\item Default value is \code{2.15} when \code{DeploymentType} is set to
-\code{PERSISTENT_2} with a metadata configuration mode.
+\item Default value is \code{2.12} when \code{DeploymentType} is set to \code{PERSISTENT_2} without a metadata configuration mode.
+\item Default value is \code{2.15} when \code{DeploymentType} is set to \code{PERSISTENT_2} with a metadata configuration mode.
 }}
 
 \item{OpenZFSConfiguration}{The OpenZFS configuration for the file system that's being created.}
+
+\item{NetworkType}{The network type of the Amazon FSx file system that you are creating. Valid values are \code{IPV4} (which supports IPv4 only) and \code{DUAL} (for dual-stack mode, which supports both IPv4 and IPv6). The default is \code{IPV4}. Supported for FSx for OpenZFS, FSx for ONTAP, and FSx for Windows File Server file systems.}
 }
 \description{
 Creates a new, empty Amazon FSx file system. You can create the following supported Amazon FSx file systems using the \code{\link[=fsx_create_file_system]{create_file_system}} API operation:

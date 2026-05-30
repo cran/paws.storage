@@ -9,8 +9,7 @@ omics_create_share(resourceArn, principalSubscriber, shareName = NULL)
 \arguments{
 \item{resourceArn}{[required] The ARN of the resource to be shared.}
 
-\item{principalSubscriber}{[required] The principal subscriber is the account being offered shared access to
-the resource.}
+\item{principalSubscriber}{[required] The principal subscriber is the account being offered shared access to the resource.}
 
 \item{shareName}{A name that the owner defines for the share.}
 }

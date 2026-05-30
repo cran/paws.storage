@@ -7,14 +7,11 @@
 storagegateway_list_tags_for_resource(ResourceARN, Marker = NULL, Limit = NULL)
 }
 \arguments{
-\item{ResourceARN}{[required] The Amazon Resource Name (ARN) of the resource for which you want to
-list tags.}
+\item{ResourceARN}{[required] The Amazon Resource Name (ARN) of the resource for which you want to list tags.}
 
-\item{Marker}{An opaque string that indicates the position at which to begin returning
-the list of tags.}
+\item{Marker}{An opaque string that indicates the position at which to begin returning the list of tags.}
 
-\item{Limit}{Specifies that the list of tags returned be limited to the specified
-number of items.}
+\item{Limit}{Specifies that the list of tags returned be limited to the specified number of items.}
 }
 \description{
 Lists the tags that have been added to the specified resource. This operation is supported in storage gateways of all types.

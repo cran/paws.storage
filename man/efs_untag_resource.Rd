@@ -9,8 +9,7 @@ efs_untag_resource(ResourceId, TagKeys)
 \arguments{
 \item{ResourceId}{[required] Specifies the EFS resource that you want to remove tags from.}
 
-\item{TagKeys}{[required] The keys of the key-value tag pairs that you want to remove from the
-specified EFS resource.}
+\item{TagKeys}{[required] The keys of the key-value tag pairs that you want to remove from the specified EFS resource.}
 }
 \description{
 Removes tags from an EFS resource. You can remove tags from EFS file systems and access points using this API operation.

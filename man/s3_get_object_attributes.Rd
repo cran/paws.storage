@@ -2,8 +2,8 @@
 % Please edit documentation in R/s3_operations.R
 \name{s3_get_object_attributes}
 \alias{s3_get_object_attributes}
-\title{Retrieves all the metadata from an object without returning the object
-itself}
+\title{Retrieves all of the metadata from an object without returning the
+object itself}
 \usage{
 s3_get_object_attributes(
   Bucket,
@@ -22,83 +22,46 @@ s3_get_object_attributes(
 \arguments{
 \item{Bucket}{[required] The name of the bucket that contains the object.
 
-\strong{Directory buckets} - When you use this operation with a directory
-bucket, you must use virtual-hosted-style requests in the format
-\code{ Bucket-name.s3express-zone-id.region-code.amazonaws.com}. Path-style
-requests are not supported. Directory bucket names must be unique in the
-chosen Zone (Availability Zone or Local Zone). Bucket names must follow
-the format \code{ bucket-base-name--zone-id--x-s3} (for example,
-\code{ amzn-s3-demo-bucket--usw2-az1--x-s3}). For information about bucket
-naming restrictions, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-bucket-naming-rules.html}{Directory bucket naming rules}
-in the \emph{Amazon S3 User Guide}.
+\strong{Directory buckets} - When you use this operation with a directory bucket, you must use virtual-hosted-style requests in the format \code{ Bucket-name.s3express-zone-id.region-code.amazonaws.com}. Path-style requests are not supported. Directory bucket names must be unique in the chosen Zone (Availability Zone or Local Zone). Bucket names must follow the format \code{ bucket-base-name--zone-id--x-s3} (for example, \code{ amzn-s3-demo-bucket--usw2-az1--x-s3}). For information about bucket naming restrictions, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-bucket-naming-rules.html}{Directory bucket naming rules} in the \emph{Amazon S3 User Guide}.
 
-\strong{Access points} - When you use this action with an access point, you
-must provide the alias of the access point in place of the bucket name
-or specify the access point ARN. When using the access point ARN, you
-must direct requests to the access point hostname. The access point
-hostname takes the form
-\emph{AccessPointName}-\emph{AccountId}.s3-accesspoint.\emph{Region}.amazonaws.com.
-When using this action with an access point through the Amazon Web
-Services SDKs, you provide the access point ARN in place of the bucket
-name. For more information about access point ARNs, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-access-points.html}{Using access points}
-in the \emph{Amazon S3 User Guide}.
+\strong{Access points} - When you use this action with an access point for general purpose buckets, you must provide the alias of the access point in place of the bucket name or specify the access point ARN. When you use this action with an access point for directory buckets, you must provide the access point name in place of the bucket name. When using the access point ARN, you must direct requests to the access point hostname. The access point hostname takes the form \emph{AccessPointName}-\emph{AccountId}.s3-accesspoint.\emph{Region}.amazonaws.com. When using this action with an access point through the Amazon Web Services SDKs, you provide the access point ARN in place of the bucket name. For more information about access point ARNs, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-access-points.html}{Using access points} in the \emph{Amazon S3 User Guide}.
 
-Access points and Object Lambda access points are not supported by
-directory buckets.
+Object Lambda access points are not supported by directory buckets.
 
-\strong{S3 on Outposts} - When you use this action with S3 on Outposts, you
-must direct requests to the S3 on Outposts hostname. The S3 on Outposts
-hostname takes the form
-\code{ AccessPointName-AccountId.outpostID.s3-outposts.Region.amazonaws.com}.
-When you use this action with S3 on Outposts, the destination bucket
-must be the Outposts access point ARN or the access point alias. For
-more information about S3 on Outposts, see \href{https://docs.aws.amazon.com/AmazonS3/latest/s3-outposts/S3onOutposts.html}{What is S3 on Outposts?}
-in the \emph{Amazon S3 User Guide}.}
+\strong{S3 on Outposts} - When you use this action with S3 on Outposts, you must direct requests to the S3 on Outposts hostname. The S3 on Outposts hostname takes the form \code{ AccessPointName-AccountId.outpostID.s3-outposts.Region.amazonaws.com}. When you use this action with S3 on Outposts, the destination bucket must be the Outposts access point ARN or the access point alias. For more information about S3 on Outposts, see \href{https://docs.aws.amazon.com/AmazonS3/latest/s3-outposts/S3onOutposts.html}{What is S3 on Outposts?} in the \emph{Amazon S3 User Guide}.}
 
 \item{Key}{[required] The object key.}
 
 \item{VersionId}{The version ID used to reference a specific version of the object.
 
-S3 Versioning isn't enabled and supported for directory buckets. For
-this API operation, only the \code{null} value of the version ID is supported
-by directory buckets. You can only specify \code{null} to the \code{versionId}
-query parameter in the request.}
+S3 Versioning isn't enabled and supported for directory buckets. For this API operation, only the \code{null} value of the version ID is supported by directory buckets. You can only specify \code{null} to the \code{versionId} query parameter in the request.}
 
-\item{MaxParts}{Sets the maximum number of parts to return.}
+\item{MaxParts}{Sets the maximum number of parts to return. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html}{Uploading and copying objects using multipart upload in Amazon S3} in the \emph{Amazon Simple Storage Service user guide}.}
 
-\item{PartNumberMarker}{Specifies the part after which listing should begin. Only parts with
-higher part numbers will be listed.}
+\item{PartNumberMarker}{Specifies the part after which listing should begin. Only parts with higher part numbers will be listed. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html}{Uploading and copying objects using multipart upload in Amazon S3} in the \emph{Amazon Simple Storage Service user guide}.}
 
-\item{SSECustomerAlgorithm}{Specifies the algorithm to use when encrypting the object (for example,
-AES256).
+\item{SSECustomerAlgorithm}{Specifies the algorithm to use when encrypting the object (for example, AES256).
 
 This functionality is not supported for directory buckets.}
 
-\item{SSECustomerKey}{Specifies the customer-provided encryption key for Amazon S3 to use in
-encrypting data. This value is used to store the object and then it is
-discarded; Amazon S3 does not store the encryption key. The key must be
-appropriate for use with the algorithm specified in the
-\code{x-amz-server-side-encryption-customer-algorithm} header.
+\item{SSECustomerKey}{Specifies the customer-provided encryption key for Amazon S3 to use in encrypting data. This value is used to store the object and then it is discarded; Amazon S3 does not store the encryption key. The key must be appropriate for use with the algorithm specified in the \code{x-amz-server-side-encryption-customer-algorithm} header.
 
 This functionality is not supported for directory buckets.}
 
-\item{SSECustomerKeyMD5}{Specifies the 128-bit MD5 digest of the encryption key according to RFC
-1321. Amazon S3 uses this header for a message integrity check to ensure
-that the encryption key was transmitted without error.
+\item{SSECustomerKeyMD5}{Specifies the 128-bit MD5 digest of the encryption key according to RFC 1321. Amazon S3 uses this header for a message integrity check to ensure that the encryption key was transmitted without error.
 
 This functionality is not supported for directory buckets.}
 
-\item{RequestPayer}{}
+\item{RequestPayer}{Confirms that the requester knows that they will be charged for the request. Bucket owners need not specify this parameter in their requests. If either the source or destination S3 bucket has Requester Pays enabled, the requester will pay for the corresponding charges. For information about downloading objects from Requester Pays buckets, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/ObjectsinRequesterPaysBuckets.html}{Downloading Objects in Requester Pays Buckets} in the \emph{Amazon S3 User Guide}.
 
-\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you
-provide does not match the actual owner of the bucket, the request fails
-with the HTTP status code \verb{403 Forbidden} (access denied).}
+This functionality is not supported for directory buckets.}
 
-\item{ObjectAttributes}{[required] Specifies the fields at the root level that you want returned in the
-response. Fields that you do not specify are not returned.}
+\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you provide does not match the actual owner of the bucket, the request fails with the HTTP status code \verb{403 Forbidden} (access denied).}
+
+\item{ObjectAttributes}{[required] Specifies the fields at the root level that you want returned in the response. Fields that you do not specify are not returned.}
 }
 \description{
-Retrieves all the metadata from an object without returning the object itself. This operation is useful if you're interested only in an object's metadata.
+Retrieves all of the metadata from an object without returning the object itself. This operation is useful if you're interested only in an object's metadata.
 
 See \url{https://www.paws-r-sdk.com/docs/s3_get_object_attributes/} for full documentation.
 }

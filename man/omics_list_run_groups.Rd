@@ -2,20 +2,20 @@
 % Please edit documentation in R/omics_operations.R
 \name{omics_list_run_groups}
 \alias{omics_list_run_groups}
-\title{Retrieves a list of run groups}
+\title{Retrieves a list of all run groups and returns the metadata for each run
+group}
 \usage{
 omics_list_run_groups(name = NULL, startingToken = NULL, maxResults = NULL)
 }
 \arguments{
 \item{name}{The run groups' name.}
 
-\item{startingToken}{Specify the pagination token from a previous request to retrieve the
-next page of results.}
+\item{startingToken}{Specify the pagination token from a previous request to retrieve the next page of results.}
 
 \item{maxResults}{The maximum number of run groups to return in one page of results.}
 }
 \description{
-Retrieves a list of run groups.
+Retrieves a list of all run groups and returns the metadata for each run group.
 
 See \url{https://www.paws-r-sdk.com/docs/omics_list_run_groups/} for full documentation.
 }

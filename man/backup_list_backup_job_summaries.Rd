@@ -18,60 +18,39 @@ backup_list_backup_job_summaries(
 \arguments{
 \item{AccountId}{Returns the job count for the specified account.
 
-If the request is sent from a member account or an account not part of
-Amazon Web Services Organizations, jobs within requestor's account will
-be returned.
+If the request is sent from a member account or an account not part of Amazon Web Services Organizations, jobs within requestor's account will be returned.
 
-Root, admin, and delegated administrator accounts can use the value ANY
-to return job counts from every account in the organization.
+Root, admin, and delegated administrator accounts can use the value ANY to return job counts from every account in the organization.
 
-\code{AGGREGATE_ALL} aggregates job counts from all accounts within the
-authenticated organization, then returns the sum.}
+\code{AGGREGATE_ALL} aggregates job counts from all accounts within the authenticated organization, then returns the sum.}
 
 \item{State}{This parameter returns the job count for jobs with the specified state.
 
 The the value ANY returns count of all states.
 
-\code{AGGREGATE_ALL} aggregates job counts for all states and returns the
-sum.
+\code{AGGREGATE_ALL} aggregates job counts for all states and returns the sum.
 
-\verb{Completed with issues} is a status found only in the Backup console.
-For API, this status refers to jobs with a state of \code{COMPLETED} and a
-\code{MessageCategory} with a value other than \code{SUCCESS}; that is, the status
-is completed but comes with a status message. To obtain the job count
-for \verb{Completed with issues}, run two GET requests, and subtract the
-second, smaller number:
+\verb{Completed with issues} is a status found only in the Backup console. For API, this status refers to jobs with a state of \code{COMPLETED} and a \code{MessageCategory} with a value other than \code{SUCCESS}; that is, the status is completed but comes with a status message. To obtain the job count for \verb{Completed with issues}, run two GET requests, and subtract the second, smaller number:
 
-GET
-/audit/backup-job-summaries?AggregationPeriod=FOURTEEN_DAYS&State=COMPLETED
+GET /audit/backup-job-summaries?AggregationPeriod=FOURTEEN_DAYS&State=COMPLETED
 
-GET
-/audit/backup-job-summaries?AggregationPeriod=FOURTEEN_DAYS&MessageCategory=SUCCESS&State=COMPLETED}
+GET /audit/backup-job-summaries?AggregationPeriod=FOURTEEN_DAYS&MessageCategory=SUCCESS&State=COMPLETED}
 
-\item{ResourceType}{Returns the job count for the specified resource type. Use request
-\code{\link[=backup_get_supported_resource_types]{get_supported_resource_types}} to
-obtain strings for supported resource types.
+\item{ResourceType}{Returns the job count for the specified resource type. Use request \code{\link[=backup_get_supported_resource_types]{get_supported_resource_types}} to obtain strings for supported resource types.
 
 The the value ANY returns count of all resource types.
 
-\code{AGGREGATE_ALL} aggregates job counts for all resource types and returns
-the sum.
+\code{AGGREGATE_ALL} aggregates job counts for all resource types and returns the sum.
 
-The type of Amazon Web Services resource to be backed up; for example,
-an Amazon Elastic Block Store (Amazon EBS) volume or an Amazon
-Relational Database Service (Amazon RDS) database.}
+The type of Amazon Web Services resource to be backed up; for example, an Amazon Elastic Block Store (Amazon EBS) volume or an Amazon Relational Database Service (Amazon RDS) database.}
 
 \item{MessageCategory}{This parameter returns the job count for the specified message category.
 
-Example accepted strings include \code{AccessDenied}, \code{Success}, and
-\code{InvalidParameters}. See
-\href{https://docs.aws.amazon.com/aws-backup/latest/devguide/monitoring.html}{Monitoring}
-for a list of accepted MessageCategory strings.
+Example accepted strings include \code{AccessDenied}, \code{Success}, and \code{InvalidParameters}. See \href{https://docs.aws.amazon.com/aws-backup/latest/devguide/monitoring.html}{Monitoring} for a list of accepted MessageCategory strings.
 
 The the value ANY returns count of all message categories.
 
-\code{AGGREGATE_ALL} aggregates job counts for all message categories and
-returns the sum.}
+\code{AGGREGATE_ALL} aggregates job counts for all message categories and returns the sum.}
 
 \item{AggregationPeriod}{The period for the returned results.
 \itemize{
@@ -84,10 +63,7 @@ returns the sum.}
 
 The value is an integer. Range of accepted values is from 1 to 500.}
 
-\item{NextToken}{The next item following a partial list of returned resources. For
-example, if a request is made to return \code{MaxResults} number of
-resources, \code{NextToken} allows you to return more items in your list
-starting at the location pointed to by the next token.}
+\item{NextToken}{The next item following a partial list of returned resources. For example, if a request is made to return \code{MaxResults} number of resources, \code{NextToken} allows you to return more items in your list starting at the location pointed to by the next token.}
 }
 \description{
 This is a request for a summary of backup jobs created or running within the most recent 30 days. You can include parameters AccountID, State, ResourceType, MessageCategory, AggregationPeriod, MaxResults, or NextToken to filter results.

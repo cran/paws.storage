@@ -12,13 +12,11 @@ s3tables_put_table_bucket_maintenance_configuration(
 )
 }
 \arguments{
-\item{tableBucketARN}{[required] The Amazon Resource Name (ARN) of the table bucket associated with the
-maintenance configuration.}
+\item{tableBucketARN}{[required] The Amazon Resource Name (ARN) of the table bucket associated with the maintenance configuration.}
 
 \item{type}{[required] The type of the maintenance configuration.}
 
-\item{value}{[required] Defines the values of the maintenance configuration for the table
-bucket.}
+\item{value}{[required] Defines the values of the maintenance configuration for the table bucket.}
 }
 \description{
 Creates a new maintenance configuration or replaces an existing maintenance configuration for a table bucket. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-table-buckets-maintenance.html}{Amazon S3 table bucket maintenance} in the \emph{Amazon Simple Storage Service User Guide}.

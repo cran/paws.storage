@@ -15,36 +15,25 @@ s3_put_object_lock_configuration(
 )
 }
 \arguments{
-\item{Bucket}{[required] The bucket whose Object Lock configuration you want to create or
-replace.}
+\item{Bucket}{[required] The bucket whose Object Lock configuration you want to create or replace.}
 
-\item{ObjectLockConfiguration}{The Object Lock configuration that you want to apply to the specified
-bucket.}
+\item{ObjectLockConfiguration}{The Object Lock configuration that you want to apply to the specified bucket.}
 
-\item{RequestPayer}{}
+\item{RequestPayer}{Confirms that the requester knows that they will be charged for the request. Bucket owners need not specify this parameter in their requests. If either the source or destination S3 bucket has Requester Pays enabled, the requester will pay for the corresponding charges. For information about downloading objects from Requester Pays buckets, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/ObjectsinRequesterPaysBuckets.html}{Downloading Objects in Requester Pays Buckets} in the \emph{Amazon S3 User Guide}.
+
+This functionality is not supported for directory buckets.}
 
 \item{Token}{A token to allow Object Lock to be enabled for an existing bucket.}
 
 \item{ContentMD5}{The MD5 hash for the request body.
 
-For requests made using the Amazon Web Services Command Line Interface
-(CLI) or Amazon Web Services SDKs, this field is calculated
-automatically.}
+For requests made using the Amazon Web Services Command Line Interface (CLI) or Amazon Web Services SDKs, this field is calculated automatically.}
 
-\item{ChecksumAlgorithm}{Indicates the algorithm used to create the checksum for the object when
-you use the SDK. This header will not provide any additional
-functionality if you don't use the SDK. When you send this header, there
-must be a corresponding \code{x-amz-checksum} or \code{x-amz-trailer} header sent.
-Otherwise, Amazon S3 fails the request with the HTTP status code
-\verb{400 Bad Request}. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity}
-in the \emph{Amazon S3 User Guide}.
+\item{ChecksumAlgorithm}{Indicates the algorithm used to create the checksum for the object when you use the SDK. This header will not provide any additional functionality if you don't use the SDK. When you send this header, there must be a corresponding \code{x-amz-checksum} or \code{x-amz-trailer} header sent. Otherwise, Amazon S3 fails the request with the HTTP status code \verb{400 Bad Request}. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity} in the \emph{Amazon S3 User Guide}.
 
-If you provide an individual checksum, Amazon S3 ignores any provided
-\code{ChecksumAlgorithm} parameter.}
+If you provide an individual checksum, Amazon S3 ignores any provided \code{ChecksumAlgorithm} parameter.}
 
-\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you
-provide does not match the actual owner of the bucket, the request fails
-with the HTTP status code \verb{403 Forbidden} (access denied).}
+\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you provide does not match the actual owner of the bucket, the request fails with the HTTP status code \verb{403 Forbidden} (access denied).}
 }
 \description{
 This operation is not supported for directory buckets.

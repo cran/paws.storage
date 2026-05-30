@@ -13,18 +13,15 @@ storagegateway_update_file_system_association(
 )
 }
 \arguments{
-\item{FileSystemAssociationARN}{[required] The Amazon Resource Name (ARN) of the file system association that you
-want to update.}
+\item{FileSystemAssociationARN}{[required] The Amazon Resource Name (ARN) of the file system association that you want to update.}
 
-\item{UserName}{The user name of the user credential that has permission to access the
-root share D$ of the Amazon FSx file system. The user account must
-belong to the Amazon FSx delegated admin user group.}
+\item{UserName}{The user name of the user credential that has permission to access the root share D$ of the Amazon FSx file system. The user account must belong to the Amazon FSx delegated admin user group.}
 
 \item{Password}{The password of the user credential.}
 
 \item{AuditDestinationARN}{The Amazon Resource Name (ARN) of the storage used for the audit logs.}
 
-\item{CacheAttributes}{}
+\item{CacheAttributes}{The refresh cache information for the file share or FSx file systems.}
 }
 \description{
 Updates a file system association. This operation is only supported in the FSx File Gateways.

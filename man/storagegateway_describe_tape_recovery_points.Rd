@@ -12,13 +12,11 @@ storagegateway_describe_tape_recovery_points(
 )
 }
 \arguments{
-\item{GatewayARN}{[required]}
+\item{GatewayARN}{[required] The Amazon Resource Name (ARN) of the gateway. Use the \code{\link[=storagegateway_list_gateways]{list_gateways}} operation to return a list of gateways for your account and Amazon Web Services Region.}
 
-\item{Marker}{An opaque string that indicates the position at which to begin
-describing the virtual tape recovery points.}
+\item{Marker}{An opaque string that indicates the position at which to begin describing the virtual tape recovery points.}
 
-\item{Limit}{Specifies that the number of virtual tape recovery points that are
-described be limited to the specified number.}
+\item{Limit}{Specifies that the number of virtual tape recovery points that are described be limited to the specified number.}
 }
 \description{
 Returns a list of virtual tape recovery points that are available for the specified tape gateway.

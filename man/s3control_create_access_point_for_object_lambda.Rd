@@ -7,8 +7,7 @@
 s3control_create_access_point_for_object_lambda(AccountId, Name, Configuration)
 }
 \arguments{
-\item{AccountId}{[required] The Amazon Web Services account ID for owner of the specified Object
-Lambda Access Point.}
+\item{AccountId}{[required] The Amazon Web Services account ID for owner of the specified Object Lambda Access Point.}
 
 \item{Name}{[required] The name you want to assign to this Object Lambda Access Point.}
 

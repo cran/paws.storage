@@ -16,70 +16,47 @@ s3_put_bucket_policy(
 \arguments{
 \item{Bucket}{[required] The name of the bucket.
 
-\strong{Directory buckets} - When you use this operation with a directory
-bucket, you must use path-style requests in the format
-\verb{https://s3express-control.region-code.amazonaws.com/bucket-name }.
-Virtual-hosted-style requests aren't supported. Directory bucket names
-must be unique in the chosen Zone (Availability Zone or Local Zone).
-Bucket names must also follow the format
-\code{ bucket-base-name--zone-id--x-s3} (for example,
-\code{ DOC-EXAMPLE-BUCKET--usw2-az1--x-s3}). For information about bucket
-naming restrictions, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-bucket-naming-rules.html}{Directory bucket naming rules}
-in the \emph{Amazon S3 User Guide}}
+\strong{Directory buckets} - When you use this operation with a directory bucket, you must use path-style requests in the format \verb{https://s3express-control.region-code.amazonaws.com/bucket-name }. Virtual-hosted-style requests aren't supported. Directory bucket names must be unique in the chosen Zone (Availability Zone or Local Zone). Bucket names must also follow the format \code{ bucket-base-name--zone-id--x-s3} (for example, \code{ DOC-EXAMPLE-BUCKET--usw2-az1--x-s3}). For information about bucket naming restrictions, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-bucket-naming-rules.html}{Directory bucket naming rules} in the \emph{Amazon S3 User Guide}}
 
 \item{ContentMD5}{The MD5 hash of the request body.
 
-For requests made using the Amazon Web Services Command Line Interface
-(CLI) or Amazon Web Services SDKs, this field is calculated
-automatically.
+For requests made using the Amazon Web Services Command Line Interface (CLI) or Amazon Web Services SDKs, this field is calculated automatically.
 
 This functionality is not supported for directory buckets.}
 
-\item{ChecksumAlgorithm}{Indicates the algorithm used to create the checksum for the request when
-you use the SDK. This header will not provide any additional
-functionality if you don't use the SDK. When you send this header, there
-must be a corresponding \code{x-amz-checksum-algorithm } or \code{x-amz-trailer}
-header sent. Otherwise, Amazon S3 fails the request with the HTTP status
-code \verb{400 Bad Request}.
+\item{ChecksumAlgorithm}{Indicates the algorithm used to create the checksum for the request when you use the SDK. This header will not provide any additional functionality if you don't use the SDK. When you send this header, there must be a corresponding \code{x-amz-checksum-algorithm } or \code{x-amz-trailer} header sent. Otherwise, Amazon S3 fails the request with the HTTP status code \verb{400 Bad Request}.
 
-For the \code{x-amz-checksum-algorithm } header, replace \code{algorithm} with
-the supported algorithm from the following list:
+For the \code{x-amz-checksum-algorithm } header, replace \code{algorithm} with the supported algorithm from the following list:
 \itemize{
 \item \code{CRC32}
 \item \code{CRC32C}
 \item \code{CRC64NVME}
+\item \code{MD5}
 \item \code{SHA1}
 \item \code{SHA256}
+\item \code{SHA512}
+\item \code{XXHASH3}
+\item \code{XXHASH64}
+\item \code{XXHASH128}
 }
 
-For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity}
-in the \emph{Amazon S3 User Guide}.
+For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity} in the \emph{Amazon S3 User Guide}.
 
-If the individual checksum value you provide through
-\code{x-amz-checksum-algorithm } doesn't match the checksum algorithm you set
-through \code{x-amz-sdk-checksum-algorithm}, Amazon S3 fails the request with
-a \code{BadDigest} error.
+If the individual checksum value you provide through \code{x-amz-checksum-algorithm } doesn't match the checksum algorithm you set through \code{x-amz-sdk-checksum-algorithm}, Amazon S3 fails the request with a \code{BadDigest} error.
 
-For directory buckets, when you use Amazon Web Services SDKs, \code{CRC32} is
-the default checksum algorithm that's used for performance.}
+For directory buckets, when you use Amazon Web Services SDKs, \code{CRC32} is the default checksum algorithm that's used for performance.}
 
-\item{ConfirmRemoveSelfBucketAccess}{Set this parameter to true to confirm that you want to remove your
-permissions to change this bucket policy in the future.
+\item{ConfirmRemoveSelfBucketAccess}{Set this parameter to true to confirm that you want to remove your permissions to change this bucket policy in the future.
 
 This functionality is not supported for directory buckets.}
 
 \item{Policy}{[required] The bucket policy as a JSON document.
 
-For directory buckets, the only IAM action supported in the bucket
-policy is \code{s3express:CreateSession}.}
+For directory buckets, the only IAM action supported in the bucket policy is \code{s3express:CreateSession}.}
 
-\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you
-provide does not match the actual owner of the bucket, the request fails
-with the HTTP status code \verb{403 Forbidden} (access denied).
+\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you provide does not match the actual owner of the bucket, the request fails with the HTTP status code \verb{403 Forbidden} (access denied).
 
-For directory buckets, this header is not supported in this API
-operation. If you specify this header, the request fails with the HTTP
-status code \verb{501 Not Implemented}.}
+For directory buckets, this header is not supported in this API operation. If you specify this header, the request fails with the HTTP status code \verb{501 Not Implemented}.}
 }
 \description{
 Applies an Amazon S3 bucket policy to an Amazon S3 bucket.

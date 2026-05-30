@@ -11,16 +11,11 @@ backup_update_restore_testing_selection(
 )
 }
 \arguments{
-\item{RestoreTestingPlanName}{[required] The restore testing plan name is required to update the indicated
-testing plan.}
+\item{RestoreTestingPlanName}{[required] The restore testing plan name is required to update the indicated testing plan.}
 
-\item{RestoreTestingSelection}{[required] To update your restore testing selection, you can use either protected
-resource ARNs or conditions, but not both. That is, if your selection
-has \code{ProtectedResourceArns}, requesting an update with the parameter
-\code{ProtectedResourceConditions} will be unsuccessful.}
+\item{RestoreTestingSelection}{[required] To update your restore testing selection, you can use either protected resource ARNs or conditions, but not both. That is, if your selection has \code{ProtectedResourceArns}, requesting an update with the parameter \code{ProtectedResourceConditions} will be unsuccessful.}
 
-\item{RestoreTestingSelectionName}{[required] The required restore testing selection name of the restore testing
-selection you wish to update.}
+\item{RestoreTestingSelectionName}{[required] The required restore testing selection name of the restore testing selection you wish to update.}
 }
 \description{
 Updates the specified restore testing selection.

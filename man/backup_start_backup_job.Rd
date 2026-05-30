@@ -6,6 +6,7 @@
 \usage{
 backup_start_backup_job(
   BackupVaultName,
+  LogicallyAirGappedBackupVaultArn = NULL,
   ResourceArn,
   IamRoleArn,
   IdempotencyToken = NULL,
@@ -18,75 +19,41 @@ backup_start_backup_job(
 )
 }
 \arguments{
-\item{BackupVaultName}{[required] The name of a logical container where backups are stored. Backup vaults
-are identified by names that are unique to the account used to create
-them and the Amazon Web Services Region where they are created.}
+\item{BackupVaultName}{[required] The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.}
 
-\item{ResourceArn}{[required] An Amazon Resource Name (ARN) that uniquely identifies a resource. The
-format of the ARN depends on the resource type.}
+\item{LogicallyAirGappedBackupVaultArn}{The ARN of a logically air-gapped vault. ARN must be in the same account and Region. If provided, supported fully managed resources back up directly to logically air-gapped vault, while other supported resources create a temporary (billable) snapshot in backup vault, then copy it to logically air-gapped vault. Unsupported resources only back up to the specified backup vault.}
 
-\item{IamRoleArn}{[required] Specifies the IAM role ARN used to create the target recovery point; for
-example, \verb{arn:aws:iam::123456789012:role/S3Access}.}
+\item{ResourceArn}{[required] An Amazon Resource Name (ARN) that uniquely identifies a resource. The format of the ARN depends on the resource type.}
 
-\item{IdempotencyToken}{A customer-chosen string that you can use to distinguish between
-otherwise identical calls to
-\code{\link[=backup_start_backup_job]{start_backup_job}}. Retrying a successful
-request with the same idempotency token results in a success message
-with no action taken.}
+\item{IamRoleArn}{[required] Specifies the IAM role ARN used to create the target recovery point; for example, \verb{arn:aws:iam::123456789012:role/S3Access}.}
 
-\item{StartWindowMinutes}{A value in minutes after a backup is scheduled before a job will be
-canceled if it doesn't start successfully. This value is optional, and
-the default is 8 hours. If this value is included, it must be at least
-60 minutes to avoid errors.
+\item{IdempotencyToken}{A customer-chosen string that you can use to distinguish between otherwise identical calls to \code{\link[=backup_start_backup_job]{start_backup_job}}. Retrying a successful request with the same idempotency token results in a success message with no action taken.}
+
+\item{StartWindowMinutes}{A value in minutes after a backup is scheduled before a job will be canceled if it doesn't start successfully. This value is optional, and the default is 8 hours. If this value is included, it must be at least 60 minutes to avoid errors.
 
 This parameter has a maximum value of 100 years (52,560,000 minutes).
 
-During the start window, the backup job status remains in \code{CREATED}
-status until it has successfully begun or until the start window time
-has run out. If within the start window time Backup receives an error
-that allows the job to be retried, Backup will automatically retry to
-begin the job at least every 10 minutes until the backup successfully
-begins (the job status changes to \code{RUNNING}) or until the job status
-changes to \code{EXPIRED} (which is expected to occur when the start window
-time is over).}
+During the start window, the backup job status remains in \code{CREATED} status until it has successfully begun or until the start window time has run out. If within the start window time Backup receives an error that allows the job to be retried, Backup will automatically retry to begin the job at least every 10 minutes until the backup successfully begins (the job status changes to \code{RUNNING}) or until the job status changes to \code{EXPIRED} (which is expected to occur when the start window time is over).}
 
-\item{CompleteWindowMinutes}{A value in minutes during which a successfully started backup must
-complete, or else Backup will cancel the job. This value is optional.
-This value begins counting down from when the backup was scheduled. It
-does not add additional time for \code{StartWindowMinutes}, or if the backup
-started later than scheduled.
+\item{CompleteWindowMinutes}{A value in minutes during which a successfully started backup must complete, or else Backup will cancel the job. This value is optional. This value begins counting down from when the backup was scheduled. It does not add additional time for \code{StartWindowMinutes}, or if the backup started later than scheduled.
 
-Like \code{StartWindowMinutes}, this parameter has a maximum value of 100
-years (52,560,000 minutes).}
+Like \code{StartWindowMinutes}, this parameter has a maximum value of 100 years (52,560,000 minutes).}
 
-\item{Lifecycle}{The lifecycle defines when a protected resource is transitioned to cold
-storage and when it expires. Backup will transition and expire backups
-automatically according to the lifecycle that you define.
+\item{Lifecycle}{The lifecycle defines when a protected resource is transitioned to cold storage and when it expires. Backup will transition and expire backups automatically according to the lifecycle that you define.
 
-Backups transitioned to cold storage must be stored in cold storage for
-a minimum of 90 days. Therefore, the “retention” setting must be 90 days
-greater than the “transition to cold after days” setting. The
-“transition to cold after days” setting cannot be changed after a backup
-has been transitioned to cold.
+Backups transitioned to cold storage must be stored in cold storage for a minimum of 90 days. Therefore, the “retention” setting must be 90 days greater than the “transition to cold after days” setting. The “transition to cold after days” setting cannot be changed after a backup has been transitioned to cold.
 
-Resource types that can transition to cold storage are listed in the
-\href{https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-feature-availability.html#features-by-resource}{Feature availability by resource}
-table. Backup ignores this expression for other resource types.
+Resource types that can transition to cold storage are listed in the \href{https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-feature-availability.html#features-by-resource}{Feature availability by resource} table. Backup ignores this expression for other resource types.
 
 This parameter has a maximum value of 100 years (36,500 days).}
 
 \item{RecoveryPointTags}{The tags to assign to the resources.}
 
-\item{BackupOptions}{The backup option for a selected resource. This option is only available
-for Windows Volume Shadow Copy Service (VSS) backup jobs.
+\item{BackupOptions}{The backup option for a selected resource. This option is only available for Windows Volume Shadow Copy Service (VSS) backup jobs.
 
-Valid values: Set to \code{"WindowsVSS":"enabled"} to enable the \code{WindowsVSS}
-backup option and create a Windows VSS backup. Set to
-\verb{"WindowsVSS""disabled"} to create a regular backup. The \code{WindowsVSS}
-option is not enabled by default.}
+Valid values: Set to \code{"WindowsVSS":"enabled"} to enable the \code{WindowsVSS} backup option and create a Windows VSS backup. Set to \verb{"WindowsVSS""disabled"} to create a regular backup. The \code{WindowsVSS} option is not enabled by default.}
 
-\item{Index}{Include this parameter to enable index creation if your backup job has a
-resource type that supports backup indexes.
+\item{Index}{Include this parameter to enable index creation if your backup job has a resource type that supports backup indexes.
 
 Resource types that support backup indexes include:
 \itemize{
@@ -96,8 +63,7 @@ Resource types that support backup indexes include:
 
 Index can have 1 of 2 possible values, either \code{ENABLED} or \code{DISABLED}.
 
-To create a backup index for an eligible \code{ACTIVE} recovery point that
-does not yet have a backup index, set value to \code{ENABLED}.
+To create a backup index for an eligible \code{ACTIVE} recovery point that does not yet have a backup index, set value to \code{ENABLED}.
 
 To delete a backup index, set value to \code{DISABLED}.}
 }

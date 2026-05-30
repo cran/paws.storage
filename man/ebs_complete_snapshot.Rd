@@ -18,19 +18,13 @@ ebs_complete_snapshot(
 
 \item{ChangedBlocksCount}{[required] The number of blocks that were written to the snapshot.}
 
-\item{Checksum}{An aggregated Base-64 SHA256 checksum based on the checksums of each
-written block.
+\item{Checksum}{An aggregated Base-64 SHA256 checksum based on the checksums of each written block.
 
-To generate the aggregated checksum using the linear aggregation method,
-arrange the checksums for each written block in ascending order of their
-block index, concatenate them to form a single string, and then generate
-the checksum on the entire string using the SHA256 algorithm.}
+To generate the aggregated checksum using the linear aggregation method, arrange the checksums for each written block in ascending order of their block index, concatenate them to form a single string, and then generate the checksum on the entire string using the SHA256 algorithm.}
 
-\item{ChecksumAlgorithm}{The algorithm used to generate the checksum. Currently, the only
-supported algorithm is \code{SHA256}.}
+\item{ChecksumAlgorithm}{The algorithm used to generate the checksum. Currently, the only supported algorithm is \code{SHA256}.}
 
-\item{ChecksumAggregationMethod}{The aggregation method used to generate the checksum. Currently, the
-only supported aggregation method is \code{LINEAR}.}
+\item{ChecksumAggregationMethod}{The aggregation method used to generate the checksum. Currently, the only supported aggregation method is \code{LINEAR}.}
 }
 \description{
 Seals and completes the snapshot after all of the required blocks of data have been written to it. Completing the snapshot changes the status to \code{completed}. You cannot write new blocks to a snapshot after it has been completed.

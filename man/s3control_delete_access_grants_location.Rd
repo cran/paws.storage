@@ -9,11 +9,7 @@ s3control_delete_access_grants_location(AccountId, AccessGrantsLocationId)
 \arguments{
 \item{AccountId}{[required] The Amazon Web Services account ID of the S3 Access Grants instance.}
 
-\item{AccessGrantsLocationId}{[required] The ID of the registered location that you are deregistering from your
-S3 Access Grants instance. S3 Access Grants assigned this ID when you
-registered the location. S3 Access Grants assigns the ID \code{default} to
-the default location \verb{s3://} and assigns an auto-generated ID to other
-locations that you register.}
+\item{AccessGrantsLocationId}{[required] The ID of the registered location that you are deregistering from your S3 Access Grants instance. S3 Access Grants assigned this ID when you registered the location. S3 Access Grants assigns the ID \code{default} to the default location \verb{s3://} and assigns an auto-generated ID to other locations that you register.}
 }
 \description{
 Deregisters a location from your S3 Access Grants instance. You can only delete a location registration from an S3 Access Grants instance if there are no grants associated with this location. See \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_DeleteAccessGrant.html}{Delete a grant} for information on how to delete grants. You need to have at least one registered location in your S3 Access Grants instance in order to create access grants.

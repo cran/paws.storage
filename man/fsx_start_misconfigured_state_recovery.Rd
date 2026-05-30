@@ -9,9 +9,9 @@ the process of Amazon FSx attempting to reconnect to the file system}
 fsx_start_misconfigured_state_recovery(ClientRequestToken = NULL, FileSystemId)
 }
 \arguments{
-\item{ClientRequestToken}{}
+\item{ClientRequestToken}{(Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.}
 
-\item{FileSystemId}{[required]}
+\item{FileSystemId}{[required] The globally unique ID of the file system, assigned by Amazon FSx.}
 }
 \description{
 After performing steps to repair the Active Directory configuration of an FSx for Windows File Server file system, use this action to initiate the process of Amazon FSx attempting to reconnect to the file system.

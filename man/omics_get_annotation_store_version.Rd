@@ -7,11 +7,9 @@
 omics_get_annotation_store_version(name, versionName)
 }
 \arguments{
-\item{name}{[required] The name given to an annotation store version to distinguish it from
-others.}
+\item{name}{[required] The name given to an annotation store version to distinguish it from others.}
 
-\item{versionName}{[required] The name given to an annotation store version to distinguish it from
-others.}
+\item{versionName}{[required] The name given to an annotation store version to distinguish it from others.}
 }
 \description{
 Retrieves the metadata for an annotation store version.

@@ -7,14 +7,9 @@
 efs_describe_tags(MaxItems = NULL, Marker = NULL, FileSystemId)
 }
 \arguments{
-\item{MaxItems}{(Optional) The maximum number of file system tags to return in the
-response. Currently, this number is automatically set to 100, and other
-values are ignored. The response is paginated at 100 per page if you
-have more than 100 tags.}
+\item{MaxItems}{(Optional) The maximum number of file system tags to return in the response. Currently, this number is automatically set to 100, and other values are ignored. The response is paginated at 100 per page if you have more than 100 tags.}
 
-\item{Marker}{(Optional) An opaque pagination token returned from a previous
-\code{\link[=efs_describe_tags]{describe_tags}} operation (String). If present, it
-specifies to continue the list from where the previous call left off.}
+\item{Marker}{(Optional) An opaque pagination token returned from a previous \code{\link[=efs_describe_tags]{describe_tags}} operation (String). If present, it specifies to continue the list from where the previous call left off.}
 
 \item{FileSystemId}{[required] The ID of the file system whose tag set you want to retrieve.}
 }

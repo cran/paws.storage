@@ -8,7 +8,7 @@ to your file share have been uploaded to Amazon S3}
 storagegateway_notify_when_uploaded(FileShareARN)
 }
 \arguments{
-\item{FileShareARN}{[required]}
+\item{FileShareARN}{[required] The Amazon Resource Name (ARN) of the file share.}
 }
 \description{
 Sends you notification through Amazon EventBridge when all files written to your file share have been uploaded to Amazon S3.

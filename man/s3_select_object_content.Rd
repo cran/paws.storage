@@ -24,20 +24,11 @@ s3_select_object_content(
 
 \item{Key}{[required] The object key.}
 
-\item{SSECustomerAlgorithm}{The server-side encryption (SSE) algorithm used to encrypt the object.
-This parameter is needed only when the object was created using a
-checksum algorithm. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/ServerSideEncryptionCustomerKeys.html}{Protecting data using SSE-C keys}
-in the \emph{Amazon S3 User Guide}.}
+\item{SSECustomerAlgorithm}{The server-side encryption (SSE) algorithm used to encrypt the object. This parameter is needed only when the object was created using a checksum algorithm. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/ServerSideEncryptionCustomerKeys.html}{Protecting data using SSE-C keys} in the \emph{Amazon S3 User Guide}.}
 
-\item{SSECustomerKey}{The server-side encryption (SSE) customer managed key. This parameter is
-needed only when the object was created using a checksum algorithm. For
-more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/ServerSideEncryptionCustomerKeys.html}{Protecting data using SSE-C keys}
-in the \emph{Amazon S3 User Guide}.}
+\item{SSECustomerKey}{The server-side encryption (SSE) customer managed key. This parameter is needed only when the object was created using a checksum algorithm. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/ServerSideEncryptionCustomerKeys.html}{Protecting data using SSE-C keys} in the \emph{Amazon S3 User Guide}.}
 
-\item{SSECustomerKeyMD5}{The MD5 server-side encryption (SSE) customer managed key. This
-parameter is needed only when the object was created using a checksum
-algorithm. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/ServerSideEncryptionCustomerKeys.html}{Protecting data using SSE-C keys}
-in the \emph{Amazon S3 User Guide}.}
+\item{SSECustomerKeyMD5}{The MD5 server-side encryption (SSE) customer managed key. This parameter is needed only when the object was created using a checksum algorithm. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/ServerSideEncryptionCustomerKeys.html}{Protecting data using SSE-C keys} in the \emph{Amazon S3 User Guide}.}
 
 \item{Expression}{[required] The expression that is used to query the object.}
 
@@ -47,29 +38,18 @@ in the \emph{Amazon S3 User Guide}.}
 
 \item{InputSerialization}{[required] Describes the format of the data in the object that is being queried.}
 
-\item{OutputSerialization}{[required] Describes the format of the data that you want Amazon S3 to return in
-response.}
+\item{OutputSerialization}{[required] Describes the format of the data that you want Amazon S3 to return in response.}
 
-\item{ScanRange}{Specifies the byte range of the object to get the records from. A record
-is processed when its first byte is contained by the range. This
-parameter is optional, but when specified, it must not be empty. See RFC
-2616, Section 14.35.1 about how to specify the start and end of the
-range.
+\item{ScanRange}{Specifies the byte range of the object to get the records from. A record is processed when its first byte is contained by the range. This parameter is optional, but when specified, it must not be empty. See RFC 2616, Section 14.35.1 about how to specify the start and end of the range.
 
 \code{ScanRange}may be used in the following ways:
 \itemize{
-\item \verb{<scanrange><start>50</start><end>100</end></scanrange>} - process
-only the records starting between the bytes 50 and 100 (inclusive,
-counting from zero)
-\item \verb{<scanrange><start>50</start></scanrange>} - process only the
-records starting after the byte 50
-\item \verb{<scanrange><end>50</end></scanrange>} - process only the records
-within the last 50 bytes of the file.
+\item \verb{<scanrange><start>50</start><end>100</end></scanrange>} - process only the records starting between the bytes 50 and 100 (inclusive, counting from zero)
+\item \verb{<scanrange><start>50</start></scanrange>} - process only the records starting after the byte 50
+\item \verb{<scanrange><end>50</end></scanrange>} - process only the records within the last 50 bytes of the file.
 }}
 
-\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you
-provide does not match the actual owner of the bucket, the request fails
-with the HTTP status code \verb{403 Forbidden} (access denied).}
+\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you provide does not match the actual owner of the bucket, the request fails with the HTTP status code \verb{403 Forbidden} (access denied).}
 }
 \description{
 This operation is not supported for directory buckets.

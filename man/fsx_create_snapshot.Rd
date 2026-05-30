@@ -7,13 +7,13 @@
 fsx_create_snapshot(ClientRequestToken = NULL, Name, VolumeId, Tags = NULL)
 }
 \arguments{
-\item{ClientRequestToken}{}
+\item{ClientRequestToken}{(Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.}
 
 \item{Name}{[required] The name of the snapshot.}
 
 \item{VolumeId}{[required] The ID of the volume that you are taking a snapshot of.}
 
-\item{Tags}{}
+\item{Tags}{A list of \code{Tag} values, with a maximum of 50 elements.}
 }
 \description{
 Creates a snapshot of an existing Amazon FSx for OpenZFS volume. With snapshots, you can easily undo file changes and compare file versions by restoring the volume to a previous version.

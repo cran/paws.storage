@@ -2,7 +2,7 @@
 % Please edit documentation in R/s3control_operations.R
 \name{s3control_create_access_point}
 \alias{s3control_create_access_point}
-\title{This operation is not supported by directory buckets}
+\title{Creates an access point and associates it to a specified bucket}
 \usage{
 s3control_create_access_point(
   AccountId,
@@ -10,50 +10,42 @@ s3control_create_access_point(
   Bucket,
   VpcConfiguration = NULL,
   PublicAccessBlockConfiguration = NULL,
-  BucketAccountId = NULL
+  BucketAccountId = NULL,
+  Scope = NULL,
+  Tags = NULL
 )
 }
 \arguments{
-\item{AccountId}{[required] The Amazon Web Services account ID for the account that owns the
-specified access point.}
+\item{AccountId}{[required] The Amazon Web Services account ID for the account that owns the specified access point.}
 
-\item{Name}{[required] The name you want to assign to this access point.}
+\item{Name}{[required] The name you want to assign to this access point.
 
-\item{Bucket}{[required] The name of the bucket that you want to associate this access point
-with.
+For directory buckets, the access point name must consist of a base name that you provide and suffix that includes the \code{ZoneID} (Amazon Web Services Availability Zone or Local Zone) of your bucket location, followed by \code{--xa-s3}. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points-directory-buckets.html}{Managing access to shared datasets in directory buckets with access points} in the \emph{Amazon S3 User Guide}.}
 
-For using this parameter with Amazon S3 on Outposts with the REST API,
-you must specify the name and the x-amz-outpost-id as well.
+\item{Bucket}{[required] The name of the bucket that you want to associate this access point with.
 
-For using this parameter with S3 on Outposts with the Amazon Web
-Services SDK and CLI, you must specify the ARN of the bucket accessed in
-the format
-\verb{arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>}.
-For example, to access the bucket \code{reports} through Outpost \code{my-outpost}
-owned by account \code{123456789012} in Region \code{us-west-2}, use the URL
-encoding of
-\code{arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/bucket/reports}.
-The value must be URL encoded.}
+For using this parameter with Amazon S3 on Outposts with the REST API, you must specify the name and the x-amz-outpost-id as well.
 
-\item{VpcConfiguration}{If you include this field, Amazon S3 restricts access to this access
-point to requests from the specified virtual private cloud (VPC).
+For using this parameter with S3 on Outposts with the Amazon Web Services SDK and CLI, you must specify the ARN of the bucket accessed in the format \verb{arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>}. For example, to access the bucket \code{reports} through Outpost \code{my-outpost} owned by account \code{123456789012} in Region \code{us-west-2}, use the URL encoding of \code{arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/bucket/reports}. The value must be URL encoded.}
 
-This is required for creating an access point for Amazon S3 on Outposts
-buckets.}
+\item{VpcConfiguration}{If you include this field, Amazon S3 restricts access to this access point to requests from the specified virtual private cloud (VPC).
 
-\item{PublicAccessBlockConfiguration}{The \code{PublicAccessBlock} configuration that you want to apply to the
-access point.}
+This is required for creating an access point for Amazon S3 on Outposts buckets.}
 
-\item{BucketAccountId}{The Amazon Web Services account ID associated with the S3 bucket
-associated with this access point.
+\item{PublicAccessBlockConfiguration}{The \code{PublicAccessBlock} configuration that you want to apply to the access point.}
 
-For same account access point when your bucket and access point belong
-to the same account owner, the \code{BucketAccountId} is not required. For
-cross-account access point when your bucket and access point are not in
-the same account, the \code{BucketAccountId} is required.}
+\item{BucketAccountId}{The Amazon Web Services account ID associated with the S3 bucket associated with this access point.
+
+For same account access point when your bucket and access point belong to the same account owner, the \code{BucketAccountId} is not required. For cross-account access point when your bucket and access point are not in the same account, the \code{BucketAccountId} is required.}
+
+\item{Scope}{For directory buckets, you can filter access control to specific prefixes, API operations, or a combination of both. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points-directory-buckets.html}{Managing access to shared datasets in directory buckets with access points} in the \emph{Amazon S3 User Guide}.
+
+Scope is only supported for access points attached to directory buckets.}
+
+\item{Tags}{An array of tags that you can apply to an access point. Tags are key-value pairs of metadata used to control access to your access points. For more information about tags, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/tagging.html}{Using tags with Amazon S3}. For information about tagging access points, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/tagging.html#using-tags-for-abac}{Using tags for attribute-based access control (ABAC)}.}
 }
 \description{
-This operation is not supported by directory buckets.
+Creates an access point and associates it to a specified bucket. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points.html}{Managing access to shared datasets with access points} or \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points-directory-buckets.html}{Managing access to shared datasets in directory buckets with access points} in the \emph{Amazon S3 User Guide}.
 
 See \url{https://www.paws-r-sdk.com/docs/s3control_create_access_point/} for full documentation.
 }

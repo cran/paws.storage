@@ -15,36 +15,25 @@ finspacedata_create_user(
 )
 }
 \arguments{
-\item{emailAddress}{[required] The email address of the user that you want to register. The email
-address serves as a uniquer identifier for each user and cannot be
-changed after it's created.}
+\item{emailAddress}{[required] The email address of the user that you want to register. The email address serves as a uniquer identifier for each user and cannot be changed after it's created.}
 
-\item{type}{[required] The option to indicate the type of user. Use one of the following
-options to specify this parameter:
+\item{type}{[required] The option to indicate the type of user. Use one of the following options to specify this parameter:
 \itemize{
-\item \code{SUPER_USER} – A user with permission to all the functionality and
-data in FinSpace.
-\item \code{APP_USER} – A user with specific permissions in FinSpace. The users
-are assigned permissions by adding them to a permission group.
+\item \code{SUPER_USER} – A user with permission to all the functionality and data in FinSpace.
+\item \code{APP_USER} – A user with specific permissions in FinSpace. The users are assigned permissions by adding them to a permission group.
 }}
 
 \item{firstName}{The first name of the user that you want to register.}
 
 \item{lastName}{The last name of the user that you want to register.}
 
-\item{apiAccess}{The option to indicate whether the user can use the
-\code{\link[=finspacedata_get_programmatic_access_credentials]{get_programmatic_access_credentials}}
-API to obtain credentials that can then be used to access other FinSpace
-Data API operations.
+\item{apiAccess}{The option to indicate whether the user can use the \code{\link[=finspacedata_get_programmatic_access_credentials]{get_programmatic_access_credentials}} API to obtain credentials that can then be used to access other FinSpace Data API operations.
 \itemize{
 \item \code{ENABLED} – The user has permissions to use the APIs.
 \item \code{DISABLED} – The user does not have permissions to use any APIs.
 }}
 
-\item{apiAccessPrincipalArn}{The ARN identifier of an AWS user or role that is allowed to call the
-\code{\link[=finspacedata_get_programmatic_access_credentials]{get_programmatic_access_credentials}}
-API to obtain a credentials token for a specific FinSpace user. This
-must be an IAM role within your FinSpace account.}
+\item{apiAccessPrincipalArn}{The ARN identifier of an AWS user or role that is allowed to call the \code{\link[=finspacedata_get_programmatic_access_credentials]{get_programmatic_access_credentials}} API to obtain a credentials token for a specific FinSpace user. This must be an IAM role within your FinSpace account.}
 
 \item{clientToken}{A token that ensures idempotency. This token expires in 10 minutes.}
 }

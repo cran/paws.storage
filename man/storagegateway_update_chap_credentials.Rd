@@ -13,19 +13,15 @@ storagegateway_update_chap_credentials(
 )
 }
 \arguments{
-\item{TargetARN}{[required] The Amazon Resource Name (ARN) of the iSCSI volume target. Use the
-\code{\link[=storagegateway_describe_storedi_scsi_volumes]{describe_storedi_scsi_volumes}}
-operation to return the TargetARN for specified VolumeARN.}
+\item{TargetARN}{[required] The Amazon Resource Name (ARN) of the iSCSI volume target. Use the \code{\link[=storagegateway_describe_storedi_scsi_volumes]{describe_storedi_scsi_volumes}} operation to return the TargetARN for specified VolumeARN.}
 
-\item{SecretToAuthenticateInitiator}{[required] The secret key that the initiator (for example, the Windows client) must
-provide to participate in mutual CHAP with the target.
+\item{SecretToAuthenticateInitiator}{[required] The secret key that the initiator (for example, the Windows client) must provide to participate in mutual CHAP with the target.
 
 The secret key must be between 12 and 16 bytes when encoded in UTF-8.}
 
 \item{InitiatorName}{[required] The iSCSI initiator that connects to the target.}
 
-\item{SecretToAuthenticateTarget}{The secret key that the target must provide to participate in mutual
-CHAP with the initiator (e.g. Windows client).
+\item{SecretToAuthenticateTarget}{The secret key that the target must provide to participate in mutual CHAP with the initiator (e.g. Windows client).
 
 Byte constraints: Minimum bytes of 12. Maximum bytes of 16.
 

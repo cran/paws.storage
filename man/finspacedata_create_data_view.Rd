@@ -25,9 +25,7 @@ finspacedata_create_data_view(
 
 \item{partitionColumns}{Ordered set of column names used to partition data.}
 
-\item{asOfTimestamp}{Beginning time to use for the Dataview. The value is determined as epoch
-time in milliseconds. For example, the value for Monday, November 1,
-2021 12:00:00 PM UTC is specified as 1635768000000.}
+\item{asOfTimestamp}{Beginning time to use for the Dataview. The value is determined as epoch time in milliseconds. For example, the value for Monday, November 1, 2021 12:00:00 PM UTC is specified as 1635768000000.}
 
 \item{destinationTypeParams}{[required] Options that define the destination type for the Dataview.}
 }

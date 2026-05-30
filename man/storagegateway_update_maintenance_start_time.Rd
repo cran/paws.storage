@@ -16,38 +16,23 @@ storagegateway_update_maintenance_start_time(
 )
 }
 \arguments{
-\item{GatewayARN}{[required]}
+\item{GatewayARN}{[required] The Amazon Resource Name (ARN) of the gateway. Use the \code{\link[=storagegateway_list_gateways]{list_gateways}} operation to return a list of gateways for your account and Amazon Web Services Region.}
 
-\item{HourOfDay}{The hour component of the maintenance start time represented as \emph{hh},
-where \emph{hh} is the hour (00 to 23). The hour of the day is in the time
-zone of the gateway.}
+\item{HourOfDay}{The hour component of the maintenance start time represented as \emph{hh}, where \emph{hh} is the hour (00 to 23). The hour of the day is in the time zone of the gateway.}
 
-\item{MinuteOfHour}{The minute component of the maintenance start time represented as \emph{mm},
-where \emph{mm} is the minute (00 to 59). The minute of the hour is in the
-time zone of the gateway.}
+\item{MinuteOfHour}{The minute component of the maintenance start time represented as \emph{mm}, where \emph{mm} is the minute (00 to 59). The minute of the hour is in the time zone of the gateway.}
 
-\item{DayOfWeek}{The day of the week component of the maintenance start time week
-represented as an ordinal number from 0 to 6, where 0 represents Sunday
-and 6 represents Saturday.}
+\item{DayOfWeek}{The day of the week component of the maintenance start time week represented as an ordinal number from 0 to 6, where 0 represents Sunday and 6 represents Saturday.}
 
-\item{DayOfMonth}{The day of the month component of the maintenance start time represented
-as an ordinal number from 1 to 28, where 1 represents the first day of
-the month. It is not possible to set the maintenance schedule to start
-on days 29 through 31.}
+\item{DayOfMonth}{The day of the month component of the maintenance start time represented as an ordinal number from 1 to 28, where 1 represents the first day of the month. It is not possible to set the maintenance schedule to start on days 29 through 31.}
 
-\item{SoftwareUpdatePreferences}{A set of variables indicating the software update preferences for the
-gateway.
+\item{SoftwareUpdatePreferences}{A set of variables indicating the software update preferences for the gateway.
 
 Includes \code{AutomaticUpdatePolicy} field with the following inputs:
 
 \code{ALL_VERSIONS} - Enables regular gateway maintenance updates.
 
-\code{EMERGENCY_VERSIONS_ONLY} - Disables regular gateway maintenance
-updates. The gateway will still receive emergency version updates on
-rare occasions if necessary to remedy highly critical security or
-durability issues. You will be notified before an emergency version
-update is applied. These updates are applied during your gateway's
-scheduled maintenance window.}
+\code{EMERGENCY_VERSIONS_ONLY} - Disables regular gateway maintenance updates. The gateway will still receive emergency version updates on rare occasions if necessary to remedy highly critical security or durability issues. You will be notified before an emergency version update is applied. These updates are applied during your gateway's scheduled maintenance window.}
 }
 \description{
 Updates a gateway's maintenance window schedule, with settings for monthly or weekly cadence, specific day and time to begin maintenance, and which types of updates to apply. Time configuration uses the gateway's time zone. You can pass values for a complete maintenance schedule, or update policy, or both. Previous values will persist for whichever setting you choose not to modify. If an incomplete or invalid maintenance schedule is passed, the entire request will be rejected with an error and no changes will occur.

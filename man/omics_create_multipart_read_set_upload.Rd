@@ -2,7 +2,8 @@
 % Please edit documentation in R/omics_operations.R
 \name{omics_create_multipart_read_set_upload}
 \alias{omics_create_multipart_read_set_upload}
-\title{Begins a multipart read set upload}
+\title{Initiates a multipart read set upload for uploading partitioned source
+files into a sequence store}
 \usage{
 omics_create_multipart_read_set_upload(
   sequenceStoreId,
@@ -18,11 +19,9 @@ omics_create_multipart_read_set_upload(
 )
 }
 \arguments{
-\item{sequenceStoreId}{[required] The sequence store ID for the store that is the destination of the
-multipart uploads.}
+\item{sequenceStoreId}{[required] The sequence store ID for the store that is the destination of the multipart uploads.}
 
-\item{clientToken}{An idempotency token that can be used to avoid triggering multiple
-multipart uploads.}
+\item{clientToken}{An idempotency token that can be used to avoid triggering multiple multipart uploads.}
 
 \item{sourceFileType}{[required] The type of file being uploaded.}
 
@@ -41,7 +40,7 @@ multipart uploads.}
 \item{tags}{Any tags to add to the read set.}
 }
 \description{
-Begins a multipart read set upload.
+Initiates a multipart read set upload for uploading partitioned source files into a sequence store. You can directly import source files from an EC2 instance and other local compute, or from an S3 bucket. To separate these source files into parts, use the \code{split} operation. Each part cannot be larger than 100 MB. If the operation is successful, it provides an \code{uploadId} which is required by the \code{\link[=omics_upload_read_set_part]{upload_read_set_part}} API operation to upload parts into a sequence store.
 
 See \url{https://www.paws-r-sdk.com/docs/omics_create_multipart_read_set_upload/} for full documentation.
 }

@@ -13,12 +13,11 @@ fsx_disassociate_file_system_aliases(
 )
 }
 \arguments{
-\item{ClientRequestToken}{}
+\item{ClientRequestToken}{(Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.}
 
 \item{FileSystemId}{[required] Specifies the file system from which to disassociate the DNS aliases.}
 
-\item{Aliases}{[required] An array of one or more DNS alias names to disassociate, or remove, from
-the file system.}
+\item{Aliases}{[required] An array of one or more DNS alias names to disassociate, or remove, from the file system.}
 }
 \description{
 Use this action to disassociate, or remove, one or more Domain Name Service (DNS) aliases from an Amazon FSx for Windows File Server file system. If you attempt to disassociate a DNS alias that is not associated with the file system, Amazon FSx responds with an HTTP status code 400 (Bad Request). For more information, see \href{https://docs.aws.amazon.com/fsx/latest/WindowsGuide/managing-dns-aliases.html}{Working with DNS Aliases}.

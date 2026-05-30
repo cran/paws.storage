@@ -7,14 +7,11 @@
 s3_get_bucket_analytics_configuration(Bucket, Id, ExpectedBucketOwner = NULL)
 }
 \arguments{
-\item{Bucket}{[required] The name of the bucket from which an analytics configuration is
-retrieved.}
+\item{Bucket}{[required] The name of the bucket from which an analytics configuration is retrieved.}
 
 \item{Id}{[required] The ID that identifies the analytics configuration.}
 
-\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you
-provide does not match the actual owner of the bucket, the request fails
-with the HTTP status code \verb{403 Forbidden} (access denied).}
+\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you provide does not match the actual owner of the bucket, the request fails with the HTTP status code \verb{403 Forbidden} (access denied).}
 }
 \description{
 This operation is not supported for directory buckets.

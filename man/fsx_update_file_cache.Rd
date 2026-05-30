@@ -13,7 +13,7 @@ fsx_update_file_cache(
 \arguments{
 \item{FileCacheId}{[required] The ID of the cache that you are updating.}
 
-\item{ClientRequestToken}{}
+\item{ClientRequestToken}{(Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.}
 
 \item{LustreConfiguration}{The configuration updates for an Amazon File Cache resource.}
 }

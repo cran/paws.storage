@@ -7,14 +7,11 @@
 s3control_put_multi_region_access_point_policy(AccountId, ClientToken, Details)
 }
 \arguments{
-\item{AccountId}{[required] The Amazon Web Services account ID for the owner of the Multi-Region
-Access Point.}
+\item{AccountId}{[required] The Amazon Web Services account ID for the owner of the Multi-Region Access Point.}
 
-\item{ClientToken}{[required] An idempotency token used to identify the request and guarantee that
-requests are unique.}
+\item{ClientToken}{[required] An idempotency token used to identify the request and guarantee that requests are unique.}
 
-\item{Details}{[required] A container element containing the details of the policy for the
-Multi-Region Access Point.}
+\item{Details}{[required] A container element containing the details of the policy for the Multi-Region Access Point.}
 }
 \description{
 This operation is not supported by directory buckets.

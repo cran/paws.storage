@@ -11,18 +11,12 @@ NULL
 #' See [https://www.paws-r-sdk.com/docs/s3outposts_create_endpoint/](https://www.paws-r-sdk.com/docs/s3outposts_create_endpoint/) for full documentation.
 #'
 #' @param OutpostId &#91;required&#93; The ID of the Outposts.
-#' @param SubnetId &#91;required&#93; The ID of the subnet in the selected VPC. The endpoint subnet must
-#' belong to the Outpost that has Amazon S3 on Outposts provisioned.
+#' @param SubnetId &#91;required&#93; The ID of the subnet in the selected VPC. The endpoint subnet must belong to the Outpost that has Amazon S3 on Outposts provisioned.
 #' @param SecurityGroupId &#91;required&#93; The ID of the security group to use with the endpoint.
-#' @param AccessType The type of access for the network connectivity for the Amazon S3 on
-#' Outposts endpoint. To use the Amazon Web Services VPC, choose `Private`.
-#' To use the endpoint with an on-premises network, choose
-#' `CustomerOwnedIp`. If you choose `CustomerOwnedIp`, you must also
-#' provide the customer-owned IP address pool (CoIP pool).
+#' @param AccessType The type of access for the network connectivity for the Amazon S3 on Outposts endpoint. To use the Amazon Web Services VPC, choose `Private`. To use the endpoint with an on-premises network, choose `CustomerOwnedIp`. If you choose `CustomerOwnedIp`, you must also provide the customer-owned IP address pool (CoIP pool).
 #' 
 #' `Private` is the default access type value.
-#' @param CustomerOwnedIpv4Pool The ID of the customer-owned IPv4 address pool (CoIP pool) for the
-#' endpoint. IP addresses are allocated from this pool for the endpoint.
+#' @param CustomerOwnedIpv4Pool The ID of the customer-owned IPv4 address pool (CoIP pool) for the endpoint. IP addresses are allocated from this pool for the endpoint.
 #'
 #' @keywords internal
 #'
@@ -85,8 +79,7 @@ s3outposts_delete_endpoint <- function(EndpointId, OutpostId) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3outposts_list_endpoints/](https://www.paws-r-sdk.com/docs/s3outposts_list_endpoints/) for full documentation.
 #'
-#' @param NextToken If a previous response from this operation included a `NextToken` value,
-#' provide that value here to retrieve the next page of results.
+#' @param NextToken If a previous response from this operation included a `NextToken` value, provide that value here to retrieve the next page of results.
 #' @param MaxResults The maximum number of endpoints that will be returned in the response.
 #'
 #' @keywords internal
@@ -119,11 +112,7 @@ s3outposts_list_endpoints <- function(NextToken = NULL, MaxResults = NULL) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3outposts_list_outposts_with_s3/](https://www.paws-r-sdk.com/docs/s3outposts_list_outposts_with_s3/) for full documentation.
 #'
-#' @param NextToken When you can get additional results from the
-#' [`list_outposts_with_s3`][s3outposts_list_outposts_with_s3] call, a
-#' `NextToken` parameter is returned in the output. You can then pass in a
-#' subsequent command to the `NextToken` parameter to continue listing
-#' additional Outposts.
+#' @param NextToken When you can get additional results from the [`list_outposts_with_s3`][s3outposts_list_outposts_with_s3] call, a `NextToken` parameter is returned in the output. You can then pass in a subsequent command to the `NextToken` parameter to continue listing additional Outposts.
 #' @param MaxResults The maximum number of Outposts to return. The limit is 100.
 #'
 #' @keywords internal
@@ -156,8 +145,7 @@ s3outposts_list_outposts_with_s3 <- function(NextToken = NULL, MaxResults = NULL
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3outposts_list_shared_endpoints/](https://www.paws-r-sdk.com/docs/s3outposts_list_shared_endpoints/) for full documentation.
 #'
-#' @param NextToken If a previous response from this operation included a `NextToken` value,
-#' you can provide that value here to retrieve the next page of results.
+#' @param NextToken If a previous response from this operation included a `NextToken` value, you can provide that value here to retrieve the next page of results.
 #' @param MaxResults The maximum number of endpoints that will be returned in the response.
 #' @param OutpostId &#91;required&#93; The ID of the Amazon Web Services Outpost.
 #'

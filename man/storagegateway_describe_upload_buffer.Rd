@@ -7,7 +7,7 @@
 storagegateway_describe_upload_buffer(GatewayARN)
 }
 \arguments{
-\item{GatewayARN}{[required]}
+\item{GatewayARN}{[required] The Amazon Resource Name (ARN) of the gateway. Use the \code{\link[=storagegateway_list_gateways]{list_gateways}} operation to return a list of gateways for your account and Amazon Web Services Region.}
 }
 \description{
 Returns information about the upload buffer of a gateway. This operation is supported for the stored volume, cached volume, and tape gateway types.

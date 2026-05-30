@@ -15,29 +15,17 @@ s3_put_bucket_notification(
 \arguments{
 \item{Bucket}{[required] The name of the bucket.}
 
-\item{ContentMD5}{The MD5 hash of the
-\code{\link[=s3_put_public_access_block]{put_public_access_block}} request body.
+\item{ContentMD5}{The MD5 hash of the \code{\link[=s3_put_public_access_block]{put_public_access_block}} request body.
 
-For requests made using the Amazon Web Services Command Line Interface
-(CLI) or Amazon Web Services SDKs, this field is calculated
-automatically.}
+For requests made using the Amazon Web Services Command Line Interface (CLI) or Amazon Web Services SDKs, this field is calculated automatically.}
 
-\item{ChecksumAlgorithm}{Indicates the algorithm used to create the checksum for the request when
-you use the SDK. This header will not provide any additional
-functionality if you don't use the SDK. When you send this header, there
-must be a corresponding \code{x-amz-checksum} or \code{x-amz-trailer} header sent.
-Otherwise, Amazon S3 fails the request with the HTTP status code
-\verb{400 Bad Request}. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity}
-in the \emph{Amazon S3 User Guide}.
+\item{ChecksumAlgorithm}{Indicates the algorithm used to create the checksum for the request when you use the SDK. This header will not provide any additional functionality if you don't use the SDK. When you send this header, there must be a corresponding \code{x-amz-checksum} or \code{x-amz-trailer} header sent. Otherwise, Amazon S3 fails the request with the HTTP status code \verb{400 Bad Request}. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity} in the \emph{Amazon S3 User Guide}.
 
-If you provide an individual checksum, Amazon S3 ignores any provided
-\code{ChecksumAlgorithm} parameter.}
+If you provide an individual checksum, Amazon S3 ignores any provided \code{ChecksumAlgorithm} parameter.}
 
 \item{NotificationConfiguration}{[required] The container for the configuration.}
 
-\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you
-provide does not match the actual owner of the bucket, the request fails
-with the HTTP status code \verb{403 Forbidden} (access denied).}
+\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you provide does not match the actual owner of the bucket, the request fails with the HTTP status code \verb{403 Forbidden} (access denied).}
 }
 \description{
 This operation is not supported for directory buckets.

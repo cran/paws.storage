@@ -7,10 +7,9 @@
 storagegateway_delete_bandwidth_rate_limit(GatewayARN, BandwidthType)
 }
 \arguments{
-\item{GatewayARN}{[required]}
+\item{GatewayARN}{[required] The Amazon Resource Name (ARN) of the gateway. Use the \code{\link[=storagegateway_list_gateways]{list_gateways}} operation to return a list of gateways for your account and Amazon Web Services Region.}
 
-\item{BandwidthType}{[required] One of the BandwidthType values that indicates the gateway bandwidth
-rate limit to delete.
+\item{BandwidthType}{[required] One of the BandwidthType values that indicates the gateway bandwidth rate limit to delete.
 
 Valid Values: \code{UPLOAD} | \code{DOWNLOAD} | \code{ALL}}
 }

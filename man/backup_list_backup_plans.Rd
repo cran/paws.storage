@@ -11,15 +11,11 @@ backup_list_backup_plans(
 )
 }
 \arguments{
-\item{NextToken}{The next item following a partial list of returned items. For example,
-if a request is made to return \code{MaxResults} number of items, \code{NextToken}
-allows you to return more items in your list starting at the location
-pointed to by the next token.}
+\item{NextToken}{The next item following a partial list of returned items. For example, if a request is made to return \code{MaxResults} number of items, \code{NextToken} allows you to return more items in your list starting at the location pointed to by the next token.}
 
 \item{MaxResults}{The maximum number of items to be returned.}
 
-\item{IncludeDeleted}{A Boolean value with a default value of \code{FALSE} that returns deleted
-backup plans when set to \code{TRUE}.}
+\item{IncludeDeleted}{A Boolean value with a default value of \code{FALSE} that returns deleted backup plans when set to \code{TRUE}.}
 }
 \description{
 Lists the active backup plans for the account.

@@ -12,11 +12,9 @@ fsx_update_shared_vpc_configuration(
 )
 }
 \arguments{
-\item{EnableFsxRouteTableUpdatesFromParticipantAccounts}{Specifies whether participant accounts can create FSx for ONTAP Multi-AZ
-file systems in shared subnets. Set to \code{true} to enable or \code{false} to
-disable.}
+\item{EnableFsxRouteTableUpdatesFromParticipantAccounts}{Specifies whether participant accounts can create FSx for ONTAP Multi-AZ file systems in shared subnets. Set to \code{true} to enable or \code{false} to disable.}
 
-\item{ClientRequestToken}{}
+\item{ClientRequestToken}{(Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.}
 }
 \description{
 Configures whether participant accounts in your organization can create Amazon FSx for NetApp ONTAP Multi-AZ file systems in subnets that are shared by a virtual private cloud (VPC) owner. For more information, see the \href{https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/}{Amazon FSx for NetApp ONTAP User Guide}.

@@ -32,44 +32,17 @@ s3_head_object(
 \arguments{
 \item{Bucket}{[required] The name of the bucket that contains the object.
 
-\strong{Directory buckets} - When you use this operation with a directory
-bucket, you must use virtual-hosted-style requests in the format
-\code{ Bucket-name.s3express-zone-id.region-code.amazonaws.com}. Path-style
-requests are not supported. Directory bucket names must be unique in the
-chosen Zone (Availability Zone or Local Zone). Bucket names must follow
-the format \code{ bucket-base-name--zone-id--x-s3} (for example,
-\code{ amzn-s3-demo-bucket--usw2-az1--x-s3}). For information about bucket
-naming restrictions, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-bucket-naming-rules.html}{Directory bucket naming rules}
-in the \emph{Amazon S3 User Guide}.
+\strong{Directory buckets} - When you use this operation with a directory bucket, you must use virtual-hosted-style requests in the format \code{ Bucket-name.s3express-zone-id.region-code.amazonaws.com}. Path-style requests are not supported. Directory bucket names must be unique in the chosen Zone (Availability Zone or Local Zone). Bucket names must follow the format \code{ bucket-base-name--zone-id--x-s3} (for example, \code{ amzn-s3-demo-bucket--usw2-az1--x-s3}). For information about bucket naming restrictions, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-bucket-naming-rules.html}{Directory bucket naming rules} in the \emph{Amazon S3 User Guide}.
 
-\strong{Access points} - When you use this action with an access point, you
-must provide the alias of the access point in place of the bucket name
-or specify the access point ARN. When using the access point ARN, you
-must direct requests to the access point hostname. The access point
-hostname takes the form
-\emph{AccessPointName}-\emph{AccountId}.s3-accesspoint.\emph{Region}.amazonaws.com.
-When using this action with an access point through the Amazon Web
-Services SDKs, you provide the access point ARN in place of the bucket
-name. For more information about access point ARNs, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-access-points.html}{Using access points}
-in the \emph{Amazon S3 User Guide}.
+\strong{Access points} - When you use this action with an access point for general purpose buckets, you must provide the alias of the access point in place of the bucket name or specify the access point ARN. When you use this action with an access point for directory buckets, you must provide the access point name in place of the bucket name. When using the access point ARN, you must direct requests to the access point hostname. The access point hostname takes the form \emph{AccessPointName}-\emph{AccountId}.s3-accesspoint.\emph{Region}.amazonaws.com. When using this action with an access point through the Amazon Web Services SDKs, you provide the access point ARN in place of the bucket name. For more information about access point ARNs, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-access-points.html}{Using access points} in the \emph{Amazon S3 User Guide}.
 
-Access points and Object Lambda access points are not supported by
-directory buckets.
+Object Lambda access points are not supported by directory buckets.
 
-\strong{S3 on Outposts} - When you use this action with S3 on Outposts, you
-must direct requests to the S3 on Outposts hostname. The S3 on Outposts
-hostname takes the form
-\code{ AccessPointName-AccountId.outpostID.s3-outposts.Region.amazonaws.com}.
-When you use this action with S3 on Outposts, the destination bucket
-must be the Outposts access point ARN or the access point alias. For
-more information about S3 on Outposts, see \href{https://docs.aws.amazon.com/AmazonS3/latest/s3-outposts/S3onOutposts.html}{What is S3 on Outposts?}
-in the \emph{Amazon S3 User Guide}.}
+\strong{S3 on Outposts} - When you use this action with S3 on Outposts, you must direct requests to the S3 on Outposts hostname. The S3 on Outposts hostname takes the form \code{ AccessPointName-AccountId.outpostID.s3-outposts.Region.amazonaws.com}. When you use this action with S3 on Outposts, the destination bucket must be the Outposts access point ARN or the access point alias. For more information about S3 on Outposts, see \href{https://docs.aws.amazon.com/AmazonS3/latest/s3-outposts/S3onOutposts.html}{What is S3 on Outposts?} in the \emph{Amazon S3 User Guide}.}
 
-\item{IfMatch}{Return the object only if its entity tag (ETag) is the same as the one
-specified; otherwise, return a 412 (precondition failed) error.
+\item{IfMatch}{Return the object only if its entity tag (ETag) is the same as the one specified; otherwise, return a 412 (precondition failed) error.
 
-If both of the \code{If-Match} and \code{If-Unmodified-Since} headers are present
-in the request as follows:
+If both of the \code{If-Match} and \code{If-Unmodified-Since} headers are present in the request as follows:
 \itemize{
 \item \code{If-Match} condition evaluates to \code{true}, and;
 \item \code{If-Unmodified-Since} condition evaluates to \code{false};
@@ -79,11 +52,9 @@ Then Amazon S3 returns \verb{200 OK} and the data requested.
 
 For more information about conditional requests, see \href{https://datatracker.ietf.org/doc/html/rfc7232}{RFC 7232}.}
 
-\item{IfModifiedSince}{Return the object only if it has been modified since the specified time;
-otherwise, return a 304 (not modified) error.
+\item{IfModifiedSince}{Return the object only if it has been modified since the specified time; otherwise, return a 304 (not modified) error.
 
-If both of the \code{If-None-Match} and \code{If-Modified-Since} headers are
-present in the request as follows:
+If both of the \code{If-None-Match} and \code{If-Modified-Since} headers are present in the request as follows:
 \itemize{
 \item \code{If-None-Match} condition evaluates to \code{false}, and;
 \item \code{If-Modified-Since} condition evaluates to \code{true};
@@ -93,11 +64,9 @@ Then Amazon S3 returns the \verb{304 Not Modified} response code.
 
 For more information about conditional requests, see \href{https://datatracker.ietf.org/doc/html/rfc7232}{RFC 7232}.}
 
-\item{IfNoneMatch}{Return the object only if its entity tag (ETag) is different from the
-one specified; otherwise, return a 304 (not modified) error.
+\item{IfNoneMatch}{Return the object only if its entity tag (ETag) is different from the one specified; otherwise, return a 304 (not modified) error.
 
-If both of the \code{If-None-Match} and \code{If-Modified-Since} headers are
-present in the request as follows:
+If both of the \code{If-None-Match} and \code{If-Modified-Since} headers are present in the request as follows:
 \itemize{
 \item \code{If-None-Match} condition evaluates to \code{false}, and;
 \item \code{If-Modified-Since} condition evaluates to \code{true};
@@ -107,11 +76,9 @@ Then Amazon S3 returns the \verb{304 Not Modified} response code.
 
 For more information about conditional requests, see \href{https://datatracker.ietf.org/doc/html/rfc7232}{RFC 7232}.}
 
-\item{IfUnmodifiedSince}{Return the object only if it has not been modified since the specified
-time; otherwise, return a 412 (precondition failed) error.
+\item{IfUnmodifiedSince}{Return the object only if it has not been modified since the specified time; otherwise, return a 412 (precondition failed) error.
 
-If both of the \code{If-Match} and \code{If-Unmodified-Since} headers are present
-in the request as follows:
+If both of the \code{If-Match} and \code{If-Unmodified-Since} headers are present in the request as follows:
 \itemize{
 \item \code{If-Match} condition evaluates to \code{true}, and;
 \item \code{If-Unmodified-Since} condition evaluates to \code{false};
@@ -123,10 +90,7 @@ For more information about conditional requests, see \href{https://datatracker.i
 
 \item{Key}{[required] The object key.}
 
-\item{Range}{HeadObject returns only the metadata for an object. If the Range is
-satisfiable, only the \code{ContentLength} is affected in the response. If
-the Range is not satisfiable, S3 returns a
-\verb{416 - Requested Range Not Satisfiable} error.}
+\item{Range}{HeadObject returns only the metadata for an object. If the Range is satisfiable, only the \code{ContentLength} is affected in the response. If the Range is not satisfiable, S3 returns a \verb{416 - Requested Range Not Satisfiable} error.}
 
 \item{ResponseCacheControl}{Sets the \code{Cache-Control} header of the response.}
 
@@ -142,52 +106,33 @@ the Range is not satisfiable, S3 returns a
 
 \item{VersionId}{Version ID used to reference a specific version of the object.
 
-For directory buckets in this API operation, only the \code{null} value of
-the version ID is supported.}
+For directory buckets in this API operation, only the \code{null} value of the version ID is supported.}
 
-\item{SSECustomerAlgorithm}{Specifies the algorithm to use when encrypting the object (for example,
-AES256).
+\item{SSECustomerAlgorithm}{Specifies the algorithm to use when encrypting the object (for example, AES256).
 
 This functionality is not supported for directory buckets.}
 
-\item{SSECustomerKey}{Specifies the customer-provided encryption key for Amazon S3 to use in
-encrypting data. This value is used to store the object and then it is
-discarded; Amazon S3 does not store the encryption key. The key must be
-appropriate for use with the algorithm specified in the
-\code{x-amz-server-side-encryption-customer-algorithm} header.
+\item{SSECustomerKey}{Specifies the customer-provided encryption key for Amazon S3 to use in encrypting data. This value is used to store the object and then it is discarded; Amazon S3 does not store the encryption key. The key must be appropriate for use with the algorithm specified in the \code{x-amz-server-side-encryption-customer-algorithm} header.
 
 This functionality is not supported for directory buckets.}
 
-\item{SSECustomerKeyMD5}{Specifies the 128-bit MD5 digest of the encryption key according to RFC
-1321. Amazon S3 uses this header for a message integrity check to ensure
-that the encryption key was transmitted without error.
+\item{SSECustomerKeyMD5}{Specifies the 128-bit MD5 digest of the encryption key according to RFC 1321. Amazon S3 uses this header for a message integrity check to ensure that the encryption key was transmitted without error.
 
 This functionality is not supported for directory buckets.}
 
-\item{RequestPayer}{}
+\item{RequestPayer}{Confirms that the requester knows that they will be charged for the request. Bucket owners need not specify this parameter in their requests. If either the source or destination S3 bucket has Requester Pays enabled, the requester will pay for the corresponding charges. For information about downloading objects from Requester Pays buckets, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/ObjectsinRequesterPaysBuckets.html}{Downloading Objects in Requester Pays Buckets} in the \emph{Amazon S3 User Guide}.
 
-\item{PartNumber}{Part number of the object being read. This is a positive integer between
-1 and 10,000. Effectively performs a 'ranged' HEAD request for the part
-specified. Useful querying about the size of the part and the number of
-parts in this object.}
+This functionality is not supported for directory buckets.}
 
-\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you
-provide does not match the actual owner of the bucket, the request fails
-with the HTTP status code \verb{403 Forbidden} (access denied).}
+\item{PartNumber}{Part number of the object being read. This is a positive integer between 1 and 10,000. Effectively performs a 'ranged' HEAD request for the part specified. Useful querying about the size of the part and the number of parts in this object.}
+
+\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you provide does not match the actual owner of the bucket, the request fails with the HTTP status code \verb{403 Forbidden} (access denied).}
 
 \item{ChecksumMode}{To retrieve the checksum, this parameter must be enabled.
 
-\strong{General purpose buckets} - If you enable checksum mode and the object
-is uploaded with a
-\href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_Checksum.html}{checksum}
-and encrypted with an Key Management Service (KMS) key, you must have
-permission to use the \code{kms:Decrypt} action to retrieve the checksum.
+\strong{General purpose buckets} - If you enable checksum mode and the object is uploaded with a \href{https://docs.aws.amazon.com/AmazonS3/latest/API/API_Checksum.html}{checksum} and encrypted with an Key Management Service (KMS) key, you must have permission to use the \code{kms:Decrypt} action to retrieve the checksum.
 
-\strong{Directory buckets} - If you enable \code{ChecksumMode} and the object is
-encrypted with Amazon Web Services Key Management Service (Amazon Web
-Services KMS), you must also have the \code{kms:GenerateDataKey} and
-\code{kms:Decrypt} permissions in IAM identity-based policies and KMS key
-policies for the KMS key to retrieve the checksum of the object.}
+\strong{Directory buckets} - If you enable \code{ChecksumMode} and the object is encrypted with Amazon Web Services Key Management Service (Amazon Web Services KMS), you must also have the \code{kms:GenerateDataKey} and \code{kms:Decrypt} permissions in IAM identity-based policies and KMS key policies for the KMS key to retrieve the checksum of the object.}
 }
 \description{
 The \code{HEAD} operation retrieves metadata from an object without returning the object itself. This operation is useful if you're interested only in an object's metadata.

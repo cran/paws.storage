@@ -7,7 +7,7 @@
 storagegateway_update_gateway_software_now(GatewayARN)
 }
 \arguments{
-\item{GatewayARN}{[required]}
+\item{GatewayARN}{[required] The Amazon Resource Name (ARN) of the gateway. Use the \code{\link[=storagegateway_list_gateways]{list_gateways}} operation to return a list of gateways for your account and Amazon Web Services Region.}
 }
 \description{
 Updates the gateway virtual machine (VM) software. The request immediately triggers the software update.

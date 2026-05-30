@@ -10,10 +10,7 @@ s3control_get_access_grants_location(AccountId, AccessGrantsLocationId)
 \arguments{
 \item{AccountId}{[required] The Amazon Web Services account ID of the S3 Access Grants instance.}
 
-\item{AccessGrantsLocationId}{[required] The ID of the registered location that you are retrieving. S3 Access
-Grants assigns this ID when you register the location. S3 Access Grants
-assigns the ID \code{default} to the default location \verb{s3://} and assigns an
-auto-generated ID to other locations that you register.}
+\item{AccessGrantsLocationId}{[required] The ID of the registered location that you are retrieving. S3 Access Grants assigns this ID when you register the location. S3 Access Grants assigns the ID \code{default} to the default location \verb{s3://} and assigns an auto-generated ID to other locations that you register.}
 }
 \description{
 Retrieves the details of a particular location registered in your S3 Access Grants instance.

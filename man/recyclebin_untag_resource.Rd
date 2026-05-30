@@ -9,8 +9,7 @@ recyclebin_untag_resource(ResourceArn, TagKeys)
 \arguments{
 \item{ResourceArn}{[required] The Amazon Resource Name (ARN) of the retention rule.}
 
-\item{TagKeys}{[required] The tag keys of the tags to unassign. All tags that have the specified
-tag key are unassigned.}
+\item{TagKeys}{[required] The tag keys of the tags to unassign. All tags that have the specified tag key are unassigned.}
 }
 \description{
 Unassigns a tag from a retention rule.

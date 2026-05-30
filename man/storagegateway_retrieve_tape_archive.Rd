@@ -8,16 +8,11 @@ a tape gateway}
 storagegateway_retrieve_tape_archive(TapeARN, GatewayARN)
 }
 \arguments{
-\item{TapeARN}{[required] The Amazon Resource Name (ARN) of the virtual tape you want to retrieve
-from the virtual tape shelf (VTS).}
+\item{TapeARN}{[required] The Amazon Resource Name (ARN) of the virtual tape you want to retrieve from the virtual tape shelf (VTS).}
 
-\item{GatewayARN}{[required] The Amazon Resource Name (ARN) of the gateway you want to retrieve the
-virtual tape to. Use the \code{\link[=storagegateway_list_gateways]{list_gateways}}
-operation to return a list of gateways for your account and Amazon Web
-Services Region.
+\item{GatewayARN}{[required] The Amazon Resource Name (ARN) of the gateway you want to retrieve the virtual tape to. Use the \code{\link[=storagegateway_list_gateways]{list_gateways}} operation to return a list of gateways for your account and Amazon Web Services Region.
 
-You retrieve archived virtual tapes to only one gateway and the gateway
-must be a tape gateway.}
+You retrieve archived virtual tapes to only one gateway and the gateway must be a tape gateway.}
 }
 \description{
 Retrieves an archived virtual tape from the virtual tape shelf (VTS) to a tape gateway. Virtual tapes archived in the VTS are not associated with any gateway. However after a tape is retrieved, it is associated with a gateway, even though it is also listed in the VTS, that is, archive. This operation is only supported in the tape gateway type.

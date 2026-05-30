@@ -9,12 +9,9 @@ s3_get_bucket_lifecycle_configuration(Bucket, ExpectedBucketOwner = NULL)
 \arguments{
 \item{Bucket}{[required] The name of the bucket for which to get the lifecycle information.}
 
-\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you
-provide does not match the actual owner of the bucket, the request fails
-with the HTTP status code \verb{403 Forbidden} (access denied).
+\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you provide does not match the actual owner of the bucket, the request fails with the HTTP status code \verb{403 Forbidden} (access denied).
 
-This parameter applies to general purpose buckets only. It is not
-supported for directory bucket lifecycle configurations.}
+This parameter applies to general purpose buckets only. It is not supported for directory bucket lifecycle configurations.}
 }
 \description{
 Returns the lifecycle configuration information set on the bucket. For information about lifecycle configuration, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lifecycle-mgmt.html}{Object Lifecycle Management}.

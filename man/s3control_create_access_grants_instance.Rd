@@ -14,20 +14,9 @@ s3control_create_access_grants_instance(
 \arguments{
 \item{AccountId}{[required] The Amazon Web Services account ID of the S3 Access Grants instance.}
 
-\item{IdentityCenterArn}{If you would like to associate your S3 Access Grants instance with an
-Amazon Web Services IAM Identity Center instance, use this field to pass
-the Amazon Resource Name (ARN) of the Amazon Web Services IAM Identity
-Center instance that you are associating with your S3 Access Grants
-instance. An IAM Identity Center instance is your corporate identity
-directory that you added to the IAM Identity Center. You can use the
-\href{https://docs.aws.amazon.com/singlesignon/latest/APIReference/API_ListInstances.html}{ListInstances}
-API operation to retrieve a list of your Identity Center instances and
-their ARNs.}
+\item{IdentityCenterArn}{If you would like to associate your S3 Access Grants instance with an Amazon Web Services IAM Identity Center instance, use this field to pass the Amazon Resource Name (ARN) of the Amazon Web Services IAM Identity Center instance that you are associating with your S3 Access Grants instance. An IAM Identity Center instance is your corporate identity directory that you added to the IAM Identity Center. You can use the \href{https://docs.aws.amazon.com/singlesignon/latest/APIReference/API_ListInstances.html}{ListInstances} API operation to retrieve a list of your Identity Center instances and their ARNs.}
 
-\item{Tags}{The Amazon Web Services resource tags that you are adding to the S3
-Access Grants instance. Each tag is a label consisting of a user-defined
-key and value. Tags can help you manage, identify, organize, search for,
-and filter resources.}
+\item{Tags}{The Amazon Web Services resource tags that you are adding to the S3 Access Grants instance. Each tag is a label consisting of a user-defined key and value. Tags can help you manage, identify, organize, search for, and filter resources.}
 }
 \description{
 Creates an S3 Access Grants instance, which serves as a logical grouping for access grants. You can create one S3 Access Grants instance per Region per account.

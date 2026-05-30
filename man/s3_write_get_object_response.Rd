@@ -24,6 +24,11 @@ s3_write_get_object_response(
   ChecksumCRC64NVME = NULL,
   ChecksumSHA1 = NULL,
   ChecksumSHA256 = NULL,
+  ChecksumSHA512 = NULL,
+  ChecksumMD5 = NULL,
+  ChecksumXXHASH64 = NULL,
+  ChecksumXXHASH3 = NULL,
+  ChecksumXXHASH128 = NULL,
   DeleteMarker = NULL,
   ETag = NULL,
   Expires = NULL,
@@ -51,15 +56,11 @@ s3_write_get_object_response(
 \arguments{
 \item{RequestRoute}{[required] Route prefix to the HTTP URL generated.}
 
-\item{RequestToken}{[required] A single use encrypted token that maps
-\code{\link[=s3_write_get_object_response]{write_get_object_response}} to the end
-user \code{\link[=s3_get_object]{get_object}} request.}
+\item{RequestToken}{[required] A single use encrypted token that maps \code{\link[=s3_write_get_object_response]{write_get_object_response}} to the end user \code{\link[=s3_get_object]{get_object}} request.}
 
 \item{Body}{The object data.}
 
-\item{StatusCode}{The integer status code for an HTTP response of a corresponding
-\code{\link[=s3_get_object]{get_object}} request. The following is a list of status
-codes.
+\item{StatusCode}{The integer status code for an HTTP response of a corresponding \code{\link[=s3_get_object]{get_object}} request. The following is a list of status codes.
 \itemize{
 \item \code{200 - OK}
 \item \verb{206 - Partial Content}
@@ -77,17 +78,9 @@ codes.
 \item \verb{503 - Service Unavailable}
 }}
 
-\item{ErrorCode}{A string that uniquely identifies an error condition. Returned in the
-\<Code\> tag of the error XML response for a corresponding
-\code{\link[=s3_get_object]{get_object}} call. Cannot be used with a successful
-\code{StatusCode} header or when the transformed object is provided in the
-body. All error codes from S3 are sentence-cased. The regular expression
-(regex) value is \code{"^[A-Z][a-zA-Z]+$"}.}
+\item{ErrorCode}{A string that uniquely identifies an error condition. Returned in the \<Code\> tag of the error XML response for a corresponding \code{\link[=s3_get_object]{get_object}} call. Cannot be used with a successful \code{StatusCode} header or when the transformed object is provided in the body. All error codes from S3 are sentence-cased. The regular expression (regex) value is \code{"^[A-Z][a-zA-Z]+$"}.}
 
-\item{ErrorMessage}{Contains a generic description of the error condition. Returned in the
-\<Message\> tag of the error XML response for a corresponding
-\code{\link[=s3_get_object]{get_object}} call. Cannot be used with a successful
-\code{StatusCode} header or when the transformed object is provided in body.}
+\item{ErrorMessage}{Contains a generic description of the error condition. Returned in the \<Message\> tag of the error XML response for a corresponding \code{\link[=s3_get_object]{get_object}} call. Cannot be used with a successful \code{StatusCode} header or when the transformed object is provided in body.}
 
 \item{AcceptRanges}{Indicates that a range of bytes was specified.}
 
@@ -95,9 +88,7 @@ body. All error codes from S3 are sentence-cased. The regular expression
 
 \item{ContentDisposition}{Specifies presentational information for the object.}
 
-\item{ContentEncoding}{Specifies what content encodings have been applied to the object and
-thus what decoding mechanisms must be applied to obtain the media-type
-referenced by the Content-Type header field.}
+\item{ContentEncoding}{Specifies what content encodings have been applied to the object and thus what decoding mechanisms must be applied to obtain the media-type referenced by the Content-Type header field.}
 
 \item{ContentLanguage}{The language the content is in.}
 
@@ -107,125 +98,75 @@ referenced by the Content-Type header field.}
 
 \item{ContentType}{A standard MIME type describing the format of the object data.}
 
-\item{ChecksumCRC32}{This header can be used as a data integrity check to verify that the
-data received is the same data that was originally sent. This specifies
-the Base64 encoded, 32-bit \code{CRC32} checksum of the object returned by
-the Object Lambda function. This may not match the checksum for the
-object stored in Amazon S3. Amazon S3 will perform validation of the
-checksum values only when the original \code{\link[=s3_get_object]{get_object}}
-request required checksum validation. For more information about
-checksums, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity}
-in the \emph{Amazon S3 User Guide}.
+\item{ChecksumCRC32}{This header can be used as a data integrity check to verify that the data received is the same data that was originally sent. This specifies the Base64 encoded, 32-bit \code{CRC32} checksum of the object returned by the Object Lambda function. This may not match the checksum for the object stored in Amazon S3. Amazon S3 will perform validation of the checksum values only when the original \code{\link[=s3_get_object]{get_object}} request required checksum validation. For more information about checksums, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity} in the \emph{Amazon S3 User Guide}.
 
-Only one checksum header can be specified at a time. If you supply
-multiple checksum headers, this request will fail.}
+Only one checksum header can be specified at a time. If you supply multiple checksum headers, this request will fail.}
 
-\item{ChecksumCRC32C}{This header can be used as a data integrity check to verify that the
-data received is the same data that was originally sent. This specifies
-the Base64 encoded, 32-bit \code{CRC32C} checksum of the object returned by
-the Object Lambda function. This may not match the checksum for the
-object stored in Amazon S3. Amazon S3 will perform validation of the
-checksum values only when the original \code{\link[=s3_get_object]{get_object}}
-request required checksum validation. For more information about
-checksums, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity}
-in the \emph{Amazon S3 User Guide}.
+\item{ChecksumCRC32C}{This header can be used as a data integrity check to verify that the data received is the same data that was originally sent. This specifies the Base64 encoded, 32-bit \code{CRC32C} checksum of the object returned by the Object Lambda function. This may not match the checksum for the object stored in Amazon S3. Amazon S3 will perform validation of the checksum values only when the original \code{\link[=s3_get_object]{get_object}} request required checksum validation. For more information about checksums, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity} in the \emph{Amazon S3 User Guide}.
 
-Only one checksum header can be specified at a time. If you supply
-multiple checksum headers, this request will fail.}
+Only one checksum header can be specified at a time. If you supply multiple checksum headers, this request will fail.}
 
-\item{ChecksumCRC64NVME}{This header can be used as a data integrity check to verify that the
-data received is the same data that was originally sent. This header
-specifies the Base64 encoded, 64-bit \code{CRC64NVME} checksum of the part.
-For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity}
-in the \emph{Amazon S3 User Guide}.}
+\item{ChecksumCRC64NVME}{This header can be used as a data integrity check to verify that the data received is the same data that was originally sent. This header specifies the Base64 encoded, 64-bit \code{CRC64NVME} checksum of the part. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity} in the \emph{Amazon S3 User Guide}.}
 
-\item{ChecksumSHA1}{This header can be used as a data integrity check to verify that the
-data received is the same data that was originally sent. This specifies
-the Base64 encoded, 160-bit \code{SHA1} digest of the object returned by the
-Object Lambda function. This may not match the checksum for the object
-stored in Amazon S3. Amazon S3 will perform validation of the checksum
-values only when the original \code{\link[=s3_get_object]{get_object}} request
-required checksum validation. For more information about checksums, see
-\href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity}
-in the \emph{Amazon S3 User Guide}.
+\item{ChecksumSHA1}{This header can be used as a data integrity check to verify that the data received is the same data that was originally sent. This specifies the Base64 encoded, 160-bit \code{SHA1} digest of the object returned by the Object Lambda function. This may not match the checksum for the object stored in Amazon S3. Amazon S3 will perform validation of the checksum values only when the original \code{\link[=s3_get_object]{get_object}} request required checksum validation. For more information about checksums, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity} in the \emph{Amazon S3 User Guide}.
 
-Only one checksum header can be specified at a time. If you supply
-multiple checksum headers, this request will fail.}
+Only one checksum header can be specified at a time. If you supply multiple checksum headers, this request will fail.}
 
-\item{ChecksumSHA256}{This header can be used as a data integrity check to verify that the
-data received is the same data that was originally sent. This specifies
-the Base64 encoded, 256-bit \code{SHA256} digest of the object returned by
-the Object Lambda function. This may not match the checksum for the
-object stored in Amazon S3. Amazon S3 will perform validation of the
-checksum values only when the original \code{\link[=s3_get_object]{get_object}}
-request required checksum validation. For more information about
-checksums, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity}
-in the \emph{Amazon S3 User Guide}.
+\item{ChecksumSHA256}{This header can be used as a data integrity check to verify that the data received is the same data that was originally sent. This specifies the Base64 encoded, 256-bit \code{SHA256} digest of the object returned by the Object Lambda function. This may not match the checksum for the object stored in Amazon S3. Amazon S3 will perform validation of the checksum values only when the original \code{\link[=s3_get_object]{get_object}} request required checksum validation. For more information about checksums, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity} in the \emph{Amazon S3 User Guide}.
 
-Only one checksum header can be specified at a time. If you supply
-multiple checksum headers, this request will fail.}
+Only one checksum header can be specified at a time. If you supply multiple checksum headers, this request will fail.}
 
-\item{DeleteMarker}{Specifies whether an object stored in Amazon S3 is (\code{true}) or is not
-(\code{false}) a delete marker. To learn more about delete markers, see
-\href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/DeleteMarker.html}{Working with delete markers}.}
+\item{ChecksumSHA512}{This header can be used as a data integrity check to verify that the data received is the same data that was originally sent. This header specifies the Base64 encoded, 512-bit \code{SHA512} digest of the part. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity} in the \emph{Amazon S3 User Guide}.}
 
-\item{ETag}{An opaque identifier assigned by a web server to a specific version of a
-resource found at a URL.}
+\item{ChecksumMD5}{This header can be used as a data integrity check to verify that the data received is the same data that was originally sent. This header specifies the Base64 encoded, 128-bit \code{MD5} digest of the part. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity} in the \emph{Amazon S3 User Guide}.}
+
+\item{ChecksumXXHASH64}{This header can be used as a data integrity check to verify that the data received is the same data that was originally sent. This header specifies the Base64 encoded, 64-bit \code{XXHASH64} checksum of the part. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity} in the \emph{Amazon S3 User Guide}.}
+
+\item{ChecksumXXHASH3}{This header can be used as a data integrity check to verify that the data received is the same data that was originally sent. This header specifies the Base64 encoded, 64-bit \code{XXHASH3} checksum of the part. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity} in the \emph{Amazon S3 User Guide}.}
+
+\item{ChecksumXXHASH128}{This header can be used as a data integrity check to verify that the data received is the same data that was originally sent. This header specifies the Base64 encoded, 128-bit \code{XXHASH128} checksum of the part. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity} in the \emph{Amazon S3 User Guide}.}
+
+\item{DeleteMarker}{Specifies whether an object stored in Amazon S3 is (\code{true}) or is not (\code{false}) a delete marker. To learn more about delete markers, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/DeleteMarker.html}{Working with delete markers}.}
+
+\item{ETag}{An opaque identifier assigned by a web server to a specific version of a resource found at a URL.}
 
 \item{Expires}{The date and time at which the object is no longer cacheable.}
 
-\item{Expiration}{If the object expiration is configured (see PUT Bucket lifecycle), the
-response includes this header. It includes the \code{expiry-date} and
-\code{rule-id} key-value pairs that provide the object expiration
-information. The value of the \code{rule-id} is URL-encoded.}
+\item{Expiration}{If the object expiration is configured (see PUT Bucket lifecycle), the response includes this header. It includes the \code{expiry-date} and \code{rule-id} key-value pairs that provide the object expiration information. The value of the \code{rule-id} is URL-encoded.}
 
 \item{LastModified}{The date and time that the object was last modified.}
 
-\item{MissingMeta}{Set to the number of metadata entries not returned in \code{x-amz-meta}
-headers. This can happen if you create metadata using an API like SOAP
-that supports more flexible metadata than the REST API. For example,
-using SOAP, you can create metadata whose values are not legal HTTP
-headers.}
+\item{MissingMeta}{Set to the number of metadata entries not returned in \code{x-amz-meta} headers. This can happen if you create metadata using an API like SOAP that supports more flexible metadata than the REST API. For example, using SOAP, you can create metadata whose values are not legal HTTP headers.}
 
 \item{Metadata}{A map of metadata to store with the object in S3.}
 
-\item{ObjectLockMode}{Indicates whether an object stored in Amazon S3 has Object Lock enabled.
-For more information about S3 Object Lock, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html}{Object Lock}.}
+\item{ObjectLockMode}{Indicates whether an object stored in Amazon S3 has Object Lock enabled. For more information about S3 Object Lock, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html}{Object Lock}.}
 
-\item{ObjectLockLegalHoldStatus}{Indicates whether an object stored in Amazon S3 has an active legal
-hold.}
+\item{ObjectLockLegalHoldStatus}{Indicates whether an object stored in Amazon S3 has an active legal hold.}
 
 \item{ObjectLockRetainUntilDate}{The date and time when Object Lock is configured to expire.}
 
 \item{PartsCount}{The count of parts this object has.}
 
-\item{ReplicationStatus}{Indicates if request involves bucket that is either a source or
-destination in a Replication rule. For more information about S3
-Replication, see
-\href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication.html}{Replication}.}
+\item{ReplicationStatus}{Indicates if request involves bucket that is either a source or destination in a Replication rule. For more information about S3 Replication, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication.html}{Replication}.}
 
-\item{RequestCharged}{}
+\item{RequestCharged}{If present, indicates that the requester was successfully charged for the request. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/RequesterPaysBuckets.html}{Using Requester Pays buckets for storage transfers and usage} in the \emph{Amazon Simple Storage Service user guide}.
 
-\item{Restore}{Provides information about object restoration operation and expiration
-time of the restored object copy.}
+This functionality is not supported for directory buckets.}
 
-\item{ServerSideEncryption}{The server-side encryption algorithm used when storing requested object
-in Amazon S3 (for example, AES256, \code{aws:kms}).}
+\item{Restore}{Provides information about object restoration operation and expiration time of the restored object copy.}
 
-\item{SSECustomerAlgorithm}{Encryption algorithm used if server-side encryption with a
-customer-provided encryption key was specified for object stored in
-Amazon S3.}
+\item{ServerSideEncryption}{The server-side encryption algorithm used when storing requested object in Amazon S3 or Amazon FSx.
 
-\item{SSEKMSKeyId}{If present, specifies the ID (Key ID, Key ARN, or Key Alias) of the
-Amazon Web Services Key Management Service (Amazon Web Services KMS)
-symmetric encryption customer managed key that was used for stored in
-Amazon S3 object.}
+When accessing data stored in Amazon FSx file systems using S3 access points, the only valid server side encryption option is \code{aws:fsx}.}
 
-\item{SSECustomerKeyMD5}{128-bit MD5 digest of customer-provided encryption key used in Amazon S3
-to encrypt data stored in S3. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/ServerSideEncryptionCustomerKeys.html}{Protecting data using server-side encryption with customer-provided encryption keys (SSE-C)}.}
+\item{SSECustomerAlgorithm}{Encryption algorithm used if server-side encryption with a customer-provided encryption key was specified for object stored in Amazon S3.}
 
-\item{StorageClass}{Provides storage class information of the object. Amazon S3 returns this
-header for all objects except for S3 Standard storage class objects.
+\item{SSEKMSKeyId}{If present, specifies the ID (Key ID, Key ARN, or Key Alias) of the Amazon Web Services Key Management Service (Amazon Web Services KMS) symmetric encryption customer managed key that was used for stored in Amazon S3 object.}
+
+\item{SSECustomerKeyMD5}{128-bit MD5 digest of customer-provided encryption key used in Amazon S3 to encrypt data stored in S3. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/ServerSideEncryptionCustomerKeys.html}{Protecting data using server-side encryption with customer-provided encryption keys (SSE-C)}.}
+
+\item{StorageClass}{Provides storage class information of the object. Amazon S3 returns this header for all objects except for S3 Standard storage class objects.
 
 For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html}{Storage Classes}.}
 
@@ -233,8 +174,7 @@ For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/user
 
 \item{VersionId}{An ID used to reference a specific version of the object.}
 
-\item{BucketKeyEnabled}{Indicates whether the object stored in Amazon S3 uses an S3 bucket key
-for server-side encryption with Amazon Web Services KMS (SSE-KMS).}
+\item{BucketKeyEnabled}{Indicates whether the object stored in Amazon S3 uses an S3 bucket key for server-side encryption with Amazon Web Services KMS (SSE-KMS).}
 }
 \description{
 This operation is not supported for directory buckets.

@@ -11,19 +11,11 @@ backup_create_restore_testing_plan(
 )
 }
 \arguments{
-\item{CreatorRequestId}{This is a unique string that identifies the request and allows failed
-requests to be retriedwithout the risk of running the operation twice.
-This parameter is optional. If used, this parameter must contain 1 to 50
-alphanumeric or '-_.' characters.}
+\item{CreatorRequestId}{This is a unique string that identifies the request and allows failed requests to be retriedwithout the risk of running the operation twice. This parameter is optional. If used, this parameter must contain 1 to 50 alphanumeric or '-_.' characters.}
 
-\item{RestoreTestingPlan}{[required] A restore testing plan must contain a unique \code{RestoreTestingPlanName}
-string you create and must contain a \code{ScheduleExpression} cron. You may
-optionally include a \code{StartWindowHours} integer and a \code{CreatorRequestId}
-string.
+\item{RestoreTestingPlan}{[required] A restore testing plan must contain a unique \code{RestoreTestingPlanName} string you create and must contain a \code{ScheduleExpression} cron. You may optionally include a \code{StartWindowHours} integer and a \code{CreatorRequestId} string.
 
-The \code{RestoreTestingPlanName} is a unique string that is the name of the
-restore testing plan. This cannot be changed after creation, and it must
-consist of only alphanumeric characters and underscores.}
+The \code{RestoreTestingPlanName} is a unique string that is the name of the restore testing plan. This cannot be changed after creation, and it must consist of only alphanumeric characters and underscores.}
 
 \item{Tags}{The tags to assign to the restore testing plan.}
 }

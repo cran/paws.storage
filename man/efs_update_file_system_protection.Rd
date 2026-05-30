@@ -14,20 +14,12 @@ efs_update_file_system_protection(
 
 \item{ReplicationOverwriteProtection}{The status of the file system's replication overwrite protection.
 \itemize{
-\item \code{ENABLED} – The file system cannot be used as the destination file
-system in a replication configuration. The file system is writeable.
-Replication overwrite protection is \code{ENABLED} by default.
-\item \code{DISABLED} – The file system can be used as the destination file
-system in a replication configuration. The file system is read-only
-and can only be modified by EFS replication.
-\item \code{REPLICATING} – The file system is being used as the destination
-file system in a replication configuration. The file system is
-read-only and is only modified only by EFS replication.
+\item \code{ENABLED} – The file system cannot be used as the destination file system in a replication configuration. The file system is writeable. Replication overwrite protection is \code{ENABLED} by default.
+\item \code{DISABLED} – The file system can be used as the destination file system in a replication configuration. The file system is read-only and can only be modified by EFS replication.
+\item \code{REPLICATING} – The file system is being used as the destination file system in a replication configuration. The file system is read-only and is only modified only by EFS replication.
 }
 
-If the replication configuration is deleted, the file system's
-replication overwrite protection is re-enabled and the file system
-becomes writeable.}
+If the replication configuration is deleted, the file system's replication overwrite protection is re-enabled and the file system becomes writeable.}
 }
 \description{
 Updates protection on the file system.

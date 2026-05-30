@@ -10,8 +10,7 @@ backup_get_backup_selection(BackupPlanId, SelectionId)
 \arguments{
 \item{BackupPlanId}{[required] Uniquely identifies a backup plan.}
 
-\item{SelectionId}{[required] Uniquely identifies the body of a request to assign a set of resources
-to a backup plan.}
+\item{SelectionId}{[required] Uniquely identifies the body of a request to assign a set of resources to a backup plan.}
 }
 \description{
 Returns selection metadata and a document in JSON format that specifies a list of resources that are associated with a backup plan.

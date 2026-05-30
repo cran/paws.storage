@@ -14,27 +14,23 @@ backup_start_copy_job(
 )
 }
 \arguments{
-\item{RecoveryPointArn}{[required] An ARN that uniquely identifies a recovery point to use for the copy
-job; for example,
-arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45.}
+\item{RecoveryPointArn}{[required] An ARN that uniquely identifies a recovery point to use for the copy job; for example, arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45.}
 
-\item{SourceBackupVaultName}{[required] The name of a logical source container where backups are stored. Backup
-vaults are identified by names that are unique to the account used to
-create them and the Amazon Web Services Region where they are created.}
+\item{SourceBackupVaultName}{[required] The name of a logical source container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.}
 
-\item{DestinationBackupVaultArn}{[required] An Amazon Resource Name (ARN) that uniquely identifies a destination
-backup vault to copy to; for example,
-\code{arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault}.}
+\item{DestinationBackupVaultArn}{[required] An Amazon Resource Name (ARN) that uniquely identifies a destination backup vault to copy to; for example, \code{arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault}.}
 
-\item{IamRoleArn}{[required] Specifies the IAM role ARN used to copy the target recovery point; for
-example, \verb{arn:aws:iam::123456789012:role/S3Access}.}
+\item{IamRoleArn}{[required] Specifies the IAM role ARN used to copy the target recovery point; for example, \verb{arn:aws:iam::123456789012:role/S3Access}.}
 
-\item{IdempotencyToken}{A customer-chosen string that you can use to distinguish between
-otherwise identical calls to \code{\link[=backup_start_copy_job]{start_copy_job}}.
-Retrying a successful request with the same idempotency token results in
-a success message with no action taken.}
+\item{IdempotencyToken}{A customer-chosen string that you can use to distinguish between otherwise identical calls to \code{\link[=backup_start_copy_job]{start_copy_job}}. Retrying a successful request with the same idempotency token results in a success message with no action taken.}
 
-\item{Lifecycle}{}
+\item{Lifecycle}{Specifies the time period, in days, before a recovery point transitions to cold storage or is deleted.
+
+Backups transitioned to cold storage must be stored in cold storage for a minimum of 90 days. Therefore, on the console, the retention setting must be 90 days greater than the transition to cold after days setting. The transition to cold after days setting can't be changed after a backup has been transitioned to cold.
+
+Resource types that can transition to cold storage are listed in the \href{https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-feature-availability.html#features-by-resource}{Feature availability by resource} table. Backup ignores this expression for other resource types.
+
+To remove the existing lifecycle and retention periods and keep your recovery points indefinitely, specify -1 for \code{MoveToColdStorageAfterDays} and \code{DeleteAfterDays}.}
 }
 \description{
 Starts a job to create a one-time copy of the specified resource.

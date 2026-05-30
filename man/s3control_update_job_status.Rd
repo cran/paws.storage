@@ -12,15 +12,13 @@ s3control_update_job_status(
 )
 }
 \arguments{
-\item{AccountId}{[required] The Amazon Web Services account ID associated with the S3 Batch
-Operations job.}
+\item{AccountId}{[required] The Amazon Web Services account ID associated with the S3 Batch Operations job.}
 
 \item{JobId}{[required] The ID of the job whose status you want to update.}
 
 \item{RequestedJobStatus}{[required] The status that you want to move the specified job to.}
 
-\item{StatusUpdateReason}{A description of the reason why you want to change the specified job's
-status. This field can be any string up to the maximum length.}
+\item{StatusUpdateReason}{A description of the reason why you want to change the specified job's status. This field can be any string up to the maximum length.}
 }
 \description{
 Updates the status for the specified job. Use this operation to confirm that you want to run a job or to cancel an existing job. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/batch-ops.html}{S3 Batch Operations} in the \emph{Amazon S3 User Guide}.

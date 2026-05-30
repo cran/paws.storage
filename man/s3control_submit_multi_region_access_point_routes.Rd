@@ -11,14 +11,11 @@ s3control_submit_multi_region_access_point_routes(
 )
 }
 \arguments{
-\item{AccountId}{[required] The Amazon Web Services account ID for the owner of the Multi-Region
-Access Point.}
+\item{AccountId}{[required] The Amazon Web Services account ID for the owner of the Multi-Region Access Point.}
 
 \item{Mrap}{[required] The Multi-Region Access Point ARN.}
 
-\item{RouteUpdates}{[required] The different routes that make up the new route configuration. Active
-routes return a value of \code{100}, and passive routes return a value of
-\code{0}.}
+\item{RouteUpdates}{[required] The different routes that make up the new route configuration. Active routes return a value of \code{100}, and passive routes return a value of \code{0}.}
 }
 \description{
 This operation is not supported by directory buckets.

@@ -2,7 +2,8 @@
 % Please edit documentation in R/s3_operations.R
 \name{s3_put_object}
 \alias{s3_put_object}
-\title{Adds an object to a bucket}
+\title{End of support notice: As of October 1, 2025, Amazon S3 has discontinued
+support for Email Grantee Access Control Lists (ACLs)}
 \usage{
 s3_put_object(
   ACL = NULL,
@@ -21,6 +22,11 @@ s3_put_object(
   ChecksumCRC64NVME = NULL,
   ChecksumSHA1 = NULL,
   ChecksumSHA256 = NULL,
+  ChecksumSHA512 = NULL,
+  ChecksumMD5 = NULL,
+  ChecksumXXHASH64 = NULL,
+  ChecksumXXHASH3 = NULL,
+  ChecksumXXHASH128 = NULL,
   Expires = NULL,
   IfMatch = NULL,
   IfNoneMatch = NULL,
@@ -49,28 +55,11 @@ s3_put_object(
 )
 }
 \arguments{
-\item{ACL}{The canned ACL to apply to the object. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/acl-overview.html#CannedACL}{Canned ACL}
-in the \emph{Amazon S3 User Guide}.
+\item{ACL}{The canned ACL to apply to the object. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/acl-overview.html#CannedACL}{Canned ACL} in the \emph{Amazon S3 User Guide}.
 
-When adding a new object, you can use headers to grant ACL-based
-permissions to individual Amazon Web Services accounts or to predefined
-groups defined by Amazon S3. These permissions are then added to the ACL
-on the object. By default, all objects are private. Only the owner has
-full access control. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/acl-overview.html}{Access Control List (ACL) Overview}
-and \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/managing-acls.html}{Managing ACLs Using the REST API}
-in the \emph{Amazon S3 User Guide}.
+When adding a new object, you can use headers to grant ACL-based permissions to individual Amazon Web Services accounts or to predefined groups defined by Amazon S3. These permissions are then added to the ACL on the object. By default, all objects are private. Only the owner has full access control. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/acl-overview.html}{Access Control List (ACL) Overview} and \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/managing-acls.html}{Managing ACLs Using the REST API} in the \emph{Amazon S3 User Guide}.
 
-If the bucket that you're uploading objects to uses the bucket owner
-enforced setting for S3 Object Ownership, ACLs are disabled and no
-longer affect permissions. Buckets that use this setting only accept PUT
-requests that don't specify an ACL or PUT requests that specify bucket
-owner full control ACLs, such as the \code{bucket-owner-full-control} canned
-ACL or an equivalent form of this ACL expressed in the XML format. PUT
-requests that contain other ACLs (for example, custom grants to certain
-Amazon Web Services accounts) fail and return a \code{400} error with the
-error code \code{AccessControlListNotSupported}. For more information, see
-\href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/about-object-ownership.html}{Controlling ownership of objects and disabling ACLs}
-in the \emph{Amazon S3 User Guide}.
+If the bucket that you're uploading objects to uses the bucket owner enforced setting for S3 Object Ownership, ACLs are disabled and no longer affect permissions. Buckets that use this setting only accept PUT requests that don't specify an ACL or PUT requests that specify bucket owner full control ACLs, such as the \code{bucket-owner-full-control} canned ACL or an equivalent form of this ACL expressed in the XML format. PUT requests that contain other ACLs (for example, custom grants to certain Amazon Web Services accounts) fail and return a \code{400} error with the error code \code{AccessControlListNotSupported}. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/about-object-ownership.html}{Controlling ownership of objects and disabling ACLs} in the \emph{Amazon S3 User Guide}.
 \itemize{
 \item This functionality is not supported for directory buckets.
 \item This functionality is not supported for Amazon S3 on Outposts.
@@ -80,170 +69,95 @@ in the \emph{Amazon S3 User Guide}.
 
 \item{Bucket}{[required] The bucket name to which the PUT action was initiated.
 
-\strong{Directory buckets} - When you use this operation with a directory
-bucket, you must use virtual-hosted-style requests in the format
-\code{ Bucket-name.s3express-zone-id.region-code.amazonaws.com}. Path-style
-requests are not supported. Directory bucket names must be unique in the
-chosen Zone (Availability Zone or Local Zone). Bucket names must follow
-the format \code{ bucket-base-name--zone-id--x-s3} (for example,
-\code{ amzn-s3-demo-bucket--usw2-az1--x-s3}). For information about bucket
-naming restrictions, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-bucket-naming-rules.html}{Directory bucket naming rules}
-in the \emph{Amazon S3 User Guide}.
+\strong{Directory buckets} - When you use this operation with a directory bucket, you must use virtual-hosted-style requests in the format \code{ Bucket-name.s3express-zone-id.region-code.amazonaws.com}. Path-style requests are not supported. Directory bucket names must be unique in the chosen Zone (Availability Zone or Local Zone). Bucket names must follow the format \code{ bucket-base-name--zone-id--x-s3} (for example, \code{ amzn-s3-demo-bucket--usw2-az1--x-s3}). For information about bucket naming restrictions, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-bucket-naming-rules.html}{Directory bucket naming rules} in the \emph{Amazon S3 User Guide}.
 
-\strong{Access points} - When you use this action with an access point, you
-must provide the alias of the access point in place of the bucket name
-or specify the access point ARN. When using the access point ARN, you
-must direct requests to the access point hostname. The access point
-hostname takes the form
-\emph{AccessPointName}-\emph{AccountId}.s3-accesspoint.\emph{Region}.amazonaws.com.
-When using this action with an access point through the Amazon Web
-Services SDKs, you provide the access point ARN in place of the bucket
-name. For more information about access point ARNs, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-access-points.html}{Using access points}
-in the \emph{Amazon S3 User Guide}.
+\strong{Access points} - When you use this action with an access point for general purpose buckets, you must provide the alias of the access point in place of the bucket name or specify the access point ARN. When you use this action with an access point for directory buckets, you must provide the access point name in place of the bucket name. When using the access point ARN, you must direct requests to the access point hostname. The access point hostname takes the form \emph{AccessPointName}-\emph{AccountId}.s3-accesspoint.\emph{Region}.amazonaws.com. When using this action with an access point through the Amazon Web Services SDKs, you provide the access point ARN in place of the bucket name. For more information about access point ARNs, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-access-points.html}{Using access points} in the \emph{Amazon S3 User Guide}.
 
-Access points and Object Lambda access points are not supported by
-directory buckets.
+Object Lambda access points are not supported by directory buckets.
 
-\strong{S3 on Outposts} - When you use this action with S3 on Outposts, you
-must direct requests to the S3 on Outposts hostname. The S3 on Outposts
-hostname takes the form
-\code{ AccessPointName-AccountId.outpostID.s3-outposts.Region.amazonaws.com}.
-When you use this action with S3 on Outposts, the destination bucket
-must be the Outposts access point ARN or the access point alias. For
-more information about S3 on Outposts, see \href{https://docs.aws.amazon.com/AmazonS3/latest/s3-outposts/S3onOutposts.html}{What is S3 on Outposts?}
-in the \emph{Amazon S3 User Guide}.}
+\strong{S3 on Outposts} - When you use this action with S3 on Outposts, you must direct requests to the S3 on Outposts hostname. The S3 on Outposts hostname takes the form \code{ AccessPointName-AccountId.outpostID.s3-outposts.Region.amazonaws.com}. When you use this action with S3 on Outposts, the destination bucket must be the Outposts access point ARN or the access point alias. For more information about S3 on Outposts, see \href{https://docs.aws.amazon.com/AmazonS3/latest/s3-outposts/S3onOutposts.html}{What is S3 on Outposts?} in the \emph{Amazon S3 User Guide}.}
 
-\item{CacheControl}{Can be used to specify caching behavior along the request/reply chain.
-For more information, see
-\href{https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9}{http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9}.}
+\item{CacheControl}{Can be used to specify caching behavior along the request/reply chain. For more information, see \href{https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9}{http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9}.}
 
-\item{ContentDisposition}{Specifies presentational information for the object. For more
-information, see \url{https://www.rfc-editor.org/rfc/rfc6266#section-4}.}
+\item{ContentDisposition}{Specifies presentational information for the object. For more information, see https://www.rfc-editor.org/rfc/rfc6266#section-4.}
 
-\item{ContentEncoding}{Specifies what content encodings have been applied to the object and
-thus what decoding mechanisms must be applied to obtain the media-type
-referenced by the Content-Type header field. For more information, see
-\url{https://www.rfc-editor.org/rfc/rfc9110.html#field.content-encoding}.}
+\item{ContentEncoding}{Specifies what content encodings have been applied to the object and thus what decoding mechanisms must be applied to obtain the media-type referenced by the Content-Type header field. For more information, see https://www.rfc-editor.org/rfc/rfc9110.html#field.content-encoding.}
 
 \item{ContentLanguage}{The language the content is in.}
 
-\item{ContentLength}{Size of the body in bytes. This parameter is useful when the size of the
-body cannot be determined automatically. For more information, see
-\url{https://www.rfc-editor.org/rfc/rfc9110.html#name-content-length}.}
+\item{ContentLength}{Size of the body in bytes. This parameter is useful when the size of the body cannot be determined automatically. For more information, see https://www.rfc-editor.org/rfc/rfc9110.html#name-content-length.}
 
-\item{ContentMD5}{The Base64 encoded 128-bit \code{MD5} digest of the message (without the
-headers) according to RFC 1864. This header can be used as a message
-integrity check to verify that the data is the same data that was
-originally sent. Although it is optional, we recommend using the
-Content-MD5 mechanism as an end-to-end integrity check. For more
-information about REST request authentication, see \href{https://docs.aws.amazon.com/AmazonS3/latest/API/RESTAuthentication.html}{REST Authentication}.
+\item{ContentMD5}{The Base64 encoded 128-bit \code{MD5} digest of the message (without the headers) according to RFC 1864. This header can be used as a message integrity check to verify that the data is the same data that was originally sent. Although it is optional, we recommend using the Content-MD5 mechanism as an end-to-end integrity check. For more information about REST request authentication, see \href{https://docs.aws.amazon.com/AmazonS3/latest/API/RESTAuthentication.html}{REST Authentication}.
 
-The \code{Content-MD5} or \code{x-amz-sdk-checksum-algorithm} header is required
-for any request to upload an object with a retention period configured
-using Amazon S3 Object Lock. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock-managing.html#object-lock-put-object}{Uploading objects to an Object Lock enabled bucket}
-in the \emph{Amazon S3 User Guide}.
+The \code{Content-MD5} or \code{x-amz-sdk-checksum-algorithm} header is required for any request to upload an object with a retention period configured using Amazon S3 Object Lock. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock-managing.html#object-lock-put-object}{Uploading objects to an Object Lock enabled bucket} in the \emph{Amazon S3 User Guide}.
 
 This functionality is not supported for directory buckets.}
 
-\item{ContentType}{A standard MIME type describing the format of the contents. For more
-information, see
-\url{https://www.rfc-editor.org/rfc/rfc9110.html#name-content-type}.}
+\item{ContentType}{A standard MIME type describing the format of the contents. For more information, see https://www.rfc-editor.org/rfc/rfc9110.html#name-content-type.}
 
-\item{ChecksumAlgorithm}{Indicates the algorithm used to create the checksum for the object when
-you use the SDK. This header will not provide any additional
-functionality if you don't use the SDK. When you send this header, there
-must be a corresponding \code{x-amz-checksum-algorithm } or \code{x-amz-trailer}
-header sent. Otherwise, Amazon S3 fails the request with the HTTP status
-code \verb{400 Bad Request}.
+\item{ChecksumAlgorithm}{Indicates the algorithm used to create the checksum for the object when you use the SDK. This header will not provide any additional functionality if you don't use the SDK. When you send this header, there must be a corresponding \code{x-amz-checksum-algorithm } or \code{x-amz-trailer} header sent. Otherwise, Amazon S3 fails the request with the HTTP status code \verb{400 Bad Request}.
 
-For the \code{x-amz-checksum-algorithm } header, replace \code{algorithm} with
-the supported algorithm from the following list:
+For the \code{x-amz-checksum-algorithm } header, replace \code{algorithm} with the supported algorithm from the following list:
 \itemize{
 \item \code{CRC32}
 \item \code{CRC32C}
 \item \code{CRC64NVME}
+\item \code{MD5}
 \item \code{SHA1}
 \item \code{SHA256}
+\item \code{SHA512}
+\item \code{XXHASH3}
+\item \code{XXHASH64}
+\item \code{XXHASH128}
 }
 
-For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity}
-in the \emph{Amazon S3 User Guide}.
+For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity} in the \emph{Amazon S3 User Guide}.
 
-If the individual checksum value you provide through
-\code{x-amz-checksum-algorithm } doesn't match the checksum algorithm you set
-through \code{x-amz-sdk-checksum-algorithm}, Amazon S3 fails the request with
-a \code{BadDigest} error.
+If the individual checksum value you provide through \code{x-amz-checksum-algorithm } doesn't match the checksum algorithm you set through \code{x-amz-sdk-checksum-algorithm}, Amazon S3 fails the request with a \code{BadDigest} error.
 
-The \code{Content-MD5} or \code{x-amz-sdk-checksum-algorithm} header is required
-for any request to upload an object with a retention period configured
-using Amazon S3 Object Lock. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock-managing.html#object-lock-put-object}{Uploading objects to an Object Lock enabled bucket}
-in the \emph{Amazon S3 User Guide}.
+The \code{Content-MD5} or \code{x-amz-sdk-checksum-algorithm} header is required for any request to upload an object with a retention period configured using Amazon S3 Object Lock. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock-managing.html#object-lock-put-object}{Uploading objects to an Object Lock enabled bucket} in the \emph{Amazon S3 User Guide}.
 
-For directory buckets, when you use Amazon Web Services SDKs, \code{CRC32} is
-the default checksum algorithm that's used for performance.}
+For directory buckets, when you use Amazon Web Services SDKs, \code{CRC32} is the default checksum algorithm that's used for performance.}
 
-\item{ChecksumCRC32}{This header can be used as a data integrity check to verify that the
-data received is the same data that was originally sent. This header
-specifies the Base64 encoded, 32-bit \code{CRC32} checksum of the object. For
-more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity}
-in the \emph{Amazon S3 User Guide}.}
+\item{ChecksumCRC32}{This header can be used as a data integrity check to verify that the data received is the same data that was originally sent. This header specifies the Base64 encoded, 32-bit \code{CRC32} checksum of the object. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity} in the \emph{Amazon S3 User Guide}.}
 
-\item{ChecksumCRC32C}{This header can be used as a data integrity check to verify that the
-data received is the same data that was originally sent. This header
-specifies the Base64 encoded, 32-bit \code{CRC32C} checksum of the object.
-For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity}
-in the \emph{Amazon S3 User Guide}.}
+\item{ChecksumCRC32C}{This header can be used as a data integrity check to verify that the data received is the same data that was originally sent. This header specifies the Base64 encoded, 32-bit \code{CRC32C} checksum of the object. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity} in the \emph{Amazon S3 User Guide}.}
 
-\item{ChecksumCRC64NVME}{This header can be used as a data integrity check to verify that the
-data received is the same data that was originally sent. This header
-specifies the Base64 encoded, 64-bit \code{CRC64NVME} checksum of the object.
-The \code{CRC64NVME} checksum is always a full object checksum. For more
-information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity in the Amazon S3 User Guide}.}
+\item{ChecksumCRC64NVME}{This header can be used as a data integrity check to verify that the data received is the same data that was originally sent. This header specifies the Base64 encoded, 64-bit \code{CRC64NVME} checksum of the object. The \code{CRC64NVME} checksum is always a full object checksum. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity in the Amazon S3 User Guide}.}
 
-\item{ChecksumSHA1}{This header can be used as a data integrity check to verify that the
-data received is the same data that was originally sent. This header
-specifies the Base64 encoded, 160-bit \code{SHA1} digest of the object. For
-more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity}
-in the \emph{Amazon S3 User Guide}.}
+\item{ChecksumSHA1}{This header can be used as a data integrity check to verify that the data received is the same data that was originally sent. This header specifies the Base64 encoded, 160-bit \code{SHA1} digest of the object. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity} in the \emph{Amazon S3 User Guide}.}
 
-\item{ChecksumSHA256}{This header can be used as a data integrity check to verify that the
-data received is the same data that was originally sent. This header
-specifies the Base64 encoded, 256-bit \code{SHA256} digest of the object. For
-more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity}
-in the \emph{Amazon S3 User Guide}.}
+\item{ChecksumSHA256}{This header can be used as a data integrity check to verify that the data received is the same data that was originally sent. This header specifies the Base64 encoded, 256-bit \code{SHA256} digest of the object. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity} in the \emph{Amazon S3 User Guide}.}
 
-\item{Expires}{The date and time at which the object is no longer cacheable. For more
-information, see \url{https://www.rfc-editor.org/rfc/rfc7234#section-5.3}.}
+\item{ChecksumSHA512}{This header can be used as a data integrity check to verify that the data received is the same data that was originally sent. This header specifies the Base64 encoded, 512-bit \code{SHA512} digest of the object. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity in the Amazon S3 User Guide}.}
 
-\item{IfMatch}{Uploads the object only if the ETag (entity tag) value provided during
-the WRITE operation matches the ETag of the object in S3. If the ETag
-values do not match, the operation returns a \verb{412 Precondition Failed}
-error.
+\item{ChecksumMD5}{This header can be used as a data integrity check to verify that the data received is the same data that was originally sent. This header specifies the Base64 encoded, 128-bit \code{MD5} digest of the object. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity in the Amazon S3 User Guide}.}
 
-If a conflicting operation occurs during the upload S3 returns a
-\verb{409 ConditionalRequestConflict} response. On a 409 failure you should
-fetch the object's ETag and retry the upload.
+\item{ChecksumXXHASH64}{This header can be used as a data integrity check to verify that the data received is the same data that was originally sent. This header specifies the Base64 encoded, 64-bit \code{XXHASH64} checksum of the object. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity in the Amazon S3 User Guide}.}
+
+\item{ChecksumXXHASH3}{This header can be used as a data integrity check to verify that the data received is the same data that was originally sent. This header specifies the Base64 encoded, 64-bit \code{XXHASH3} checksum of the object. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity in the Amazon S3 User Guide}.}
+
+\item{ChecksumXXHASH128}{This header can be used as a data integrity check to verify that the data received is the same data that was originally sent. This header specifies the Base64 encoded, 128-bit \code{XXHASH128} checksum of the object. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity in the Amazon S3 User Guide}.}
+
+\item{Expires}{The date and time at which the object is no longer cacheable. For more information, see https://www.rfc-editor.org/rfc/rfc7234#section-5.3.}
+
+\item{IfMatch}{Uploads the object only if the ETag (entity tag) value provided during the WRITE operation matches the ETag of the object in S3. If the ETag values do not match, the operation returns a \verb{412 Precondition Failed} error.
+
+If a conflicting operation occurs during the upload S3 returns a \verb{409 ConditionalRequestConflict} response. On a 409 failure you should fetch the object's ETag and retry the upload.
 
 Expects the ETag value as a string.
 
-For more information about conditional requests, see \href{https://datatracker.ietf.org/doc/html/rfc7232}{RFC 7232}, or \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/conditional-requests.html}{Conditional requests}
-in the \emph{Amazon S3 User Guide}.}
+For more information about conditional requests, see \href{https://datatracker.ietf.org/doc/html/rfc7232}{RFC 7232}, or \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/conditional-requests.html}{Conditional requests} in the \emph{Amazon S3 User Guide}.}
 
-\item{IfNoneMatch}{Uploads the object only if the object key name does not already exist in
-the bucket specified. Otherwise, Amazon S3 returns a
-\verb{412 Precondition Failed} error.
+\item{IfNoneMatch}{Uploads the object only if the object key name does not already exist in the bucket specified. Otherwise, Amazon S3 returns a \verb{412 Precondition Failed} error.
 
-If a conflicting operation occurs during the upload S3 returns a
-\verb{409 ConditionalRequestConflict} response. On a 409 failure you should
-retry the upload.
+If a conflicting operation occurs during the upload S3 returns a \verb{409 ConditionalRequestConflict} response. On a 409 failure you should retry the upload.
 
 Expects the '*' (asterisk) character.
 
-For more information about conditional requests, see \href{https://datatracker.ietf.org/doc/html/rfc7232}{RFC 7232}, or \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/conditional-requests.html}{Conditional requests}
-in the \emph{Amazon S3 User Guide}.}
+For more information about conditional requests, see \href{https://datatracker.ietf.org/doc/html/rfc7232}{RFC 7232}, or \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/conditional-requests.html}{Conditional requests} in the \emph{Amazon S3 User Guide}.}
 
-\item{GrantFullControl}{Gives the grantee READ, READ_ACP, and WRITE_ACP permissions on the
-object.
+\item{GrantFullControl}{Gives the grantee READ, READ_ACP, and WRITE_ACP permissions on the object.
 \itemize{
 \item This functionality is not supported for directory buckets.
 \item This functionality is not supported for Amazon S3 on Outposts.
@@ -269,194 +183,78 @@ object.
 
 \item{Key}{[required] Object key for which the PUT action was initiated.}
 
-\item{WriteOffsetBytes}{Specifies the offset for appending data to existing objects in bytes.
-The offset must be equal to the size of the existing object being
-appended to. If no object exists, setting this header to 0 will create a
-new object.
+\item{WriteOffsetBytes}{Specifies the offset for appending data to existing objects in bytes. The offset must be equal to the size of the existing object being appended to. If no object exists, setting this header to 0 will create a new object.
 
-This functionality is only supported for objects in the Amazon S3
-Express One Zone storage class in directory buckets.}
+This functionality is only supported for objects in the Amazon S3 Express One Zone storage class in directory buckets.}
 
 \item{Metadata}{A map of metadata to store with the object in S3.}
 
-\item{ServerSideEncryption}{The server-side encryption algorithm that was used when you store this
-object in Amazon S3 (for example, \code{AES256}, \code{aws:kms}, \code{aws:kms:dsse}).
+\item{ServerSideEncryption}{The server-side encryption algorithm that was used when you store this object in Amazon S3 or Amazon FSx.
 \itemize{
-\item \strong{General purpose buckets} - You have four mutually exclusive
-options to protect data using server-side encryption in Amazon S3,
-depending on how you choose to manage the encryption keys.
-Specifically, the encryption key options are Amazon S3 managed keys
-(SSE-S3), Amazon Web Services KMS keys (SSE-KMS or DSSE-KMS), and
-customer-provided keys (SSE-C). Amazon S3 encrypts data with
-server-side encryption by using Amazon S3 managed keys (SSE-S3) by
-default. You can optionally tell Amazon S3 to encrypt data at rest
-by using server-side encryption with other key options. For more
-information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingServerSideEncryption.html}{Using Server-Side Encryption}
-in the \emph{Amazon S3 User Guide}.
-\item \strong{Directory buckets} - For directory buckets, there are only two
-supported options for server-side encryption: server-side encryption
-with Amazon S3 managed keys (SSE-S3) (\code{AES256}) and server-side
-encryption with KMS keys (SSE-KMS) (\code{aws:kms}). We recommend that
-the bucket's default encryption uses the desired encryption
-configuration and you don't override the bucket default encryption
-in your \code{\link[=s3_create_session]{create_session}} requests or \code{PUT}
-object requests. Then, new objects are automatically encrypted with
-the desired encryption settings. For more information, see
-\href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/}{Protecting data with server-side encryption}
-in the \emph{Amazon S3 User Guide}. For more information about the
-encryption overriding behaviors in directory buckets, see
-\href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-specifying-kms-encryption.html}{Specifying server-side encryption with KMS for new object uploads}.
+\item \strong{General purpose buckets} - You have four mutually exclusive options to protect data using server-side encryption in Amazon S3, depending on how you choose to manage the encryption keys. Specifically, the encryption key options are Amazon S3 managed keys (SSE-S3), Amazon Web Services KMS keys (SSE-KMS or DSSE-KMS), and customer-provided keys (SSE-C). Amazon S3 encrypts data with server-side encryption by using Amazon S3 managed keys (SSE-S3) by default. You can optionally tell Amazon S3 to encrypt data at rest by using server-side encryption with other key options. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingServerSideEncryption.html}{Using Server-Side Encryption} in the \emph{Amazon S3 User Guide}.
+\item \strong{Directory buckets} - For directory buckets, there are only two supported options for server-side encryption: server-side encryption with Amazon S3 managed keys (SSE-S3) (\code{AES256}) and server-side encryption with KMS keys (SSE-KMS) (\code{aws:kms}). We recommend that the bucket's default encryption uses the desired encryption configuration and you don't override the bucket default encryption in your \code{\link[=s3_create_session]{create_session}} requests or \code{PUT} object requests. Then, new objects are automatically encrypted with the desired encryption settings. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/}{Protecting data with server-side encryption} in the \emph{Amazon S3 User Guide}. For more information about the encryption overriding behaviors in directory buckets, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-specifying-kms-encryption.html}{Specifying server-side encryption with KMS for new object uploads}.
 
-In the Zonal endpoint API calls (except
-\code{\link[=s3_copy_object]{copy_object}} and
-\code{\link[=s3_upload_part_copy]{upload_part_copy}}) using the REST API, the
-encryption request headers must match the encryption settings that
-are specified in the \code{\link[=s3_create_session]{create_session}} request.
-You can't override the values of the encryption settings
-(\code{x-amz-server-side-encryption},
-\code{x-amz-server-side-encryption-aws-kms-key-id},
-\code{x-amz-server-side-encryption-context}, and
-\code{x-amz-server-side-encryption-bucket-key-enabled}) that are
-specified in the \code{\link[=s3_create_session]{create_session}} request. You
-don't need to explicitly specify these encryption settings values in
-Zonal endpoint API calls, and Amazon S3 will use the encryption
-settings values from the \code{\link[=s3_create_session]{create_session}}
-request to protect new objects in the directory bucket.
+In the Zonal endpoint API calls (except \code{\link[=s3_copy_object]{copy_object}} and \code{\link[=s3_upload_part_copy]{upload_part_copy}}) using the REST API, the encryption request headers must match the encryption settings that are specified in the \code{\link[=s3_create_session]{create_session}} request. You can't override the values of the encryption settings (\code{x-amz-server-side-encryption}, \code{x-amz-server-side-encryption-aws-kms-key-id}, \code{x-amz-server-side-encryption-context}, and \code{x-amz-server-side-encryption-bucket-key-enabled}) that are specified in the \code{\link[=s3_create_session]{create_session}} request. You don't need to explicitly specify these encryption settings values in Zonal endpoint API calls, and Amazon S3 will use the encryption settings values from the \code{\link[=s3_create_session]{create_session}} request to protect new objects in the directory bucket.
 
-When you use the CLI or the Amazon Web Services SDKs, for
-\code{\link[=s3_create_session]{create_session}}, the session token refreshes
-automatically to avoid service interruptions when a session expires.
-The CLI or the Amazon Web Services SDKs use the bucket's default
-encryption configuration for the
-\code{\link[=s3_create_session]{create_session}} request. It's not supported to
-override the encryption settings values in the
-\code{\link[=s3_create_session]{create_session}} request. So in the Zonal
-endpoint API calls (except \code{\link[=s3_copy_object]{copy_object}} and
-\code{\link[=s3_upload_part_copy]{upload_part_copy}}), the encryption request
-headers must match the default encryption configuration of the
-directory bucket.
+When you use the CLI or the Amazon Web Services SDKs, for \code{\link[=s3_create_session]{create_session}}, the session token refreshes automatically to avoid service interruptions when a session expires. The CLI or the Amazon Web Services SDKs use the bucket's default encryption configuration for the \code{\link[=s3_create_session]{create_session}} request. It's not supported to override the encryption settings values in the \code{\link[=s3_create_session]{create_session}} request. So in the Zonal endpoint API calls (except \code{\link[=s3_copy_object]{copy_object}} and \code{\link[=s3_upload_part_copy]{upload_part_copy}}), the encryption request headers must match the default encryption configuration of the directory bucket.
+\item \strong{S3 access points for Amazon FSx} - When accessing data stored in Amazon FSx file systems using S3 access points, the only valid server side encryption option is \code{aws:fsx}. All Amazon FSx file systems have encryption configured by default and are encrypted at rest. Data is automatically encrypted before being written to the file system, and automatically decrypted as it is read. These processes are handled transparently by Amazon FSx.
 }}
 
-\item{StorageClass}{By default, Amazon S3 uses the STANDARD Storage Class to store newly
-created objects. The STANDARD storage class provides high durability and
-high availability. Depending on performance needs, you can specify a
-different Storage Class. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html}{Storage Classes}
-in the \emph{Amazon S3 User Guide}.
+\item{StorageClass}{By default, Amazon S3 uses the STANDARD Storage Class to store newly created objects. The STANDARD storage class provides high durability and high availability. Depending on performance needs, you can specify a different Storage Class. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html}{Storage Classes} in the \emph{Amazon S3 User Guide}.
 \itemize{
-\item For directory buckets, only the S3 Express One Zone storage class is
-supported to store newly created objects.
+\item Directory buckets only support \code{EXPRESS_ONEZONE} (the S3 Express One Zone storage class) in Availability Zones and \code{ONEZONE_IA} (the S3 One Zone-Infrequent Access storage class) in Dedicated Local Zones.
 \item Amazon S3 on Outposts only uses the OUTPOSTS Storage Class.
 }}
 
-\item{WebsiteRedirectLocation}{If the bucket is configured as a website, redirects requests for this
-object to another object in the same bucket or to an external URL.
-Amazon S3 stores the value of this header in the object metadata. For
-information about object metadata, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingMetadata.html}{Object Key and Metadata}
-in the \emph{Amazon S3 User Guide}.
+\item{WebsiteRedirectLocation}{If the bucket is configured as a website, redirects requests for this object to another object in the same bucket or to an external URL. Amazon S3 stores the value of this header in the object metadata. For information about object metadata, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingMetadata.html}{Object Key and Metadata} in the \emph{Amazon S3 User Guide}.
 
-In the following example, the request header sets the redirect to an
-object (anotherPage.html) in the same bucket:
+In the following example, the request header sets the redirect to an object (anotherPage.html) in the same bucket:
 
 \verb{x-amz-website-redirect-location: /anotherPage.html}
 
-In the following example, the request header sets the object redirect to
-another website:
+In the following example, the request header sets the object redirect to another website:
 
 \verb{x-amz-website-redirect-location: http://www.example.com/}
 
-For more information about website hosting in Amazon S3, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteHosting.html}{Hosting Websites on Amazon S3}
-and \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/how-to-page-redirect.html}{How to Configure Website Page Redirects}
-in the \emph{Amazon S3 User Guide}.
+For more information about website hosting in Amazon S3, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteHosting.html}{Hosting Websites on Amazon S3} and \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/how-to-page-redirect.html}{How to Configure Website Page Redirects} in the \emph{Amazon S3 User Guide}.
 
 This functionality is not supported for directory buckets.}
 
-\item{SSECustomerAlgorithm}{Specifies the algorithm to use when encrypting the object (for example,
-\code{AES256}).
+\item{SSECustomerAlgorithm}{Specifies the algorithm to use when encrypting the object (for example, \code{AES256}).
 
 This functionality is not supported for directory buckets.}
 
-\item{SSECustomerKey}{Specifies the customer-provided encryption key for Amazon S3 to use in
-encrypting data. This value is used to store the object and then it is
-discarded; Amazon S3 does not store the encryption key. The key must be
-appropriate for use with the algorithm specified in the
-\code{x-amz-server-side-encryption-customer-algorithm} header.
+\item{SSECustomerKey}{Specifies the customer-provided encryption key for Amazon S3 to use in encrypting data. This value is used to store the object and then it is discarded; Amazon S3 does not store the encryption key. The key must be appropriate for use with the algorithm specified in the \code{x-amz-server-side-encryption-customer-algorithm} header.
 
 This functionality is not supported for directory buckets.}
 
-\item{SSECustomerKeyMD5}{Specifies the 128-bit MD5 digest of the encryption key according to RFC
-1321. Amazon S3 uses this header for a message integrity check to ensure
-that the encryption key was transmitted without error.
+\item{SSECustomerKeyMD5}{Specifies the 128-bit MD5 digest of the encryption key according to RFC 1321. Amazon S3 uses this header for a message integrity check to ensure that the encryption key was transmitted without error.
 
 This functionality is not supported for directory buckets.}
 
-\item{SSEKMSKeyId}{Specifies the KMS key ID (Key ID, Key ARN, or Key Alias) to use for
-object encryption. If the KMS key doesn't exist in the same account
-that's issuing the command, you must use the full Key ARN not the Key
-ID.
+\item{SSEKMSKeyId}{Specifies the KMS key ID (Key ID, Key ARN, or Key Alias) to use for object encryption. If the KMS key doesn't exist in the same account that's issuing the command, you must use the full Key ARN not the Key ID.
 
-\strong{General purpose buckets} - If you specify
-\code{x-amz-server-side-encryption} with \code{aws:kms} or \code{aws:kms:dsse}, this
-header specifies the ID (Key ID, Key ARN, or Key Alias) of the KMS key
-to use. If you specify \code{x-amz-server-side-encryption:aws:kms} or
-\code{x-amz-server-side-encryption:aws:kms:dsse}, but do not provide
-\code{x-amz-server-side-encryption-aws-kms-key-id}, Amazon S3 uses the Amazon
-Web Services managed key (\code{aws/s3}) to protect the data.
+\strong{General purpose buckets} - If you specify \code{x-amz-server-side-encryption} with \code{aws:kms} or \code{aws:kms:dsse}, this header specifies the ID (Key ID, Key ARN, or Key Alias) of the KMS key to use. If you specify \code{x-amz-server-side-encryption:aws:kms} or \code{x-amz-server-side-encryption:aws:kms:dsse}, but do not provide \code{x-amz-server-side-encryption-aws-kms-key-id}, Amazon S3 uses the Amazon Web Services managed key (\code{aws/s3}) to protect the data.
 
-\strong{Directory buckets} - To encrypt data using SSE-KMS, it's recommended
-to specify the \code{x-amz-server-side-encryption} header to \code{aws:kms}. Then,
-the \code{x-amz-server-side-encryption-aws-kms-key-id} header implicitly uses
-the bucket's default KMS customer managed key ID. If you want to
-explicitly set the \code{ x-amz-server-side-encryption-aws-kms-key-id}
-header, it must match the bucket's default customer managed key (using
-key ID or ARN, not alias). Your SSE-KMS configuration can only support 1
-\href{https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-cmk}{customer managed key}
-per directory bucket's lifetime. The \href{https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-cmk}{Amazon Web Services managed key}
-(\code{aws/s3}) isn't supported. Incorrect key specification results in an
-HTTP \verb{400 Bad Request} error.}
+\strong{Directory buckets} - To encrypt data using SSE-KMS, it's recommended to specify the \code{x-amz-server-side-encryption} header to \code{aws:kms}. Then, the \code{x-amz-server-side-encryption-aws-kms-key-id} header implicitly uses the bucket's default KMS customer managed key ID. If you want to explicitly set the \code{ x-amz-server-side-encryption-aws-kms-key-id} header, it must match the bucket's default customer managed key (using key ID or ARN, not alias). Your SSE-KMS configuration can only support 1 \href{https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-cmk}{customer managed key} per directory bucket's lifetime. The \href{https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-cmk}{Amazon Web Services managed key} (\code{aws/s3}) isn't supported. Incorrect key specification results in an HTTP \verb{400 Bad Request} error.}
 
-\item{SSEKMSEncryptionContext}{Specifies the Amazon Web Services KMS Encryption Context as an
-additional encryption context to use for object encryption. The value of
-this header is a Base64 encoded string of a UTF-8 encoded JSON, which
-contains the encryption context as key-value pairs. This value is stored
-as object metadata and automatically gets passed on to Amazon Web
-Services KMS for future \code{\link[=s3_get_object]{get_object}} operations on this
-object.
+\item{SSEKMSEncryptionContext}{Specifies the Amazon Web Services KMS Encryption Context as an additional encryption context to use for object encryption. The value of this header is a Base64 encoded string of a UTF-8 encoded JSON, which contains the encryption context as key-value pairs. This value is stored as object metadata and automatically gets passed on to Amazon Web Services KMS for future \code{\link[=s3_get_object]{get_object}} operations on this object.
 
-\strong{General purpose buckets} - This value must be explicitly added during
-\code{\link[=s3_copy_object]{copy_object}} operations if you want an additional
-encryption context for your object. For more information, see
-\href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingKMSEncryption.html#encryption-context}{Encryption context}
-in the \emph{Amazon S3 User Guide}.
+\strong{General purpose buckets} - This value must be explicitly added during \code{\link[=s3_copy_object]{copy_object}} operations if you want an additional encryption context for your object. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingKMSEncryption.html#encryption-context}{Encryption context} in the \emph{Amazon S3 User Guide}.
 
-\strong{Directory buckets} - You can optionally provide an explicit
-encryption context value. The value must match the default encryption
-context - the bucket Amazon Resource Name (ARN). An additional
-encryption context value is not supported.}
+\strong{Directory buckets} - You can optionally provide an explicit encryption context value. The value must match the default encryption context - the bucket Amazon Resource Name (ARN). An additional encryption context value is not supported.}
 
-\item{BucketKeyEnabled}{Specifies whether Amazon S3 should use an S3 Bucket Key for object
-encryption with server-side encryption using Key Management Service
-(KMS) keys (SSE-KMS).
+\item{BucketKeyEnabled}{Specifies whether Amazon S3 should use an S3 Bucket Key for object encryption with server-side encryption using Key Management Service (KMS) keys (SSE-KMS).
 
-\strong{General purpose buckets} - Setting this header to \code{true} causes
-Amazon S3 to use an S3 Bucket Key for object encryption with SSE-KMS.
-Also, specifying this header with a PUT action doesn't affect
-bucket-level settings for S3 Bucket Key.
+\strong{General purpose buckets} - Setting this header to \code{true} causes Amazon S3 to use an S3 Bucket Key for object encryption with SSE-KMS. Also, specifying this header with a PUT action doesn't affect bucket-level settings for S3 Bucket Key.
 
-\strong{Directory buckets} - S3 Bucket Keys are always enabled for \code{GET} and
-\code{PUT} operations in a directory bucket and can’t be disabled. S3 Bucket
-Keys aren't supported, when you copy SSE-KMS encrypted objects from
-general purpose buckets to directory buckets, from directory buckets to
-general purpose buckets, or between directory buckets, through
-\code{\link[=s3_copy_object]{copy_object}},
-\code{\link[=s3_upload_part_copy]{upload_part_copy}}, \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-buckets-objects-Batch-Ops.html}{the Copy operation in Batch Operations},
-or \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-import-job.html}{the import jobs}.
-In this case, Amazon S3 makes a call to KMS every time a copy request is
-made for a KMS-encrypted object.}
+\strong{Directory buckets} - S3 Bucket Keys are always enabled for \code{GET} and \code{PUT} operations in a directory bucket and can’t be disabled. S3 Bucket Keys aren't supported, when you copy SSE-KMS encrypted objects from general purpose buckets to directory buckets, from directory buckets to general purpose buckets, or between directory buckets, through \code{\link[=s3_copy_object]{copy_object}}, \code{\link[=s3_upload_part_copy]{upload_part_copy}}, \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-buckets-objects-Batch-Ops.html}{the Copy operation in Batch Operations}, or \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-import-job.html}{the import jobs}. In this case, Amazon S3 makes a call to KMS every time a copy request is made for a KMS-encrypted object.}
 
-\item{RequestPayer}{}
+\item{RequestPayer}{Confirms that the requester knows that they will be charged for the request. Bucket owners need not specify this parameter in their requests. If either the source or destination S3 bucket has Requester Pays enabled, the requester will pay for the corresponding charges. For information about downloading objects from Requester Pays buckets, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/ObjectsinRequesterPaysBuckets.html}{Downloading Objects in Requester Pays Buckets} in the \emph{Amazon S3 User Guide}.
 
-\item{Tagging}{The tag-set for the object. The tag-set must be encoded as URL Query
-parameters. (For example, "Key1=Value1")
+This functionality is not supported for directory buckets.}
+
+\item{Tagging}{The tag-set for the object. The tag-set must be encoded as URL Query parameters. (For example, "Key1=Value1")
 
 This functionality is not supported for directory buckets.}
 
@@ -464,23 +262,18 @@ This functionality is not supported for directory buckets.}
 
 This functionality is not supported for directory buckets.}
 
-\item{ObjectLockRetainUntilDate}{The date and time when you want this object's Object Lock to expire.
-Must be formatted as a timestamp parameter.
+\item{ObjectLockRetainUntilDate}{The date and time when you want this object's Object Lock to expire. Must be formatted as a timestamp parameter.
 
 This functionality is not supported for directory buckets.}
 
-\item{ObjectLockLegalHoldStatus}{Specifies whether a legal hold will be applied to this object. For more
-information about S3 Object Lock, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html}{Object Lock}
-in the \emph{Amazon S3 User Guide}.
+\item{ObjectLockLegalHoldStatus}{Specifies whether a legal hold will be applied to this object. For more information about S3 Object Lock, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html}{Object Lock} in the \emph{Amazon S3 User Guide}.
 
 This functionality is not supported for directory buckets.}
 
-\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you
-provide does not match the actual owner of the bucket, the request fails
-with the HTTP status code \verb{403 Forbidden} (access denied).}
+\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you provide does not match the actual owner of the bucket, the request fails with the HTTP status code \verb{403 Forbidden} (access denied).}
 }
 \description{
-Adds an object to a bucket.
+End of support notice: As of October 1, 2025, Amazon S3 has discontinued support for Email Grantee Access Control Lists (ACLs). If you attempt to use an Email Grantee ACL in a request after October 1, 2025, the request will receive an \verb{HTTP 405} (Method Not Allowed) error.
 
 See \url{https://www.paws-r-sdk.com/docs/s3_put_object/} for full documentation.
 }

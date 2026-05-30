@@ -8,7 +8,7 @@ from a file gateway}
 storagegateway_describe_smb_settings(GatewayARN)
 }
 \arguments{
-\item{GatewayARN}{[required]}
+\item{GatewayARN}{[required] The Amazon Resource Name (ARN) of the gateway. Use the \code{\link[=storagegateway_list_gateways]{list_gateways}} operation to return a list of gateways for your account and Amazon Web Services Region.}
 }
 \description{
 Gets a description of a Server Message Block (SMB) file share settings from a file gateway. This operation is only supported for file gateways.

@@ -9,8 +9,7 @@ s3control_get_access_grant(AccountId, AccessGrantId)
 \arguments{
 \item{AccountId}{[required] The Amazon Web Services account ID of the S3 Access Grants instance.}
 
-\item{AccessGrantId}{[required] The ID of the access grant. S3 Access Grants auto-generates this ID when
-you create the access grant.}
+\item{AccessGrantId}{[required] The ID of the access grant. S3 Access Grants auto-generates this ID when you create the access grant.}
 }
 \description{
 Get the details of an access grant from your S3 Access Grants instance.

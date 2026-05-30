@@ -17,94 +17,45 @@ efs_create_file_system(
 )
 }
 \arguments{
-\item{CreationToken}{[required] A string of up to 64 ASCII characters. Amazon EFS uses this to ensure
-idempotent creation.}
+\item{CreationToken}{[required] A string of up to 64 ASCII characters. Amazon EFS uses this to ensure idempotent creation.}
 
-\item{PerformanceMode}{The performance mode of the file system. We recommend \code{generalPurpose}
-performance mode for all file systems. File systems using the \code{maxIO}
-performance mode can scale to higher levels of aggregate throughput and
-operations per second with a tradeoff of slightly higher latencies for
-most file operations. The performance mode can't be changed after the
-file system has been created. The \code{maxIO} mode is not supported on One
-Zone file systems.
+\item{PerformanceMode}{The performance mode of the file system. We recommend \code{generalPurpose} performance mode for all file systems. File systems using the \code{maxIO} performance mode can scale to higher levels of aggregate throughput and operations per second with a tradeoff of slightly higher latencies for most file operations. The performance mode can't be changed after the file system has been created. The \code{maxIO} mode is not supported on One Zone file systems.
 
-Due to the higher per-operation latencies with Max I/O, we recommend
-using General Purpose performance mode for all file systems.
+Due to the higher per-operation latencies with Max I/O, we recommend using General Purpose performance mode for all file systems.
 
 Default is \code{generalPurpose}.}
 
-\item{Encrypted}{A Boolean value that, if true, creates an encrypted file system. When
-creating an encrypted file system, you have the option of specifying an
-existing Key Management Service key (KMS key). If you don't specify a
-KMS key, then the default KMS key for Amazon EFS,
-\verb{/aws/elasticfilesystem}, is used to protect the encrypted file system.}
+\item{Encrypted}{A Boolean value that, if true, creates an encrypted file system. When creating an encrypted file system, you have the option of specifying an existing Key Management Service key (KMS key). If you don't specify a KMS key, then the default KMS key for Amazon EFS, \verb{/aws/elasticfilesystem}, is used to protect the encrypted file system.}
 
-\item{KmsKeyId}{The ID of the KMS key that you want to use to protect the encrypted file
-system. This parameter is required only if you want to use a non-default
-KMS key. If this parameter is not specified, the default KMS key for
-Amazon EFS is used. You can specify a KMS key ID using the following
-formats:
+\item{KmsKeyId}{The ID of the KMS key that you want to use to protect the encrypted file system. This parameter is required only if you want to use a non-default KMS key. If this parameter is not specified, the default KMS key for Amazon EFS is used. You can specify a KMS key ID using the following formats:
 \itemize{
-\item Key ID - A unique identifier of the key, for example
-\verb{1234abcd-12ab-34cd-56ef-1234567890ab}.
-\item ARN - An Amazon Resource Name (ARN) for the key, for example
-\verb{arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab}.
-\item Key alias - A previously created display name for a key, for example
-\code{alias/projectKey1}.
-\item Key alias ARN - An ARN for a key alias, for example
-\code{arn:aws:kms:us-west-2:444455556666:alias/projectKey1}.
+\item Key ID - A unique identifier of the key, for example \verb{1234abcd-12ab-34cd-56ef-1234567890ab}.
+\item ARN - An Amazon Resource Name (ARN) for the key, for example \verb{arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab}.
+\item Key alias - A previously created display name for a key, for example \code{alias/projectKey1}.
+\item Key alias ARN - An ARN for a key alias, for example \code{arn:aws:kms:us-west-2:444455556666:alias/projectKey1}.
 }
 
-If you use \code{KmsKeyId}, you must set the
-CreateFileSystemRequest$Encrypted parameter to true.
+If you use \code{KmsKeyId}, you must set the CreateFileSystemRequest$Encrypted parameter to true.
 
-EFS accepts only symmetric KMS keys. You cannot use asymmetric KMS keys
-with Amazon EFS file systems.}
+EFS accepts only symmetric KMS keys. You cannot use asymmetric KMS keys with Amazon EFS file systems.}
 
-\item{ThroughputMode}{Specifies the throughput mode for the file system. The mode can be
-\code{bursting}, \code{provisioned}, or \code{elastic}. If you set \code{ThroughputMode} to
-\code{provisioned}, you must also set a value for
-\code{ProvisionedThroughputInMibps}. After you create the file system, you
-can decrease your file system's Provisioned throughput or change between
-the throughput modes, with certain time restrictions. For more
-information, see \href{https://docs.aws.amazon.com/efs/latest/ug/performance.html#provisioned-throughput}{Specifying throughput with provisioned mode}
-in the \emph{Amazon EFS User Guide}.
+\item{ThroughputMode}{Specifies the throughput mode for the file system. The mode can be \code{bursting}, \code{provisioned}, or \code{elastic}. If you set \code{ThroughputMode} to \code{provisioned}, you must also set a value for \code{ProvisionedThroughputInMibps}. After you create the file system, you can decrease your file system's Provisioned throughput or change between the throughput modes, with certain time restrictions. For more information, see \href{https://docs.aws.amazon.com/efs/latest/ug/performance.html#provisioned-throughput}{Specifying throughput with provisioned mode} in the \emph{Amazon EFS User Guide}.
 
 Default is \code{bursting}.}
 
-\item{ProvisionedThroughputInMibps}{The throughput, measured in mebibytes per second (MiBps), that you want
-to provision for a file system that you're creating. Required if
-\code{ThroughputMode} is set to \code{provisioned}. Valid values are 1-3414 MiBps,
-with the upper limit depending on Region. To increase this limit,
-contact Amazon Web Services Support. For more information, see \href{https://docs.aws.amazon.com/efs/latest/ug/limits.html#soft-limits}{Amazon EFS quotas that you can increase}
-in the \emph{Amazon EFS User Guide}.}
+\item{ProvisionedThroughputInMibps}{The throughput, measured in mebibytes per second (MiBps), that you want to provision for a file system that you're creating. Required if \code{ThroughputMode} is set to \code{provisioned}. Valid values are 1-3414 MiBps, with the upper limit depending on Region. To increase this limit, contact Amazon Web ServicesSupport. For more information, see \href{https://docs.aws.amazon.com/efs/latest/ug/limits.html#soft-limits}{Amazon EFS quotas that you can increase} in the \emph{Amazon EFS User Guide}.}
 
-\item{AvailabilityZoneName}{For One Zone file systems, specify the Amazon Web Services Availability
-Zone in which to create the file system. Use the format \verb{us-east-1a} to
-specify the Availability Zone. For more information about One Zone file
-systems, see \href{https://docs.aws.amazon.com/efs/latest/ug/#file-system-type}{EFS file system types} in
-the \emph{Amazon EFS User Guide}.
+\item{AvailabilityZoneName}{For One Zone file systems, specify the Amazon Web Services Availability Zone in which to create the file system. Use the format \verb{us-east-1a} to specify the Availability Zone. For more information about One Zone file systems, see \href{https://docs.aws.amazon.com/efs/latest/ug/#file-system-type}{EFS file system types} in the \emph{Amazon EFS User Guide}.
 
-One Zone file systems are not available in all Availability Zones in
-Amazon Web Services Regions where Amazon EFS is available.}
+One Zone file systems are not available in all Availability Zones in Amazon Web Services Regions where Amazon EFS is available.}
 
-\item{Backup}{Specifies whether automatic backups are enabled on the file system that
-you are creating. Set the value to \code{true} to enable automatic backups.
-If you are creating a One Zone file system, automatic backups are
-enabled by default. For more information, see \href{https://docs.aws.amazon.com/efs/latest/ug/awsbackup.html#automatic-backups}{Automatic backups}
-in the \emph{Amazon EFS User Guide}.
+\item{Backup}{Specifies whether automatic backups are enabled on the file system that you are creating. Set the value to \code{true} to enable automatic backups. If you are creating a One Zone file system, automatic backups are enabled by default. For more information, see \href{https://docs.aws.amazon.com/efs/latest/ug/awsbackup.html#automatic-backups}{Automatic backups} in the \emph{Amazon EFS User Guide}.
 
-Default is \code{false}. However, if you specify an \code{AvailabilityZoneName},
-the default is \code{true}.
+Default is \code{false}. However, if you specify an \code{AvailabilityZoneName}, the default is \code{true}.
 
-Backup is not available in all Amazon Web Services Regions where Amazon
-EFS is available.}
+Backup is not available in all Amazon Web Services Regions where Amazon EFS is available.}
 
-\item{Tags}{Use to create one or more tags associated with the file system. Each tag
-is a user-defined key-value pair. Name your file system on creation by
-including a \verb{"Key":"Name","Value":"\{value\}"} key-value pair. Each key
-must be unique. For more information, see \href{https://docs.aws.amazon.com/tag-editor/latest/userguide/tagging.html}{Tagging Amazon Web Services resources}
-in the \emph{Amazon Web Services General Reference Guide}.}
+\item{Tags}{Use to create one or more tags associated with the file system. Each tag is a user-defined key-value pair. Name your file system on creation by including a \verb{"Key":"Name","Value":"\{value\}"} key-value pair. Each key must be unique. For more information, see \href{https://docs.aws.amazon.com/tag-editor/latest/userguide/tagging.html}{Tagging Amazon Web Services resources} in the \emph{Amazon Web Services General Reference Guide}.}
 }
 \description{
 Creates a new, empty file system. The operation requires a creation token in the request that Amazon EFS uses to ensure idempotent creation (calling the operation with same creation token has no effect). If a file system does not currently exist that is owned by the caller's Amazon Web Services account with the specified creation token, this operation does the following:

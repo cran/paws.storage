@@ -13,25 +13,16 @@ fsx_restore_volume_from_snapshot(
 )
 }
 \arguments{
-\item{ClientRequestToken}{}
+\item{ClientRequestToken}{(Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.}
 
 \item{VolumeId}{[required] The ID of the volume that you are restoring.}
 
-\item{SnapshotId}{[required] The ID of the source snapshot. Specifies the snapshot that you are
-restoring from.}
+\item{SnapshotId}{[required] The ID of the source snapshot. Specifies the snapshot that you are restoring from.}
 
 \item{Options}{The settings used when restoring the specified volume from snapshot.
 \itemize{
-\item \code{DELETE_INTERMEDIATE_SNAPSHOTS} - Deletes snapshots between the
-current state and the specified snapshot. If there are intermediate
-snapshots and this option isn't used,
-\code{\link[=fsx_restore_volume_from_snapshot]{restore_volume_from_snapshot}}
-fails.
-\item \code{DELETE_CLONED_VOLUMES} - Deletes any dependent clone volumes
-created from intermediate snapshots. If there are any dependent
-clone volumes and this option isn't used,
-\code{\link[=fsx_restore_volume_from_snapshot]{restore_volume_from_snapshot}}
-fails.
+\item \code{DELETE_INTERMEDIATE_SNAPSHOTS} - Deletes snapshots between the current state and the specified snapshot. If there are intermediate snapshots and this option isn't used, \code{\link[=fsx_restore_volume_from_snapshot]{restore_volume_from_snapshot}} fails.
+\item \code{DELETE_CLONED_VOLUMES} - Deletes any dependent clone volumes created from intermediate snapshots. If there are any dependent clone volumes and this option isn't used, \code{\link[=fsx_restore_volume_from_snapshot]{restore_volume_from_snapshot}} fails.
 }}
 }
 \description{

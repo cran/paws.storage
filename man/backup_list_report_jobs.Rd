@@ -16,27 +16,19 @@ backup_list_report_jobs(
 \arguments{
 \item{ByReportPlanName}{Returns only report jobs with the specified report plan name.}
 
-\item{ByCreationBefore}{Returns only report jobs that were created before the date and time
-specified in Unix format and Coordinated Universal Time (UTC). For
-example, the value 1516925490 represents Friday, January 26, 2018
-12:11:30 AM.}
+\item{ByCreationBefore}{Returns only report jobs that were created before the date and time specified in Unix format and Coordinated Universal Time (UTC). For example, the value 1516925490 represents Friday, January 26, 2018 12:11:30 AM.}
 
-\item{ByCreationAfter}{Returns only report jobs that were created after the date and time
-specified in Unix format and Coordinated Universal Time (UTC). For
-example, the value 1516925490 represents Friday, January 26, 2018
-12:11:30 AM.}
+\item{ByCreationAfter}{Returns only report jobs that were created after the date and time specified in Unix format and Coordinated Universal Time (UTC). For example, the value 1516925490 represents Friday, January 26, 2018 12:11:30 AM.}
 
-\item{ByStatus}{Returns only report jobs that are in the specified status. The statuses
-are:
+\item{ByStatus}{Returns only report jobs that are in the specified status. The statuses are:
 
-\code{CREATED | RUNNING | COMPLETED | FAILED}}
+\code{CREATED | RUNNING | COMPLETED | FAILED | COMPLETED_WITH_ISSUES}
 
-\item{MaxResults}{The number of desired results from 1 to 1000. Optional. If unspecified,
-the query will return 1 MB of data.}
+Please note that only scanning jobs finish with state completed with issues. For backup jobs this is a console interpretation of a job that finishes in completed state and has a status message.}
 
-\item{NextToken}{An identifier that was returned from the previous call to this
-operation, which can be used to return the next set of items in the
-list.}
+\item{MaxResults}{The number of desired results from 1 to 1000. Optional. If unspecified, the query will return 1 MB of data.}
+
+\item{NextToken}{An identifier that was returned from the previous call to this operation, which can be used to return the next set of items in the list.}
 }
 \description{
 Returns details about your report jobs.

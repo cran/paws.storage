@@ -9,10 +9,7 @@ backup_list_restore_testing_plans(MaxResults = NULL, NextToken = NULL)
 \arguments{
 \item{MaxResults}{The maximum number of items to be returned.}
 
-\item{NextToken}{The next item following a partial list of returned items. For example,
-if a request is made to return \code{MaxResults} number of items, \code{NextToken}
-allows you to return more items in your list starting at the location
-pointed to by the nexttoken.}
+\item{NextToken}{The next item following a partial list of returned items. For example, if a request is made to return \code{MaxResults} number of items, \code{NextToken} allows you to return more items in your list starting at the location pointed to by the nexttoken.}
 }
 \description{
 Returns a list of restore testing plans.

@@ -16,16 +16,9 @@ fsx_create_backup(
 \arguments{
 \item{FileSystemId}{The ID of the file system to back up.}
 
-\item{ClientRequestToken}{(Optional) A string of up to 63 ASCII characters that Amazon FSx uses to
-ensure idempotent creation. This string is automatically filled on your
-behalf when you use the Command Line Interface (CLI) or an Amazon Web
-Services SDK.}
+\item{ClientRequestToken}{(Optional) A string of up to 63 ASCII characters that Amazon FSx uses to ensure idempotent creation. This string is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.}
 
-\item{Tags}{(Optional) The tags to apply to the backup at backup creation. The key
-value of the \code{Name} tag appears in the console as the backup name. If
-you have set \code{CopyTagsToBackups} to \code{true}, and you specify one or more
-tags using the \code{\link[=fsx_create_backup]{create_backup}} operation, no
-existing file system tags are copied from the file system to the backup.}
+\item{Tags}{(Optional) The tags to apply to the backup at backup creation. The key value of the \code{Name} tag appears in the console as the backup name. If you have set \code{CopyTagsToBackups} to \code{true}, and you specify one or more tags using the \code{\link[=fsx_create_backup]{create_backup}} operation, no existing file system tags are copied from the file system to the backup.}
 
 \item{VolumeId}{(Optional) The ID of the FSx for ONTAP volume to back up.}
 }

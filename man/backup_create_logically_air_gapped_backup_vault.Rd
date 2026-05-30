@@ -9,27 +9,26 @@ backup_create_logically_air_gapped_backup_vault(
   BackupVaultTags = NULL,
   CreatorRequestId = NULL,
   MinRetentionDays,
-  MaxRetentionDays
+  MaxRetentionDays,
+  EncryptionKeyArn = NULL
 )
 }
 \arguments{
-\item{BackupVaultName}{[required] The name of a logical container where backups are stored. Logically
-air-gapped backup vaults are identified by names that are unique to the
-account used to create them and the Region where they are created.}
+\item{BackupVaultName}{[required] The name of a logical container where backups are stored. Logically air-gapped backup vaults are identified by names that are unique to the account used to create them and the Region where they are created.}
 
 \item{BackupVaultTags}{The tags to assign to the vault.}
 
 \item{CreatorRequestId}{The ID of the creation request.
 
-This parameter is optional. If used, this parameter must contain 1 to 50
-alphanumeric or '-_.' characters.}
+This parameter is optional. If used, this parameter must contain 1 to 50 alphanumeric or '-_.' characters.}
 
-\item{MinRetentionDays}{[required] This setting specifies the minimum retention period that the vault
-retains its recovery points.
+\item{MinRetentionDays}{[required] This setting specifies the minimum retention period that the vault retains its recovery points.
 
 The minimum value accepted is 7 days.}
 
 \item{MaxRetentionDays}{[required] The maximum retention period that the vault retains its recovery points.}
+
+\item{EncryptionKeyArn}{The ARN of the customer-managed KMS key to use for encrypting the logically air-gapped backup vault. If not specified, the vault will be encrypted with an Amazon Web Services-owned key managed by Amazon Web Services Backup.}
 }
 \description{
 Creates a logical container to where backups may be copied.

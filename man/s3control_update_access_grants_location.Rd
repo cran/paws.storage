@@ -14,23 +14,13 @@ s3control_update_access_grants_location(
 \arguments{
 \item{AccountId}{[required] The Amazon Web Services account ID of the S3 Access Grants instance.}
 
-\item{AccessGrantsLocationId}{[required] The ID of the registered location that you are updating. S3 Access
-Grants assigns this ID when you register the location. S3 Access Grants
-assigns the ID \code{default} to the default location \verb{s3://} and assigns an
-auto-generated ID to other locations that you register.
+\item{AccessGrantsLocationId}{[required] The ID of the registered location that you are updating. S3 Access Grants assigns this ID when you register the location. S3 Access Grants assigns the ID \code{default} to the default location \verb{s3://} and assigns an auto-generated ID to other locations that you register.
 
-The ID of the registered location to which you are granting access. S3
-Access Grants assigned this ID when you registered the location. S3
-Access Grants assigns the ID \code{default} to the default location \verb{s3://}
-and assigns an auto-generated ID to other locations that you register.
+The ID of the registered location to which you are granting access. S3 Access Grants assigned this ID when you registered the location. S3 Access Grants assigns the ID \code{default} to the default location \verb{s3://} and assigns an auto-generated ID to other locations that you register.
 
-If you are passing the \code{default} location, you cannot create an access
-grant for the entire default location. You must also specify a bucket or
-a bucket and prefix in the \code{Subprefix} field.}
+If you are passing the \code{default} location, you cannot create an access grant for the entire default location. You must also specify a bucket or a bucket and prefix in the \code{Subprefix} field.}
 
-\item{IAMRoleArn}{[required] The Amazon Resource Name (ARN) of the IAM role for the registered
-location. S3 Access Grants assumes this role to manage access to the
-registered location.}
+\item{IAMRoleArn}{[required] The Amazon Resource Name (ARN) of the IAM role for the registered location. S3 Access Grants assumes this role to manage access to the registered location.}
 }
 \description{
 Updates the IAM role of a registered location in your S3 Access Grants instance.

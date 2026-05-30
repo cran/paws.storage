@@ -7,9 +7,7 @@
 backup_describe_backup_vault(BackupVaultName, BackupVaultAccountId = NULL)
 }
 \arguments{
-\item{BackupVaultName}{[required] The name of a logical container where backups are stored. Backup vaults
-are identified by names that are unique to the account used to create
-them and the Amazon Web Services Region where they are created.}
+\item{BackupVaultName}{[required] The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.}
 
 \item{BackupVaultAccountId}{The account ID of the specified backup vault.}
 }

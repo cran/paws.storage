@@ -10,14 +10,9 @@ storagegateway_disassociate_file_system(
 )
 }
 \arguments{
-\item{FileSystemAssociationARN}{[required] The Amazon Resource Name (ARN) of the file system association to be
-deleted.}
+\item{FileSystemAssociationARN}{[required] The Amazon Resource Name (ARN) of the file system association to be deleted.}
 
-\item{ForceDelete}{If this value is set to true, the operation disassociates an Amazon FSx
-file system immediately. It ends all data uploads to the file system,
-and the file system association enters the \code{FORCE_DELETING} status. If
-this value is set to false, the Amazon FSx file system does not
-disassociate until all data is uploaded.}
+\item{ForceDelete}{If this value is set to true, the operation disassociates an Amazon FSx file system immediately. It ends all data uploads to the file system, and the file system association enters the \code{FORCE_DELETING} status. If this value is set to false, the Amazon FSx file system does not disassociate until all data is uploaded.}
 }
 \description{
 Disassociates an Amazon FSx file system from the specified gateway. After the disassociation process finishes, the gateway can no longer access the Amazon FSx file system. This operation is only supported in the FSx File Gateway type.

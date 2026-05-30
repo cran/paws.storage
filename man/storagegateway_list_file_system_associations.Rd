@@ -11,18 +11,11 @@ storagegateway_list_file_system_associations(
 )
 }
 \arguments{
-\item{GatewayARN}{}
+\item{GatewayARN}{The Amazon Resource Name (ARN) of the gateway. Use the \code{\link[=storagegateway_list_gateways]{list_gateways}} operation to return a list of gateways for your account and Amazon Web Services Region.}
 
-\item{Limit}{The maximum number of file system associations to return in the
-response. If present, \code{Limit} must be an integer with a value greater
-than zero. Optional.}
+\item{Limit}{The maximum number of file system associations to return in the response. If present, \code{Limit} must be an integer with a value greater than zero. Optional.}
 
-\item{Marker}{Opaque pagination token returned from a previous
-\code{\link[=storagegateway_list_file_system_associations]{list_file_system_associations}}
-operation. If present, \code{Marker} specifies where to continue the list
-from after a previous call to
-\code{\link[=storagegateway_list_file_system_associations]{list_file_system_associations}}.
-Optional.}
+\item{Marker}{Opaque pagination token returned from a previous \code{\link[=storagegateway_list_file_system_associations]{list_file_system_associations}} operation. If present, \code{Marker} specifies where to continue the list from after a previous call to \code{\link[=storagegateway_list_file_system_associations]{list_file_system_associations}}. Optional.}
 }
 \description{
 Gets a list of \code{FileSystemAssociationSummary} objects. Each object contains a summary of a file system association. This operation is only supported for FSx File Gateways.

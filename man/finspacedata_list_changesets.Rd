@@ -7,8 +7,7 @@
 finspacedata_list_changesets(datasetId, maxResults = NULL, nextToken = NULL)
 }
 \arguments{
-\item{datasetId}{[required] The unique identifier for the FinSpace Dataset to which the Changeset
-belongs.}
+\item{datasetId}{[required] The unique identifier for the FinSpace Dataset to which the Changeset belongs.}
 
 \item{maxResults}{The maximum number of results per page.}
 

@@ -48,13 +48,7 @@ to the client. The available operations are listed in the
 Operations section.
 }
 \description{
-Amazon Elastic File System (Amazon EFS) provides simple, scalable file
-storage for use with Amazon EC2 Linux and Mac instances in the Amazon
-Web Services Cloud. With Amazon EFS, storage capacity is elastic,
-growing and shrinking automatically as you add and remove files, so that
-your applications have the storage they need, when they need it. For
-more information, see the \href{https://docs.aws.amazon.com/efs/latest/ug/api-reference.html}{Amazon Elastic File System API Reference}
-and the \href{https://docs.aws.amazon.com/efs/latest/ug/whatisefs.html}{Amazon Elastic File System User Guide}.
+Amazon Elastic File System (Amazon EFS) provides simple, scalable file storage for use with Amazon EC2 Linux and Mac instances in the Amazon Web Services Cloud. With Amazon EFS, storage capacity is elastic, growing and shrinking automatically as you add and remove files, so that your applications have the storage they need, when they need it. For more information, see the \href{https://docs.aws.amazon.com/efs/latest/ug/api-reference.html}{Amazon Elastic File System API Reference} and the \href{https://docs.aws.amazon.com/efs/latest/ug/whatisefs.html}{Amazon Elastic File System User Guide}.
 }
 \section{Service syntax}{
 
@@ -111,7 +105,7 @@ and the \href{https://docs.aws.amazon.com/efs/latest/ug/whatisefs.html}{Amazon E
 \link[=efs_describe_backup_policy]{describe_backup_policy} \tab Returns the backup policy for the specified EFS file system\cr
 \link[=efs_describe_file_system_policy]{describe_file_system_policy} \tab Returns the FileSystemPolicy for the specified EFS file system\cr
 \link[=efs_describe_file_systems]{describe_file_systems} \tab Returns the description of a specific Amazon EFS file system if either the file system CreationToken or the FileSystemId is provided\cr
-\link[=efs_describe_lifecycle_configuration]{describe_lifecycle_configuration} \tab Returns the current LifecycleConfiguration object for the specified Amazon EFS file system\cr
+\link[=efs_describe_lifecycle_configuration]{describe_lifecycle_configuration} \tab Returns the current LifecycleConfiguration object for the specified EFS file system\cr
 \link[=efs_describe_mount_targets]{describe_mount_targets} \tab Returns the descriptions of all the current mount targets, or a specific mount target, for a file system\cr
 \link[=efs_describe_mount_target_security_groups]{describe_mount_target_security_groups} \tab Returns the security groups currently in effect for a mount target\cr
 \link[=efs_describe_replication_configurations]{describe_replication_configurations} \tab Retrieves the replication configuration for a specific file system\cr

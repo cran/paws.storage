@@ -7,12 +7,11 @@
 fsx_update_snapshot(ClientRequestToken = NULL, Name, SnapshotId)
 }
 \arguments{
-\item{ClientRequestToken}{}
+\item{ClientRequestToken}{(Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.}
 
 \item{Name}{[required] The name of the snapshot to update.}
 
-\item{SnapshotId}{[required] The ID of the snapshot that you want to update, in the format
-\verb{fsvolsnap-0123456789abcdef0}.}
+\item{SnapshotId}{[required] The ID of the snapshot that you want to update, in the format \verb{fsvolsnap-0123456789abcdef0}.}
 }
 \description{
 Updates the name of an Amazon FSx for OpenZFS snapshot.

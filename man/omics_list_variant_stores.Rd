@@ -2,7 +2,8 @@
 % Please edit documentation in R/omics_operations.R
 \name{omics_list_variant_stores}
 \alias{omics_list_variant_stores}
-\title{Retrieves a list of variant stores}
+\title{Amazon Web Services HealthOmics variant stores and annotation stores are
+no longer open to new customers}
 \usage{
 omics_list_variant_stores(
   maxResults = NULL,
@@ -16,13 +17,12 @@ omics_list_variant_stores(
 
 \item{ids}{A list of store IDs.}
 
-\item{nextToken}{Specify the pagination token from a previous request to retrieve the
-next page of results.}
+\item{nextToken}{Specify the pagination token from a previous request to retrieve the next page of results.}
 
 \item{filter}{A filter to apply to the list.}
 }
 \description{
-Retrieves a list of variant stores.
+Amazon Web Services HealthOmics variant stores and annotation stores are no longer open to new customers. Existing customers can continue to use the service as normal. For more information, see \href{https://docs.aws.amazon.com/omics/latest/dev/variant-store-availability-change.html}{Amazon Web Services HealthOmics variant store and annotation store availability change}.
 
 See \url{https://www.paws-r-sdk.com/docs/omics_list_variant_stores/} for full documentation.
 }

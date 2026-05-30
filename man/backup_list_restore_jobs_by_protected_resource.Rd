@@ -14,21 +14,15 @@ backup_list_restore_jobs_by_protected_resource(
 )
 }
 \arguments{
-\item{ResourceArn}{[required] Returns only restore jobs that match the specified resource Amazon
-Resource Name (ARN).}
+\item{ResourceArn}{[required] Returns only restore jobs that match the specified resource Amazon Resource Name (ARN).}
 
 \item{ByStatus}{Returns only restore jobs associated with the specified job status.}
 
-\item{ByRecoveryPointCreationDateAfter}{Returns only restore jobs of recovery points that were created after the
-specified date.}
+\item{ByRecoveryPointCreationDateAfter}{Returns only restore jobs of recovery points that were created after the specified date.}
 
-\item{ByRecoveryPointCreationDateBefore}{Returns only restore jobs of recovery points that were created before
-the specified date.}
+\item{ByRecoveryPointCreationDateBefore}{Returns only restore jobs of recovery points that were created before the specified date.}
 
-\item{NextToken}{The next item following a partial list of returned items. For example,
-if a request ismade to return \code{MaxResults} number of items, \code{NextToken}
-allows you to return more items in your list starting at the location
-pointed to by the next token.}
+\item{NextToken}{The next item following a partial list of returned items. For example, if a request ismade to return \code{MaxResults} number of items, \code{NextToken} allows you to return more items in your list starting at the location pointed to by the next token.}
 
 \item{MaxResults}{The maximum number of items to be returned.}
 }

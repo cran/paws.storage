@@ -36,56 +36,31 @@ storagegateway_create_smb_file_share(
 )
 }
 \arguments{
-\item{ClientToken}{[required] A unique string value that you supply that is used by S3 File Gateway to
-ensure idempotent file share creation.}
+\item{ClientToken}{[required] A unique string value that you supply that is used by S3 File Gateway to ensure idempotent file share creation.}
 
 \item{GatewayARN}{[required] The ARN of the S3 File Gateway on which you want to create a file share.}
 
-\item{EncryptionType}{A value that specifies the type of server-side encryption that the file
-share will use for the data that it stores in Amazon S3.
+\item{EncryptionType}{A value that specifies the type of server-side encryption that the file share will use for the data that it stores in Amazon S3.
 
-We recommend using \code{EncryptionType} instead of \code{KMSEncrypted} to set the
-file share encryption method. You do not need to provide values for both
-parameters.
+We recommend using \code{EncryptionType} instead of \code{KMSEncrypted} to set the file share encryption method. You do not need to provide values for both parameters.
 
-If values for both parameters exist in the same request, then the
-specified encryption methods must not conflict. For example, if
-\code{EncryptionType} is \code{SseS3}, then \code{KMSEncrypted} must be \code{false}. If
-\code{EncryptionType} is \code{SseKms} or \code{DsseKms}, then \code{KMSEncrypted} must be
-\code{true}.}
+If values for both parameters exist in the same request, then the specified encryption methods must not conflict. For example, if \code{EncryptionType} is \code{SseS3}, then \code{KMSEncrypted} must be \code{false}. If \code{EncryptionType} is \code{SseKms} or \code{DsseKms}, then \code{KMSEncrypted} must be \code{true}.}
 
-\item{KMSEncrypted}{Optional. Set to \code{true} to use Amazon S3 server-side encryption with
-your own KMS key (SSE-KMS), or \code{false} to use a key managed by Amazon S3
-(SSE-S3). To use dual-layer encryption (DSSE-KMS), set the
-\code{EncryptionType} parameter instead.
+\item{KMSEncrypted}{Optional. Set to \code{true} to use Amazon S3 server-side encryption with your own KMS key (SSE-KMS), or \code{false} to use a key managed by Amazon S3 (SSE-S3). To use dual-layer encryption (DSSE-KMS), set the \code{EncryptionType} parameter instead.
 
-We recommend using \code{EncryptionType} instead of \code{KMSEncrypted} to set the
-file share encryption method. You do not need to provide values for both
-parameters.
+We recommend using \code{EncryptionType} instead of \code{KMSEncrypted} to set the file share encryption method. You do not need to provide values for both parameters.
 
-If values for both parameters exist in the same request, then the
-specified encryption methods must not conflict. For example, if
-\code{EncryptionType} is \code{SseS3}, then \code{KMSEncrypted} must be \code{false}. If
-\code{EncryptionType} is \code{SseKms} or \code{DsseKms}, then \code{KMSEncrypted} must be
-\code{true}.
+If values for both parameters exist in the same request, then the specified encryption methods must not conflict. For example, if \code{EncryptionType} is \code{SseS3}, then \code{KMSEncrypted} must be \code{false}. If \code{EncryptionType} is \code{SseKms} or \code{DsseKms}, then \code{KMSEncrypted} must be \code{true}.
 
 Valid Values: \code{true} | \code{false}}
 
-\item{KMSKey}{Optional. The Amazon Resource Name (ARN) of a symmetric customer master
-key (CMK) used for Amazon S3 server-side encryption. Storage Gateway
-does not support asymmetric CMKs. This value must be set if
-\code{KMSEncrypted} is \code{true}, or if \code{EncryptionType} is \code{SseKms} or
-\code{DsseKms}.}
+\item{KMSKey}{Optional. The Amazon Resource Name (ARN) of a symmetric customer master key (CMK) used for Amazon S3 server-side encryption. Storage Gateway does not support asymmetric CMKs. This value must be set if \code{KMSEncrypted} is \code{true}, or if \code{EncryptionType} is \code{SseKms} or \code{DsseKms}.}
 
-\item{Role}{[required] The ARN of the Identity and Access Management (IAM) role that an S3 File
-Gateway assumes when it accesses the underlying storage.}
+\item{Role}{[required] The ARN of the Identity and Access Management (IAM) role that an S3 File Gateway assumes when it accesses the underlying storage.}
 
-\item{LocationARN}{[required] A custom ARN for the backend storage used for storing data for file
-shares. It includes a resource ARN with an optional prefix
-concatenation. The prefix must end with a forward slash (/).
+\item{LocationARN}{[required] A custom ARN for the backend storage used for storing data for file shares. It includes a resource ARN with an optional prefix concatenation. The prefix must end with a forward slash (/).
 
-You can specify LocationARN as a bucket ARN, access point ARN or access
-point alias, as shown in the following examples.
+You can specify LocationARN as a bucket ARN, access point ARN or access point alias, as shown in the following examples.
 
 Bucket ARN:
 
@@ -95,126 +70,75 @@ Access point ARN:
 
 \verb{arn:aws:s3:region:account-id:accesspoint/access-point-name/prefix/}
 
-If you specify an access point, the bucket policy must be configured to
-delegate access control to the access point. For information, see
-\href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points-policies.html#access-points-delegating-control}{Delegating access control to access points}
-in the \emph{Amazon S3 User Guide}.
+If you specify an access point, the bucket policy must be configured to delegate access control to the access point. For information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points-policies.html#access-points-delegating-control}{Delegating access control to access points} in the \emph{Amazon S3 User Guide}.
 
 Access point alias:
 
 \code{test-ap-ab123cdef4gehijklmn5opqrstuvuse1a-s3alias}}
 
-\item{DefaultStorageClass}{The default storage class for objects put into an Amazon S3 bucket by
-the S3 File Gateway. The default value is \code{S3_STANDARD}. Optional.
+\item{DefaultStorageClass}{The default storage class for objects put into an Amazon S3 bucket by the S3 File Gateway. The default value is \code{S3_STANDARD}. Optional.
 
-Valid Values: \code{S3_STANDARD} | \code{S3_INTELLIGENT_TIERING} |
-\code{S3_STANDARD_IA} | \code{S3_ONEZONE_IA}}
+Valid Values: \code{S3_STANDARD} | \code{S3_INTELLIGENT_TIERING} | \code{S3_STANDARD_IA} | \code{S3_ONEZONE_IA}}
 
-\item{ObjectACL}{A value that sets the access control list (ACL) permission for objects
-in the S3 bucket that a S3 File Gateway puts objects into. The default
-value is \code{private}.}
+\item{ObjectACL}{A value that sets the access control list (ACL) permission for objects in the S3 bucket that a S3 File Gateway puts objects into. The default value is \code{private}.}
 
-\item{ReadOnly}{A value that sets the write status of a file share. Set this value to
-\code{true} to set the write status to read-only, otherwise set to \code{false}.
+\item{ReadOnly}{A value that sets the write status of a file share. Set this value to \code{true} to set the write status to read-only, otherwise set to \code{false}.
 
 Valid Values: \code{true} | \code{false}}
 
-\item{GuessMIMETypeEnabled}{A value that enables guessing of the MIME type for uploaded objects
-based on file extensions. Set this value to \code{true} to enable MIME type
-guessing, otherwise set to \code{false}. The default value is \code{true}.
+\item{GuessMIMETypeEnabled}{A value that enables guessing of the MIME type for uploaded objects based on file extensions. Set this value to \code{true} to enable MIME type guessing, otherwise set to \code{false}. The default value is \code{true}.
 
 Valid Values: \code{true} | \code{false}}
 
-\item{RequesterPays}{A value that sets who pays the cost of the request and the cost
-associated with data download from the S3 bucket. If this value is set
-to \code{true}, the requester pays the costs; otherwise, the S3 bucket owner
-pays. However, the S3 bucket owner always pays the cost of storing data.
+\item{RequesterPays}{A value that sets who pays the cost of the request and the cost associated with data download from the S3 bucket. If this value is set to \code{true}, the requester pays the costs; otherwise, the S3 bucket owner pays. However, the S3 bucket owner always pays the cost of storing data.
 
-\code{RequesterPays} is a configuration for the S3 bucket that backs the file
-share, so make sure that the configuration on the file share is the same
-as the S3 bucket configuration.
+\code{RequesterPays} is a configuration for the S3 bucket that backs the file share, so make sure that the configuration on the file share is the same as the S3 bucket configuration.
 
 Valid Values: \code{true} | \code{false}}
 
-\item{SMBACLEnabled}{Set this value to \code{true} to enable access control list (ACL) on the SMB
-file share. Set it to \code{false} to map file and directory permissions to
-the POSIX permissions.
+\item{SMBACLEnabled}{Set this value to \code{true} to enable access control list (ACL) on the SMB file share. Set it to \code{false} to map file and directory permissions to the POSIX permissions.
 
-For more information, see \href{https://docs.aws.amazon.com/filegateway/latest/files3/smb-acl.html}{Using Windows ACLs to limit SMB file share access}
-in the \emph{Amazon S3 File Gateway User Guide}.
+For more information, see \href{https://docs.aws.amazon.com/filegateway/latest/files3/smb-acl.html}{Using Windows ACLs to limit SMB file share access} in the \emph{Amazon S3 File Gateway User Guide}.
 
 Valid Values: \code{true} | \code{false}}
 
-\item{AccessBasedEnumeration}{The files and folders on this share will only be visible to users with
-read access.}
+\item{AccessBasedEnumeration}{The files and folders on this share will only be visible to users with read access.}
 
-\item{AdminUserList}{A list of users or groups in the Active Directory that will be granted
-administrator privileges on the file share. These users can do all file
-operations as the super-user. Acceptable formats include:
-\verb{DOMAIN\\\\User1}, \code{user1}, \verb{@group1}, and \verb{@DOMAIN\\\\group1}.
+\item{AdminUserList}{A list of users or groups in the Active Directory that will be granted administrator privileges on the file share. These users can do all file operations as the super-user. Acceptable formats include: \verb{DOMAIN\\\\User1}, \code{user1}, \verb{@group1}, and \verb{@DOMAIN\\\\group1}.
 
-Use this option very carefully, because any user in this list can do
-anything they like on the file share, regardless of file permissions.}
+Use this option very carefully, because any user in this list can do anything they like on the file share, regardless of file permissions.}
 
-\item{ValidUserList}{A list of users or groups in the Active Directory that are allowed to
-access the file share. A group must be prefixed with the @ character.
-Acceptable formats include: \verb{DOMAIN\\\\User1}, \code{user1}, \verb{@group1}, and
-\verb{@DOMAIN\\\\group1}. Can only be set if Authentication is set to
-\code{ActiveDirectory}.}
+\item{ValidUserList}{A list of users or groups in the Active Directory that are allowed to access the file share. A group must be prefixed with the @ character. Acceptable formats include: \verb{DOMAIN\\\\User1}, \code{user1}, \verb{@group1}, and \verb{@DOMAIN\\\\group1}. Can only be set if Authentication is set to \code{ActiveDirectory}.}
 
-\item{InvalidUserList}{A list of users or groups in the Active Directory that are not allowed
-to access the file share. A group must be prefixed with the @ character.
-Acceptable formats include: \verb{DOMAIN\\\\User1}, \code{user1}, \verb{@group1}, and
-\verb{@DOMAIN\\\\group1}. Can only be set if Authentication is set to
-\code{ActiveDirectory}.}
+\item{InvalidUserList}{A list of users or groups in the Active Directory that are not allowed to access the file share. A group must be prefixed with the @ character. Acceptable formats include: \verb{DOMAIN\\\\User1}, \code{user1}, \verb{@group1}, and \verb{@DOMAIN\\\\group1}. Can only be set if Authentication is set to \code{ActiveDirectory}.}
 
 \item{AuditDestinationARN}{The Amazon Resource Name (ARN) of the storage used for audit logs.}
 
-\item{Authentication}{The authentication method that users use to access the file share. The
-default is \code{ActiveDirectory}.
+\item{Authentication}{The authentication method that users use to access the file share. The default is \code{ActiveDirectory}.
 
 Valid Values: \code{ActiveDirectory} | \code{GuestAccess}}
 
-\item{CaseSensitivity}{The case of an object name in an Amazon S3 bucket. For
-\code{ClientSpecified}, the client determines the case sensitivity. For
-\code{CaseSensitive}, the gateway determines the case sensitivity. The
-default value is \code{ClientSpecified}.}
+\item{CaseSensitivity}{The case of an object name in an Amazon S3 bucket. For \code{ClientSpecified}, the client determines the case sensitivity. For \code{CaseSensitive}, the gateway determines the case sensitivity. The default value is \code{ClientSpecified}.}
 
-\item{Tags}{A list of up to 50 tags that can be assigned to the NFS file share. Each
-tag is a key-value pair.
+\item{Tags}{A list of up to 50 tags that can be assigned to the NFS file share. Each tag is a key-value pair.
 
-Valid characters for key and value are letters, spaces, and numbers
-representable in UTF-8 format, and the following special characters: + -
-= . _ : / @. The maximum length of a tag's key is 128 characters, and
-the maximum length for a tag's value is 256.}
+Valid characters for key and value are letters, spaces, and numbers representable in UTF-8 format, and the following special characters: + - = . _ : / @. The maximum length of a tag's key is 128 characters, and the maximum length for a tag's value is 256.}
 
 \item{FileShareName}{The name of the file share. Optional.
 
-\code{FileShareName} must be set if an S3 prefix name is set in
-\code{LocationARN}, or if an access point or access point alias is used.
+\code{FileShareName} must be set if an S3 prefix name is set in \code{LocationARN}, or if an access point or access point alias is used.
 
-A valid SMB file share name cannot contain the following characters:
-\code{[},\verb{]},\verb{#},\verb{;},\code{<},\code{>},\code{:},\verb{\\"},\verb{\\},\code{/},\code{|},\verb{?},\code{*},\code{+}, or ASCII
-control characters \code{1-31}.}
+A valid SMB file share name cannot contain the following characters: \code{[},\verb{]},\verb{#},\verb{;},\code{<},\code{>},\code{:},\verb{\\"},\verb{\\},\code{/},\code{|},\verb{?},\code{*},\code{+}, or ASCII control characters \code{1-31}.}
 
 \item{CacheAttributes}{Specifies refresh cache information for the file share.}
 
-\item{NotificationPolicy}{The notification policy of the file share. \code{SettlingTimeInSeconds}
-controls the number of seconds to wait after the last point in time a
-client wrote to a file before generating an \code{ObjectUploaded}
-notification. Because clients can make many small writes to files, it's
-best to set this parameter for as long as possible to avoid generating
-multiple notifications for the same file in a small time period.
+\item{NotificationPolicy}{The notification policy of the file share. \code{SettlingTimeInSeconds} controls the number of seconds to wait after the last point in time a client wrote to a file before generating an \code{ObjectUploaded} notification. Because clients can make many small writes to files, it's best to set this parameter for as long as possible to avoid generating multiple notifications for the same file in a small time period.
 
-\code{SettlingTimeInSeconds} has no effect on the timing of the object
-uploading to Amazon S3, only the timing of the notification.
+\code{SettlingTimeInSeconds} has no effect on the timing of the object uploading to Amazon S3, only the timing of the notification.
 
-This setting is not meant to specify an exact time at which the
-notification will be sent. In some cases, the gateway might require more
-than the specified delay time to generate and send notifications.
+This setting is not meant to specify an exact time at which the notification will be sent. In some cases, the gateway might require more than the specified delay time to generate and send notifications.
 
-The following example sets \code{NotificationPolicy} on with
-\code{SettlingTimeInSeconds} set to 60.
+The following example sets \code{NotificationPolicy} on with \code{SettlingTimeInSeconds} set to 60.
 
 \verb{\{\\"Upload\\": \{\\"SettlingTimeInSeconds\\": 60\}\}}
 
@@ -222,26 +146,17 @@ The following example sets \code{NotificationPolicy} off.
 
 \code{{}}}
 
-\item{VPCEndpointDNSName}{Specifies the DNS name for the VPC endpoint that the SMB file share uses
-to connect to Amazon S3.
+\item{VPCEndpointDNSName}{Specifies the DNS name for the VPC endpoint that the SMB file share uses to connect to Amazon S3.
 
-This parameter is required for SMB file shares that connect to Amazon S3
-through a VPC endpoint, a VPC access point, or an access point alias
-that points to a VPC access point.}
+This parameter is required for SMB file shares that connect to Amazon S3 through a VPC endpoint, a VPC access point, or an access point alias that points to a VPC access point.}
 
-\item{BucketRegion}{Specifies the Region of the S3 bucket where the SMB file share stores
-files.
+\item{BucketRegion}{Specifies the Region of the S3 bucket where the SMB file share stores files.
 
-This parameter is required for SMB file shares that connect to Amazon S3
-through a VPC endpoint, a VPC access point, or an access point alias
-that points to a VPC access point.}
+This parameter is required for SMB file shares that connect to Amazon S3 through a VPC endpoint, a VPC access point, or an access point alias that points to a VPC access point.}
 
-\item{OplocksEnabled}{Specifies whether opportunistic locking is enabled for the SMB file
-share.
+\item{OplocksEnabled}{Specifies whether opportunistic locking is enabled for the SMB file share.
 
-Enabling opportunistic locking on case-sensitive shares is not
-recommended for workloads that involve access to files with the same
-name in different case.
+Enabling opportunistic locking on case-sensitive shares is not recommended for workloads that involve access to files with the same name in different case.
 
 Valid Values: \code{true} | \code{false}}
 }

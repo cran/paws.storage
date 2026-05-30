@@ -16,73 +16,29 @@ s3_create_session(
 )
 }
 \arguments{
-\item{SessionMode}{Specifies the mode of the session that will be created, either
-\code{ReadWrite} or \code{ReadOnly}. By default, a \code{ReadWrite} session is created.
-A \code{ReadWrite} session is capable of executing all the Zonal endpoint API
-operations on a directory bucket. A \code{ReadOnly} session is constrained to
-execute the following Zonal endpoint API operations:
-\code{\link[=s3_get_object]{get_object}}, \code{\link[=s3_head_object]{head_object}},
-\code{\link[=s3_list_objects_v2]{list_objects_v2}},
-\code{\link[=s3_get_object_attributes]{get_object_attributes}},
-\code{\link[=s3_list_parts]{list_parts}}, and
-\code{\link[=s3_list_multipart_uploads]{list_multipart_uploads}}.}
+\item{SessionMode}{Specifies the mode of the session that will be created, either \code{ReadWrite} or \code{ReadOnly}. If no session mode is specified, the default behavior attempts to create a session with the maximum allowable privilege. It will first attempt to create a \code{ReadWrite} session, and if that is not allowed by permissions, it will attempt to create a \code{ReadOnly} session. If neither session type is allowed, the request will return an Access Denied error. A \code{ReadWrite} session is capable of executing all the Zonal endpoint API operations on a directory bucket. A \code{ReadOnly} session is constrained to execute the following Zonal endpoint API operations: \code{\link[=s3_get_object]{get_object}}, \code{\link[=s3_head_object]{head_object}}, \code{\link[=s3_list_objects_v2]{list_objects_v2}}, \code{\link[=s3_get_object_attributes]{get_object_attributes}}, \code{\link[=s3_list_parts]{list_parts}}, and \code{\link[=s3_list_multipart_uploads]{list_multipart_uploads}}.}
 
 \item{Bucket}{[required] The name of the bucket that you create a session for.}
 
-\item{ServerSideEncryption}{The server-side encryption algorithm to use when you store objects in
-the directory bucket.
+\item{ServerSideEncryption}{The server-side encryption algorithm to use when you store objects in the directory bucket.
 
-For directory buckets, there are only two supported options for
-server-side encryption: server-side encryption with Amazon S3 managed
-keys (SSE-S3) (\code{AES256}) and server-side encryption with KMS keys
-(SSE-KMS) (\code{aws:kms}). By default, Amazon S3 encrypts data with SSE-S3.
-For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/serv-side-encryption.html}{Protecting data with server-side encryption}
-in the \emph{Amazon S3 User Guide}.}
+For directory buckets, there are only two supported options for server-side encryption: server-side encryption with Amazon S3 managed keys (SSE-S3) (\code{AES256}) and server-side encryption with KMS keys (SSE-KMS) (\code{aws:kms}). By default, Amazon S3 encrypts data with SSE-S3. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/serv-side-encryption.html}{Protecting data with server-side encryption} in the \emph{Amazon S3 User Guide}.
 
-\item{SSEKMSKeyId}{If you specify \code{x-amz-server-side-encryption} with \code{aws:kms}, you must
-specify the \code{ x-amz-server-side-encryption-aws-kms-key-id} header with
-the ID (Key ID or Key ARN) of the KMS symmetric encryption customer
-managed key to use. Otherwise, you get an HTTP \verb{400 Bad Request} error.
-Only use the key ID or key ARN. The key alias format of the KMS key
-isn't supported. Also, if the KMS key doesn't exist in the same account
-that't issuing the command, you must use the full Key ARN not the Key
-ID.
+\strong{S3 access points for Amazon FSx} - When accessing data stored in Amazon FSx file systems using S3 access points, the only valid server side encryption option is \code{aws:fsx}. All Amazon FSx file systems have encryption configured by default and are encrypted at rest. Data is automatically encrypted before being written to the file system, and automatically decrypted as it is read. These processes are handled transparently by Amazon FSx.}
 
-Your SSE-KMS configuration can only support 1 \href{https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-cmk}{customer managed key}
-per directory bucket's lifetime. The \href{https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-cmk}{Amazon Web Services managed key}
-(\code{aws/s3}) isn't supported.}
+\item{SSEKMSKeyId}{If you specify \code{x-amz-server-side-encryption} with \code{aws:kms}, you must specify the \code{ x-amz-server-side-encryption-aws-kms-key-id} header with the ID (Key ID or Key ARN) of the KMS symmetric encryption customer managed key to use. Otherwise, you get an HTTP \verb{400 Bad Request} error. Only use the key ID or key ARN. The key alias format of the KMS key isn't supported. Also, if the KMS key doesn't exist in the same account that't issuing the command, you must use the full Key ARN not the Key ID.
 
-\item{SSEKMSEncryptionContext}{Specifies the Amazon Web Services KMS Encryption Context as an
-additional encryption context to use for object encryption. The value of
-this header is a Base64 encoded string of a UTF-8 encoded JSON, which
-contains the encryption context as key-value pairs. This value is stored
-as object metadata and automatically gets passed on to Amazon Web
-Services KMS for future \code{\link[=s3_get_object]{get_object}} operations on this
-object.
+Your SSE-KMS configuration can only support 1 \href{https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-cmk}{customer managed key} per directory bucket's lifetime. The \href{https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-cmk}{Amazon Web Services managed key} (\code{aws/s3}) isn't supported.}
 
-\strong{General purpose buckets} - This value must be explicitly added during
-\code{\link[=s3_copy_object]{copy_object}} operations if you want an additional
-encryption context for your object. For more information, see
-\href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingKMSEncryption.html#encryption-context}{Encryption context}
-in the \emph{Amazon S3 User Guide}.
+\item{SSEKMSEncryptionContext}{Specifies the Amazon Web Services KMS Encryption Context as an additional encryption context to use for object encryption. The value of this header is a Base64 encoded string of a UTF-8 encoded JSON, which contains the encryption context as key-value pairs. This value is stored as object metadata and automatically gets passed on to Amazon Web Services KMS for future \code{\link[=s3_get_object]{get_object}} operations on this object.
 
-\strong{Directory buckets} - You can optionally provide an explicit
-encryption context value. The value must match the default encryption
-context - the bucket Amazon Resource Name (ARN). An additional
-encryption context value is not supported.}
+\strong{General purpose buckets} - This value must be explicitly added during \code{\link[=s3_copy_object]{copy_object}} operations if you want an additional encryption context for your object. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingKMSEncryption.html#encryption-context}{Encryption context} in the \emph{Amazon S3 User Guide}.
 
-\item{BucketKeyEnabled}{Specifies whether Amazon S3 should use an S3 Bucket Key for object
-encryption with server-side encryption using KMS keys (SSE-KMS).
+\strong{Directory buckets} - You can optionally provide an explicit encryption context value. The value must match the default encryption context - the bucket Amazon Resource Name (ARN). An additional encryption context value is not supported.}
 
-S3 Bucket Keys are always enabled for \code{GET} and \code{PUT} operations in a
-directory bucket and can’t be disabled. S3 Bucket Keys aren't supported,
-when you copy SSE-KMS encrypted objects from general purpose buckets to
-directory buckets, from directory buckets to general purpose buckets, or
-between directory buckets, through \code{\link[=s3_copy_object]{copy_object}},
-\code{\link[=s3_upload_part_copy]{upload_part_copy}}, \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-buckets-objects-Batch-Ops.html}{the Copy operation in Batch Operations},
-or \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-import-job.html}{the import jobs}.
-In this case, Amazon S3 makes a call to KMS every time a copy request is
-made for a KMS-encrypted object.}
+\item{BucketKeyEnabled}{Specifies whether Amazon S3 should use an S3 Bucket Key for object encryption with server-side encryption using KMS keys (SSE-KMS).
+
+S3 Bucket Keys are always enabled for \code{GET} and \code{PUT} operations in a directory bucket and can’t be disabled. S3 Bucket Keys aren't supported, when you copy SSE-KMS encrypted objects from general purpose buckets to directory buckets, from directory buckets to general purpose buckets, or between directory buckets, through \code{\link[=s3_copy_object]{copy_object}}, \code{\link[=s3_upload_part_copy]{upload_part_copy}}, \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-buckets-objects-Batch-Ops.html}{the Copy operation in Batch Operations}, or \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-import-job.html}{the import jobs}. In this case, Amazon S3 makes a call to KMS every time a copy request is made for a KMS-encrypted object.}
 }
 \description{
 Creates a session that establishes temporary security credentials to support fast authentication and authorization for the Zonal endpoint API operations on directory buckets. For more information about Zonal endpoint API operations that include the Availability Zone in the request endpoint, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-APIs.html}{S3 Express One Zone APIs} in the \emph{Amazon S3 User Guide}.

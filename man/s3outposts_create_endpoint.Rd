@@ -15,21 +15,15 @@ s3outposts_create_endpoint(
 \arguments{
 \item{OutpostId}{[required] The ID of the Outposts.}
 
-\item{SubnetId}{[required] The ID of the subnet in the selected VPC. The endpoint subnet must
-belong to the Outpost that has Amazon S3 on Outposts provisioned.}
+\item{SubnetId}{[required] The ID of the subnet in the selected VPC. The endpoint subnet must belong to the Outpost that has Amazon S3 on Outposts provisioned.}
 
 \item{SecurityGroupId}{[required] The ID of the security group to use with the endpoint.}
 
-\item{AccessType}{The type of access for the network connectivity for the Amazon S3 on
-Outposts endpoint. To use the Amazon Web Services VPC, choose \code{Private}.
-To use the endpoint with an on-premises network, choose
-\code{CustomerOwnedIp}. If you choose \code{CustomerOwnedIp}, you must also
-provide the customer-owned IP address pool (CoIP pool).
+\item{AccessType}{The type of access for the network connectivity for the Amazon S3 on Outposts endpoint. To use the Amazon Web Services VPC, choose \code{Private}. To use the endpoint with an on-premises network, choose \code{CustomerOwnedIp}. If you choose \code{CustomerOwnedIp}, you must also provide the customer-owned IP address pool (CoIP pool).
 
 \code{Private} is the default access type value.}
 
-\item{CustomerOwnedIpv4Pool}{The ID of the customer-owned IPv4 address pool (CoIP pool) for the
-endpoint. IP addresses are allocated from this pool for the endpoint.}
+\item{CustomerOwnedIpv4Pool}{The ID of the customer-owned IPv4 address pool (CoIP pool) for the endpoint. IP addresses are allocated from this pool for the endpoint.}
 }
 \description{
 Creates an endpoint and associates it with the specified Outpost.

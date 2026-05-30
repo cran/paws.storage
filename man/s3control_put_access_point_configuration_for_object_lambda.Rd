@@ -11,8 +11,7 @@ s3control_put_access_point_configuration_for_object_lambda(
 )
 }
 \arguments{
-\item{AccountId}{[required] The account ID for the account that owns the specified Object Lambda
-Access Point.}
+\item{AccountId}{[required] The account ID for the account that owns the specified Object Lambda Access Point.}
 
 \item{Name}{[required] The name of the Object Lambda Access Point.}
 

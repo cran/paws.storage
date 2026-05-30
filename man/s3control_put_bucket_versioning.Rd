@@ -16,8 +16,7 @@ s3control_put_bucket_versioning(
 
 \item{Bucket}{[required] The S3 on Outposts bucket to set the versioning state for.}
 
-\item{MFA}{The concatenation of the authentication device's serial number, a space,
-and the value that is displayed on your authentication device.}
+\item{MFA}{The concatenation of the authentication device's serial number, a space, and the value that is displayed on your authentication device.}
 
 \item{VersioningConfiguration}{[required] The root-level tag for the \code{VersioningConfiguration} parameters.}
 }

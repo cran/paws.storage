@@ -15,41 +15,28 @@ recyclebin_create_rule(
 )
 }
 \arguments{
-\item{RetentionPeriod}{[required] Information about the retention period for which the retention rule is
-to retain resources.}
+\item{RetentionPeriod}{[required] Information about the retention period for which the retention rule is to retain resources.}
 
 \item{Description}{The retention rule description.}
 
 \item{Tags}{Information about the tags to assign to the retention rule.}
 
-\item{ResourceType}{[required] The resource type to be retained by the retention rule. Currently, only
-Amazon EBS snapshots and EBS-backed AMIs are supported. To retain
-snapshots, specify \code{EBS_SNAPSHOT}. To retain EBS-backed AMIs, specify
-\code{EC2_IMAGE}.}
+\item{ResourceType}{[required] The resource type to be retained by the retention rule. Currently, only EBS volumes, EBS snapshots, and EBS-backed AMIs are supported.
+\itemize{
+\item To retain EBS volumes, specify \code{EBS_VOLUME}.
+\item To retain EBS snapshots, specify \code{EBS_SNAPSHOT}
+\item To retain EBS-backed AMIs, specify \code{EC2_IMAGE}.
+}}
 
-\item{ResourceTags}{[Tag-level retention rules only] Specifies the resource tags to use to
-identify resources that are to be retained by a tag-level retention
-rule. For tag-level retention rules, only deleted resources, of the
-specified resource type, that have one or more of the specified tag key
-and value pairs are retained. If a resource is deleted, but it does not
-have any of the specified tag key and value pairs, it is immediately
-deleted without being retained by the retention rule.
+\item{ResourceTags}{[Tag-level retention rules only] Specifies the resource tags to use to identify resources that are to be retained by a tag-level retention rule. For tag-level retention rules, only deleted resources, of the specified resource type, that have one or more of the specified tag key and value pairs are retained. If a resource is deleted, but it does not have any of the specified tag key and value pairs, it is immediately deleted without being retained by the retention rule.
 
-You can add the same tag key and value pair to a maximum or five
-retention rules.
+You can add the same tag key and value pair to a maximum or five retention rules.
 
-To create a Region-level retention rule, omit this parameter. A
-Region-level retention rule does not have any resource tags specified.
-It retains all deleted resources of the specified resource type in the
-Region in which the rule is created, even if the resources are not
-tagged.}
+To create a Region-level retention rule, omit this parameter. A Region-level retention rule does not have any resource tags specified. It retains all deleted resources of the specified resource type in the Region in which the rule is created, even if the resources are not tagged.}
 
 \item{LockConfiguration}{Information about the retention rule lock configuration.}
 
-\item{ExcludeResourceTags}{[Region-level retention rules only] Specifies the exclusion tags to
-use to identify resources that are to be excluded, or ignored, by a
-Region-level retention rule. Resources that have any of these tags are
-not retained by the retention rule upon deletion.
+\item{ExcludeResourceTags}{[Region-level retention rules only] Specifies the exclusion tags to use to identify resources that are to be excluded, or ignored, by a Region-level retention rule. Resources that have any of these tags are not retained by the retention rule upon deletion.
 
 You can't specify exclusion tags for tag-level retention rules.}
 }

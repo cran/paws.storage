@@ -7,9 +7,7 @@
 backup_delete_backup_vault(BackupVaultName)
 }
 \arguments{
-\item{BackupVaultName}{[required] The name of a logical container where backups are stored. Backup vaults
-are identified by names that are unique to the account used to create
-them and the Amazon Web Services Region where they are created.}
+\item{BackupVaultName}{[required] The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.}
 }
 \description{
 Deletes the backup vault identified by its name. A vault can be deleted only if it is empty.

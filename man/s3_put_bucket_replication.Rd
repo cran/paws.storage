@@ -16,32 +16,19 @@ s3_put_bucket_replication(
 \arguments{
 \item{Bucket}{[required] The name of the bucket}
 
-\item{ContentMD5}{The Base64 encoded 128-bit \code{MD5} digest of the data. You must use this
-header as a message integrity check to verify that the request body was
-not corrupted in transit. For more information, see \href{https://www.ietf.org/rfc/rfc1864.txt}{RFC 1864}.
+\item{ContentMD5}{The Base64 encoded 128-bit \code{MD5} digest of the data. You must use this header as a message integrity check to verify that the request body was not corrupted in transit. For more information, see \href{https://www.ietf.org/rfc/rfc1864.txt}{RFC 1864}.
 
-For requests made using the Amazon Web Services Command Line Interface
-(CLI) or Amazon Web Services SDKs, this field is calculated
-automatically.}
+For requests made using the Amazon Web Services Command Line Interface (CLI) or Amazon Web Services SDKs, this field is calculated automatically.}
 
-\item{ChecksumAlgorithm}{Indicates the algorithm used to create the checksum for the request when
-you use the SDK. This header will not provide any additional
-functionality if you don't use the SDK. When you send this header, there
-must be a corresponding \code{x-amz-checksum} or \code{x-amz-trailer} header sent.
-Otherwise, Amazon S3 fails the request with the HTTP status code
-\verb{400 Bad Request}. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity}
-in the \emph{Amazon S3 User Guide}.
+\item{ChecksumAlgorithm}{Indicates the algorithm used to create the checksum for the request when you use the SDK. This header will not provide any additional functionality if you don't use the SDK. When you send this header, there must be a corresponding \code{x-amz-checksum} or \code{x-amz-trailer} header sent. Otherwise, Amazon S3 fails the request with the HTTP status code \verb{400 Bad Request}. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html}{Checking object integrity} in the \emph{Amazon S3 User Guide}.
 
-If you provide an individual checksum, Amazon S3 ignores any provided
-\code{ChecksumAlgorithm} parameter.}
+If you provide an individual checksum, Amazon S3 ignores any provided \code{ChecksumAlgorithm} parameter.}
 
-\item{ReplicationConfiguration}{[required]}
+\item{ReplicationConfiguration}{[required] A container for replication rules. You can add up to 1,000 rules. The maximum size of a replication configuration is 2 MB.}
 
 \item{Token}{A token to allow Object Lock to be enabled for an existing bucket.}
 
-\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you
-provide does not match the actual owner of the bucket, the request fails
-with the HTTP status code \verb{403 Forbidden} (access denied).}
+\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you provide does not match the actual owner of the bucket, the request fails with the HTTP status code \verb{403 Forbidden} (access denied).}
 }
 \description{
 This operation is not supported for directory buckets.

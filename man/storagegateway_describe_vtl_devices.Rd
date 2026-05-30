@@ -13,20 +13,15 @@ storagegateway_describe_vtl_devices(
 )
 }
 \arguments{
-\item{GatewayARN}{[required]}
+\item{GatewayARN}{[required] The Amazon Resource Name (ARN) of the gateway. Use the \code{\link[=storagegateway_list_gateways]{list_gateways}} operation to return a list of gateways for your account and Amazon Web Services Region.}
 
-\item{VTLDeviceARNs}{An array of strings, where each string represents the Amazon Resource
-Name (ARN) of a VTL device.
+\item{VTLDeviceARNs}{An array of strings, where each string represents the Amazon Resource Name (ARN) of a VTL device.
 
-All of the specified VTL devices must be from the same gateway. If no
-VTL devices are specified, the result will contain all devices on the
-specified gateway.}
+All of the specified VTL devices must be from the same gateway. If no VTL devices are specified, the result will contain all devices on the specified gateway.}
 
-\item{Marker}{An opaque string that indicates the position at which to begin
-describing the VTL devices.}
+\item{Marker}{An opaque string that indicates the position at which to begin describing the VTL devices.}
 
-\item{Limit}{Specifies that the number of VTL devices described be limited to the
-specified number.}
+\item{Limit}{Specifies that the number of VTL devices described be limited to the specified number.}
 }
 \description{
 Returns a description of virtual tape library (VTL) devices for the specified tape gateway. In the response, Storage Gateway returns VTL device information.

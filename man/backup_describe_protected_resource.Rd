@@ -9,8 +9,7 @@ Services service type of the saved resource}
 backup_describe_protected_resource(ResourceArn)
 }
 \arguments{
-\item{ResourceArn}{[required] An Amazon Resource Name (ARN) that uniquely identifies a resource. The
-format of the ARN depends on the resource type.}
+\item{ResourceArn}{[required] An Amazon Resource Name (ARN) that uniquely identifies a resource. The format of the ARN depends on the resource type.}
 }
 \description{
 Returns information about a saved resource, including the last time it was backed up, its Amazon Resource Name (ARN), and the Amazon Web Services service type of the saved resource.

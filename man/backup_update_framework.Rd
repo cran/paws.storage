@@ -12,20 +12,13 @@ backup_update_framework(
 )
 }
 \arguments{
-\item{FrameworkName}{[required] The unique name of a framework. This name is between 1 and 256
-characters, starting with a letter, and consisting of letters (a-z,
-A-Z), numbers (0-9), and underscores (_).}
+\item{FrameworkName}{[required] The unique name of a framework. This name is between 1 and 256 characters, starting with a letter, and consisting of letters (a-z, A-Z), numbers (0-9), and underscores (_).}
 
-\item{FrameworkDescription}{An optional description of the framework with a maximum 1,024
-characters.}
+\item{FrameworkDescription}{An optional description of the framework with a maximum 1,024 characters.}
 
-\item{FrameworkControls}{The controls that make up the framework. Each control in the list has a
-name, input parameters, and scope.}
+\item{FrameworkControls}{The controls that make up the framework. Each control in the list has a name, input parameters, and scope.}
 
-\item{IdempotencyToken}{A customer-chosen string that you can use to distinguish between
-otherwise identical calls to \code{UpdateFrameworkInput}. Retrying a
-successful request with the same idempotency token results in a success
-message with no action taken.}
+\item{IdempotencyToken}{A customer-chosen string that you can use to distinguish between otherwise identical calls to \code{UpdateFrameworkInput}. Retrying a successful request with the same idempotency token results in a success message with no action taken.}
 }
 \description{
 Updates the specified framework.

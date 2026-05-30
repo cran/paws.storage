@@ -7,10 +7,9 @@
 storagegateway_retrieve_tape_recovery_point(TapeARN, GatewayARN)
 }
 \arguments{
-\item{TapeARN}{[required] The Amazon Resource Name (ARN) of the virtual tape for which you want to
-retrieve the recovery point.}
+\item{TapeARN}{[required] The Amazon Resource Name (ARN) of the virtual tape for which you want to retrieve the recovery point.}
 
-\item{GatewayARN}{[required]}
+\item{GatewayARN}{[required] The Amazon Resource Name (ARN) of the gateway. Use the \code{\link[=storagegateway_list_gateways]{list_gateways}} operation to return a list of gateways for your account and Amazon Web Services Region.}
 }
 \description{
 Retrieves the recovery point for the specified virtual tape. This operation is only supported in the tape gateway type.

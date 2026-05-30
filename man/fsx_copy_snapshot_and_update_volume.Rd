@@ -14,38 +14,27 @@ fsx_copy_snapshot_and_update_volume(
 )
 }
 \arguments{
-\item{ClientRequestToken}{}
+\item{ClientRequestToken}{(Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.}
 
 \item{VolumeId}{[required] Specifies the ID of the volume that you are copying the snapshot to.}
 
-\item{SourceSnapshotARN}{[required]}
+\item{SourceSnapshotARN}{[required] The Amazon Resource Name (ARN) for a given resource. ARNs uniquely identify Amazon Web Services resources. We require an ARN when you need to specify a resource unambiguously across all of Amazon Web Services. For more information, see \href{https://docs.aws.amazon.com/IAM/latest/UserGuide/reference-arns.html}{Amazon Resource Names (ARNs)} in the \emph{Amazon Web Services General Reference}.}
 
-\item{CopyStrategy}{Specifies the strategy to use when copying data from a snapshot to the
-volume.
+\item{CopyStrategy}{Specifies the strategy to use when copying data from a snapshot to the volume.
 \itemize{
 \item \code{FULL_COPY} - Copies all data from the snapshot to the volume.
-\item \code{INCREMENTAL_COPY} - Copies only the snapshot data that's changed
-since the previous replication.
+\item \code{INCREMENTAL_COPY} - Copies only the snapshot data that's changed since the previous replication.
 }
 
-\code{CLONE} isn't a valid copy strategy option for the
-\code{\link[=fsx_copy_snapshot_and_update_volume]{copy_snapshot_and_update_volume}}
-operation.}
+\code{CLONE} isn't a valid copy strategy option for the \code{\link[=fsx_copy_snapshot_and_update_volume]{copy_snapshot_and_update_volume}} operation.}
 
-\item{Options}{Confirms that you want to delete data on the destination volume that
-wasn’t there during the previous snapshot replication.
+\item{Options}{Confirms that you want to delete data on the destination volume that wasn’t there during the previous snapshot replication.
 
-Your replication will fail if you don’t include an option for a specific
-type of data and that data is on your destination. For example, if you
-don’t include \code{DELETE_INTERMEDIATE_SNAPSHOTS} and there are intermediate
-snapshots on the destination, you can’t copy the snapshot.
+Your replication will fail if you don’t include an option for a specific type of data and that data is on your destination. For example, if you don’t include \code{DELETE_INTERMEDIATE_SNAPSHOTS} and there are intermediate snapshots on the destination, you can’t copy the snapshot.
 \itemize{
-\item \code{DELETE_INTERMEDIATE_SNAPSHOTS} - Deletes snapshots on the
-destination volume that aren’t on the source volume.
-\item \code{DELETE_CLONED_VOLUMES} - Deletes snapshot clones on the destination
-volume that aren't on the source volume.
-\item \code{DELETE_INTERMEDIATE_DATA} - Overwrites snapshots on the destination
-volume that don’t match the source snapshot that you’re copying.
+\item \code{DELETE_INTERMEDIATE_SNAPSHOTS} - Deletes snapshots on the destination volume that aren’t on the source volume.
+\item \code{DELETE_CLONED_VOLUMES} - Deletes snapshot clones on the destination volume that aren't on the source volume.
+\item \code{DELETE_INTERMEDIATE_DATA} - Overwrites snapshots on the destination volume that don’t match the source snapshot that you’re copying.
 }}
 }
 \description{

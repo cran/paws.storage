@@ -8,15 +8,9 @@ backup vault identified by an Amazon Resource Name (ARN)}
 backup_untag_resource(ResourceArn, TagKeyList)
 }
 \arguments{
-\item{ResourceArn}{[required] An ARN that uniquely identifies a resource. The format of the ARN
-depends on the type of the tagged resource.
+\item{ResourceArn}{[required] An ARN that uniquely identifies a resource. The format of the ARN depends on the type of the tagged resource.
 
-ARNs that do not include \code{backup} are incompatible with tagging.
-\code{\link[=backup_tag_resource]{tag_resource}} and
-\code{\link[=backup_untag_resource]{untag_resource}} with invalid ARNs will result
-in an error. Acceptable ARN content can include
-\code{arn:aws:backup:us-east}. Invalid ARN content may look like
-\code{arn:aws:ec2:us-east}.}
+ARNs that do not include \code{backup} are incompatible with tagging. \code{\link[=backup_tag_resource]{tag_resource}} and \code{\link[=backup_untag_resource]{untag_resource}} with invalid ARNs will result in an error. Acceptable ARN content can include \code{arn:aws:backup:us-east}. Invalid ARN content may look like \code{arn:aws:ec2:us-east}.}
 
 \item{TagKeyList}{[required] The keys to identify which key-value tags to remove from a resource.}
 }

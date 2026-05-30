@@ -7,8 +7,7 @@
 s3tables_get_table_bucket_maintenance_configuration(tableBucketARN)
 }
 \arguments{
-\item{tableBucketARN}{[required] The Amazon Resource Name (ARN) of the table bucket associated with the
-maintenance configuration.}
+\item{tableBucketARN}{[required] The Amazon Resource Name (ARN) of the table bucket associated with the maintenance configuration.}
 }
 \description{
 Gets details about a maintenance configuration for a given table bucket. For more information, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-table-buckets-maintenance.html}{Amazon S3 table bucket maintenance} in the \emph{Amazon Simple Storage Service User Guide}.

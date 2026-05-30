@@ -7,10 +7,7 @@ NULL
 #' @description
 #' Backup
 #' 
-#' Backup is a unified backup service designed to protect Amazon Web
-#' Services services and their associated data. Backup simplifies the
-#' creation, migration, restoration, and deletion of backups, while also
-#' providing reporting and auditing.
+#' Backup is a unified backup service designed to protect Amazon Web Services services and their associated data. Backup simplifies the creation, migration, restoration, and deletion of backups, while also providing reporting and auditing.
 #'
 #' @param
 #' config
@@ -88,13 +85,14 @@ NULL
 #' @examples
 #' \dontrun{
 #' svc <- backup()
-#' svc$cancel_legal_hold(
+#' svc$associate_backup_vault_mpa_approval_team(
 #'   Foo = 123
 #' )
 #' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
+#'  \link[=backup_associate_backup_vault_mpa_approval_team]{associate_backup_vault_mpa_approval_team} \tab Associates an MPA approval team with a backup vault\cr
 #'  \link[=backup_cancel_legal_hold]{cancel_legal_hold} \tab Removes the specified legal hold on a recovery point\cr
 #'  \link[=backup_create_backup_plan]{create_backup_plan} \tab Creates a backup plan using a backup plan name and backup rules\cr
 #'  \link[=backup_create_backup_selection]{create_backup_selection} \tab Creates a JSON document that specifies a set of resources to assign to a backup plan\cr
@@ -103,8 +101,10 @@ NULL
 #'  \link[=backup_create_legal_hold]{create_legal_hold} \tab Creates a legal hold on a recovery point (backup)\cr
 #'  \link[=backup_create_logically_air_gapped_backup_vault]{create_logically_air_gapped_backup_vault} \tab Creates a logical container to where backups may be copied\cr
 #'  \link[=backup_create_report_plan]{create_report_plan} \tab Creates a report plan\cr
+#'  \link[=backup_create_restore_access_backup_vault]{create_restore_access_backup_vault} \tab Creates a restore access backup vault that provides temporary access to recovery points in a logically air-gapped backup vault, subject to MPA approval\cr
 #'  \link[=backup_create_restore_testing_plan]{create_restore_testing_plan} \tab Creates a restore testing plan\cr
 #'  \link[=backup_create_restore_testing_selection]{create_restore_testing_selection} \tab This request can be sent after CreateRestoreTestingPlan request returns successfully\cr
+#'  \link[=backup_create_tiering_configuration]{create_tiering_configuration} \tab Creates a tiering configuration\cr
 #'  \link[=backup_delete_backup_plan]{delete_backup_plan} \tab Deletes a backup plan\cr
 #'  \link[=backup_delete_backup_selection]{delete_backup_selection} \tab Deletes the resource selection associated with a backup plan that is specified by the SelectionId\cr
 #'  \link[=backup_delete_backup_vault]{delete_backup_vault} \tab Deletes the backup vault identified by its name\cr
@@ -116,17 +116,20 @@ NULL
 #'  \link[=backup_delete_report_plan]{delete_report_plan} \tab Deletes the report plan specified by a report plan name\cr
 #'  \link[=backup_delete_restore_testing_plan]{delete_restore_testing_plan} \tab This request deletes the specified restore testing plan\cr
 #'  \link[=backup_delete_restore_testing_selection]{delete_restore_testing_selection} \tab Input the Restore Testing Plan name and Restore Testing Selection name\cr
+#'  \link[=backup_delete_tiering_configuration]{delete_tiering_configuration} \tab Deletes the tiering configuration specified by a tiering configuration name\cr
 #'  \link[=backup_describe_backup_job]{describe_backup_job} \tab Returns backup job details for the specified BackupJobId\cr
 #'  \link[=backup_describe_backup_vault]{describe_backup_vault} \tab Returns metadata about a backup vault specified by its name\cr
 #'  \link[=backup_describe_copy_job]{describe_copy_job} \tab Returns metadata associated with creating a copy of a resource\cr
 #'  \link[=backup_describe_framework]{describe_framework} \tab Returns the framework details for the specified FrameworkName\cr
-#'  \link[=backup_describe_global_settings]{describe_global_settings} \tab Describes whether the Amazon Web Services account is opted in to cross-account backup\cr
+#'  \link[=backup_describe_global_settings]{describe_global_settings} \tab Describes whether the Amazon Web Services account has enabled different cross-account management options, including cross-account backup, multi-party approval, and delegated administrator\cr
 #'  \link[=backup_describe_protected_resource]{describe_protected_resource} \tab Returns information about a saved resource, including the last time it was backed up, its Amazon Resource Name (ARN), and the Amazon Web Services service type of the saved resource\cr
 #'  \link[=backup_describe_recovery_point]{describe_recovery_point} \tab Returns metadata associated with a recovery point, including ID, status, encryption, and lifecycle\cr
 #'  \link[=backup_describe_region_settings]{describe_region_settings} \tab Returns the current service opt-in settings for the Region\cr
 #'  \link[=backup_describe_report_job]{describe_report_job} \tab Returns the details associated with creating a report as specified by its ReportJobId\cr
 #'  \link[=backup_describe_report_plan]{describe_report_plan} \tab Returns a list of all report plans for an Amazon Web Services account and Amazon Web Services Region\cr
 #'  \link[=backup_describe_restore_job]{describe_restore_job} \tab Returns metadata associated with a restore job that is specified by a job ID\cr
+#'  \link[=backup_describe_scan_job]{describe_scan_job} \tab Returns scan job details for the specified ScanJobID\cr
+#'  \link[=backup_disassociate_backup_vault_mpa_approval_team]{disassociate_backup_vault_mpa_approval_team} \tab Removes the association between an MPA approval team and a backup vault, disabling the MPA approval workflow for restore operations\cr
 #'  \link[=backup_disassociate_recovery_point]{disassociate_recovery_point} \tab Deletes the specified continuous backup recovery point from Backup and releases control of that continuous backup to the source service, such as Amazon RDS\cr
 #'  \link[=backup_disassociate_recovery_point_from_parent]{disassociate_recovery_point_from_parent} \tab This action to a specific child (nested) recovery point removes the relationship between the specified recovery point and its parent (composite) recovery point\cr
 #'  \link[=backup_export_backup_plan_template]{export_backup_plan_template} \tab Returns the backup plan that is specified by the plan ID as a backup template\cr
@@ -137,6 +140,7 @@ NULL
 #'  \link[=backup_get_backup_vault_access_policy]{get_backup_vault_access_policy} \tab Returns the access policy document that is associated with the named backup vault\cr
 #'  \link[=backup_get_backup_vault_notifications]{get_backup_vault_notifications} \tab Returns event notifications for the specified backup vault\cr
 #'  \link[=backup_get_legal_hold]{get_legal_hold} \tab This action returns details for a specified legal hold\cr
+#'  \link[=backup_get_pitr_malware_scan_results]{get_pitr_malware_scan_results} \tab Returns the malware scan results for a specified point in time within a continuous (point-in-time recovery) backup\cr
 #'  \link[=backup_get_recovery_point_index_details]{get_recovery_point_index_details} \tab This operation returns the metadata and details specific to the backup index associated with the specified recovery point\cr
 #'  \link[=backup_get_recovery_point_restore_metadata]{get_recovery_point_restore_metadata} \tab Returns a set of metadata key-value pairs that were used to create the backup\cr
 #'  \link[=backup_get_restore_job_metadata]{get_restore_job_metadata} \tab This request returns the metadata for the specified restore job\cr
@@ -144,6 +148,7 @@ NULL
 #'  \link[=backup_get_restore_testing_plan]{get_restore_testing_plan} \tab Returns RestoreTestingPlan details for the specified RestoreTestingPlanName\cr
 #'  \link[=backup_get_restore_testing_selection]{get_restore_testing_selection} \tab Returns RestoreTestingSelection, which displays resources and elements of the restore testing plan\cr
 #'  \link[=backup_get_supported_resource_types]{get_supported_resource_types} \tab Returns the Amazon Web Services resource types supported by Backup\cr
+#'  \link[=backup_get_tiering_configuration]{get_tiering_configuration} \tab Returns TieringConfiguration details for the specified TieringConfigurationName\cr
 #'  \link[=backup_list_backup_jobs]{list_backup_jobs} \tab Returns a list of existing backup jobs for an authenticated account for the last 30 days\cr
 #'  \link[=backup_list_backup_job_summaries]{list_backup_job_summaries} \tab This is a request for a summary of backup jobs created or running within the most recent 30 days\cr
 #'  \link[=backup_list_backup_plans]{list_backup_plans} \tab Lists the active backup plans for the account\cr
@@ -163,32 +168,39 @@ NULL
 #'  \link[=backup_list_recovery_points_by_resource]{list_recovery_points_by_resource} \tab The information about the recovery points of the type specified by a resource Amazon Resource Name (ARN)\cr
 #'  \link[=backup_list_report_jobs]{list_report_jobs} \tab Returns details about your report jobs\cr
 #'  \link[=backup_list_report_plans]{list_report_plans} \tab Returns a list of your report plans\cr
+#'  \link[=backup_list_restore_access_backup_vaults]{list_restore_access_backup_vaults} \tab Returns a list of restore access backup vaults associated with a specified backup vault\cr
 #'  \link[=backup_list_restore_jobs]{list_restore_jobs} \tab Returns a list of jobs that Backup initiated to restore a saved resource, including details about the recovery process\cr
 #'  \link[=backup_list_restore_jobs_by_protected_resource]{list_restore_jobs_by_protected_resource} \tab This returns restore jobs that contain the specified protected resource\cr
 #'  \link[=backup_list_restore_job_summaries]{list_restore_job_summaries} \tab This request obtains a summary of restore jobs created or running within the the most recent 30 days\cr
 #'  \link[=backup_list_restore_testing_plans]{list_restore_testing_plans} \tab Returns a list of restore testing plans\cr
 #'  \link[=backup_list_restore_testing_selections]{list_restore_testing_selections} \tab Returns a list of restore testing selections\cr
+#'  \link[=backup_list_scan_jobs]{list_scan_jobs} \tab Returns a list of existing scan jobs for an authenticated account for the last 30 days\cr
+#'  \link[=backup_list_scan_job_summaries]{list_scan_job_summaries} \tab This is a request for a summary of scan jobs created or running within the most recent 30 days\cr
 #'  \link[=backup_list_tags]{list_tags} \tab Returns the tags assigned to the resource, such as a target recovery point, backup plan, or backup vault\cr
+#'  \link[=backup_list_tiering_configurations]{list_tiering_configurations} \tab Returns a list of tiering configurations\cr
 #'  \link[=backup_put_backup_vault_access_policy]{put_backup_vault_access_policy} \tab Sets a resource-based policy that is used to manage access permissions on the target backup vault\cr
 #'  \link[=backup_put_backup_vault_lock_configuration]{put_backup_vault_lock_configuration} \tab Applies Backup Vault Lock to a backup vault, preventing attempts to delete any recovery point stored in or created in a backup vault\cr
 #'  \link[=backup_put_backup_vault_notifications]{put_backup_vault_notifications} \tab Turns on notifications on a backup vault for the specified topic and events\cr
 #'  \link[=backup_put_restore_validation_result]{put_restore_validation_result} \tab This request allows you to send your independent self-run restore test validation results\cr
+#'  \link[=backup_revoke_restore_access_backup_vault]{revoke_restore_access_backup_vault} \tab Revokes access to a restore access backup vault, removing the ability to restore from its recovery points and permanently deleting the vault\cr
 #'  \link[=backup_start_backup_job]{start_backup_job} \tab Starts an on-demand backup job for the specified resource\cr
 #'  \link[=backup_start_copy_job]{start_copy_job} \tab Starts a job to create a one-time copy of the specified resource\cr
 #'  \link[=backup_start_report_job]{start_report_job} \tab Starts an on-demand report job for the specified report plan\cr
 #'  \link[=backup_start_restore_job]{start_restore_job} \tab Recovers the saved resource identified by an Amazon Resource Name (ARN)\cr
+#'  \link[=backup_start_scan_job]{start_scan_job} \tab Starts scanning jobs for specific resources\cr
 #'  \link[=backup_stop_backup_job]{stop_backup_job} \tab Attempts to cancel a job to create a one-time backup of a resource\cr
-#'  \link[=backup_tag_resource]{tag_resource} \tab Assigns a set of key-value pairs to a recovery point, backup plan, or backup vault identified by an Amazon Resource Name (ARN)\cr
+#'  \link[=backup_tag_resource]{tag_resource} \tab Assigns a set of key-value pairs to a resource\cr
 #'  \link[=backup_untag_resource]{untag_resource} \tab Removes a set of key-value pairs from a recovery point, backup plan, or backup vault identified by an Amazon Resource Name (ARN)\cr
 #'  \link[=backup_update_backup_plan]{update_backup_plan} \tab Updates the specified backup plan\cr
 #'  \link[=backup_update_framework]{update_framework} \tab Updates the specified framework\cr
-#'  \link[=backup_update_global_settings]{update_global_settings} \tab Updates whether the Amazon Web Services account is opted in to cross-account backup\cr
+#'  \link[=backup_update_global_settings]{update_global_settings} \tab Updates whether the Amazon Web Services account has enabled different cross-account management options, including cross-account backup, multi-party approval, and delegated administrator\cr
 #'  \link[=backup_update_recovery_point_index_settings]{update_recovery_point_index_settings} \tab This operation updates the settings of a recovery point index\cr
 #'  \link[=backup_update_recovery_point_lifecycle]{update_recovery_point_lifecycle} \tab Sets the transition lifecycle of a recovery point\cr
 #'  \link[=backup_update_region_settings]{update_region_settings} \tab Updates the current service opt-in settings for the Region\cr
 #'  \link[=backup_update_report_plan]{update_report_plan} \tab Updates the specified report plan\cr
 #'  \link[=backup_update_restore_testing_plan]{update_restore_testing_plan} \tab This request will send changes to your specified restore testing plan\cr
-#'  \link[=backup_update_restore_testing_selection]{update_restore_testing_selection} \tab Updates the specified restore testing selection
+#'  \link[=backup_update_restore_testing_selection]{update_restore_testing_selection} \tab Updates the specified restore testing selection\cr
+#'  \link[=backup_update_tiering_configuration]{update_tiering_configuration} \tab This request will send changes to your specified tiering configuration
 #' }
 #'
 #' @return
@@ -220,7 +232,7 @@ backup <- function(config = list(), credentials = list(), endpoint = NULL, regio
 
 .backup$metadata <- list(
   service_name = "backup",
-  endpoints = list("^(us|eu|ap|sa|ca|me|af|il|mx)\\-\\w+\\-\\d+$" = list(endpoint = "backup.{region}.amazonaws.com", global = FALSE), "^cn\\-\\w+\\-\\d+$" = list(endpoint = "backup.{region}.amazonaws.com.cn", global = FALSE), "^us\\-gov\\-\\w+\\-\\d+$" = list(endpoint = "backup.{region}.amazonaws.com", global = FALSE), "^us\\-iso\\-\\w+\\-\\d+$" = list(endpoint = "backup.{region}.c2s.ic.gov", global = FALSE), "^us\\-isob\\-\\w+\\-\\d+$" = list(endpoint = "backup.{region}.sc2s.sgov.gov", global = FALSE), "^eu\\-isoe\\-\\w+\\-\\d+$" = list(endpoint = "backup.{region}.cloud.adc-e.uk", global = FALSE), "^us\\-isof\\-\\w+\\-\\d+$" = list(endpoint = "backup.{region}.csp.hci.ic.gov", global = FALSE)),
+  endpoints = list("^(us|eu|ap|sa|ca|me|af|il|mx)\\-\\w+\\-\\d+$" = list(endpoint = "backup.{region}.amazonaws.com", global = FALSE), "^cn\\-\\w+\\-\\d+$" = list(endpoint = "backup.{region}.amazonaws.com.cn", global = FALSE), "^us\\-gov\\-\\w+\\-\\d+$" = list(endpoint = "backup.{region}.amazonaws.com", global = FALSE), "^us\\-iso\\-\\w+\\-\\d+$" = list(endpoint = "backup.{region}.c2s.ic.gov", global = FALSE), "^us\\-isob\\-\\w+\\-\\d+$" = list(endpoint = "backup.{region}.sc2s.sgov.gov", global = FALSE), "^eu\\-isoe\\-\\w+\\-\\d+$" = list(endpoint = "backup.{region}.cloud.adc-e.uk", global = FALSE), "^us\\-isof\\-\\w+\\-\\d+$" = list(endpoint = "backup.{region}.csp.hci.ic.gov", global = FALSE), "^eusc\\-(de)\\-\\w+\\-\\d+$" = list(endpoint = "backup.{region}.amazonaws.eu", global = FALSE)),
   service_id = "Backup",
   api_version = "2018-11-15",
   signing_name = "backup",

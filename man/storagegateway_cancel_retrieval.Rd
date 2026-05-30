@@ -8,10 +8,9 @@ a gateway after the retrieval process is initiated}
 storagegateway_cancel_retrieval(GatewayARN, TapeARN)
 }
 \arguments{
-\item{GatewayARN}{[required]}
+\item{GatewayARN}{[required] The Amazon Resource Name (ARN) of the gateway. Use the \code{\link[=storagegateway_list_gateways]{list_gateways}} operation to return a list of gateways for your account and Amazon Web Services Region.}
 
-\item{TapeARN}{[required] The Amazon Resource Name (ARN) of the virtual tape you want to cancel
-retrieval for.}
+\item{TapeARN}{[required] The Amazon Resource Name (ARN) of the virtual tape you want to cancel retrieval for.}
 }
 \description{
 Cancels retrieval of a virtual tape from the virtual tape shelf (VTS) to a gateway after the retrieval process is initiated. The virtual tape is returned to the VTS. This operation is only supported in the tape gateway type.

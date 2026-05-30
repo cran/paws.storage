@@ -8,9 +8,7 @@ its ReportJobId}
 backup_describe_report_job(ReportJobId)
 }
 \arguments{
-\item{ReportJobId}{[required] The identifier of the report job. A unique, randomly generated, Unicode,
-UTF-8 encoded string that is at most 1,024 bytes long. The report job ID
-cannot be edited.}
+\item{ReportJobId}{[required] The identifier of the report job. A unique, randomly generated, Unicode, UTF-8 encoded string that is at most 1,024 bytes long. The report job ID cannot be edited.}
 }
 \description{
 Returns the details associated with creating a report as specified by its \code{ReportJobId}.

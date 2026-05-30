@@ -2,17 +2,16 @@
 % Please edit documentation in R/efs_operations.R
 \name{efs_describe_lifecycle_configuration}
 \alias{efs_describe_lifecycle_configuration}
-\title{Returns the current LifecycleConfiguration object for the specified
-Amazon EFS file system}
+\title{Returns the current LifecycleConfiguration object for the specified EFS
+file system}
 \usage{
 efs_describe_lifecycle_configuration(FileSystemId)
 }
 \arguments{
-\item{FileSystemId}{[required] The ID of the file system whose \code{LifecycleConfiguration} object you want
-to retrieve (String).}
+\item{FileSystemId}{[required] The ID of the file system whose \code{LifecycleConfiguration} object you want to retrieve (String).}
 }
 \description{
-Returns the current \code{LifecycleConfiguration} object for the specified Amazon EFS file system. Lifecycle management uses the \code{LifecycleConfiguration} object to identify when to move files between storage classes. For a file system without a \code{LifecycleConfiguration} object, the call returns an empty array in the response.
+Returns the current \code{LifecycleConfiguration} object for the specified EFS file system. Lifecycle management uses the \code{LifecycleConfiguration} object to identify when to move files between storage classes. For a file system without a \code{LifecycleConfiguration} object, the call returns an empty array in the response.
 
 See \url{https://www.paws-r-sdk.com/docs/efs_describe_lifecycle_configuration/} for full documentation.
 }

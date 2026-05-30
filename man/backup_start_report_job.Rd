@@ -9,10 +9,7 @@ backup_start_report_job(ReportPlanName, IdempotencyToken = NULL)
 \arguments{
 \item{ReportPlanName}{[required] The unique name of a report plan.}
 
-\item{IdempotencyToken}{A customer-chosen string that you can use to distinguish between
-otherwise identical calls to \code{StartReportJobInput}. Retrying a
-successful request with the same idempotency token results in a success
-message with no action taken.}
+\item{IdempotencyToken}{A customer-chosen string that you can use to distinguish between otherwise identical calls to \code{StartReportJobInput}. Retrying a successful request with the same idempotency token results in a success message with no action taken.}
 }
 \description{
 Starts an on-demand report job for the specified report plan.

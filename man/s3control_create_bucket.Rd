@@ -28,8 +28,7 @@ This is not supported by Amazon S3 on Outposts buckets.}
 
 This is not supported by Amazon S3 on Outposts buckets.}
 
-\item{GrantFullControl}{Allows grantee the read, write, read ACP, and write ACP permissions on
-the bucket.
+\item{GrantFullControl}{Allows grantee the read, write, read ACP, and write ACP permissions on the bucket.
 
 This is not supported by Amazon S3 on Outposts buckets.}
 
@@ -41,8 +40,7 @@ This is not supported by Amazon S3 on Outposts buckets.}
 
 This is not supported by Amazon S3 on Outposts buckets.}
 
-\item{GrantWrite}{Allows grantee to create, overwrite, and delete any object in the
-bucket.
+\item{GrantWrite}{Allows grantee to create, overwrite, and delete any object in the bucket.
 
 This is not supported by Amazon S3 on Outposts buckets.}
 
@@ -50,8 +48,7 @@ This is not supported by Amazon S3 on Outposts buckets.}
 
 This is not supported by Amazon S3 on Outposts buckets.}
 
-\item{ObjectLockEnabledForBucket}{Specifies whether you want S3 Object Lock to be enabled for the new
-bucket.
+\item{ObjectLockEnabledForBucket}{Specifies whether you want S3 Object Lock to be enabled for the new bucket.
 
 This is not supported by Amazon S3 on Outposts buckets.}
 

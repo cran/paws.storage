@@ -19,24 +19,17 @@ backup_list_recovery_points_by_backup_vault(
 )
 }
 \arguments{
-\item{BackupVaultName}{[required] The name of a logical container where backups are stored. Backup vaults
-are identified by names that are unique to the account used to create
-them and the Amazon Web Services Region where they are created.
+\item{BackupVaultName}{[required] The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.
 
-Backup vault name might not be available when a supported service
-creates the backup.}
+Backup vault name might not be available when a supported service creates the backup.}
 
 \item{BackupVaultAccountId}{This parameter will sort the list of recovery points by account ID.}
 
-\item{NextToken}{The next item following a partial list of returned items. For example,
-if a request is made to return \code{MaxResults} number of items, \code{NextToken}
-allows you to return more items in your list starting at the location
-pointed to by the next token.}
+\item{NextToken}{The next item following a partial list of returned items. For example, if a request is made to return \code{MaxResults} number of items, \code{NextToken} allows you to return more items in your list starting at the location pointed to by the next token.}
 
 \item{MaxResults}{The maximum number of items to be returned.}
 
-\item{ByResourceArn}{Returns only recovery points that match the specified resource Amazon
-Resource Name (ARN).}
+\item{ByResourceArn}{Returns only recovery points that match the specified resource Amazon Resource Name (ARN).}
 
 \item{ByResourceType}{Returns only recovery points that match the specified resource type(s):
 \itemize{
@@ -47,13 +40,13 @@ Resource Name (ARN).}
 \item \code{EBS} for Amazon Elastic Block Store
 \item \code{EC2} for Amazon Elastic Compute Cloud
 \item \code{EFS} for Amazon Elastic File System
+\item \code{EKS} for Amazon Elastic Kubernetes Service
 \item \code{FSx} for Amazon FSx
 \item \code{Neptune} for Amazon Neptune
 \item \code{RDS} for Amazon Relational Database Service
 \item \code{Redshift} for Amazon Redshift
 \item \code{S3} for Amazon Simple Storage Service (Amazon S3)
-\item \verb{SAP HANA on Amazon EC2} for SAP HANA databases on Amazon Elastic
-Compute Cloud instances
+\item \verb{SAP HANA on Amazon EC2} for SAP HANA databases on Amazon Elastic Compute Cloud instances
 \item \verb{Storage Gateway} for Storage Gateway
 \item \code{Timestream} for Amazon Timestream
 \item \code{VirtualMachine} for VMware virtual machines
@@ -61,14 +54,11 @@ Compute Cloud instances
 
 \item{ByBackupPlanId}{Returns only recovery points that match the specified backup plan ID.}
 
-\item{ByCreatedBefore}{Returns only recovery points that were created before the specified
-timestamp.}
+\item{ByCreatedBefore}{Returns only recovery points that were created before the specified timestamp.}
 
-\item{ByCreatedAfter}{Returns only recovery points that were created after the specified
-timestamp.}
+\item{ByCreatedAfter}{Returns only recovery points that were created after the specified timestamp.}
 
-\item{ByParentRecoveryPointArn}{This returns only recovery points that match the specified parent
-(composite) recovery point Amazon Resource Name (ARN).}
+\item{ByParentRecoveryPointArn}{This returns only recovery points that match the specified parent (composite) recovery point Amazon Resource Name (ARN).}
 }
 \description{
 Returns detailed information about the recovery points stored in a backup vault.

@@ -7,31 +7,17 @@
 storagegateway_update_smb_security_strategy(GatewayARN, SMBSecurityStrategy)
 }
 \arguments{
-\item{GatewayARN}{[required]}
+\item{GatewayARN}{[required] The Amazon Resource Name (ARN) of the gateway. Use the \code{\link[=storagegateway_list_gateways]{list_gateways}} operation to return a list of gateways for your account and Amazon Web Services Region.}
 
 \item{SMBSecurityStrategy}{[required] Specifies the type of security strategy.
 
-\code{ClientSpecified}: If you choose this option, requests are established
-based on what is negotiated by the client. This option is recommended
-when you want to maximize compatibility across different clients in your
-environment. Supported only for S3 File Gateway.
+\code{ClientSpecified}: If you choose this option, requests are established based on what is negotiated by the client. This option is recommended when you want to maximize compatibility across different clients in your environment. Supported only for S3 File Gateway.
 
-\code{MandatorySigning}: If you choose this option, File Gateway only allows
-connections from SMBv2 or SMBv3 clients that have signing enabled. This
-option works with SMB clients on Microsoft Windows Vista, Windows Server
-2008 or newer.
+\code{MandatorySigning}: If you choose this option, File Gateway only allows connections from SMBv2 or SMBv3 clients that have signing enabled. This option works with SMB clients on Microsoft Windows Vista, Windows Server 2008 or newer.
 
-\code{MandatoryEncryption}: If you choose this option, File Gateway only
-allows connections from SMBv3 clients that have encryption enabled. This
-option is recommended for environments that handle sensitive data. This
-option works with SMB clients on Microsoft Windows 8, Windows Server
-2012 or newer.
+\code{MandatoryEncryption}: If you choose this option, File Gateway only allows connections from SMBv3 clients that have encryption enabled. This option is recommended for environments that handle sensitive data. This option works with SMB clients on Microsoft Windows 8, Windows Server 2012 or newer.
 
-\code{MandatoryEncryptionNoAes128}: If you choose this option, File Gateway
-only allows connections from SMBv3 clients that use 256-bit AES
-encryption algorithms. 128-bit algorithms are not allowed. This option
-is recommended for environments that handle sensitive data. It works
-with SMB clients on Microsoft Windows 8, Windows Server 2012, or later.}
+\code{MandatoryEncryptionNoAes128}: If you choose this option, File Gateway only allows connections from SMBv3 clients that use 256-bit AES encryption algorithms. 128-bit algorithms are not allowed. This option is recommended for environments that handle sensitive data. It works with SMB clients on Microsoft Windows 8, Windows Server 2012, or later.}
 }
 \description{
 Updates the SMB security strategy level for an Amazon S3 file gateway. This action is only supported for Amazon S3 file gateways.

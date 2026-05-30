@@ -11,18 +11,11 @@ s3control_list_access_points_for_object_lambda(
 )
 }
 \arguments{
-\item{AccountId}{[required] The account ID for the account that owns the specified Object Lambda
-Access Point.}
+\item{AccountId}{[required] The account ID for the account that owns the specified Object Lambda Access Point.}
 
-\item{NextToken}{If the list has more access points than can be returned in one call to
-this API, this field contains a continuation token that you can provide
-in subsequent calls to this API to retrieve additional access points.}
+\item{NextToken}{If the list has more access points than can be returned in one call to this API, this field contains a continuation token that you can provide in subsequent calls to this API to retrieve additional access points.}
 
-\item{MaxResults}{The maximum number of access points that you want to include in the
-list. The response may contain fewer access points but will never
-contain more. If there are more than this number of access points, then
-the response will include a continuation token in the \code{NextToken} field
-that you can use to retrieve the next page of access points.}
+\item{MaxResults}{The maximum number of access points that you want to include in the list. The response may contain fewer access points but will never contain more. If there are more than this number of access points, then the response will include a continuation token in the \code{NextToken} field that you can use to retrieve the next page of access points.}
 }
 \description{
 This operation is not supported by directory buckets.

@@ -10,11 +10,9 @@ storagegateway_update_bandwidth_rate_limit_schedule(
 )
 }
 \arguments{
-\item{GatewayARN}{[required]}
+\item{GatewayARN}{[required] The Amazon Resource Name (ARN) of the gateway. Use the \code{\link[=storagegateway_list_gateways]{list_gateways}} operation to return a list of gateways for your account and Amazon Web Services Region.}
 
-\item{BandwidthRateLimitIntervals}{[required] An array containing bandwidth rate limit schedule intervals for a
-gateway. When no bandwidth rate limit intervals have been scheduled, the
-array is empty.}
+\item{BandwidthRateLimitIntervals}{[required] An array containing bandwidth rate limit schedule intervals for a gateway. When no bandwidth rate limit intervals have been scheduled, the array is empty.}
 }
 \description{
 Updates the bandwidth rate limit schedule for a specified gateway. By default, gateways do not have bandwidth rate limit schedules, which means no bandwidth rate limiting is in effect. Use this to initiate or update a gateway's bandwidth rate limit schedule. This operation is supported for volume, tape, and S3 file gateways. S3 file gateways support bandwidth rate limits for upload only. FSx file gateways do not support bandwidth rate limits.

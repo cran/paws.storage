@@ -9,9 +9,7 @@ s3_delete_bucket_ownership_controls(Bucket, ExpectedBucketOwner = NULL)
 \arguments{
 \item{Bucket}{[required] The Amazon S3 bucket whose \code{OwnershipControls} you want to delete.}
 
-\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you
-provide does not match the actual owner of the bucket, the request fails
-with the HTTP status code \verb{403 Forbidden} (access denied).}
+\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you provide does not match the actual owner of the bucket, the request fails with the HTTP status code \verb{403 Forbidden} (access denied).}
 }
 \description{
 This operation is not supported for directory buckets.

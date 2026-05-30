@@ -8,12 +8,9 @@ system}
 efs_create_replication_configuration(SourceFileSystemId, Destinations)
 }
 \arguments{
-\item{SourceFileSystemId}{[required] Specifies the Amazon EFS file system that you want to replicate. This
-file system cannot already be a source or destination file system in
-another replication configuration.}
+\item{SourceFileSystemId}{[required] Specifies the Amazon EFS file system that you want to replicate. This file system cannot already be a source or destination file system in another replication configuration.}
 
-\item{Destinations}{[required] An array of destination configuration objects. Only one destination
-configuration object is supported.}
+\item{Destinations}{[required] An array of destination configuration objects. Only one destination configuration object is supported.}
 }
 \description{
 Creates a replication configuration to either a new or existing EFS file system. For more information, see \href{https://docs.aws.amazon.com/efs/latest/ug/efs-replication.html}{Amazon EFS replication} in the \emph{Amazon EFS User Guide}. The replication configuration specifies the following:

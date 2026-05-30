@@ -7,8 +7,7 @@
 efs_describe_backup_policy(FileSystemId)
 }
 \arguments{
-\item{FileSystemId}{[required] Specifies which EFS file system for which to retrieve the
-\code{BackupPolicy}.}
+\item{FileSystemId}{[required] Specifies which EFS file system for which to retrieve the \code{BackupPolicy}.}
 }
 \description{
 Returns the backup policy for the specified EFS file system.

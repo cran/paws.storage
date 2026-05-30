@@ -14,14 +14,11 @@ s3_put_bucket_notification_configuration(
 \arguments{
 \item{Bucket}{[required] The name of the bucket.}
 
-\item{NotificationConfiguration}{[required]}
+\item{NotificationConfiguration}{[required] A container for specifying the notification configuration of the bucket. If this element is empty, notifications are turned off for the bucket.}
 
-\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you
-provide does not match the actual owner of the bucket, the request fails
-with the HTTP status code \verb{403 Forbidden} (access denied).}
+\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you provide does not match the actual owner of the bucket, the request fails with the HTTP status code \verb{403 Forbidden} (access denied).}
 
-\item{SkipDestinationValidation}{Skips validation of Amazon SQS, Amazon SNS, and Lambda destinations.
-True or false value.}
+\item{SkipDestinationValidation}{Skips validation of Amazon SQS, Amazon SNS, and Lambda destinations. True or false value.}
 }
 \description{
 This operation is not supported for directory buckets.

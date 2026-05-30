@@ -2,8 +2,8 @@
 % Please edit documentation in R/omics_operations.R
 \name{omics_create_run_cache}
 \alias{omics_create_run_cache}
-\title{You can create a run cache to save the task outputs from completed tasks
-in a run for a private workflow}
+\title{Creates a run cache to store and reference task outputs from completed
+private runs}
 \usage{
 omics_create_run_cache(
   cacheBehavior = NULL,
@@ -16,45 +16,30 @@ omics_create_run_cache(
 )
 }
 \arguments{
-\item{cacheBehavior}{Default cache behavior for runs that use this cache. Supported values
-are:
+\item{cacheBehavior}{Default cache behavior for runs that use this cache. Supported values are:
 
-\code{CACHE_ON_FAILURE}: Caches task outputs from completed tasks for runs
-that fail. This setting is useful if you're debugging a workflow that
-fails after several tasks completed successfully. The subsequent run
-uses the cache outputs for previously-completed tasks if the task
-definition, inputs, and container in ECR are identical to the prior run.
+\code{CACHE_ON_FAILURE}: Caches task outputs from completed tasks for runs that fail. This setting is useful if you're debugging a workflow that fails after several tasks completed successfully. The subsequent run uses the cache outputs for previously-completed tasks if the task definition, inputs, and container in ECR are identical to the prior run.
 
-\code{CACHE_ALWAYS}: Caches task outputs from completed tasks for all runs.
-This setting is useful in development mode, but do not use it in a
-production setting.
+\code{CACHE_ALWAYS}: Caches task outputs from completed tasks for all runs. This setting is useful in development mode, but do not use it in a production setting.
 
-If you don't specify a value, the default behavior is CACHE_ON_FAILURE.
-When you start a run that uses this cache, you can override the default
-cache behavior.
+If you don't specify a value, the default behavior is CACHE_ON_FAILURE. When you start a run that uses this cache, you can override the default cache behavior.
 
-For more information, see \href{https://docs.aws.amazon.com/omics/latest/dev/how-run-cache.html#run-cache-behavior}{Run cache behavior}
-in the AWS HealthOmics User Guide.}
+For more information, see \href{https://docs.aws.amazon.com/omics/latest/dev/how-run-cache.html#run-cache-behavior}{Run cache behavior} in the \emph{Amazon Web Services HealthOmics User Guide}.}
 
-\item{cacheS3Location}{[required] Specify the S3 location for storing the cached task outputs. This data
-must be immediately accessible (not in an archived state).}
+\item{cacheS3Location}{[required] Specify the S3 location for storing the cached task outputs. This data must be immediately accessible (not in an archived state).}
 
 \item{description}{Enter a description of the run cache.}
 
 \item{name}{Enter a user-friendly name for the run cache.}
 
-\item{requestId}{[required] A unique request token, to ensure idempotency. If you don't specify a
-token, HealthOmics automatically generates a universally unique
-identifier (UUID) for the request.}
+\item{requestId}{[required] A unique request token, to ensure idempotency. If you don't specify a token, Amazon Web Services HealthOmics automatically generates a universally unique identifier (UUID) for the request.}
 
 \item{tags}{Specify one or more tags to associate with this run cache.}
 
-\item{cacheBucketOwnerId}{The AWS account ID of the expected owner of the S3 bucket for the run
-cache. If not provided, your account ID is set as the owner of the
-bucket.}
+\item{cacheBucketOwnerId}{The Amazon Web Services account ID of the expected owner of the S3 bucket for the run cache. If not provided, your account ID is set as the owner of the bucket.}
 }
 \description{
-You can create a run cache to save the task outputs from completed tasks in a run for a private workflow. Subsequent runs use the task outputs from the cache, rather than computing the task outputs again. You specify an Amazon S3 location where HealthOmics saves the cached data. This data must be immediately accessible (not in an archived state).
+Creates a run cache to store and reference task outputs from completed private runs. Specify an Amazon S3 location where Amazon Web Services HealthOmics saves the cached data. This data must be immediately accessible and not in an archived state. You can save intermediate task files to a run cache if they are declared as task outputs in the workflow definition file.
 
 See \url{https://www.paws-r-sdk.com/docs/omics_create_run_cache/} for full documentation.
 }

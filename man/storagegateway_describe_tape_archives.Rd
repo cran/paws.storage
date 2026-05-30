@@ -12,14 +12,11 @@ storagegateway_describe_tape_archives(
 )
 }
 \arguments{
-\item{TapeARNs}{Specifies one or more unique Amazon Resource Names (ARNs) that represent
-the virtual tapes you want to describe.}
+\item{TapeARNs}{Specifies one or more unique Amazon Resource Names (ARNs) that represent the virtual tapes you want to describe.}
 
-\item{Marker}{An opaque string that indicates the position at which to begin
-describing virtual tapes.}
+\item{Marker}{An opaque string that indicates the position at which to begin describing virtual tapes.}
 
-\item{Limit}{Specifies that the number of virtual tapes described be limited to the
-specified number.}
+\item{Limit}{Specifies that the number of virtual tapes described be limited to the specified number.}
 }
 \description{
 Returns a description of specified virtual tapes in the virtual tape shelf (VTS). This operation is only supported in the tape gateway type.

@@ -12,38 +12,21 @@ s3_list_buckets(
 )
 }
 \arguments{
-\item{MaxBuckets}{Maximum number of buckets to be returned in response. When the number is
-more than the count of buckets that are owned by an Amazon Web Services
-account, return all the buckets in response.}
+\item{MaxBuckets}{Maximum number of buckets to be returned in response. When the number is more than the count of buckets that are owned by an Amazon Web Services account, return all the buckets in response.}
 
-\item{ContinuationToken}{\code{ContinuationToken} indicates to Amazon S3 that the list is being
-continued on this bucket with a token. \code{ContinuationToken} is obfuscated
-and is not a real key. You can use this \code{ContinuationToken} for
-pagination of the list results.
+\item{ContinuationToken}{\code{ContinuationToken} indicates to Amazon S3 that the list is being continued on this bucket with a token. \code{ContinuationToken} is obfuscated and is not a real key. You can use this \code{ContinuationToken} for pagination of the list results.
 
 Length Constraints: Minimum length of 0. Maximum length of 1024.
 
 Required: No.
 
-If you specify the \code{bucket-region}, \code{prefix}, or \code{continuation-token}
-query parameters without using \code{max-buckets} to set the maximum number
-of buckets returned in the response, Amazon S3 applies a default page
-size of 10,000 and provides a continuation token if there are more
-buckets.}
+If you specify the \code{bucket-region}, \code{prefix}, or \code{continuation-token} query parameters without using \code{max-buckets} to set the maximum number of buckets returned in the response, Amazon S3 applies a default page size of 10,000 and provides a continuation token if there are more buckets.}
 
-\item{Prefix}{Limits the response to bucket names that begin with the specified bucket
-name prefix.}
+\item{Prefix}{Limits the response to bucket names that begin with the specified bucket name prefix.}
 
-\item{BucketRegion}{Limits the response to buckets that are located in the specified Amazon
-Web Services Region. The Amazon Web Services Region must be expressed
-according to the Amazon Web Services Region code, such as \code{us-west-2}
-for the US West (Oregon) Region. For a list of the valid values for all
-of the Amazon Web Services Regions, see \href{https://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region}{Regions and Endpoints}.
+\item{BucketRegion}{Limits the response to buckets that are located in the specified Amazon Web Services Region. The Amazon Web Services Region must be expressed according to the Amazon Web Services Region code, such as \code{us-west-2} for the US West (Oregon) Region. For a list of the valid values for all of the Amazon Web Services Regions, see \href{https://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region}{Regions and Endpoints}.
 
-Requests made to a Regional endpoint that is different from the
-\code{bucket-region} parameter are not supported. For example, if you want to
-limit the response to your buckets in Region \code{us-west-2}, the request
-must be made to an endpoint in Region \code{us-west-2}.}
+Requests made to a Regional endpoint that is different from the \code{bucket-region} parameter are not supported. For example, if you want to limit the response to your buckets in Region \code{us-west-2}, the request must be made to an endpoint in Region \code{us-west-2}.}
 }
 \description{
 This operation is not supported for directory buckets.

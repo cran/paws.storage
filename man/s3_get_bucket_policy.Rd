@@ -9,38 +9,17 @@ s3_get_bucket_policy(Bucket, ExpectedBucketOwner = NULL)
 \arguments{
 \item{Bucket}{[required] The bucket name to get the bucket policy for.
 
-\strong{Directory buckets} - When you use this operation with a directory
-bucket, you must use path-style requests in the format
-\verb{https://s3express-control.region-code.amazonaws.com/bucket-name }.
-Virtual-hosted-style requests aren't supported. Directory bucket names
-must be unique in the chosen Zone (Availability Zone or Local Zone).
-Bucket names must also follow the format
-\code{ bucket-base-name--zone-id--x-s3} (for example,
-\code{ DOC-EXAMPLE-BUCKET--usw2-az1--x-s3}). For information about bucket
-naming restrictions, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-bucket-naming-rules.html}{Directory bucket naming rules}
-in the \emph{Amazon S3 User Guide}
+\strong{Directory buckets} - When you use this operation with a directory bucket, you must use path-style requests in the format \verb{https://s3express-control.region-code.amazonaws.com/bucket-name }. Virtual-hosted-style requests aren't supported. Directory bucket names must be unique in the chosen Zone (Availability Zone or Local Zone). Bucket names must also follow the format \code{ bucket-base-name--zone-id--x-s3} (for example, \code{ DOC-EXAMPLE-BUCKET--usw2-az1--x-s3}). For information about bucket naming restrictions, see \href{https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-bucket-naming-rules.html}{Directory bucket naming rules} in the \emph{Amazon S3 User Guide}
 
-\strong{Access points} - When you use this API operation with an access
-point, provide the alias of the access point in place of the bucket
-name.
+\strong{Access points} - When you use this API operation with an access point, provide the alias of the access point in place of the bucket name.
 
-\strong{Object Lambda access points} - When you use this API operation with
-an Object Lambda access point, provide the alias of the Object Lambda
-access point in place of the bucket name. If the Object Lambda access
-point alias in a request is not valid, the error code
-\code{InvalidAccessPointAliasError} is returned. For more information about
-\code{InvalidAccessPointAliasError}, see \href{https://docs.aws.amazon.com/AmazonS3/latest/API/ErrorResponses.html#ErrorCodeList}{List of Error Codes}.
+\strong{Object Lambda access points} - When you use this API operation with an Object Lambda access point, provide the alias of the Object Lambda access point in place of the bucket name. If the Object Lambda access point alias in a request is not valid, the error code \code{InvalidAccessPointAliasError} is returned. For more information about \code{InvalidAccessPointAliasError}, see \href{https://docs.aws.amazon.com/AmazonS3/latest/API/ErrorResponses.html#ErrorCodeList}{List of Error Codes}.
 
-Access points and Object Lambda access points are not supported by
-directory buckets.}
+Object Lambda access points are not supported by directory buckets.}
 
-\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you
-provide does not match the actual owner of the bucket, the request fails
-with the HTTP status code \verb{403 Forbidden} (access denied).
+\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you provide does not match the actual owner of the bucket, the request fails with the HTTP status code \verb{403 Forbidden} (access denied).
 
-For directory buckets, this header is not supported in this API
-operation. If you specify this header, the request fails with the HTTP
-status code \verb{501 Not Implemented}.}
+For directory buckets, this header is not supported in this API operation. If you specify this header, the request fails with the HTTP status code \verb{501 Not Implemented}.}
 }
 \description{
 Returns the policy of a specified bucket.

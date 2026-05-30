@@ -2,20 +2,20 @@
 % Please edit documentation in R/omics_operations.R
 \name{omics_list_reference_stores}
 \alias{omics_list_reference_stores}
-\title{Retrieves a list of reference stores}
+\title{Retrieves a list of reference stores linked to your account and returns
+their metadata in JSON format}
 \usage{
 omics_list_reference_stores(maxResults = NULL, nextToken = NULL, filter = NULL)
 }
 \arguments{
 \item{maxResults}{The maximum number of stores to return in one page of results.}
 
-\item{nextToken}{Specify the pagination token from a previous request to retrieve the
-next page of results.}
+\item{nextToken}{Specify the pagination token from a previous request to retrieve the next page of results.}
 
 \item{filter}{A filter to apply to the list.}
 }
 \description{
-Retrieves a list of reference stores.
+Retrieves a list of reference stores linked to your account and returns their metadata in JSON format.
 
 See \url{https://www.paws-r-sdk.com/docs/omics_list_reference_stores/} for full documentation.
 }

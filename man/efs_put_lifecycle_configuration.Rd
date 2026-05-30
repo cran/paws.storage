@@ -7,39 +7,20 @@
 efs_put_lifecycle_configuration(FileSystemId, LifecyclePolicies)
 }
 \arguments{
-\item{FileSystemId}{[required] The ID of the file system for which you are creating the
-\code{LifecycleConfiguration} object (String).}
+\item{FileSystemId}{[required] The ID of the file system for which you are creating the \code{LifecycleConfiguration} object (String).}
 
-\item{LifecyclePolicies}{[required] An array of \code{LifecyclePolicy} objects that define the file system's
-\code{LifecycleConfiguration} object. A \code{LifecycleConfiguration} object
-informs lifecycle management of the following:
+\item{LifecyclePolicies}{[required] An array of \code{LifecyclePolicy} objects that define the file system's \code{LifecycleConfiguration} object. A \code{LifecycleConfiguration} object informs lifecycle management of the following:
 \itemize{
-\item \strong{\code{TransitionToIA}} – When to move files in the file system from
-primary storage (Standard storage class) into the Infrequent Access
-(IA) storage.
-\item \strong{\code{TransitionToArchive}} – When to move files in the file system
-from their current storage class (either IA or Standard storage)
-into the Archive storage.
+\item \strong{\code{TransitionToIA}} – When to move files in the file system from primary storage (Standard storage class) into the Infrequent Access (IA) storage.
+\item \strong{\code{TransitionToArchive}} – When to move files in the file system from their current storage class (either IA or Standard storage) into the Archive storage.
 
-File systems cannot transition into Archive storage before
-transitioning into IA storage. Therefore, TransitionToArchive must
-either not be set or must be later than TransitionToIA.
+File systems cannot transition into Archive storage before transitioning into IA storage. Therefore, TransitionToArchive must either not be set or must be later than TransitionToIA.
 
-The Archive storage class is available only for file systems that
-use the Elastic throughput mode and the General Purpose performance
-mode.
-\item \strong{\code{TransitionToPrimaryStorageClass}} – Whether to move files in the
-file system back to primary storage (Standard storage class) after
-they are accessed in IA or Archive storage.
+The Archive storage class is available only for file systems that use the Elastic throughput mode and the General Purpose performance mode.
+\item \strong{\code{TransitionToPrimaryStorageClass}} – Whether to move files in the file system back to primary storage (Standard storage class) after they are accessed in IA or Archive storage.
 }
 
-When using the \code{put-lifecycle-configuration} CLI command or the
-\code{\link[=efs_put_lifecycle_configuration]{put_lifecycle_configuration}} API
-action, Amazon EFS requires that each \code{LifecyclePolicy} object have only
-a single transition. This means that in a request body,
-\code{LifecyclePolicies} must be structured as an array of \code{LifecyclePolicy}
-objects, one object for each storage transition. See the example
-requests in the following section for more information.}
+When using the \code{put-lifecycle-configuration} CLI command or the \code{\link[=efs_put_lifecycle_configuration]{put_lifecycle_configuration}} API action, Amazon EFS requires that each \code{LifecyclePolicy} object have only a single transition. This means that in a request body, \code{LifecyclePolicies} must be structured as an array of \code{LifecyclePolicy} objects, one object for each storage transition. See the example requests in the following section for more information.}
 }
 \description{
 Use this action to manage storage for your file system. A \code{LifecycleConfiguration} consists of one or more \code{LifecyclePolicy} objects that define the following:

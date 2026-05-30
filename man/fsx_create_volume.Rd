@@ -14,16 +14,15 @@ fsx_create_volume(
 )
 }
 \arguments{
-\item{ClientRequestToken}{}
+\item{ClientRequestToken}{(Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.}
 
-\item{VolumeType}{[required] Specifies the type of volume to create; \code{ONTAP} and \code{OPENZFS} are the
-only valid volume types.}
+\item{VolumeType}{[required] Specifies the type of volume to create; \code{ONTAP} and \code{OPENZFS} are the only valid volume types.}
 
 \item{Name}{[required] Specifies the name of the volume that you're creating.}
 
 \item{OntapConfiguration}{Specifies the configuration to use when creating the ONTAP volume.}
 
-\item{Tags}{}
+\item{Tags}{A list of \code{Tag} values, with a maximum of 50 elements.}
 
 \item{OpenZFSConfiguration}{Specifies the configuration to use when creating the OpenZFS volume.}
 }

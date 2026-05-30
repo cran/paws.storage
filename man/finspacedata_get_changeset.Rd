@@ -7,8 +7,7 @@
 finspacedata_get_changeset(datasetId, changesetId)
 }
 \arguments{
-\item{datasetId}{[required] The unique identifier for the FinSpace Dataset where the Changeset is
-created.}
+\item{datasetId}{[required] The unique identifier for the FinSpace Dataset where the Changeset is created.}
 
 \item{changesetId}{[required] The unique identifier of the Changeset for which to get data.}
 }

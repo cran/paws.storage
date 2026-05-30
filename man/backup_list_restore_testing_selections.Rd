@@ -13,13 +13,9 @@ backup_list_restore_testing_selections(
 \arguments{
 \item{MaxResults}{The maximum number of items to be returned.}
 
-\item{NextToken}{The next item following a partial list of returned items. For example,
-if a request is made to return \code{MaxResults} number of items, \code{NextToken}
-allows you to return more items in your list starting at the location
-pointed to by the nexttoken.}
+\item{NextToken}{The next item following a partial list of returned items. For example, if a request is made to return \code{MaxResults} number of items, \code{NextToken} allows you to return more items in your list starting at the location pointed to by the nexttoken.}
 
-\item{RestoreTestingPlanName}{[required] Returns restore testing selections by the specified restore testing plan
-name.}
+\item{RestoreTestingPlanName}{[required] Returns restore testing selections by the specified restore testing plan name.}
 }
 \description{
 Returns a list of restore testing selections. Can be filtered by \code{MaxResults} and \code{RestoreTestingPlanName}.

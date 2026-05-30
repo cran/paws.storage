@@ -10,10 +10,7 @@ storagegateway_detach_volume(VolumeARN, ForceDetach = NULL)
 \arguments{
 \item{VolumeARN}{[required] The Amazon Resource Name (ARN) of the volume to detach from the gateway.}
 
-\item{ForceDetach}{Set to \code{true} to forcibly remove the iSCSI connection of the target
-volume and detach the volume. The default is \code{false}. If this value is
-set to \code{false}, you must manually disconnect the iSCSI connection from
-the target volume.
+\item{ForceDetach}{Set to \code{true} to forcibly remove the iSCSI connection of the target volume and detach the volume. The default is \code{false}. If this value is set to \code{false}, you must manually disconnect the iSCSI connection from the target volume.
 
 Valid Values: \code{true} | \code{false}}
 }

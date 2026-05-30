@@ -12,13 +12,7 @@ NULL
 #' See [https://www.paws-r-sdk.com/docs/s3control_associate_access_grants_identity_center/](https://www.paws-r-sdk.com/docs/s3control_associate_access_grants_identity_center/) for full documentation.
 #'
 #' @param AccountId &#91;required&#93; The Amazon Web Services account ID of the S3 Access Grants instance.
-#' @param IdentityCenterArn &#91;required&#93; The Amazon Resource Name (ARN) of the Amazon Web Services IAM Identity
-#' Center instance that you are associating with your S3 Access Grants
-#' instance. An IAM Identity Center instance is your corporate identity
-#' directory that you added to the IAM Identity Center. You can use the
-#' [ListInstances](https://docs.aws.amazon.com/singlesignon/latest/APIReference/API_ListInstances.html)
-#' API operation to retrieve a list of your Identity Center instances and
-#' their ARNs.
+#' @param IdentityCenterArn &#91;required&#93; The Amazon Resource Name (ARN) of the Amazon Web Services IAM Identity Center instance that you are associating with your S3 Access Grants instance. An IAM Identity Center instance is your corporate identity directory that you added to the IAM Identity Center. You can use the [ListInstances](https://docs.aws.amazon.com/singlesignon/latest/APIReference/API_ListInstances.html) API operation to retrieve a list of your Identity Center instances and their ARNs.
 #'
 #' @keywords internal
 #'
@@ -50,42 +44,21 @@ s3control_associate_access_grants_identity_center <- function(AccountId, Identit
 #' See [https://www.paws-r-sdk.com/docs/s3control_create_access_grant/](https://www.paws-r-sdk.com/docs/s3control_create_access_grant/) for full documentation.
 #'
 #' @param AccountId &#91;required&#93; The Amazon Web Services account ID of the S3 Access Grants instance.
-#' @param AccessGrantsLocationId &#91;required&#93; The ID of the registered location to which you are granting access. S3
-#' Access Grants assigns this ID when you register the location. S3 Access
-#' Grants assigns the ID `default` to the default location `s3://` and
-#' assigns an auto-generated ID to other locations that you register.
+#' @param AccessGrantsLocationId &#91;required&#93; The ID of the registered location to which you are granting access. S3 Access Grants assigns this ID when you register the location. S3 Access Grants assigns the ID `default` to the default location `s3://` and assigns an auto-generated ID to other locations that you register.
 #' 
-#' If you are passing the `default` location, you cannot create an access
-#' grant for the entire default location. You must also specify a bucket or
-#' a bucket and prefix in the `Subprefix` field.
-#' @param AccessGrantsLocationConfiguration The configuration options of the grant location. The grant location is
-#' the S3 path to the data to which you are granting access. It contains
-#' the `S3SubPrefix` field. The grant scope is the result of appending the
-#' subprefix to the location scope of the registered location.
-#' @param Grantee &#91;required&#93; The user, group, or role to which you are granting access. You can grant
-#' access to an IAM user or role. If you have added your corporate
-#' directory to Amazon Web Services IAM Identity Center and associated your
-#' Identity Center instance with your S3 Access Grants instance, the
-#' grantee can also be a corporate directory user or group.
-#' @param Permission &#91;required&#93; The type of access that you are granting to your S3 data, which can be
-#' set to one of the following values:
+#' If you are passing the `default` location, you cannot create an access grant for the entire default location. You must also specify a bucket or a bucket and prefix in the `Subprefix` field.
+#' @param AccessGrantsLocationConfiguration The configuration options of the grant location. The grant location is the S3 path to the data to which you are granting access. It contains the `S3SubPrefix` field. The grant scope is the result of appending the subprefix to the location scope of the registered location.
+#' @param Grantee &#91;required&#93; The user, group, or role to which you are granting access. You can grant access to an IAM user or role. If you have added your corporate directory to Amazon Web Services IAM Identity Center and associated your Identity Center instance with your S3 Access Grants instance, the grantee can also be a corporate directory user or group.
+#' @param Permission &#91;required&#93; The type of access that you are granting to your S3 data, which can be set to one of the following values:
 #' 
 #' -   `READ` – Grant read-only access to the S3 data.
 #' 
 #' -   `WRITE` – Grant write-only access to the S3 data.
 #' 
 #' -   `READWRITE` – Grant both read and write access to the S3 data.
-#' @param ApplicationArn The Amazon Resource Name (ARN) of an Amazon Web Services IAM Identity
-#' Center application associated with your Identity Center instance. If an
-#' application ARN is included in the request to create an access grant,
-#' the grantee can only access the S3 data through this application.
-#' @param S3PrefixType The type of `S3SubPrefix`. The only possible value is `Object`. Pass
-#' this value if the access grant scope is an object. Do not pass this
-#' value if the access grant scope is a bucket or a bucket and a prefix.
-#' @param Tags The Amazon Web Services resource tags that you are adding to the access
-#' grant. Each tag is a label consisting of a user-defined key and value.
-#' Tags can help you manage, identify, organize, search for, and filter
-#' resources.
+#' @param ApplicationArn The Amazon Resource Name (ARN) of an Amazon Web Services IAM Identity Center application associated with your Identity Center instance. If an application ARN is included in the request to create an access grant, the grantee can only access the S3 data through this application.
+#' @param S3PrefixType The type of `S3SubPrefix`. The only possible value is `Object`. Pass this value if the access grant scope is an object. Do not pass this value if the access grant scope is a bucket or a bucket and a prefix.
+#' @param Tags The Amazon Web Services resource tags that you are adding to the access grant. Each tag is a label consisting of a user-defined key and value. Tags can help you manage, identify, organize, search for, and filter resources.
 #'
 #' @keywords internal
 #'
@@ -118,19 +91,8 @@ s3control_create_access_grant <- function(AccountId, AccessGrantsLocationId, Acc
 #' See [https://www.paws-r-sdk.com/docs/s3control_create_access_grants_instance/](https://www.paws-r-sdk.com/docs/s3control_create_access_grants_instance/) for full documentation.
 #'
 #' @param AccountId &#91;required&#93; The Amazon Web Services account ID of the S3 Access Grants instance.
-#' @param IdentityCenterArn If you would like to associate your S3 Access Grants instance with an
-#' Amazon Web Services IAM Identity Center instance, use this field to pass
-#' the Amazon Resource Name (ARN) of the Amazon Web Services IAM Identity
-#' Center instance that you are associating with your S3 Access Grants
-#' instance. An IAM Identity Center instance is your corporate identity
-#' directory that you added to the IAM Identity Center. You can use the
-#' [ListInstances](https://docs.aws.amazon.com/singlesignon/latest/APIReference/API_ListInstances.html)
-#' API operation to retrieve a list of your Identity Center instances and
-#' their ARNs.
-#' @param Tags The Amazon Web Services resource tags that you are adding to the S3
-#' Access Grants instance. Each tag is a label consisting of a user-defined
-#' key and value. Tags can help you manage, identify, organize, search for,
-#' and filter resources.
+#' @param IdentityCenterArn If you would like to associate your S3 Access Grants instance with an Amazon Web Services IAM Identity Center instance, use this field to pass the Amazon Resource Name (ARN) of the Amazon Web Services IAM Identity Center instance that you are associating with your S3 Access Grants instance. An IAM Identity Center instance is your corporate identity directory that you added to the IAM Identity Center. You can use the [ListInstances](https://docs.aws.amazon.com/singlesignon/latest/APIReference/API_ListInstances.html) API operation to retrieve a list of your Identity Center instances and their ARNs.
+#' @param Tags The Amazon Web Services resource tags that you are adding to the S3 Access Grants instance. Each tag is a label consisting of a user-defined key and value. Tags can help you manage, identify, organize, search for, and filter resources.
 #'
 #' @keywords internal
 #'
@@ -163,21 +125,9 @@ s3control_create_access_grants_instance <- function(AccountId, IdentityCenterArn
 #' See [https://www.paws-r-sdk.com/docs/s3control_create_access_grants_location/](https://www.paws-r-sdk.com/docs/s3control_create_access_grants_location/) for full documentation.
 #'
 #' @param AccountId &#91;required&#93; The Amazon Web Services account ID of the S3 Access Grants instance.
-#' @param LocationScope &#91;required&#93; The S3 path to the location that you are registering. The location scope
-#' can be the default S3 location `s3://`, the S3 path to a bucket
-#' `s3://<bucket>`, or the S3 path to a bucket and prefix
-#' `s3://<bucket>/<prefix>`. A prefix in S3 is a string of characters at
-#' the beginning of an object key name used to organize the objects that
-#' you store in your S3 buckets. For example, object key names that start
-#' with the `engineering/` prefix or object key names that start with the
-#' `marketing/campaigns/` prefix.
-#' @param IAMRoleArn &#91;required&#93; The Amazon Resource Name (ARN) of the IAM role for the registered
-#' location. S3 Access Grants assumes this role to manage access to the
-#' registered location.
-#' @param Tags The Amazon Web Services resource tags that you are adding to the S3
-#' Access Grants location. Each tag is a label consisting of a user-defined
-#' key and value. Tags can help you manage, identify, organize, search for,
-#' and filter resources.
+#' @param LocationScope &#91;required&#93; The S3 path to the location that you are registering. The location scope can be the default S3 location `s3://`, the S3 path to a bucket `s3://<bucket>`, or the S3 path to a bucket and prefix `s3://<bucket>/<prefix>`. A prefix in S3 is a string of characters at the beginning of an object key name used to organize the objects that you store in your S3 buckets. For example, object key names that start with the `engineering/` prefix or object key names that start with the `marketing/campaigns/` prefix.
+#' @param IAMRoleArn &#91;required&#93; The Amazon Resource Name (ARN) of the IAM role for the registered location. S3 Access Grants assumes this role to manage access to the registered location.
+#' @param Tags The Amazon Web Services resource tags that you are adding to the S3 Access Grants location. Each tag is a label consisting of a user-defined key and value. Tags can help you manage, identify, organize, search for, and filter resources.
 #'
 #' @keywords internal
 #'
@@ -201,50 +151,38 @@ s3control_create_access_grants_location <- function(AccountId, LocationScope, IA
 }
 .s3control$operations$create_access_grants_location <- s3control_create_access_grants_location
 
-#' This operation is not supported by directory buckets
+#' Creates an access point and associates it to a specified bucket
 #'
 #' @description
-#' This operation is not supported by directory buckets.
+#' Creates an access point and associates it to a specified bucket. For more information, see [Managing access to shared datasets with access points](https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points.html) or [Managing access to shared datasets in directory buckets with access points](https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points-directory-buckets.html) in the *Amazon S3 User Guide*.
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_create_access_point/](https://www.paws-r-sdk.com/docs/s3control_create_access_point/) for full documentation.
 #'
-#' @param AccountId &#91;required&#93; The Amazon Web Services account ID for the account that owns the
-#' specified access point.
+#' @param AccountId &#91;required&#93; The Amazon Web Services account ID for the account that owns the specified access point.
 #' @param Name &#91;required&#93; The name you want to assign to this access point.
-#' @param Bucket &#91;required&#93; The name of the bucket that you want to associate this access point
-#' with.
 #' 
-#' For using this parameter with Amazon S3 on Outposts with the REST API,
-#' you must specify the name and the x-amz-outpost-id as well.
+#' For directory buckets, the access point name must consist of a base name that you provide and suffix that includes the `ZoneID` (Amazon Web Services Availability Zone or Local Zone) of your bucket location, followed by `--xa-s3`. For more information, see [Managing access to shared datasets in directory buckets with access points](https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points-directory-buckets.html) in the *Amazon S3 User Guide*.
+#' @param Bucket &#91;required&#93; The name of the bucket that you want to associate this access point with.
 #' 
-#' For using this parameter with S3 on Outposts with the Amazon Web
-#' Services SDK and CLI, you must specify the ARN of the bucket accessed in
-#' the format
-#' `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>`.
-#' For example, to access the bucket `reports` through Outpost `my-outpost`
-#' owned by account `123456789012` in Region `us-west-2`, use the URL
-#' encoding of
-#' `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/bucket/reports`.
-#' The value must be URL encoded.
-#' @param VpcConfiguration If you include this field, Amazon S3 restricts access to this access
-#' point to requests from the specified virtual private cloud (VPC).
+#' For using this parameter with Amazon S3 on Outposts with the REST API, you must specify the name and the x-amz-outpost-id as well.
 #' 
-#' This is required for creating an access point for Amazon S3 on Outposts
-#' buckets.
-#' @param PublicAccessBlockConfiguration The `PublicAccessBlock` configuration that you want to apply to the
-#' access point.
-#' @param BucketAccountId The Amazon Web Services account ID associated with the S3 bucket
-#' associated with this access point.
+#' For using this parameter with S3 on Outposts with the Amazon Web Services SDK and CLI, you must specify the ARN of the bucket accessed in the format `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>`. For example, to access the bucket `reports` through Outpost `my-outpost` owned by account `123456789012` in Region `us-west-2`, use the URL encoding of `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/bucket/reports`. The value must be URL encoded.
+#' @param VpcConfiguration If you include this field, Amazon S3 restricts access to this access point to requests from the specified virtual private cloud (VPC).
 #' 
-#' For same account access point when your bucket and access point belong
-#' to the same account owner, the `BucketAccountId` is not required. For
-#' cross-account access point when your bucket and access point are not in
-#' the same account, the `BucketAccountId` is required.
+#' This is required for creating an access point for Amazon S3 on Outposts buckets.
+#' @param PublicAccessBlockConfiguration The `PublicAccessBlock` configuration that you want to apply to the access point.
+#' @param BucketAccountId The Amazon Web Services account ID associated with the S3 bucket associated with this access point.
+#' 
+#' For same account access point when your bucket and access point belong to the same account owner, the `BucketAccountId` is not required. For cross-account access point when your bucket and access point are not in the same account, the `BucketAccountId` is required.
+#' @param Scope For directory buckets, you can filter access control to specific prefixes, API operations, or a combination of both. For more information, see [Managing access to shared datasets in directory buckets with access points](https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points-directory-buckets.html) in the *Amazon S3 User Guide*.
+#' 
+#' Scope is only supported for access points attached to directory buckets.
+#' @param Tags An array of tags that you can apply to an access point. Tags are key-value pairs of metadata used to control access to your access points. For more information about tags, see [Using tags with Amazon S3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/tagging.html). For information about tagging access points, see [Using tags for attribute-based access control (ABAC)](https://docs.aws.amazon.com/AmazonS3/latest/userguide/tagging.html#using-tags-for-abac).
 #'
 #' @keywords internal
 #'
 #' @rdname s3control_create_access_point
-s3control_create_access_point <- function(AccountId, Name, Bucket, VpcConfiguration = NULL, PublicAccessBlockConfiguration = NULL, BucketAccountId = NULL) {
+s3control_create_access_point <- function(AccountId, Name, Bucket, VpcConfiguration = NULL, PublicAccessBlockConfiguration = NULL, BucketAccountId = NULL, Scope = NULL, Tags = NULL) {
   op <- new_operation(
     name = "CreateAccessPoint",
     http_method = "PUT",
@@ -253,7 +191,7 @@ s3control_create_access_point <- function(AccountId, Name, Bucket, VpcConfigurat
     paginator = list(),
     stream_api = FALSE
   )
-  input <- .s3control$create_access_point_input(AccountId = AccountId, Name = Name, Bucket = Bucket, VpcConfiguration = VpcConfiguration, PublicAccessBlockConfiguration = PublicAccessBlockConfiguration, BucketAccountId = BucketAccountId)
+  input <- .s3control$create_access_point_input(AccountId = AccountId, Name = Name, Bucket = Bucket, VpcConfiguration = VpcConfiguration, PublicAccessBlockConfiguration = PublicAccessBlockConfiguration, BucketAccountId = BucketAccountId, Scope = Scope, Tags = Tags)
   output <- .s3control$create_access_point_output()
   config <- get_config()
   svc <- .s3control$service(config, op)
@@ -270,8 +208,7 @@ s3control_create_access_point <- function(AccountId, Name, Bucket, VpcConfigurat
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_create_access_point_for_object_lambda/](https://www.paws-r-sdk.com/docs/s3control_create_access_point_for_object_lambda/) for full documentation.
 #'
-#' @param AccountId &#91;required&#93; The Amazon Web Services account ID for owner of the specified Object
-#' Lambda Access Point.
+#' @param AccountId &#91;required&#93; The Amazon Web Services account ID for owner of the specified Object Lambda Access Point.
 #' @param Name &#91;required&#93; The name you want to assign to this Object Lambda Access Point.
 #' @param Configuration &#91;required&#93; Object Lambda Access Point configuration as a JSON document.
 #'
@@ -311,8 +248,7 @@ s3control_create_access_point_for_object_lambda <- function(AccountId, Name, Con
 #' @param CreateBucketConfiguration The configuration information for the bucket.
 #' 
 #' This is not supported by Amazon S3 on Outposts buckets.
-#' @param GrantFullControl Allows grantee the read, write, read ACP, and write ACP permissions on
-#' the bucket.
+#' @param GrantFullControl Allows grantee the read, write, read ACP, and write ACP permissions on the bucket.
 #' 
 #' This is not supported by Amazon S3 on Outposts buckets.
 #' @param GrantRead Allows grantee to list the objects in the bucket.
@@ -321,15 +257,13 @@ s3control_create_access_point_for_object_lambda <- function(AccountId, Name, Con
 #' @param GrantReadACP Allows grantee to read the bucket ACL.
 #' 
 #' This is not supported by Amazon S3 on Outposts buckets.
-#' @param GrantWrite Allows grantee to create, overwrite, and delete any object in the
-#' bucket.
+#' @param GrantWrite Allows grantee to create, overwrite, and delete any object in the bucket.
 #' 
 #' This is not supported by Amazon S3 on Outposts buckets.
 #' @param GrantWriteACP Allows grantee to write the ACL for the applicable bucket.
 #' 
 #' This is not supported by Amazon S3 on Outposts buckets.
-#' @param ObjectLockEnabledForBucket Specifies whether you want S3 Object Lock to be enabled for the new
-#' bucket.
+#' @param ObjectLockEnabledForBucket Specifies whether you want S3 Object Lock to be enabled for the new bucket.
 #' 
 #' This is not supported by Amazon S3 on Outposts buckets.
 #' @param OutpostId The ID of the Outposts where the bucket is being created.
@@ -366,30 +300,16 @@ s3control_create_bucket <- function(ACL = NULL, Bucket, CreateBucketConfiguratio
 #' See [https://www.paws-r-sdk.com/docs/s3control_create_job/](https://www.paws-r-sdk.com/docs/s3control_create_job/) for full documentation.
 #'
 #' @param AccountId &#91;required&#93; The Amazon Web Services account ID that creates the job.
-#' @param ConfirmationRequired Indicates whether confirmation is required before Amazon S3 runs the
-#' job. Confirmation is only required for jobs created through the Amazon
-#' S3 console.
-#' @param Operation &#91;required&#93; The action that you want this job to perform on every object listed in
-#' the manifest. For more information about the available actions, see
-#' [Operations](https://docs.aws.amazon.com/AmazonS3/latest/userguide/batch-ops-operations.html)
-#' in the *Amazon S3 User Guide*.
+#' @param ConfirmationRequired Indicates whether confirmation is required before Amazon S3 runs the job. Confirmation is only required for jobs created through the Amazon S3 console.
+#' @param Operation &#91;required&#93; The action that you want this job to perform on every object listed in the manifest. For more information about the available actions, see [Operations](https://docs.aws.amazon.com/AmazonS3/latest/userguide/batch-ops-operations.html) in the *Amazon S3 User Guide*.
 #' @param Report &#91;required&#93; Configuration parameters for the optional job-completion report.
-#' @param ClientRequestToken &#91;required&#93; An idempotency token to ensure that you don't accidentally submit the
-#' same request twice. You can use any string up to the maximum length.
+#' @param ClientRequestToken &#91;required&#93; An idempotency token to ensure that you don't accidentally submit the same request twice. You can use any string up to the maximum length.
 #' @param Manifest Configuration parameters for the manifest.
-#' @param Description A description for this job. You can use any string within the permitted
-#' length. Descriptions don't need to be unique and can be used for
-#' multiple jobs.
-#' @param Priority &#91;required&#93; The numerical priority for this job. Higher numbers indicate higher
-#' priority.
-#' @param RoleArn &#91;required&#93; The Amazon Resource Name (ARN) for the Identity and Access Management
-#' (IAM) role that Batch Operations will use to run this job's action on
-#' every object in the manifest.
-#' @param Tags A set of tags to associate with the S3 Batch Operations job. This is an
-#' optional parameter.
-#' @param ManifestGenerator The attribute container for the ManifestGenerator details. Jobs must be
-#' created with either a manifest file or a ManifestGenerator, but not
-#' both.
+#' @param Description A description for this job. You can use any string within the permitted length. Descriptions don't need to be unique and can be used for multiple jobs.
+#' @param Priority &#91;required&#93; The numerical priority for this job. Higher numbers indicate higher priority.
+#' @param RoleArn &#91;required&#93; The Amazon Resource Name (ARN) for the Identity and Access Management (IAM) role that Batch Operations will use to run this job's action on every object in the manifest.
+#' @param Tags A set of tags to associate with the S3 Batch Operations job. This is an optional parameter.
+#' @param ManifestGenerator The attribute container for the ManifestGenerator details. Jobs must be created with either a manifest file or a ManifestGenerator, but not both.
 #'
 #' @keywords internal
 #'
@@ -420,13 +340,9 @@ s3control_create_job <- function(AccountId, ConfirmationRequired = NULL, Operati
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_create_multi_region_access_point/](https://www.paws-r-sdk.com/docs/s3control_create_multi_region_access_point/) for full documentation.
 #'
-#' @param AccountId &#91;required&#93; The Amazon Web Services account ID for the owner of the Multi-Region
-#' Access Point. The owner of the Multi-Region Access Point also must own
-#' the underlying buckets.
-#' @param ClientToken &#91;required&#93; An idempotency token used to identify the request and guarantee that
-#' requests are unique.
-#' @param Details &#91;required&#93; A container element containing details about the Multi-Region Access
-#' Point.
+#' @param AccountId &#91;required&#93; The Amazon Web Services account ID for the owner of the Multi-Region Access Point. The owner of the Multi-Region Access Point also must own the underlying buckets.
+#' @param ClientToken &#91;required&#93; An idempotency token used to identify the request and guarantee that requests are unique.
+#' @param Details &#91;required&#93; A container element containing details about the Multi-Region Access Point.
 #'
 #' @keywords internal
 #'
@@ -458,11 +374,9 @@ s3control_create_multi_region_access_point <- function(AccountId, ClientToken, D
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_create_storage_lens_group/](https://www.paws-r-sdk.com/docs/s3control_create_storage_lens_group/) for full documentation.
 #'
-#' @param AccountId &#91;required&#93; The Amazon Web Services account ID that the Storage Lens group is
-#' created from and associated with.
+#' @param AccountId &#91;required&#93; The Amazon Web Services account ID that the Storage Lens group is created from and associated with.
 #' @param StorageLensGroup &#91;required&#93; The Storage Lens group configuration.
-#' @param Tags The Amazon Web Services resource tags that you're adding to your Storage
-#' Lens group. This parameter is optional.
+#' @param Tags The Amazon Web Services resource tags that you're adding to your Storage Lens group. This parameter is optional.
 #'
 #' @keywords internal
 #'
@@ -494,8 +408,7 @@ s3control_create_storage_lens_group <- function(AccountId, StorageLensGroup, Tag
 #' See [https://www.paws-r-sdk.com/docs/s3control_delete_access_grant/](https://www.paws-r-sdk.com/docs/s3control_delete_access_grant/) for full documentation.
 #'
 #' @param AccountId &#91;required&#93; The Amazon Web Services account ID of the S3 Access Grants instance.
-#' @param AccessGrantId &#91;required&#93; The ID of the access grant. S3 Access Grants auto-generates this ID when
-#' you create the access grant.
+#' @param AccessGrantId &#91;required&#93; The ID of the access grant. S3 Access Grants auto-generates this ID when you create the access grant.
 #'
 #' @keywords internal
 #'
@@ -589,11 +502,7 @@ s3control_delete_access_grants_instance_resource_policy <- function(AccountId) {
 #' See [https://www.paws-r-sdk.com/docs/s3control_delete_access_grants_location/](https://www.paws-r-sdk.com/docs/s3control_delete_access_grants_location/) for full documentation.
 #'
 #' @param AccountId &#91;required&#93; The Amazon Web Services account ID of the S3 Access Grants instance.
-#' @param AccessGrantsLocationId &#91;required&#93; The ID of the registered location that you are deregistering from your
-#' S3 Access Grants instance. S3 Access Grants assigned this ID when you
-#' registered the location. S3 Access Grants assigns the ID `default` to
-#' the default location `s3://` and assigns an auto-generated ID to other
-#' locations that you register.
+#' @param AccessGrantsLocationId &#91;required&#93; The ID of the registered location that you are deregistering from your S3 Access Grants instance. S3 Access Grants assigned this ID when you registered the location. S3 Access Grants assigns the ID `default` to the default location `s3://` and assigns an auto-generated ID to other locations that you register.
 #'
 #' @keywords internal
 #'
@@ -617,29 +526,19 @@ s3control_delete_access_grants_location <- function(AccountId, AccessGrantsLocat
 }
 .s3control$operations$delete_access_grants_location <- s3control_delete_access_grants_location
 
-#' This operation is not supported by directory buckets
+#' Deletes the specified access point
 #'
 #' @description
-#' This operation is not supported by directory buckets.
+#' Deletes the specified access point.
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_delete_access_point/](https://www.paws-r-sdk.com/docs/s3control_delete_access_point/) for full documentation.
 #'
-#' @param AccountId &#91;required&#93; The Amazon Web Services account ID for the account that owns the
-#' specified access point.
+#' @param AccountId &#91;required&#93; The Amazon Web Services account ID for the account that owns the specified access point.
 #' @param Name &#91;required&#93; The name of the access point you want to delete.
 #' 
-#' For using this parameter with Amazon S3 on Outposts with the REST API,
-#' you must specify the name and the x-amz-outpost-id as well.
+#' For using this parameter with Amazon S3 on Outposts with the REST API, you must specify the name and the x-amz-outpost-id as well.
 #' 
-#' For using this parameter with S3 on Outposts with the Amazon Web
-#' Services SDK and CLI, you must specify the ARN of the access point
-#' accessed in the format
-#' `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/accesspoint/<my-accesspoint-name>`.
-#' For example, to access the access point `reports-ap` through Outpost
-#' `my-outpost` owned by account `123456789012` in Region `us-west-2`, use
-#' the URL encoding of
-#' `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/accesspoint/reports-ap`.
-#' The value must be URL encoded.
+#' For using this parameter with S3 on Outposts with the Amazon Web Services SDK and CLI, you must specify the ARN of the access point accessed in the format `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/accesspoint/<my-accesspoint-name>`. For example, to access the access point `reports-ap` through Outpost `my-outpost` owned by account `123456789012` in Region `us-west-2`, use the URL encoding of `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/accesspoint/reports-ap`. The value must be URL encoded.
 #'
 #' @keywords internal
 #'
@@ -670,8 +569,7 @@ s3control_delete_access_point <- function(AccountId, Name) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_delete_access_point_for_object_lambda/](https://www.paws-r-sdk.com/docs/s3control_delete_access_point_for_object_lambda/) for full documentation.
 #'
-#' @param AccountId &#91;required&#93; The account ID for the account that owns the specified Object Lambda
-#' Access Point.
+#' @param AccountId &#91;required&#93; The account ID for the account that owns the specified Object Lambda Access Point.
 #' @param Name &#91;required&#93; The name of the access point you want to delete.
 #'
 #' @keywords internal
@@ -696,28 +594,19 @@ s3control_delete_access_point_for_object_lambda <- function(AccountId, Name) {
 }
 .s3control$operations$delete_access_point_for_object_lambda <- s3control_delete_access_point_for_object_lambda
 
-#' This operation is not supported by directory buckets
+#' Deletes the access point policy for the specified access point
 #'
 #' @description
-#' This operation is not supported by directory buckets.
+#' Deletes the access point policy for the specified access point.
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_delete_access_point_policy/](https://www.paws-r-sdk.com/docs/s3control_delete_access_point_policy/) for full documentation.
 #'
 #' @param AccountId &#91;required&#93; The account ID for the account that owns the specified access point.
 #' @param Name &#91;required&#93; The name of the access point whose policy you want to delete.
 #' 
-#' For using this parameter with Amazon S3 on Outposts with the REST API,
-#' you must specify the name and the x-amz-outpost-id as well.
+#' For using this parameter with Amazon S3 on Outposts with the REST API, you must specify the name and the x-amz-outpost-id as well.
 #' 
-#' For using this parameter with S3 on Outposts with the Amazon Web
-#' Services SDK and CLI, you must specify the ARN of the access point
-#' accessed in the format
-#' `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/accesspoint/<my-accesspoint-name>`.
-#' For example, to access the access point `reports-ap` through Outpost
-#' `my-outpost` owned by account `123456789012` in Region `us-west-2`, use
-#' the URL encoding of
-#' `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/accesspoint/reports-ap`.
-#' The value must be URL encoded.
+#' For using this parameter with S3 on Outposts with the Amazon Web Services SDK and CLI, you must specify the ARN of the access point accessed in the format `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/accesspoint/<my-accesspoint-name>`. For example, to access the access point `reports-ap` through Outpost `my-outpost` owned by account `123456789012` in Region `us-west-2`, use the URL encoding of `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/accesspoint/reports-ap`. The value must be URL encoded.
 #'
 #' @keywords internal
 #'
@@ -748,10 +637,8 @@ s3control_delete_access_point_policy <- function(AccountId, Name) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_delete_access_point_policy_for_object_lambda/](https://www.paws-r-sdk.com/docs/s3control_delete_access_point_policy_for_object_lambda/) for full documentation.
 #'
-#' @param AccountId &#91;required&#93; The account ID for the account that owns the specified Object Lambda
-#' Access Point.
-#' @param Name &#91;required&#93; The name of the Object Lambda Access Point you want to delete the policy
-#' for.
+#' @param AccountId &#91;required&#93; The account ID for the account that owns the specified Object Lambda Access Point.
+#' @param Name &#91;required&#93; The name of the Object Lambda Access Point you want to delete the policy for.
 #'
 #' @keywords internal
 #'
@@ -775,6 +662,38 @@ s3control_delete_access_point_policy_for_object_lambda <- function(AccountId, Na
 }
 .s3control$operations$delete_access_point_policy_for_object_lambda <- s3control_delete_access_point_policy_for_object_lambda
 
+#' Deletes an existing access point scope for a directory bucket
+#'
+#' @description
+#' Deletes an existing access point scope for a directory bucket.
+#'
+#' See [https://www.paws-r-sdk.com/docs/s3control_delete_access_point_scope/](https://www.paws-r-sdk.com/docs/s3control_delete_access_point_scope/) for full documentation.
+#'
+#' @param AccountId &#91;required&#93; The Amazon Web Services account ID that owns the access point with the scope that you want to delete.
+#' @param Name &#91;required&#93; The name of the access point with the scope that you want to delete.
+#'
+#' @keywords internal
+#'
+#' @rdname s3control_delete_access_point_scope
+s3control_delete_access_point_scope <- function(AccountId, Name) {
+  op <- new_operation(
+    name = "DeleteAccessPointScope",
+    http_method = "DELETE",
+    http_path = "/v20180820/accesspoint/{name}/scope",
+    host_prefix = "",
+    paginator = list(),
+    stream_api = FALSE
+  )
+  input <- .s3control$delete_access_point_scope_input(AccountId = AccountId, Name = Name)
+  output <- .s3control$delete_access_point_scope_output()
+  config <- get_config()
+  svc <- .s3control$service(config, op)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.s3control$operations$delete_access_point_scope <- s3control_delete_access_point_scope
+
 #' This action deletes an Amazon S3 on Outposts bucket
 #'
 #' @description
@@ -785,18 +704,9 @@ s3control_delete_access_point_policy_for_object_lambda <- function(AccountId, Na
 #' @param AccountId &#91;required&#93; The account ID that owns the Outposts bucket.
 #' @param Bucket &#91;required&#93; Specifies the bucket being deleted.
 #' 
-#' For using this parameter with Amazon S3 on Outposts with the REST API,
-#' you must specify the name and the x-amz-outpost-id as well.
+#' For using this parameter with Amazon S3 on Outposts with the REST API, you must specify the name and the x-amz-outpost-id as well.
 #' 
-#' For using this parameter with S3 on Outposts with the Amazon Web
-#' Services SDK and CLI, you must specify the ARN of the bucket accessed in
-#' the format
-#' `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>`.
-#' For example, to access the bucket `reports` through Outpost `my-outpost`
-#' owned by account `123456789012` in Region `us-west-2`, use the URL
-#' encoding of
-#' `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/bucket/reports`.
-#' The value must be URL encoded.
+#' For using this parameter with S3 on Outposts with the Amazon Web Services SDK and CLI, you must specify the ARN of the bucket accessed in the format `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>`. For example, to access the bucket `reports` through Outpost `my-outpost` owned by account `123456789012` in Region `us-west-2`, use the URL encoding of `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/bucket/reports`. The value must be URL encoded.
 #'
 #' @keywords internal
 #'
@@ -831,18 +741,9 @@ s3control_delete_bucket <- function(AccountId, Bucket) {
 #' @param AccountId &#91;required&#93; The account ID of the lifecycle configuration to delete.
 #' @param Bucket &#91;required&#93; Specifies the bucket.
 #' 
-#' For using this parameter with Amazon S3 on Outposts with the REST API,
-#' you must specify the name and the x-amz-outpost-id as well.
+#' For using this parameter with Amazon S3 on Outposts with the REST API, you must specify the name and the x-amz-outpost-id as well.
 #' 
-#' For using this parameter with S3 on Outposts with the Amazon Web
-#' Services SDK and CLI, you must specify the ARN of the bucket accessed in
-#' the format
-#' `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>`.
-#' For example, to access the bucket `reports` through Outpost `my-outpost`
-#' owned by account `123456789012` in Region `us-west-2`, use the URL
-#' encoding of
-#' `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/bucket/reports`.
-#' The value must be URL encoded.
+#' For using this parameter with S3 on Outposts with the Amazon Web Services SDK and CLI, you must specify the ARN of the bucket accessed in the format `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>`. For example, to access the bucket `reports` through Outpost `my-outpost` owned by account `123456789012` in Region `us-west-2`, use the URL encoding of `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/bucket/reports`. The value must be URL encoded.
 #'
 #' @keywords internal
 #'
@@ -876,18 +777,9 @@ s3control_delete_bucket_lifecycle_configuration <- function(AccountId, Bucket) {
 #' @param AccountId &#91;required&#93; The account ID of the Outposts bucket.
 #' @param Bucket &#91;required&#93; Specifies the bucket.
 #' 
-#' For using this parameter with Amazon S3 on Outposts with the REST API,
-#' you must specify the name and the x-amz-outpost-id as well.
+#' For using this parameter with Amazon S3 on Outposts with the REST API, you must specify the name and the x-amz-outpost-id as well.
 #' 
-#' For using this parameter with S3 on Outposts with the Amazon Web
-#' Services SDK and CLI, you must specify the ARN of the bucket accessed in
-#' the format
-#' `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>`.
-#' For example, to access the bucket `reports` through Outpost `my-outpost`
-#' owned by account `123456789012` in Region `us-west-2`, use the URL
-#' encoding of
-#' `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/bucket/reports`.
-#' The value must be URL encoded.
+#' For using this parameter with S3 on Outposts with the Amazon Web Services SDK and CLI, you must specify the ARN of the bucket accessed in the format `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>`. For example, to access the bucket `reports` through Outpost `my-outpost` owned by account `123456789012` in Region `us-west-2`, use the URL encoding of `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/bucket/reports`. The value must be URL encoded.
 #'
 #' @keywords internal
 #'
@@ -919,23 +811,12 @@ s3control_delete_bucket_policy <- function(AccountId, Bucket) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_delete_bucket_replication/](https://www.paws-r-sdk.com/docs/s3control_delete_bucket_replication/) for full documentation.
 #'
-#' @param AccountId &#91;required&#93; The Amazon Web Services account ID of the Outposts bucket to delete the
-#' replication configuration for.
-#' @param Bucket &#91;required&#93; Specifies the S3 on Outposts bucket to delete the replication
-#' configuration for.
+#' @param AccountId &#91;required&#93; The Amazon Web Services account ID of the Outposts bucket to delete the replication configuration for.
+#' @param Bucket &#91;required&#93; Specifies the S3 on Outposts bucket to delete the replication configuration for.
 #' 
-#' For using this parameter with Amazon S3 on Outposts with the REST API,
-#' you must specify the name and the x-amz-outpost-id as well.
+#' For using this parameter with Amazon S3 on Outposts with the REST API, you must specify the name and the x-amz-outpost-id as well.
 #' 
-#' For using this parameter with S3 on Outposts with the Amazon Web
-#' Services SDK and CLI, you must specify the ARN of the bucket accessed in
-#' the format
-#' `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>`.
-#' For example, to access the bucket `reports` through Outpost `my-outpost`
-#' owned by account `123456789012` in Region `us-west-2`, use the URL
-#' encoding of
-#' `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/bucket/reports`.
-#' The value must be URL encoded.
+#' For using this parameter with S3 on Outposts with the Amazon Web Services SDK and CLI, you must specify the ARN of the bucket accessed in the format `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>`. For example, to access the bucket `reports` through Outpost `my-outpost` owned by account `123456789012` in Region `us-west-2`, use the URL encoding of `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/bucket/reports`. The value must be URL encoded.
 #'
 #' @keywords internal
 #'
@@ -966,22 +847,12 @@ s3control_delete_bucket_replication <- function(AccountId, Bucket) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_delete_bucket_tagging/](https://www.paws-r-sdk.com/docs/s3control_delete_bucket_tagging/) for full documentation.
 #'
-#' @param AccountId &#91;required&#93; The Amazon Web Services account ID of the Outposts bucket tag set to be
-#' removed.
+#' @param AccountId &#91;required&#93; The Amazon Web Services account ID of the Outposts bucket tag set to be removed.
 #' @param Bucket &#91;required&#93; The bucket ARN that has the tag set to be removed.
 #' 
-#' For using this parameter with Amazon S3 on Outposts with the REST API,
-#' you must specify the name and the x-amz-outpost-id as well.
+#' For using this parameter with Amazon S3 on Outposts with the REST API, you must specify the name and the x-amz-outpost-id as well.
 #' 
-#' For using this parameter with S3 on Outposts with the Amazon Web
-#' Services SDK and CLI, you must specify the ARN of the bucket accessed in
-#' the format
-#' `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>`.
-#' For example, to access the bucket `reports` through Outpost `my-outpost`
-#' owned by account `123456789012` in Region `us-west-2`, use the URL
-#' encoding of
-#' `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/bucket/reports`.
-#' The value must be URL encoded.
+#' For using this parameter with S3 on Outposts with the Amazon Web Services SDK and CLI, you must specify the ARN of the bucket accessed in the format `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>`. For example, to access the bucket `reports` through Outpost `my-outpost` owned by account `123456789012` in Region `us-west-2`, use the URL encoding of `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/bucket/reports`. The value must be URL encoded.
 #'
 #' @keywords internal
 #'
@@ -1012,8 +883,7 @@ s3control_delete_bucket_tagging <- function(AccountId, Bucket) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_delete_job_tagging/](https://www.paws-r-sdk.com/docs/s3control_delete_job_tagging/) for full documentation.
 #'
-#' @param AccountId &#91;required&#93; The Amazon Web Services account ID associated with the S3 Batch
-#' Operations job.
+#' @param AccountId &#91;required&#93; The Amazon Web Services account ID associated with the S3 Batch Operations job.
 #' @param JobId &#91;required&#93; The ID for the S3 Batch Operations job whose tags you want to delete.
 #'
 #' @keywords internal
@@ -1045,12 +915,9 @@ s3control_delete_job_tagging <- function(AccountId, JobId) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_delete_multi_region_access_point/](https://www.paws-r-sdk.com/docs/s3control_delete_multi_region_access_point/) for full documentation.
 #'
-#' @param AccountId &#91;required&#93; The Amazon Web Services account ID for the owner of the Multi-Region
-#' Access Point.
-#' @param ClientToken &#91;required&#93; An idempotency token used to identify the request and guarantee that
-#' requests are unique.
-#' @param Details &#91;required&#93; A container element containing details about the Multi-Region Access
-#' Point.
+#' @param AccountId &#91;required&#93; The Amazon Web Services account ID for the owner of the Multi-Region Access Point.
+#' @param ClientToken &#91;required&#93; An idempotency token used to identify the request and guarantee that requests are unique.
+#' @param Details &#91;required&#93; A container element containing details about the Multi-Region Access Point.
 #'
 #' @keywords internal
 #'
@@ -1081,8 +948,7 @@ s3control_delete_multi_region_access_point <- function(AccountId, ClientToken, D
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_delete_public_access_block/](https://www.paws-r-sdk.com/docs/s3control_delete_public_access_block/) for full documentation.
 #'
-#' @param AccountId &#91;required&#93; The account ID for the Amazon Web Services account whose
-#' `PublicAccessBlock` configuration you want to remove.
+#' @param AccountId &#91;required&#93; The account ID for the Amazon Web Services account whose `PublicAccessBlock` configuration you want to remove.
 #'
 #' @keywords internal
 #'
@@ -1178,8 +1044,7 @@ s3control_delete_storage_lens_configuration_tagging <- function(ConfigId, Accoun
 #' See [https://www.paws-r-sdk.com/docs/s3control_delete_storage_lens_group/](https://www.paws-r-sdk.com/docs/s3control_delete_storage_lens_group/) for full documentation.
 #'
 #' @param Name &#91;required&#93; The name of the Storage Lens group that you're trying to delete.
-#' @param AccountId &#91;required&#93; The Amazon Web Services account ID used to create the Storage Lens group
-#' that you're trying to delete.
+#' @param AccountId &#91;required&#93; The Amazon Web Services account ID used to create the Storage Lens group that you're trying to delete.
 #'
 #' @keywords internal
 #'
@@ -1211,8 +1076,7 @@ s3control_delete_storage_lens_group <- function(Name, AccountId) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_describe_job/](https://www.paws-r-sdk.com/docs/s3control_describe_job/) for full documentation.
 #'
-#' @param AccountId &#91;required&#93; The Amazon Web Services account ID associated with the S3 Batch
-#' Operations job.
+#' @param AccountId &#91;required&#93; The Amazon Web Services account ID associated with the S3 Batch Operations job.
 #' @param JobId &#91;required&#93; The ID for the job whose information you want to retrieve.
 #'
 #' @keywords internal
@@ -1244,12 +1108,8 @@ s3control_describe_job <- function(AccountId, JobId) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_describe_multi_region_access_point_operation/](https://www.paws-r-sdk.com/docs/s3control_describe_multi_region_access_point_operation/) for full documentation.
 #'
-#' @param AccountId &#91;required&#93; The Amazon Web Services account ID for the owner of the Multi-Region
-#' Access Point.
-#' @param RequestTokenARN &#91;required&#93; The request token associated with the request you want to know about.
-#' This request token is returned as part of the response when you make an
-#' asynchronous request. You provide this token to query about the status
-#' of the asynchronous action.
+#' @param AccountId &#91;required&#93; The Amazon Web Services account ID for the owner of the Multi-Region Access Point.
+#' @param RequestTokenARN &#91;required&#93; The request token associated with the request you want to know about. This request token is returned as part of the response when you make an asynchronous request. You provide this token to query about the status of the asynchronous action.
 #'
 #' @keywords internal
 #'
@@ -1313,8 +1173,7 @@ s3control_dissociate_access_grants_identity_center <- function(AccountId) {
 #' See [https://www.paws-r-sdk.com/docs/s3control_get_access_grant/](https://www.paws-r-sdk.com/docs/s3control_get_access_grant/) for full documentation.
 #'
 #' @param AccountId &#91;required&#93; The Amazon Web Services account ID of the S3 Access Grants instance.
-#' @param AccessGrantId &#91;required&#93; The ID of the access grant. S3 Access Grants auto-generates this ID when
-#' you create the access grant.
+#' @param AccessGrantId &#91;required&#93; The ID of the access grant. S3 Access Grants auto-generates this ID when you create the access grant.
 #'
 #' @keywords internal
 #'
@@ -1441,10 +1300,7 @@ s3control_get_access_grants_instance_resource_policy <- function(AccountId) {
 #' See [https://www.paws-r-sdk.com/docs/s3control_get_access_grants_location/](https://www.paws-r-sdk.com/docs/s3control_get_access_grants_location/) for full documentation.
 #'
 #' @param AccountId &#91;required&#93; The Amazon Web Services account ID of the S3 Access Grants instance.
-#' @param AccessGrantsLocationId &#91;required&#93; The ID of the registered location that you are retrieving. S3 Access
-#' Grants assigns this ID when you register the location. S3 Access Grants
-#' assigns the ID `default` to the default location `s3://` and assigns an
-#' auto-generated ID to other locations that you register.
+#' @param AccessGrantsLocationId &#91;required&#93; The ID of the registered location that you are retrieving. S3 Access Grants assigns this ID when you register the location. S3 Access Grants assigns the ID `default` to the default location `s3://` and assigns an auto-generated ID to other locations that you register.
 #'
 #' @keywords internal
 #'
@@ -1468,30 +1324,19 @@ s3control_get_access_grants_location <- function(AccountId, AccessGrantsLocation
 }
 .s3control$operations$get_access_grants_location <- s3control_get_access_grants_location
 
-#' This operation is not supported by directory buckets
+#' Returns configuration information about the specified access point
 #'
 #' @description
-#' This operation is not supported by directory buckets.
+#' Returns configuration information about the specified access point.
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_get_access_point/](https://www.paws-r-sdk.com/docs/s3control_get_access_point/) for full documentation.
 #'
-#' @param AccountId &#91;required&#93; The Amazon Web Services account ID for the account that owns the
-#' specified access point.
-#' @param Name &#91;required&#93; The name of the access point whose configuration information you want to
-#' retrieve.
+#' @param AccountId &#91;required&#93; The Amazon Web Services account ID for the account that owns the specified access point.
+#' @param Name &#91;required&#93; The name of the access point whose configuration information you want to retrieve.
 #' 
-#' For using this parameter with Amazon S3 on Outposts with the REST API,
-#' you must specify the name and the x-amz-outpost-id as well.
+#' For using this parameter with Amazon S3 on Outposts with the REST API, you must specify the name and the x-amz-outpost-id as well.
 #' 
-#' For using this parameter with S3 on Outposts with the Amazon Web
-#' Services SDK and CLI, you must specify the ARN of the access point
-#' accessed in the format
-#' `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/accesspoint/<my-accesspoint-name>`.
-#' For example, to access the access point `reports-ap` through Outpost
-#' `my-outpost` owned by account `123456789012` in Region `us-west-2`, use
-#' the URL encoding of
-#' `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/accesspoint/reports-ap`.
-#' The value must be URL encoded.
+#' For using this parameter with S3 on Outposts with the Amazon Web Services SDK and CLI, you must specify the ARN of the access point accessed in the format `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/accesspoint/<my-accesspoint-name>`. For example, to access the access point `reports-ap` through Outpost `my-outpost` owned by account `123456789012` in Region `us-west-2`, use the URL encoding of `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/accesspoint/reports-ap`. The value must be URL encoded.
 #'
 #' @keywords internal
 #'
@@ -1522,10 +1367,8 @@ s3control_get_access_point <- function(AccountId, Name) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_get_access_point_configuration_for_object_lambda/](https://www.paws-r-sdk.com/docs/s3control_get_access_point_configuration_for_object_lambda/) for full documentation.
 #'
-#' @param AccountId &#91;required&#93; The account ID for the account that owns the specified Object Lambda
-#' Access Point.
-#' @param Name &#91;required&#93; The name of the Object Lambda Access Point you want to return the
-#' configuration for.
+#' @param AccountId &#91;required&#93; The account ID for the account that owns the specified Object Lambda Access Point.
+#' @param Name &#91;required&#93; The name of the Object Lambda Access Point you want to return the configuration for.
 #'
 #' @keywords internal
 #'
@@ -1556,8 +1399,7 @@ s3control_get_access_point_configuration_for_object_lambda <- function(AccountId
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_get_access_point_for_object_lambda/](https://www.paws-r-sdk.com/docs/s3control_get_access_point_for_object_lambda/) for full documentation.
 #'
-#' @param AccountId &#91;required&#93; The account ID for the account that owns the specified Object Lambda
-#' Access Point.
+#' @param AccountId &#91;required&#93; The account ID for the account that owns the specified Object Lambda Access Point.
 #' @param Name &#91;required&#93; The name of the Object Lambda Access Point.
 #'
 #' @keywords internal
@@ -1582,28 +1424,20 @@ s3control_get_access_point_for_object_lambda <- function(AccountId, Name) {
 }
 .s3control$operations$get_access_point_for_object_lambda <- s3control_get_access_point_for_object_lambda
 
-#' This operation is not supported by directory buckets
+#' Returns the access point policy associated with the specified access
+#' point
 #'
 #' @description
-#' This operation is not supported by directory buckets.
+#' Returns the access point policy associated with the specified access point.
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_get_access_point_policy/](https://www.paws-r-sdk.com/docs/s3control_get_access_point_policy/) for full documentation.
 #'
 #' @param AccountId &#91;required&#93; The account ID for the account that owns the specified access point.
 #' @param Name &#91;required&#93; The name of the access point whose policy you want to retrieve.
 #' 
-#' For using this parameter with Amazon S3 on Outposts with the REST API,
-#' you must specify the name and the x-amz-outpost-id as well.
+#' For using this parameter with Amazon S3 on Outposts with the REST API, you must specify the name and the x-amz-outpost-id as well.
 #' 
-#' For using this parameter with S3 on Outposts with the Amazon Web
-#' Services SDK and CLI, you must specify the ARN of the access point
-#' accessed in the format
-#' `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/accesspoint/<my-accesspoint-name>`.
-#' For example, to access the access point `reports-ap` through Outpost
-#' `my-outpost` owned by account `123456789012` in Region `us-west-2`, use
-#' the URL encoding of
-#' `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/accesspoint/reports-ap`.
-#' The value must be URL encoded.
+#' For using this parameter with S3 on Outposts with the Amazon Web Services SDK and CLI, you must specify the ARN of the access point accessed in the format `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/accesspoint/<my-accesspoint-name>`. For example, to access the access point `reports-ap` through Outpost `my-outpost` owned by account `123456789012` in Region `us-west-2`, use the URL encoding of `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/accesspoint/reports-ap`. The value must be URL encoded.
 #'
 #' @keywords internal
 #'
@@ -1634,8 +1468,7 @@ s3control_get_access_point_policy <- function(AccountId, Name) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_get_access_point_policy_for_object_lambda/](https://www.paws-r-sdk.com/docs/s3control_get_access_point_policy_for_object_lambda/) for full documentation.
 #'
-#' @param AccountId &#91;required&#93; The account ID for the account that owns the specified Object Lambda
-#' Access Point.
+#' @param AccountId &#91;required&#93; The account ID for the account that owns the specified Object Lambda Access Point.
 #' @param Name &#91;required&#93; The name of the Object Lambda Access Point.
 #'
 #' @keywords internal
@@ -1699,8 +1532,7 @@ s3control_get_access_point_policy_status <- function(AccountId, Name) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_get_access_point_policy_status_for_object_lambda/](https://www.paws-r-sdk.com/docs/s3control_get_access_point_policy_status_for_object_lambda/) for full documentation.
 #'
-#' @param AccountId &#91;required&#93; The account ID for the account that owns the specified Object Lambda
-#' Access Point.
+#' @param AccountId &#91;required&#93; The account ID for the account that owns the specified Object Lambda Access Point.
 #' @param Name &#91;required&#93; The name of the Object Lambda Access Point.
 #'
 #' @keywords internal
@@ -1725,6 +1557,38 @@ s3control_get_access_point_policy_status_for_object_lambda <- function(AccountId
 }
 .s3control$operations$get_access_point_policy_status_for_object_lambda <- s3control_get_access_point_policy_status_for_object_lambda
 
+#' Returns the access point scope for a directory bucket
+#'
+#' @description
+#' Returns the access point scope for a directory bucket.
+#'
+#' See [https://www.paws-r-sdk.com/docs/s3control_get_access_point_scope/](https://www.paws-r-sdk.com/docs/s3control_get_access_point_scope/) for full documentation.
+#'
+#' @param AccountId &#91;required&#93; The Amazon Web Services account ID that owns the access point with the scope that you want to retrieve.
+#' @param Name &#91;required&#93; The name of the access point with the scope you want to retrieve.
+#'
+#' @keywords internal
+#'
+#' @rdname s3control_get_access_point_scope
+s3control_get_access_point_scope <- function(AccountId, Name) {
+  op <- new_operation(
+    name = "GetAccessPointScope",
+    http_method = "GET",
+    http_path = "/v20180820/accesspoint/{name}/scope",
+    host_prefix = "",
+    paginator = list(),
+    stream_api = FALSE
+  )
+  input <- .s3control$get_access_point_scope_input(AccountId = AccountId, Name = Name)
+  output <- .s3control$get_access_point_scope_output()
+  config <- get_config()
+  svc <- .s3control$service(config, op)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.s3control$operations$get_access_point_scope <- s3control_get_access_point_scope
+
 #' Gets an Amazon S3 on Outposts bucket
 #'
 #' @description
@@ -1735,18 +1599,9 @@ s3control_get_access_point_policy_status_for_object_lambda <- function(AccountId
 #' @param AccountId &#91;required&#93; The Amazon Web Services account ID of the Outposts bucket.
 #' @param Bucket &#91;required&#93; Specifies the bucket.
 #' 
-#' For using this parameter with Amazon S3 on Outposts with the REST API,
-#' you must specify the name and the x-amz-outpost-id as well.
+#' For using this parameter with Amazon S3 on Outposts with the REST API, you must specify the name and the x-amz-outpost-id as well.
 #' 
-#' For using this parameter with S3 on Outposts with the Amazon Web
-#' Services SDK and CLI, you must specify the ARN of the bucket accessed in
-#' the format
-#' `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>`.
-#' For example, to access the bucket `reports` through Outpost `my-outpost`
-#' owned by account `123456789012` in Region `us-west-2`, use the URL
-#' encoding of
-#' `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/bucket/reports`.
-#' The value must be URL encoded.
+#' For using this parameter with S3 on Outposts with the Amazon Web Services SDK and CLI, you must specify the ARN of the bucket accessed in the format `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>`. For example, to access the bucket `reports` through Outpost `my-outpost` owned by account `123456789012` in Region `us-west-2`, use the URL encoding of `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/bucket/reports`. The value must be URL encoded.
 #'
 #' @keywords internal
 #'
@@ -1781,18 +1636,9 @@ s3control_get_bucket <- function(AccountId, Bucket) {
 #' @param AccountId &#91;required&#93; The Amazon Web Services account ID of the Outposts bucket.
 #' @param Bucket &#91;required&#93; The Amazon Resource Name (ARN) of the bucket.
 #' 
-#' For using this parameter with Amazon S3 on Outposts with the REST API,
-#' you must specify the name and the x-amz-outpost-id as well.
+#' For using this parameter with Amazon S3 on Outposts with the REST API, you must specify the name and the x-amz-outpost-id as well.
 #' 
-#' For using this parameter with S3 on Outposts with the Amazon Web
-#' Services SDK and CLI, you must specify the ARN of the bucket accessed in
-#' the format
-#' `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>`.
-#' For example, to access the bucket `reports` through Outpost `my-outpost`
-#' owned by account `123456789012` in Region `us-west-2`, use the URL
-#' encoding of
-#' `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/bucket/reports`.
-#' The value must be URL encoded.
+#' For using this parameter with S3 on Outposts with the Amazon Web Services SDK and CLI, you must specify the ARN of the bucket accessed in the format `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>`. For example, to access the bucket `reports` through Outpost `my-outpost` owned by account `123456789012` in Region `us-west-2`, use the URL encoding of `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/bucket/reports`. The value must be URL encoded.
 #'
 #' @keywords internal
 #'
@@ -1826,18 +1672,9 @@ s3control_get_bucket_lifecycle_configuration <- function(AccountId, Bucket) {
 #' @param AccountId &#91;required&#93; The Amazon Web Services account ID of the Outposts bucket.
 #' @param Bucket &#91;required&#93; Specifies the bucket.
 #' 
-#' For using this parameter with Amazon S3 on Outposts with the REST API,
-#' you must specify the name and the x-amz-outpost-id as well.
+#' For using this parameter with Amazon S3 on Outposts with the REST API, you must specify the name and the x-amz-outpost-id as well.
 #' 
-#' For using this parameter with S3 on Outposts with the Amazon Web
-#' Services SDK and CLI, you must specify the ARN of the bucket accessed in
-#' the format
-#' `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>`.
-#' For example, to access the bucket `reports` through Outpost `my-outpost`
-#' owned by account `123456789012` in Region `us-west-2`, use the URL
-#' encoding of
-#' `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/bucket/reports`.
-#' The value must be URL encoded.
+#' For using this parameter with S3 on Outposts with the Amazon Web Services SDK and CLI, you must specify the ARN of the bucket accessed in the format `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>`. For example, to access the bucket `reports` through Outpost `my-outpost` owned by account `123456789012` in Region `us-west-2`, use the URL encoding of `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/bucket/reports`. The value must be URL encoded.
 #'
 #' @keywords internal
 #'
@@ -1872,18 +1709,9 @@ s3control_get_bucket_policy <- function(AccountId, Bucket) {
 #' @param AccountId &#91;required&#93; The Amazon Web Services account ID of the Outposts bucket.
 #' @param Bucket &#91;required&#93; Specifies the bucket to get the replication information for.
 #' 
-#' For using this parameter with Amazon S3 on Outposts with the REST API,
-#' you must specify the name and the x-amz-outpost-id as well.
+#' For using this parameter with Amazon S3 on Outposts with the REST API, you must specify the name and the x-amz-outpost-id as well.
 #' 
-#' For using this parameter with S3 on Outposts with the Amazon Web
-#' Services SDK and CLI, you must specify the ARN of the bucket accessed in
-#' the format
-#' `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>`.
-#' For example, to access the bucket `reports` through Outpost `my-outpost`
-#' owned by account `123456789012` in Region `us-west-2`, use the URL
-#' encoding of
-#' `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/bucket/reports`.
-#' The value must be URL encoded.
+#' For using this parameter with S3 on Outposts with the Amazon Web Services SDK and CLI, you must specify the ARN of the bucket accessed in the format `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>`. For example, to access the bucket `reports` through Outpost `my-outpost` owned by account `123456789012` in Region `us-west-2`, use the URL encoding of `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/bucket/reports`. The value must be URL encoded.
 #'
 #' @keywords internal
 #'
@@ -1917,18 +1745,9 @@ s3control_get_bucket_replication <- function(AccountId, Bucket) {
 #' @param AccountId &#91;required&#93; The Amazon Web Services account ID of the Outposts bucket.
 #' @param Bucket &#91;required&#93; Specifies the bucket.
 #' 
-#' For using this parameter with Amazon S3 on Outposts with the REST API,
-#' you must specify the name and the x-amz-outpost-id as well.
+#' For using this parameter with Amazon S3 on Outposts with the REST API, you must specify the name and the x-amz-outpost-id as well.
 #' 
-#' For using this parameter with S3 on Outposts with the Amazon Web
-#' Services SDK and CLI, you must specify the ARN of the bucket accessed in
-#' the format
-#' `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>`.
-#' For example, to access the bucket `reports` through Outpost `my-outpost`
-#' owned by account `123456789012` in Region `us-west-2`, use the URL
-#' encoding of
-#' `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/bucket/reports`.
-#' The value must be URL encoded.
+#' For using this parameter with S3 on Outposts with the Amazon Web Services SDK and CLI, you must specify the ARN of the bucket accessed in the format `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>`. For example, to access the bucket `reports` through Outpost `my-outpost` owned by account `123456789012` in Region `us-west-2`, use the URL encoding of `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/bucket/reports`. The value must be URL encoded.
 #'
 #' @keywords internal
 #'
@@ -1994,41 +1813,27 @@ s3control_get_bucket_versioning <- function(AccountId, Bucket) {
 #' See [https://www.paws-r-sdk.com/docs/s3control_get_data_access/](https://www.paws-r-sdk.com/docs/s3control_get_data_access/) for full documentation.
 #'
 #' @param AccountId &#91;required&#93; The Amazon Web Services account ID of the S3 Access Grants instance.
-#' @param Target &#91;required&#93; The S3 URI path of the data to which you are requesting temporary access
-#' credentials. If the requesting account has an access grant for this
-#' data, S3 Access Grants vends temporary access credentials in the
-#' response.
-#' @param Permission &#91;required&#93; The type of permission granted to your S3 data, which can be set to one
-#' of the following values:
+#' @param Target &#91;required&#93; The S3 URI path of the data to which you are requesting temporary access credentials. If the requesting account has an access grant for this data, S3 Access Grants vends temporary access credentials in the response.
+#' @param Permission &#91;required&#93; The type of permission granted to your S3 data, which can be set to one of the following values:
 #' 
 #' -   `READ` – Grant read-only access to the S3 data.
 #' 
 #' -   `WRITE` – Grant write-only access to the S3 data.
 #' 
 #' -   `READWRITE` – Grant both read and write access to the S3 data.
-#' @param DurationSeconds The session duration, in seconds, of the temporary access credential
-#' that S3 Access Grants vends to the grantee or client application. The
-#' default value is 1 hour, but the grantee can specify a range from 900
-#' seconds (15 minutes) up to 43200 seconds (12 hours). If the grantee
-#' requests a value higher than this maximum, the operation fails.
-#' @param Privilege The scope of the temporary access credential that S3 Access Grants vends
-#' to the grantee or client application.
+#' @param DurationSeconds The session duration, in seconds, of the temporary access credential that S3 Access Grants vends to the grantee or client application. The default value is 1 hour, but the grantee can specify a range from 900 seconds (15 minutes) up to 43200 seconds (12 hours). If the grantee requests a value higher than this maximum, the operation fails.
+#' @param Privilege The scope of the temporary access credential that S3 Access Grants vends to the grantee or client application.
 #' 
-#' -   `Default` – The scope of the returned temporary access token is the
-#'     scope of the grant that is closest to the target scope.
+#' -   `Default` – The scope of the returned temporary access token is the scope of the grant that is closest to the target scope.
 #' 
-#' -   `Minimal` – The scope of the returned temporary access token is the
-#'     same as the requested target scope as long as the requested scope is
-#'     the same as or a subset of the grant scope.
-#' @param TargetType The type of `Target`. The only possible value is `Object`. Pass this
-#' value if the target data that you would like to access is a path to an
-#' object. Do not pass this value if the target data is a bucket or a
-#' bucket and a prefix.
+#' -   `Minimal` – The scope of the returned temporary access token is the same as the requested target scope as long as the requested scope is the same as or a subset of the grant scope.
+#' @param TargetType The type of `Target`. The only possible value is `Object`. Pass this value if the target data that you would like to access is a path to an object. Do not pass this value if the target data is a bucket or a bucket and a prefix.
+#' @param AuditContext The context to identify the job or query associated with the credential request. This information will be displayed in CloudTrail log in your account.
 #'
 #' @keywords internal
 #'
 #' @rdname s3control_get_data_access
-s3control_get_data_access <- function(AccountId, Target, Permission, DurationSeconds = NULL, Privilege = NULL, TargetType = NULL) {
+s3control_get_data_access <- function(AccountId, Target, Permission, DurationSeconds = NULL, Privilege = NULL, TargetType = NULL, AuditContext = NULL) {
   op <- new_operation(
     name = "GetDataAccess",
     http_method = "GET",
@@ -2037,7 +1842,7 @@ s3control_get_data_access <- function(AccountId, Target, Permission, DurationSec
     paginator = list(),
     stream_api = FALSE
   )
-  input <- .s3control$get_data_access_input(AccountId = AccountId, Target = Target, Permission = Permission, DurationSeconds = DurationSeconds, Privilege = Privilege, TargetType = TargetType)
+  input <- .s3control$get_data_access_input(AccountId = AccountId, Target = Target, Permission = Permission, DurationSeconds = DurationSeconds, Privilege = Privilege, TargetType = TargetType, AuditContext = AuditContext)
   output <- .s3control$get_data_access_output()
   config <- get_config()
   svc <- .s3control$service(config, op)
@@ -2054,8 +1859,7 @@ s3control_get_data_access <- function(AccountId, Target, Permission, DurationSec
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_get_job_tagging/](https://www.paws-r-sdk.com/docs/s3control_get_job_tagging/) for full documentation.
 #'
-#' @param AccountId &#91;required&#93; The Amazon Web Services account ID associated with the S3 Batch
-#' Operations job.
+#' @param AccountId &#91;required&#93; The Amazon Web Services account ID associated with the S3 Batch Operations job.
 #' @param JobId &#91;required&#93; The ID for the S3 Batch Operations job whose tags you want to retrieve.
 #'
 #' @keywords internal
@@ -2087,15 +1891,8 @@ s3control_get_job_tagging <- function(AccountId, JobId) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_get_multi_region_access_point/](https://www.paws-r-sdk.com/docs/s3control_get_multi_region_access_point/) for full documentation.
 #'
-#' @param AccountId &#91;required&#93; The Amazon Web Services account ID for the owner of the Multi-Region
-#' Access Point.
-#' @param Name &#91;required&#93; The name of the Multi-Region Access Point whose configuration
-#' information you want to receive. The name of the Multi-Region Access
-#' Point is different from the alias. For more information about the
-#' distinction between the name and the alias of an Multi-Region Access
-#' Point, see [Rules for naming Amazon S3 Multi-Region Access
-#' Points](https://docs.aws.amazon.com/AmazonS3/latest/userguide/CreatingMultiRegionAccessPoints.html#multi-region-access-point-naming)
-#' in the *Amazon S3 User Guide*.
+#' @param AccountId &#91;required&#93; The Amazon Web Services account ID for the owner of the Multi-Region Access Point.
+#' @param Name &#91;required&#93; The name of the Multi-Region Access Point whose configuration information you want to receive. The name of the Multi-Region Access Point is different from the alias. For more information about the distinction between the name and the alias of an Multi-Region Access Point, see [Rules for naming Amazon S3 Multi-Region Access Points](https://docs.aws.amazon.com/AmazonS3/latest/userguide/CreatingMultiRegionAccessPoints.html#multi-region-access-point-naming) in the *Amazon S3 User Guide*.
 #'
 #' @keywords internal
 #'
@@ -2126,14 +1923,8 @@ s3control_get_multi_region_access_point <- function(AccountId, Name) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_get_multi_region_access_point_policy/](https://www.paws-r-sdk.com/docs/s3control_get_multi_region_access_point_policy/) for full documentation.
 #'
-#' @param AccountId &#91;required&#93; The Amazon Web Services account ID for the owner of the Multi-Region
-#' Access Point.
-#' @param Name &#91;required&#93; Specifies the Multi-Region Access Point. The name of the Multi-Region
-#' Access Point is different from the alias. For more information about the
-#' distinction between the name and the alias of an Multi-Region Access
-#' Point, see [Rules for naming Amazon S3 Multi-Region Access
-#' Points](https://docs.aws.amazon.com/AmazonS3/latest/userguide/CreatingMultiRegionAccessPoints.html#multi-region-access-point-naming)
-#' in the *Amazon S3 User Guide*.
+#' @param AccountId &#91;required&#93; The Amazon Web Services account ID for the owner of the Multi-Region Access Point.
+#' @param Name &#91;required&#93; Specifies the Multi-Region Access Point. The name of the Multi-Region Access Point is different from the alias. For more information about the distinction between the name and the alias of an Multi-Region Access Point, see [Rules for naming Amazon S3 Multi-Region Access Points](https://docs.aws.amazon.com/AmazonS3/latest/userguide/CreatingMultiRegionAccessPoints.html#multi-region-access-point-naming) in the *Amazon S3 User Guide*.
 #'
 #' @keywords internal
 #'
@@ -2164,14 +1955,8 @@ s3control_get_multi_region_access_point_policy <- function(AccountId, Name) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_get_multi_region_access_point_policy_status/](https://www.paws-r-sdk.com/docs/s3control_get_multi_region_access_point_policy_status/) for full documentation.
 #'
-#' @param AccountId &#91;required&#93; The Amazon Web Services account ID for the owner of the Multi-Region
-#' Access Point.
-#' @param Name &#91;required&#93; Specifies the Multi-Region Access Point. The name of the Multi-Region
-#' Access Point is different from the alias. For more information about the
-#' distinction between the name and the alias of an Multi-Region Access
-#' Point, see [Rules for naming Amazon S3 Multi-Region Access
-#' Points](https://docs.aws.amazon.com/AmazonS3/latest/userguide/CreatingMultiRegionAccessPoints.html#multi-region-access-point-naming)
-#' in the *Amazon S3 User Guide*.
+#' @param AccountId &#91;required&#93; The Amazon Web Services account ID for the owner of the Multi-Region Access Point.
+#' @param Name &#91;required&#93; Specifies the Multi-Region Access Point. The name of the Multi-Region Access Point is different from the alias. For more information about the distinction between the name and the alias of an Multi-Region Access Point, see [Rules for naming Amazon S3 Multi-Region Access Points](https://docs.aws.amazon.com/AmazonS3/latest/userguide/CreatingMultiRegionAccessPoints.html#multi-region-access-point-naming) in the *Amazon S3 User Guide*.
 #'
 #' @keywords internal
 #'
@@ -2202,8 +1987,7 @@ s3control_get_multi_region_access_point_policy_status <- function(AccountId, Nam
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_get_multi_region_access_point_routes/](https://www.paws-r-sdk.com/docs/s3control_get_multi_region_access_point_routes/) for full documentation.
 #'
-#' @param AccountId &#91;required&#93; The Amazon Web Services account ID for the owner of the Multi-Region
-#' Access Point.
+#' @param AccountId &#91;required&#93; The Amazon Web Services account ID for the owner of the Multi-Region Access Point.
 #' @param Mrap &#91;required&#93; The Multi-Region Access Point ARN.
 #'
 #' @keywords internal
@@ -2235,8 +2019,7 @@ s3control_get_multi_region_access_point_routes <- function(AccountId, Mrap) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_get_public_access_block/](https://www.paws-r-sdk.com/docs/s3control_get_public_access_block/) for full documentation.
 #'
-#' @param AccountId &#91;required&#93; The account ID for the Amazon Web Services account whose
-#' `PublicAccessBlock` configuration you want to retrieve.
+#' @param AccountId &#91;required&#93; The account ID for the Amazon Web Services account whose `PublicAccessBlock` configuration you want to retrieve.
 #'
 #' @keywords internal
 #'
@@ -2331,10 +2114,8 @@ s3control_get_storage_lens_configuration_tagging <- function(ConfigId, AccountId
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_get_storage_lens_group/](https://www.paws-r-sdk.com/docs/s3control_get_storage_lens_group/) for full documentation.
 #'
-#' @param Name &#91;required&#93; The name of the Storage Lens group that you're trying to retrieve the
-#' configuration details for.
-#' @param AccountId &#91;required&#93; The Amazon Web Services account ID associated with the Storage Lens
-#' group that you're trying to retrieve the details for.
+#' @param Name &#91;required&#93; The name of the Storage Lens group that you're trying to retrieve the configuration details for.
+#' @param AccountId &#91;required&#93; The Amazon Web Services account ID associated with the Storage Lens group that you're trying to retrieve the details for.
 #'
 #' @keywords internal
 #'
@@ -2366,47 +2147,25 @@ s3control_get_storage_lens_group <- function(Name, AccountId) {
 #' See [https://www.paws-r-sdk.com/docs/s3control_list_access_grants/](https://www.paws-r-sdk.com/docs/s3control_list_access_grants/) for full documentation.
 #'
 #' @param AccountId &#91;required&#93; The Amazon Web Services account ID of the S3 Access Grants instance.
-#' @param NextToken A pagination token to request the next page of results. Pass this value
-#' into a subsequent `List Access Grants` request in order to retrieve the
-#' next page of results.
-#' @param MaxResults The maximum number of access grants that you would like returned in the
-#' `List Access Grants` response. If the results include the pagination
-#' token `NextToken`, make another call using the `NextToken` to determine
-#' if there are more results.
-#' @param GranteeType The type of the grantee to which access has been granted. It can be one
-#' of the following values:
+#' @param NextToken A pagination token to request the next page of results. Pass this value into a subsequent `List Access Grants` request in order to retrieve the next page of results.
+#' @param MaxResults The maximum number of access grants that you would like returned in the `List Access Grants` response. If the results include the pagination token `NextToken`, make another call using the `NextToken` to determine if there are more results.
+#' @param GranteeType The type of the grantee to which access has been granted. It can be one of the following values:
 #' 
 #' -   `IAM` - An IAM user or role.
 #' 
-#' -   `DIRECTORY_USER` - Your corporate directory user. You can use this
-#'     option if you have added your corporate identity directory to IAM
-#'     Identity Center and associated the IAM Identity Center instance with
-#'     your S3 Access Grants instance.
+#' -   `DIRECTORY_USER` - Your corporate directory user. You can use this option if you have added your corporate identity directory to IAM Identity Center and associated the IAM Identity Center instance with your S3 Access Grants instance.
 #' 
-#' -   `DIRECTORY_GROUP` - Your corporate directory group. You can use this
-#'     option if you have added your corporate identity directory to IAM
-#'     Identity Center and associated the IAM Identity Center instance with
-#'     your S3 Access Grants instance.
-#' @param GranteeIdentifier The unique identifer of the `Grantee`. If the grantee type is `IAM`, the
-#' identifier is the IAM Amazon Resource Name (ARN) of the user or role. If
-#' the grantee type is a directory user or group, the identifier is 128-bit
-#' universally unique identifier (UUID) in the format
-#' `a1b2c3d4-5678-90ab-cdef-EXAMPLE11111`. You can obtain this UUID from
-#' your Amazon Web Services IAM Identity Center instance.
-#' @param Permission The type of permission granted to your S3 data, which can be set to one
-#' of the following values:
+#' -   `DIRECTORY_GROUP` - Your corporate directory group. You can use this option if you have added your corporate identity directory to IAM Identity Center and associated the IAM Identity Center instance with your S3 Access Grants instance.
+#' @param GranteeIdentifier The unique identifer of the `Grantee`. If the grantee type is `IAM`, the identifier is the IAM Amazon Resource Name (ARN) of the user or role. If the grantee type is a directory user or group, the identifier is 128-bit universally unique identifier (UUID) in the format `a1b2c3d4-5678-90ab-cdef-EXAMPLE11111`. You can obtain this UUID from your Amazon Web Services IAM Identity Center instance.
+#' @param Permission The type of permission granted to your S3 data, which can be set to one of the following values:
 #' 
 #' -   `READ` – Grant read-only access to the S3 data.
 #' 
 #' -   `WRITE` – Grant write-only access to the S3 data.
 #' 
 #' -   `READWRITE` – Grant both read and write access to the S3 data.
-#' @param GrantScope The S3 path of the data to which you are granting access. It is the
-#' result of appending the `Subprefix` to the location scope.
-#' @param ApplicationArn The Amazon Resource Name (ARN) of an Amazon Web Services IAM Identity
-#' Center application associated with your Identity Center instance. If the
-#' grant includes an application ARN, the grantee can only access the S3
-#' data through this application.
+#' @param GrantScope The S3 path of the data to which you are granting access. It is the result of appending the `Subprefix` to the location scope.
+#' @param ApplicationArn The Amazon Resource Name (ARN) of an Amazon Web Services IAM Identity Center application associated with your Identity Center instance. If the grant includes an application ARN, the grantee can only access the S3 data through this application.
 #'
 #' @keywords internal
 #'
@@ -2438,13 +2197,8 @@ s3control_list_access_grants <- function(AccountId, NextToken = NULL, MaxResults
 #' See [https://www.paws-r-sdk.com/docs/s3control_list_access_grants_instances/](https://www.paws-r-sdk.com/docs/s3control_list_access_grants_instances/) for full documentation.
 #'
 #' @param AccountId &#91;required&#93; The Amazon Web Services account ID of the S3 Access Grants instance.
-#' @param NextToken A pagination token to request the next page of results. Pass this value
-#' into a subsequent `List Access Grants Instances` request in order to
-#' retrieve the next page of results.
-#' @param MaxResults The maximum number of access grants that you would like returned in the
-#' `List Access Grants` response. If the results include the pagination
-#' token `NextToken`, make another call using the `NextToken` to determine
-#' if there are more results.
+#' @param NextToken A pagination token to request the next page of results. Pass this value into a subsequent `List Access Grants Instances` request in order to retrieve the next page of results.
+#' @param MaxResults The maximum number of access grants that you would like returned in the `List Access Grants` response. If the results include the pagination token `NextToken`, make another call using the `NextToken` to determine if there are more results.
 #'
 #' @keywords internal
 #'
@@ -2477,21 +2231,9 @@ s3control_list_access_grants_instances <- function(AccountId, NextToken = NULL, 
 #' See [https://www.paws-r-sdk.com/docs/s3control_list_access_grants_locations/](https://www.paws-r-sdk.com/docs/s3control_list_access_grants_locations/) for full documentation.
 #'
 #' @param AccountId &#91;required&#93; The Amazon Web Services account ID of the S3 Access Grants instance.
-#' @param NextToken A pagination token to request the next page of results. Pass this value
-#' into a subsequent `List Access Grants Locations` request in order to
-#' retrieve the next page of results.
-#' @param MaxResults The maximum number of access grants that you would like returned in the
-#' `List Access Grants` response. If the results include the pagination
-#' token `NextToken`, make another call using the `NextToken` to determine
-#' if there are more results.
-#' @param LocationScope The S3 path to the location that you are registering. The location scope
-#' can be the default S3 location `s3://`, the S3 path to a bucket
-#' `s3://<bucket>`, or the S3 path to a bucket and prefix
-#' `s3://<bucket>/<prefix>`. A prefix in S3 is a string of characters at
-#' the beginning of an object key name used to organize the objects that
-#' you store in your S3 buckets. For example, object key names that start
-#' with the `engineering/` prefix or object key names that start with the
-#' `marketing/campaigns/` prefix.
+#' @param NextToken A pagination token to request the next page of results. Pass this value into a subsequent `List Access Grants Locations` request in order to retrieve the next page of results.
+#' @param MaxResults The maximum number of access grants that you would like returned in the `List Access Grants` response. If the results include the pagination token `NextToken`, make another call using the `NextToken` to determine if there are more results.
+#' @param LocationScope The S3 path to the location that you are registering. The location scope can be the default S3 location `s3://`, the S3 path to a bucket `s3://<bucket>`, or the S3 path to a bucket and prefix `s3://<bucket>/<prefix>`. A prefix in S3 is a string of characters at the beginning of an object key name used to organize the objects that you store in your S3 buckets. For example, object key names that start with the `engineering/` prefix or object key names that start with the `marketing/campaigns/` prefix.
 #'
 #' @keywords internal
 #'
@@ -2522,36 +2264,21 @@ s3control_list_access_grants_locations <- function(AccountId, NextToken = NULL, 
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_list_access_points/](https://www.paws-r-sdk.com/docs/s3control_list_access_points/) for full documentation.
 #'
-#' @param AccountId &#91;required&#93; The Amazon Web Services account ID for the account that owns the
-#' specified access points.
+#' @param AccountId &#91;required&#93; The Amazon Web Services account ID for the account that owns the specified access points.
 #' @param Bucket The name of the bucket whose associated access points you want to list.
 #' 
-#' For using this parameter with Amazon S3 on Outposts with the REST API,
-#' you must specify the name and the x-amz-outpost-id as well.
+#' For using this parameter with Amazon S3 on Outposts with the REST API, you must specify the name and the x-amz-outpost-id as well.
 #' 
-#' For using this parameter with S3 on Outposts with the Amazon Web
-#' Services SDK and CLI, you must specify the ARN of the bucket accessed in
-#' the format
-#' `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>`.
-#' For example, to access the bucket `reports` through Outpost `my-outpost`
-#' owned by account `123456789012` in Region `us-west-2`, use the URL
-#' encoding of
-#' `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/bucket/reports`.
-#' The value must be URL encoded.
-#' @param NextToken A continuation token. If a previous call to
-#' [`list_access_points`][s3control_list_access_points] returned a
-#' continuation token in the `NextToken` field, then providing that value
-#' here causes Amazon S3 to retrieve the next page of results.
-#' @param MaxResults The maximum number of access points that you want to include in the
-#' list. If the specified bucket has more than this number of access
-#' points, then the response will include a continuation token in the
-#' `NextToken` field that you can use to retrieve the next page of access
-#' points.
+#' For using this parameter with S3 on Outposts with the Amazon Web Services SDK and CLI, you must specify the ARN of the bucket accessed in the format `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>`. For example, to access the bucket `reports` through Outpost `my-outpost` owned by account `123456789012` in Region `us-west-2`, use the URL encoding of `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/bucket/reports`. The value must be URL encoded.
+#' @param NextToken A continuation token. If a previous call to [`list_access_points`][s3control_list_access_points] returned a continuation token in the `NextToken` field, then providing that value here causes Amazon S3 to retrieve the next page of results.
+#' @param MaxResults The maximum number of access points that you want to include in the list. If the specified bucket has more than this number of access points, then the response will include a continuation token in the `NextToken` field that you can use to retrieve the next page of access points.
+#' @param DataSourceId The unique identifier for the data source of the access point.
+#' @param DataSourceType The type of the data source that the access point is attached to. Returns only access points attached to S3 buckets by default. To return all access points specify `DataSourceType` as `ALL`.
 #'
 #' @keywords internal
 #'
 #' @rdname s3control_list_access_points
-s3control_list_access_points <- function(AccountId, Bucket = NULL, NextToken = NULL, MaxResults = NULL) {
+s3control_list_access_points <- function(AccountId, Bucket = NULL, NextToken = NULL, MaxResults = NULL, DataSourceId = NULL, DataSourceType = NULL) {
   op <- new_operation(
     name = "ListAccessPoints",
     http_method = "GET",
@@ -2560,7 +2287,7 @@ s3control_list_access_points <- function(AccountId, Bucket = NULL, NextToken = N
     paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults"),
     stream_api = FALSE
   )
-  input <- .s3control$list_access_points_input(AccountId = AccountId, Bucket = Bucket, NextToken = NextToken, MaxResults = MaxResults)
+  input <- .s3control$list_access_points_input(AccountId = AccountId, Bucket = Bucket, NextToken = NextToken, MaxResults = MaxResults, DataSourceId = DataSourceId, DataSourceType = DataSourceType)
   output <- .s3control$list_access_points_output()
   config <- get_config()
   svc <- .s3control$service(config, op)
@@ -2570,6 +2297,42 @@ s3control_list_access_points <- function(AccountId, Bucket = NULL, NextToken = N
 }
 .s3control$operations$list_access_points <- s3control_list_access_points
 
+#' Returns a list of the access points that are owned by the Amazon Web
+#' Services account and that are associated with the specified directory
+#' bucket
+#'
+#' @description
+#' Returns a list of the access points that are owned by the Amazon Web Services account and that are associated with the specified directory bucket.
+#'
+#' See [https://www.paws-r-sdk.com/docs/s3control_list_access_points_for_directory_buckets/](https://www.paws-r-sdk.com/docs/s3control_list_access_points_for_directory_buckets/) for full documentation.
+#'
+#' @param AccountId &#91;required&#93; The Amazon Web Services account ID that owns the access points.
+#' @param DirectoryBucket The name of the directory bucket associated with the access points you want to list.
+#' @param NextToken If `NextToken` is returned, there are more access points available than requested in the `maxResults` value. The value of `NextToken` is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page. Keep all other arguments unchanged. Each pagination token expires after 24 hours.
+#' @param MaxResults The maximum number of access points that you would like returned in the [`list_access_points_for_directory_buckets`][s3control_list_access_points_for_directory_buckets] response. If the directory bucket is associated with more than this number of access points, the results include the pagination token `NextToken`. Make another call using the `NextToken` to retrieve more results.
+#'
+#' @keywords internal
+#'
+#' @rdname s3control_list_access_points_for_directory_buckets
+s3control_list_access_points_for_directory_buckets <- function(AccountId, DirectoryBucket = NULL, NextToken = NULL, MaxResults = NULL) {
+  op <- new_operation(
+    name = "ListAccessPointsForDirectoryBuckets",
+    http_method = "GET",
+    http_path = "/v20180820/accesspointfordirectory",
+    host_prefix = "",
+    paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults", result_key = "AccessPointList"),
+    stream_api = FALSE
+  )
+  input <- .s3control$list_access_points_for_directory_buckets_input(AccountId = AccountId, DirectoryBucket = DirectoryBucket, NextToken = NextToken, MaxResults = MaxResults)
+  output <- .s3control$list_access_points_for_directory_buckets_output()
+  config <- get_config()
+  svc <- .s3control$service(config, op)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.s3control$operations$list_access_points_for_directory_buckets <- s3control_list_access_points_for_directory_buckets
+
 #' This operation is not supported by directory buckets
 #'
 #' @description
@@ -2577,16 +2340,9 @@ s3control_list_access_points <- function(AccountId, Bucket = NULL, NextToken = N
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_list_access_points_for_object_lambda/](https://www.paws-r-sdk.com/docs/s3control_list_access_points_for_object_lambda/) for full documentation.
 #'
-#' @param AccountId &#91;required&#93; The account ID for the account that owns the specified Object Lambda
-#' Access Point.
-#' @param NextToken If the list has more access points than can be returned in one call to
-#' this API, this field contains a continuation token that you can provide
-#' in subsequent calls to this API to retrieve additional access points.
-#' @param MaxResults The maximum number of access points that you want to include in the
-#' list. The response may contain fewer access points but will never
-#' contain more. If there are more than this number of access points, then
-#' the response will include a continuation token in the `NextToken` field
-#' that you can use to retrieve the next page of access points.
+#' @param AccountId &#91;required&#93; The account ID for the account that owns the specified Object Lambda Access Point.
+#' @param NextToken If the list has more access points than can be returned in one call to this API, this field contains a continuation token that you can provide in subsequent calls to this API to retrieve additional access points.
+#' @param MaxResults The maximum number of access points that you want to include in the list. The response may contain fewer access points but will never contain more. If there are more than this number of access points, then the response will include a continuation token in the `NextToken` field that you can use to retrieve the next page of access points.
 #'
 #' @keywords internal
 #'
@@ -2619,21 +2375,10 @@ s3control_list_access_points_for_object_lambda <- function(AccountId, NextToken 
 #' See [https://www.paws-r-sdk.com/docs/s3control_list_caller_access_grants/](https://www.paws-r-sdk.com/docs/s3control_list_caller_access_grants/) for full documentation.
 #'
 #' @param AccountId &#91;required&#93; The Amazon Web Services account ID of the S3 Access Grants instance.
-#' @param GrantScope The S3 path of the data that you would like to access. Must start with
-#' `s3://`. You can optionally pass only the beginning characters of a
-#' path, and S3 Access Grants will search for all applicable grants for the
-#' path fragment.
-#' @param NextToken A pagination token to request the next page of results. Pass this value
-#' into a subsequent `List Caller Access Grants` request in order to
-#' retrieve the next page of results.
-#' @param MaxResults The maximum number of access grants that you would like returned in the
-#' `List Caller Access Grants` response. If the results include the
-#' pagination token `NextToken`, make another call using the `NextToken` to
-#' determine if there are more results.
-#' @param AllowedByApplication If this optional parameter is passed in the request, a filter is applied
-#' to the results. The results will include only the access grants for the
-#' caller's Identity Center application or for any other applications
-#' (`ALL`).
+#' @param GrantScope The S3 path of the data that you would like to access. Must start with `s3://`. You can optionally pass only the beginning characters of a path, and S3 Access Grants will search for all applicable grants for the path fragment.
+#' @param NextToken A pagination token to request the next page of results. Pass this value into a subsequent `List Caller Access Grants` request in order to retrieve the next page of results.
+#' @param MaxResults The maximum number of access grants that you would like returned in the `List Caller Access Grants` response. If the results include the pagination token `NextToken`, make another call using the `NextToken` to determine if there are more results.
+#' @param AllowedByApplication If this optional parameter is passed in the request, a filter is applied to the results. The results will include only the access grants for the caller's Identity Center application or for any other applications (`ALL`).
 #'
 #' @keywords internal
 #'
@@ -2666,17 +2411,10 @@ s3control_list_caller_access_grants <- function(AccountId, GrantScope = NULL, Ne
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_list_jobs/](https://www.paws-r-sdk.com/docs/s3control_list_jobs/) for full documentation.
 #'
-#' @param AccountId &#91;required&#93; The Amazon Web Services account ID associated with the S3 Batch
-#' Operations job.
-#' @param JobStatuses The `List Jobs` request returns jobs that match the statuses listed in
-#' this element.
-#' @param NextToken A pagination token to request the next page of results. Use the token
-#' that Amazon S3 returned in the `NextToken` element of the
-#' `ListJobsResult` from the previous `List Jobs` request.
-#' @param MaxResults The maximum number of jobs that Amazon S3 will include in the
-#' `List Jobs` response. If there are more jobs than this number, the
-#' response will include a pagination token in the `NextToken` field to
-#' enable you to retrieve the next page of results.
+#' @param AccountId &#91;required&#93; The Amazon Web Services account ID associated with the S3 Batch Operations job.
+#' @param JobStatuses The `List Jobs` request returns jobs that match the statuses listed in this element.
+#' @param NextToken A pagination token to request the next page of results. Use the token that Amazon S3 returned in the `NextToken` element of the `ListJobsResult` from the previous `List Jobs` request.
+#' @param MaxResults The maximum number of jobs that Amazon S3 will include in the `List Jobs` response. If there are more jobs than this number, the response will include a pagination token in the `NextToken` field to enable you to retrieve the next page of results.
 #'
 #' @keywords internal
 #'
@@ -2707,8 +2445,7 @@ s3control_list_jobs <- function(AccountId, JobStatuses = NULL, NextToken = NULL,
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_list_multi_region_access_points/](https://www.paws-r-sdk.com/docs/s3control_list_multi_region_access_points/) for full documentation.
 #'
-#' @param AccountId &#91;required&#93; The Amazon Web Services account ID for the owner of the Multi-Region
-#' Access Point.
+#' @param AccountId &#91;required&#93; The Amazon Web Services account ID for the owner of the Multi-Region Access Point.
 #' @param NextToken Not currently used. Do not use this parameter.
 #' @param MaxResults Not currently used. Do not use this parameter.
 #'
@@ -2810,8 +2547,7 @@ s3control_list_storage_lens_configurations <- function(AccountId, NextToken = NU
 #' See [https://www.paws-r-sdk.com/docs/s3control_list_storage_lens_groups/](https://www.paws-r-sdk.com/docs/s3control_list_storage_lens_groups/) for full documentation.
 #'
 #' @param AccountId &#91;required&#93; The Amazon Web Services account ID that owns the Storage Lens groups.
-#' @param NextToken The token for the next set of results, or `null` if there are no more
-#' results.
+#' @param NextToken The token for the next set of results, or `null` if there are no more results.
 #'
 #' @keywords internal
 #'
@@ -2835,18 +2571,16 @@ s3control_list_storage_lens_groups <- function(AccountId, NextToken = NULL) {
 }
 .s3control$operations$list_storage_lens_groups <- s3control_list_storage_lens_groups
 
-#' This operation allows you to list all the Amazon Web Services resource
-#' tags for a specified resource
+#' This operation allows you to list all of the tags for a specified
+#' resource
 #'
 #' @description
-#' This operation allows you to list all the Amazon Web Services resource tags for a specified resource. Each tag is a label consisting of a user-defined key and value. Tags can help you manage, identify, organize, search for, and filter resources.
+#' This operation allows you to list all of the tags for a specified resource. Each tag is a label consisting of a key and value. Tags can help you organize, track costs for, and control access to resources.
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_list_tags_for_resource/](https://www.paws-r-sdk.com/docs/s3control_list_tags_for_resource/) for full documentation.
 #'
 #' @param AccountId &#91;required&#93; The Amazon Web Services account ID of the resource owner.
-#' @param ResourceArn &#91;required&#93; The Amazon Resource Name (ARN) of the S3 resource that you want to list
-#' the tags for. The tagged resource can be an S3 Storage Lens group or S3
-#' Access Grants instance, registered location, or grant.
+#' @param ResourceArn &#91;required&#93; The Amazon Resource Name (ARN) of the S3 resource that you want to list tags for. The tagged resource can be a directory bucket, S3 Storage Lens group or S3 Access Grants instance, registered location, or grant.
 #'
 #' @keywords internal
 #'
@@ -2878,10 +2612,8 @@ s3control_list_tags_for_resource <- function(AccountId, ResourceArn) {
 #' See [https://www.paws-r-sdk.com/docs/s3control_put_access_grants_instance_resource_policy/](https://www.paws-r-sdk.com/docs/s3control_put_access_grants_instance_resource_policy/) for full documentation.
 #'
 #' @param AccountId &#91;required&#93; The Amazon Web Services account ID of the S3 Access Grants instance.
-#' @param Policy &#91;required&#93; The resource policy of the S3 Access Grants instance that you are
-#' updating.
-#' @param Organization The Organization of the resource policy of the S3 Access Grants
-#' instance.
+#' @param Policy &#91;required&#93; The resource policy of the S3 Access Grants instance that you are updating.
+#' @param Organization The Organization of the resource policy of the S3 Access Grants instance.
 #'
 #' @keywords internal
 #'
@@ -2912,8 +2644,7 @@ s3control_put_access_grants_instance_resource_policy <- function(AccountId, Poli
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_put_access_point_configuration_for_object_lambda/](https://www.paws-r-sdk.com/docs/s3control_put_access_point_configuration_for_object_lambda/) for full documentation.
 #'
-#' @param AccountId &#91;required&#93; The account ID for the account that owns the specified Object Lambda
-#' Access Point.
+#' @param AccountId &#91;required&#93; The account ID for the account that owns the specified Object Lambda Access Point.
 #' @param Name &#91;required&#93; The name of the Object Lambda Access Point.
 #' @param Configuration &#91;required&#93; Object Lambda Access Point configuration document.
 #'
@@ -2939,35 +2670,20 @@ s3control_put_access_point_configuration_for_object_lambda <- function(AccountId
 }
 .s3control$operations$put_access_point_configuration_for_object_lambda <- s3control_put_access_point_configuration_for_object_lambda
 
-#' This operation is not supported by directory buckets
+#' Associates an access policy with the specified access point
 #'
 #' @description
-#' This operation is not supported by directory buckets.
+#' Associates an access policy with the specified access point. Each access point can have only one policy, so a request made to this API replaces any existing policy associated with the specified access point.
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_put_access_point_policy/](https://www.paws-r-sdk.com/docs/s3control_put_access_point_policy/) for full documentation.
 #'
-#' @param AccountId &#91;required&#93; The Amazon Web Services account ID for owner of the bucket associated
-#' with the specified access point.
-#' @param Name &#91;required&#93; The name of the access point that you want to associate with the
-#' specified policy.
+#' @param AccountId &#91;required&#93; The Amazon Web Services account ID for owner of the bucket associated with the specified access point.
+#' @param Name &#91;required&#93; The name of the access point that you want to associate with the specified policy.
 #' 
-#' For using this parameter with Amazon S3 on Outposts with the REST API,
-#' you must specify the name and the x-amz-outpost-id as well.
+#' For using this parameter with Amazon S3 on Outposts with the REST API, you must specify the name and the x-amz-outpost-id as well.
 #' 
-#' For using this parameter with S3 on Outposts with the Amazon Web
-#' Services SDK and CLI, you must specify the ARN of the access point
-#' accessed in the format
-#' `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/accesspoint/<my-accesspoint-name>`.
-#' For example, to access the access point `reports-ap` through Outpost
-#' `my-outpost` owned by account `123456789012` in Region `us-west-2`, use
-#' the URL encoding of
-#' `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/accesspoint/reports-ap`.
-#' The value must be URL encoded.
-#' @param Policy &#91;required&#93; The policy that you want to apply to the specified access point. For
-#' more information about access point policies, see [Managing data access
-#' with Amazon S3 access
-#' points](https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points.html)
-#' in the *Amazon S3 User Guide*.
+#' For using this parameter with S3 on Outposts with the Amazon Web Services SDK and CLI, you must specify the ARN of the access point accessed in the format `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/accesspoint/<my-accesspoint-name>`. For example, to access the access point `reports-ap` through Outpost `my-outpost` owned by account `123456789012` in Region `us-west-2`, use the URL encoding of `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/accesspoint/reports-ap`. The value must be URL encoded.
+#' @param Policy &#91;required&#93; The policy that you want to apply to the specified access point. For more information about access point policies, see [Managing data access with Amazon S3 access points](https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points.html) or [Managing access to shared datasets in directory buckets with access points](https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points-directory-buckets.html) in the *Amazon S3 User Guide*.
 #'
 #' @keywords internal
 #'
@@ -2998,8 +2714,7 @@ s3control_put_access_point_policy <- function(AccountId, Name, Policy) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_put_access_point_policy_for_object_lambda/](https://www.paws-r-sdk.com/docs/s3control_put_access_point_policy_for_object_lambda/) for full documentation.
 #'
-#' @param AccountId &#91;required&#93; The account ID for the account that owns the specified Object Lambda
-#' Access Point.
+#' @param AccountId &#91;required&#93; The account ID for the account that owns the specified Object Lambda Access Point.
 #' @param Name &#91;required&#93; The name of the Object Lambda Access Point.
 #' @param Policy &#91;required&#93; Object Lambda Access Point resource policy document.
 #'
@@ -3024,6 +2739,39 @@ s3control_put_access_point_policy_for_object_lambda <- function(AccountId, Name,
   return(response)
 }
 .s3control$operations$put_access_point_policy_for_object_lambda <- s3control_put_access_point_policy_for_object_lambda
+
+#' Creates or replaces the access point scope for a directory bucket
+#'
+#' @description
+#' Creates or replaces the access point scope for a directory bucket. You can use the access point scope to restrict access to specific prefixes, API operations, or a combination of both.
+#'
+#' See [https://www.paws-r-sdk.com/docs/s3control_put_access_point_scope/](https://www.paws-r-sdk.com/docs/s3control_put_access_point_scope/) for full documentation.
+#'
+#' @param AccountId &#91;required&#93; The Amazon Web Services account ID that owns the access point with scope that you want to create or replace.
+#' @param Name &#91;required&#93; The name of the access point with the scope that you want to create or replace.
+#' @param Scope &#91;required&#93; Object prefixes, API operations, or a combination of both.
+#'
+#' @keywords internal
+#'
+#' @rdname s3control_put_access_point_scope
+s3control_put_access_point_scope <- function(AccountId, Name, Scope) {
+  op <- new_operation(
+    name = "PutAccessPointScope",
+    http_method = "PUT",
+    http_path = "/v20180820/accesspoint/{name}/scope",
+    host_prefix = "",
+    paginator = list(),
+    stream_api = FALSE
+  )
+  input <- .s3control$put_access_point_scope_input(AccountId = AccountId, Name = Name, Scope = Scope)
+  output <- .s3control$put_access_point_scope_output()
+  config <- get_config()
+  svc <- .s3control$service(config, op)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.s3control$operations$put_access_point_scope <- s3control_put_access_point_scope
 
 #' This action puts a lifecycle configuration to an Amazon S3 on Outposts
 #' bucket
@@ -3069,20 +2817,10 @@ s3control_put_bucket_lifecycle_configuration <- function(AccountId, Bucket, Life
 #' @param AccountId &#91;required&#93; The Amazon Web Services account ID of the Outposts bucket.
 #' @param Bucket &#91;required&#93; Specifies the bucket.
 #' 
-#' For using this parameter with Amazon S3 on Outposts with the REST API,
-#' you must specify the name and the x-amz-outpost-id as well.
+#' For using this parameter with Amazon S3 on Outposts with the REST API, you must specify the name and the x-amz-outpost-id as well.
 #' 
-#' For using this parameter with S3 on Outposts with the Amazon Web
-#' Services SDK and CLI, you must specify the ARN of the bucket accessed in
-#' the format
-#' `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>`.
-#' For example, to access the bucket `reports` through Outpost `my-outpost`
-#' owned by account `123456789012` in Region `us-west-2`, use the URL
-#' encoding of
-#' `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/bucket/reports`.
-#' The value must be URL encoded.
-#' @param ConfirmRemoveSelfBucketAccess Set this parameter to true to confirm that you want to remove your
-#' permissions to change this bucket policy in the future.
+#' For using this parameter with S3 on Outposts with the Amazon Web Services SDK and CLI, you must specify the ARN of the bucket accessed in the format `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>`. For example, to access the bucket `reports` through Outpost `my-outpost` owned by account `123456789012` in Region `us-west-2`, use the URL encoding of `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/bucket/reports`. The value must be URL encoded.
+#' @param ConfirmRemoveSelfBucketAccess Set this parameter to true to confirm that you want to remove your permissions to change this bucket policy in the future.
 #' 
 #' This is not supported by Amazon S3 on Outposts buckets.
 #' @param Policy &#91;required&#93; The bucket policy as a JSON document.
@@ -3120,18 +2858,9 @@ s3control_put_bucket_policy <- function(AccountId, Bucket, ConfirmRemoveSelfBuck
 #' @param AccountId &#91;required&#93; The Amazon Web Services account ID of the Outposts bucket.
 #' @param Bucket &#91;required&#93; Specifies the S3 on Outposts bucket to set the configuration for.
 #' 
-#' For using this parameter with Amazon S3 on Outposts with the REST API,
-#' you must specify the name and the x-amz-outpost-id as well.
+#' For using this parameter with Amazon S3 on Outposts with the REST API, you must specify the name and the x-amz-outpost-id as well.
 #' 
-#' For using this parameter with S3 on Outposts with the Amazon Web
-#' Services SDK and CLI, you must specify the ARN of the bucket accessed in
-#' the format
-#' `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>`.
-#' For example, to access the bucket `reports` through Outpost `my-outpost`
-#' owned by account `123456789012` in Region `us-west-2`, use the URL
-#' encoding of
-#' `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/bucket/reports`.
-#' The value must be URL encoded.
+#' For using this parameter with S3 on Outposts with the Amazon Web Services SDK and CLI, you must specify the ARN of the bucket accessed in the format `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>`. For example, to access the bucket `reports` through Outpost `my-outpost` owned by account `123456789012` in Region `us-west-2`, use the URL encoding of `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/bucket/reports`. The value must be URL encoded.
 #' @param ReplicationConfiguration &#91;required&#93; 
 #'
 #' @keywords internal
@@ -3166,18 +2895,9 @@ s3control_put_bucket_replication <- function(AccountId, Bucket, ReplicationConfi
 #' @param AccountId &#91;required&#93; The Amazon Web Services account ID of the Outposts bucket.
 #' @param Bucket &#91;required&#93; The Amazon Resource Name (ARN) of the bucket.
 #' 
-#' For using this parameter with Amazon S3 on Outposts with the REST API,
-#' you must specify the name and the x-amz-outpost-id as well.
+#' For using this parameter with Amazon S3 on Outposts with the REST API, you must specify the name and the x-amz-outpost-id as well.
 #' 
-#' For using this parameter with S3 on Outposts with the Amazon Web
-#' Services SDK and CLI, you must specify the ARN of the bucket accessed in
-#' the format
-#' `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>`.
-#' For example, to access the bucket `reports` through Outpost `my-outpost`
-#' owned by account `123456789012` in Region `us-west-2`, use the URL
-#' encoding of
-#' `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/bucket/reports`.
-#' The value must be URL encoded.
+#' For using this parameter with S3 on Outposts with the Amazon Web Services SDK and CLI, you must specify the ARN of the bucket accessed in the format `arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>`. For example, to access the bucket `reports` through Outpost `my-outpost` owned by account `123456789012` in Region `us-west-2`, use the URL encoding of `arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/bucket/reports`. The value must be URL encoded.
 #' @param Tagging &#91;required&#93; 
 #'
 #' @keywords internal
@@ -3211,8 +2931,7 @@ s3control_put_bucket_tagging <- function(AccountId, Bucket, Tagging) {
 #'
 #' @param AccountId &#91;required&#93; The Amazon Web Services account ID of the S3 on Outposts bucket.
 #' @param Bucket &#91;required&#93; The S3 on Outposts bucket to set the versioning state for.
-#' @param MFA The concatenation of the authentication device's serial number, a space,
-#' and the value that is displayed on your authentication device.
+#' @param MFA The concatenation of the authentication device's serial number, a space, and the value that is displayed on your authentication device.
 #' @param VersioningConfiguration &#91;required&#93; The root-level tag for the `VersioningConfiguration` parameters.
 #'
 #' @keywords internal
@@ -3244,8 +2963,7 @@ s3control_put_bucket_versioning <- function(AccountId, Bucket, MFA = NULL, Versi
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_put_job_tagging/](https://www.paws-r-sdk.com/docs/s3control_put_job_tagging/) for full documentation.
 #'
-#' @param AccountId &#91;required&#93; The Amazon Web Services account ID associated with the S3 Batch
-#' Operations job.
+#' @param AccountId &#91;required&#93; The Amazon Web Services account ID associated with the S3 Batch Operations job.
 #' @param JobId &#91;required&#93; The ID for the S3 Batch Operations job whose tags you want to replace.
 #' @param Tags &#91;required&#93; The set of tags to associate with the S3 Batch Operations job.
 #'
@@ -3278,12 +2996,9 @@ s3control_put_job_tagging <- function(AccountId, JobId, Tags) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_put_multi_region_access_point_policy/](https://www.paws-r-sdk.com/docs/s3control_put_multi_region_access_point_policy/) for full documentation.
 #'
-#' @param AccountId &#91;required&#93; The Amazon Web Services account ID for the owner of the Multi-Region
-#' Access Point.
-#' @param ClientToken &#91;required&#93; An idempotency token used to identify the request and guarantee that
-#' requests are unique.
-#' @param Details &#91;required&#93; A container element containing the details of the policy for the
-#' Multi-Region Access Point.
+#' @param AccountId &#91;required&#93; The Amazon Web Services account ID for the owner of the Multi-Region Access Point.
+#' @param ClientToken &#91;required&#93; An idempotency token used to identify the request and guarantee that requests are unique.
+#' @param Details &#91;required&#93; A container element containing the details of the policy for the Multi-Region Access Point.
 #'
 #' @keywords internal
 #'
@@ -3314,10 +3029,8 @@ s3control_put_multi_region_access_point_policy <- function(AccountId, ClientToke
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_put_public_access_block/](https://www.paws-r-sdk.com/docs/s3control_put_public_access_block/) for full documentation.
 #'
-#' @param PublicAccessBlockConfiguration &#91;required&#93; The `PublicAccessBlock` configuration that you want to apply to the
-#' specified Amazon Web Services account.
-#' @param AccountId &#91;required&#93; The account ID for the Amazon Web Services account whose
-#' `PublicAccessBlock` configuration you want to set.
+#' @param PublicAccessBlockConfiguration &#91;required&#93; The `PublicAccessBlock` configuration that you want to apply to the specified Amazon Web Services account.
+#' @param AccountId &#91;required&#93; The account ID for the Amazon Web Services account whose `PublicAccessBlock` configuration you want to set.
 #'
 #' @keywords internal
 #'
@@ -3419,12 +3132,9 @@ s3control_put_storage_lens_configuration_tagging <- function(ConfigId, AccountId
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_submit_multi_region_access_point_routes/](https://www.paws-r-sdk.com/docs/s3control_submit_multi_region_access_point_routes/) for full documentation.
 #'
-#' @param AccountId &#91;required&#93; The Amazon Web Services account ID for the owner of the Multi-Region
-#' Access Point.
+#' @param AccountId &#91;required&#93; The Amazon Web Services account ID for the owner of the Multi-Region Access Point.
 #' @param Mrap &#91;required&#93; The Multi-Region Access Point ARN.
-#' @param RouteUpdates &#91;required&#93; The different routes that make up the new route configuration. Active
-#' routes return a value of `100`, and passive routes return a value of
-#' `0`.
+#' @param RouteUpdates &#91;required&#93; The different routes that make up the new route configuration. Active routes return a value of `100`, and passive routes return a value of `0`.
 #'
 #' @keywords internal
 #'
@@ -3448,21 +3158,16 @@ s3control_submit_multi_region_access_point_routes <- function(AccountId, Mrap, R
 }
 .s3control$operations$submit_multi_region_access_point_routes <- s3control_submit_multi_region_access_point_routes
 
-#' Creates a new Amazon Web Services resource tag or updates an existing
-#' resource tag
+#' Creates a new user-defined tag or updates an existing tag
 #'
 #' @description
-#' Creates a new Amazon Web Services resource tag or updates an existing resource tag. Each tag is a label consisting of a user-defined key and value. Tags can help you manage, identify, organize, search for, and filter resources. You can add up to 50 Amazon Web Services resource tags for each S3 resource.
+#' Creates a new user-defined tag or updates an existing tag. Each tag is a label consisting of a key and value that is applied to your resource. Tags can help you organize, track costs for, and control access to your resources. You can add up to 50 Amazon Web Services resource tags for each S3 resource.
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_tag_resource/](https://www.paws-r-sdk.com/docs/s3control_tag_resource/) for full documentation.
 #'
-#' @param AccountId &#91;required&#93; The Amazon Web Services account ID that created the S3 resource that
-#' you're trying to add tags to or the requester's account ID.
-#' @param ResourceArn &#91;required&#93; The Amazon Resource Name (ARN) of the S3 resource that you're trying to
-#' add tags to. The tagged resource can be an S3 Storage Lens group or S3
-#' Access Grants instance, registered location, or grant.
-#' @param Tags &#91;required&#93; The Amazon Web Services resource tags that you want to add to the
-#' specified S3 resource.
+#' @param AccountId &#91;required&#93; The Amazon Web Services account ID that created the S3 resource that you're trying to add tags to or the requester's account ID.
+#' @param ResourceArn &#91;required&#93; The Amazon Resource Name (ARN) of the S3 resource that you're applying tags to. The tagged resource can be a directory bucket, S3 Storage Lens group or S3 Access Grants instance, registered location, or grant.
+#' @param Tags &#91;required&#93; The Amazon Web Services resource tags that you want to add to the specified S3 resource.
 #'
 #' @keywords internal
 #'
@@ -3486,20 +3191,17 @@ s3control_tag_resource <- function(AccountId, ResourceArn, Tags) {
 }
 .s3control$operations$tag_resource <- s3control_tag_resource
 
-#' This operation removes the specified Amazon Web Services resource tags
-#' from an S3 resource
+#' This operation removes the specified user-defined tags from an S3
+#' resource
 #'
 #' @description
-#' This operation removes the specified Amazon Web Services resource tags from an S3 resource. Each tag is a label consisting of a user-defined key and value. Tags can help you manage, identify, organize, search for, and filter resources.
+#' This operation removes the specified user-defined tags from an S3 resource. You can pass one or more tag keys.
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_untag_resource/](https://www.paws-r-sdk.com/docs/s3control_untag_resource/) for full documentation.
 #'
-#' @param AccountId &#91;required&#93; The Amazon Web Services account ID that owns the resource that you're
-#' trying to remove the tags from.
-#' @param ResourceArn &#91;required&#93; The Amazon Resource Name (ARN) of the S3 resource that you're trying to
-#' remove the tags from.
-#' @param TagKeys &#91;required&#93; The array of tag key-value pairs that you're trying to remove from of
-#' the S3 resource.
+#' @param AccountId &#91;required&#93; The Amazon Web Services account ID that owns the resource that you're trying to remove the tags from.
+#' @param ResourceArn &#91;required&#93; The Amazon Resource Name (ARN) of the S3 resource that you're removing tags from. The tagged resource can be a directory bucket, S3 Storage Lens group or S3 Access Grants instance, registered location, or grant.
+#' @param TagKeys &#91;required&#93; The array of tag key-value pairs that you're trying to remove from of the S3 resource.
 #'
 #' @keywords internal
 #'
@@ -3532,22 +3234,12 @@ s3control_untag_resource <- function(AccountId, ResourceArn, TagKeys) {
 #' See [https://www.paws-r-sdk.com/docs/s3control_update_access_grants_location/](https://www.paws-r-sdk.com/docs/s3control_update_access_grants_location/) for full documentation.
 #'
 #' @param AccountId &#91;required&#93; The Amazon Web Services account ID of the S3 Access Grants instance.
-#' @param AccessGrantsLocationId &#91;required&#93; The ID of the registered location that you are updating. S3 Access
-#' Grants assigns this ID when you register the location. S3 Access Grants
-#' assigns the ID `default` to the default location `s3://` and assigns an
-#' auto-generated ID to other locations that you register.
+#' @param AccessGrantsLocationId &#91;required&#93; The ID of the registered location that you are updating. S3 Access Grants assigns this ID when you register the location. S3 Access Grants assigns the ID `default` to the default location `s3://` and assigns an auto-generated ID to other locations that you register.
 #' 
-#' The ID of the registered location to which you are granting access. S3
-#' Access Grants assigned this ID when you registered the location. S3
-#' Access Grants assigns the ID `default` to the default location `s3://`
-#' and assigns an auto-generated ID to other locations that you register.
+#' The ID of the registered location to which you are granting access. S3 Access Grants assigned this ID when you registered the location. S3 Access Grants assigns the ID `default` to the default location `s3://` and assigns an auto-generated ID to other locations that you register.
 #' 
-#' If you are passing the `default` location, you cannot create an access
-#' grant for the entire default location. You must also specify a bucket or
-#' a bucket and prefix in the `Subprefix` field.
-#' @param IAMRoleArn &#91;required&#93; The Amazon Resource Name (ARN) of the IAM role for the registered
-#' location. S3 Access Grants assumes this role to manage access to the
-#' registered location.
+#' If you are passing the `default` location, you cannot create an access grant for the entire default location. You must also specify a bucket or a bucket and prefix in the `Subprefix` field.
+#' @param IAMRoleArn &#91;required&#93; The Amazon Resource Name (ARN) of the IAM role for the registered location. S3 Access Grants assumes this role to manage access to the registered location.
 #'
 #' @keywords internal
 #'
@@ -3578,8 +3270,7 @@ s3control_update_access_grants_location <- function(AccountId, AccessGrantsLocat
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_update_job_priority/](https://www.paws-r-sdk.com/docs/s3control_update_job_priority/) for full documentation.
 #'
-#' @param AccountId &#91;required&#93; The Amazon Web Services account ID associated with the S3 Batch
-#' Operations job.
+#' @param AccountId &#91;required&#93; The Amazon Web Services account ID associated with the S3 Batch Operations job.
 #' @param JobId &#91;required&#93; The ID for the job whose priority you want to update.
 #' @param Priority &#91;required&#93; The priority you want to assign to this job.
 #'
@@ -3612,12 +3303,10 @@ s3control_update_job_priority <- function(AccountId, JobId, Priority) {
 #'
 #' See [https://www.paws-r-sdk.com/docs/s3control_update_job_status/](https://www.paws-r-sdk.com/docs/s3control_update_job_status/) for full documentation.
 #'
-#' @param AccountId &#91;required&#93; The Amazon Web Services account ID associated with the S3 Batch
-#' Operations job.
+#' @param AccountId &#91;required&#93; The Amazon Web Services account ID associated with the S3 Batch Operations job.
 #' @param JobId &#91;required&#93; The ID of the job whose status you want to update.
 #' @param RequestedJobStatus &#91;required&#93; The status that you want to move the specified job to.
-#' @param StatusUpdateReason A description of the reason why you want to change the specified job's
-#' status. This field can be any string up to the maximum length.
+#' @param StatusUpdateReason A description of the reason why you want to change the specified job's status. This field can be any string up to the maximum length.
 #'
 #' @keywords internal
 #'

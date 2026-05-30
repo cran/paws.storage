@@ -9,12 +9,9 @@ s3_delete_bucket_lifecycle(Bucket, ExpectedBucketOwner = NULL)
 \arguments{
 \item{Bucket}{[required] The bucket name of the lifecycle to delete.}
 
-\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you
-provide does not match the actual owner of the bucket, the request fails
-with the HTTP status code \verb{403 Forbidden} (access denied).
+\item{ExpectedBucketOwner}{The account ID of the expected bucket owner. If the account ID that you provide does not match the actual owner of the bucket, the request fails with the HTTP status code \verb{403 Forbidden} (access denied).
 
-This parameter applies to general purpose buckets only. It is not
-supported for directory bucket lifecycle configurations.}
+This parameter applies to general purpose buckets only. It is not supported for directory bucket lifecycle configurations.}
 }
 \description{
 Deletes the lifecycle configuration from the specified bucket. Amazon S3 removes all the lifecycle configuration rules in the lifecycle subresource associated with the bucket. Your objects never expire, and Amazon S3 no longer automatically deletes any objects on the basis of rules contained in the deleted lifecycle configuration.

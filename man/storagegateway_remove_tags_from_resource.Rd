@@ -7,11 +7,9 @@
 storagegateway_remove_tags_from_resource(ResourceARN, TagKeys)
 }
 \arguments{
-\item{ResourceARN}{[required] The Amazon Resource Name (ARN) of the resource you want to remove the
-tags from.}
+\item{ResourceARN}{[required] The Amazon Resource Name (ARN) of the resource you want to remove the tags from.}
 
-\item{TagKeys}{[required] The keys of the tags you want to remove from the specified resource. A
-tag is composed of a key-value pair.}
+\item{TagKeys}{[required] The keys of the tags you want to remove from the specified resource. A tag is composed of a key-value pair.}
 }
 \description{
 Removes one or more tags from the specified resource. This operation is supported in storage gateways of all types.

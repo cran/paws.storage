@@ -7,16 +7,11 @@
 efs_list_tags_for_resource(ResourceId, MaxResults = NULL, NextToken = NULL)
 }
 \arguments{
-\item{ResourceId}{[required] Specifies the EFS resource you want to retrieve tags for. You can
-retrieve tags for EFS file systems and access points using this API
-endpoint.}
+\item{ResourceId}{[required] Specifies the EFS resource you want to retrieve tags for. You can retrieve tags for EFS file systems and access points using this API endpoint.}
 
-\item{MaxResults}{(Optional) Specifies the maximum number of tag objects to return in the
-response. The default value is 100.}
+\item{MaxResults}{(Optional) Specifies the maximum number of tag objects to return in the response. The default value is 100.}
 
-\item{NextToken}{(Optional) You can use \code{NextToken} in a subsequent request to fetch the
-next page of access point descriptions if the response payload was
-paginated.}
+\item{NextToken}{(Optional) You can use \code{NextToken} in a subsequent request to fetch the next page of access point descriptions if the response payload was paginated.}
 }
 \description{
 Lists all tags for a top-level EFS resource. You must provide the ID of the resource that you want to retrieve the tags for.

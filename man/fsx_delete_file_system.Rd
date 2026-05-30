@@ -15,17 +15,13 @@ fsx_delete_file_system(
 \arguments{
 \item{FileSystemId}{[required] The ID of the file system that you want to delete.}
 
-\item{ClientRequestToken}{A string of up to 63 ASCII characters that Amazon FSx uses to ensure
-idempotent deletion. This token is automatically filled on your behalf
-when using the Command Line Interface (CLI) or an Amazon Web Services
-SDK.}
+\item{ClientRequestToken}{A string of up to 63 ASCII characters that Amazon FSx uses to ensure idempotent deletion. This token is automatically filled on your behalf when using the Command Line Interface (CLI) or an Amazon Web Services SDK.}
 
-\item{WindowsConfiguration}{}
+\item{WindowsConfiguration}{The configuration object for the Microsoft Windows file system used in the \code{\link[=fsx_delete_file_system]{delete_file_system}} operation.}
 
-\item{LustreConfiguration}{}
+\item{LustreConfiguration}{The configuration object for the Amazon FSx for Lustre file system being deleted in the \code{\link[=fsx_delete_file_system]{delete_file_system}} operation.}
 
-\item{OpenZFSConfiguration}{The configuration object for the OpenZFS file system used in the
-\code{\link[=fsx_delete_file_system]{delete_file_system}} operation.}
+\item{OpenZFSConfiguration}{The configuration object for the OpenZFS file system used in the \code{\link[=fsx_delete_file_system]{delete_file_system}} operation.}
 }
 \description{
 Deletes a file system. After deletion, the file system no longer exists, and its data is gone. Any existing automatic backups and snapshots are also deleted.

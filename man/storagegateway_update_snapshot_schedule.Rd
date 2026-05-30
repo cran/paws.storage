@@ -13,26 +13,17 @@ storagegateway_update_snapshot_schedule(
 )
 }
 \arguments{
-\item{VolumeARN}{[required] The Amazon Resource Name (ARN) of the volume. Use the
-\code{\link[=storagegateway_list_volumes]{list_volumes}} operation to return a list
-of gateway volumes.}
+\item{VolumeARN}{[required] The Amazon Resource Name (ARN) of the volume. Use the \code{\link[=storagegateway_list_volumes]{list_volumes}} operation to return a list of gateway volumes.}
 
-\item{StartAt}{[required] The hour of the day at which the snapshot schedule begins represented as
-\emph{hh}, where \emph{hh} is the hour (0 to 23). The hour of the day is in the
-time zone of the gateway.}
+\item{StartAt}{[required] The hour of the day at which the snapshot schedule begins represented as \emph{hh}, where \emph{hh} is the hour (0 to 23). The hour of the day is in the time zone of the gateway.}
 
 \item{RecurrenceInHours}{[required] Frequency of snapshots. Specify the number of hours between snapshots.}
 
-\item{Description}{Optional description of the snapshot that overwrites the existing
-description.}
+\item{Description}{Optional description of the snapshot that overwrites the existing description.}
 
-\item{Tags}{A list of up to 50 tags that can be assigned to a snapshot. Each tag is
-a key-value pair.
+\item{Tags}{A list of up to 50 tags that can be assigned to a snapshot. Each tag is a key-value pair.
 
-Valid characters for key and value are letters, spaces, and numbers
-representable in UTF-8 format, and the following special characters: + -
-= . _ : / @. The maximum length of a tag's key is 128 characters, and
-the maximum length for a tag's value is 256.}
+Valid characters for key and value are letters, spaces, and numbers representable in UTF-8 format, and the following special characters: + - = . _ : / @. The maximum length of a tag's key is 128 characters, and the maximum length for a tag's value is 256.}
 }
 \description{
 Updates a snapshot schedule configured for a gateway volume. This operation is only supported in the cached volume and stored volume gateway types.
