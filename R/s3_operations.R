@@ -39,7 +39,8 @@ s3_abort_multipart_upload <- function(Bucket, Key, UploadId, RequestPayer = NULL
     http_path = "/{Bucket}/{Key+}",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$abort_multipart_upload_input(Bucket = Bucket, Key = Key, UploadId = UploadId, RequestPayer = RequestPayer, ExpectedBucketOwner = ExpectedBucketOwner, IfMatchInitiatedTime = IfMatchInitiatedTime)
   output <- .s3$abort_multipart_upload_output()
@@ -92,14 +93,14 @@ s3_abort_multipart_upload <- function(Bucket, Key, UploadId, RequestPayer = NULL
 #' 
 #' Expects the ETag value as a string.
 #' 
-#' For more information about conditional requests, see [RFC 7232](https://datatracker.ietf.org/doc/html/rfc7232), or [Conditional requests](https://docs.aws.amazon.com/AmazonS3/latest/userguide/conditional-requests.html) in the *Amazon S3 User Guide*.
+#' For more information about conditional requests, see [RFC 7232](https://www.rfc-editor.org/info/rfc7232/), or [Conditional requests](https://docs.aws.amazon.com/AmazonS3/latest/userguide/conditional-requests.html) in the *Amazon S3 User Guide*.
 #' @param IfNoneMatch Uploads the object only if the object key name does not already exist in the bucket specified. Otherwise, Amazon S3 returns a `412 Precondition Failed` error.
 #' 
 #' If a conflicting operation occurs during the upload S3 returns a `409 ConditionalRequestConflict` response. On a 409 failure you should re-initiate the multipart upload with [`create_multipart_upload`][s3_create_multipart_upload] and re-upload each part.
 #' 
 #' Expects the '*' (asterisk) character.
 #' 
-#' For more information about conditional requests, see [RFC 7232](https://datatracker.ietf.org/doc/html/rfc7232), or [Conditional requests](https://docs.aws.amazon.com/AmazonS3/latest/userguide/conditional-requests.html) in the *Amazon S3 User Guide*.
+#' For more information about conditional requests, see [RFC 7232](https://www.rfc-editor.org/info/rfc7232/), or [Conditional requests](https://docs.aws.amazon.com/AmazonS3/latest/userguide/conditional-requests.html) in the *Amazon S3 User Guide*.
 #' @param SSECustomerAlgorithm The server-side encryption (SSE) algorithm used to encrypt the object. This parameter is required only when the object was created using a checksum algorithm or if your bucket policy requires the use of SSE-C. For more information, see [Protecting data using SSE-C keys](https://docs.aws.amazon.com/AmazonS3/latest/userguide/ServerSideEncryptionCustomerKeys.html#ssec-require-condition-key) in the *Amazon S3 User Guide*.
 #' 
 #' This functionality is not supported for directory buckets.
@@ -120,7 +121,8 @@ s3_complete_multipart_upload <- function(Bucket, Key, MultipartUpload = NULL, Up
     http_path = "/{Bucket}/{Key+}",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$complete_multipart_upload_input(Bucket = Bucket, Key = Key, MultipartUpload = MultipartUpload, UploadId = UploadId, ChecksumCRC32 = ChecksumCRC32, ChecksumCRC32C = ChecksumCRC32C, ChecksumCRC64NVME = ChecksumCRC64NVME, ChecksumSHA1 = ChecksumSHA1, ChecksumSHA256 = ChecksumSHA256, ChecksumSHA512 = ChecksumSHA512, ChecksumMD5 = ChecksumMD5, ChecksumXXHASH64 = ChecksumXXHASH64, ChecksumXXHASH3 = ChecksumXXHASH3, ChecksumXXHASH128 = ChecksumXXHASH128, ChecksumType = ChecksumType, MpuObjectSize = MpuObjectSize, RequestPayer = RequestPayer, ExpectedBucketOwner = ExpectedBucketOwner, IfMatch = IfMatch, IfNoneMatch = IfNoneMatch, SSECustomerAlgorithm = SSECustomerAlgorithm, SSECustomerKey = SSECustomerKey, SSECustomerKeyMD5 = SSECustomerKeyMD5)
   output <- .s3$complete_multipart_upload_output()
@@ -247,12 +249,12 @@ s3_complete_multipart_upload <- function(Bucket, Key, MultipartUpload = NULL, Up
 #' 
 #' Expects the ETag value as a string.
 #' 
-#' For more information about conditional requests, see [RFC 7232](https://datatracker.ietf.org/doc/html/rfc7232).
+#' For more information about conditional requests, see [RFC 7232](https://www.rfc-editor.org/info/rfc7232/).
 #' @param IfNoneMatch Copies the object only if the object key name at the destination does not already exist in the bucket specified. Otherwise, Amazon S3 returns a `412 Precondition Failed` error. If a concurrent operation occurs during the upload S3 returns a `409 ConditionalRequestConflict` response. On a 409 failure you should retry the upload.
 #' 
 #' Expects the '*' (asterisk) character.
 #' 
-#' For more information about conditional requests, see [RFC 7232](https://datatracker.ietf.org/doc/html/rfc7232).
+#' For more information about conditional requests, see [RFC 7232](https://www.rfc-editor.org/info/rfc7232/).
 #' @param Key &#91;required&#93; The key of the destination object.
 #' @param Metadata A map of metadata to store with the object in S3.
 #' @param MetadataDirective Specifies whether the metadata is copied from the source object or replaced with metadata that's provided in the request. When copying an object, you can preserve all metadata (the default) or specify new metadata. If this header isn’t specified, `COPY` is the default behavior.
@@ -281,6 +283,17 @@ s3_complete_multipart_upload <- function(Bucket, Key, MultipartUpload = NULL, Up
 #' -   When you attempt to `REPLACE` the tag-set of a general purpose bucket source object that has non-empty tags and set the `x-amz-tagging` value of the directory bucket destination object to empty.
 #' 
 #' -   When you attempt to `REPLACE` the tag-set of a directory bucket source object and don't set the `x-amz-tagging` value of the directory bucket destination object. This is because the default value of `x-amz-tagging` is the empty value.
+#' @param AnnotationDirective Specifies whether you want to copy annotations from the source object or exclude them. If this header isn't specified, `COPY` is the default behavior.
+#' 
+#' Valid Values: `COPY | EXCLUDE`
+#' 
+#' You can specify this directive as either an HTTP header (`x-amz-object-annotation-directive`) or as a query string parameter. Use the query string form when generating presigned URLs that need to control annotation copy behavior.
+#' 
+#' When set to `COPY`, you must have `s3:GetObjectAnnotation` permission on the source object and `s3:PutObjectAnnotation` permission on the destination. Each annotation copied is billed as a separate PUT request. If annotations on the source are modified during the copy, Amazon S3 returns a retryable error.
+#' 
+#' For directory buckets, annotations are not supported. Use `EXCLUDE` to copy objects to directory buckets without errors. If you specify `COPY` for a directory bucket, the request returns HTTP 501 (Not Implemented).
+#' 
+#' When you copy objects using multipart upload (for example, when the Amazon Web Services CLI or Amazon Web Services SDKs use Transfer Manager for objects larger than approximately 8 MB), annotations are not copied by default. To include annotations, specify `--copy-props default` in the Amazon Web Services CLI or the equivalent SDK configuration. With this opt-in, the SDK reads source annotations, completes the multipart upload, and then writes each annotation to the destination. Between the upload completion and the last annotation write, the destination object exists without all its annotations.
 #' @param ServerSideEncryption The server-side encryption algorithm used when storing this object in Amazon S3. Unrecognized or unsupported values won’t write a destination object and will receive a `400 Bad Request` response.
 #' 
 #' Amazon S3 automatically encrypts all new objects that are copied to an S3 bucket. When copying an object, if you don't specify encryption information in your copy request, the encryption setting of the target object is set to the default encryption configuration of the destination bucket. By default, all buckets have a base level of encryption configuration that uses server-side encryption with Amazon S3 managed keys (SSE-S3). If the destination bucket has a different default encryption configuration, Amazon S3 uses the corresponding encryption key to encrypt the target object copy.
@@ -392,22 +405,32 @@ s3_complete_multipart_upload <- function(Bucket, Key, MultipartUpload = NULL, Up
 #' @param ObjectLockLegalHoldStatus Specifies whether you want to apply a legal hold to the object copy.
 #' 
 #' This functionality is not supported for directory buckets.
+#' @param ObjectLockEventHold The event hold status to apply to the object copy. Set to `ON` to enable or `OFF` to disable.
+#' 
+#' This functionality is not supported for directory buckets.
+#' @param ObjectLockEventHoldDurationDays The event hold duration in days to apply to the object copy. You cannot specify a duration in both days and years.
+#' 
+#' This functionality is not supported for directory buckets.
+#' @param ObjectLockEventHoldDurationYears The event hold duration in years to apply to the object copy. You cannot specify a duration in both days and years.
+#' 
+#' This functionality is not supported for directory buckets.
 #' @param ExpectedBucketOwner The account ID of the expected destination bucket owner. If the account ID that you provide does not match the actual owner of the destination bucket, the request fails with the HTTP status code `403 Forbidden` (access denied).
 #' @param ExpectedSourceBucketOwner The account ID of the expected source bucket owner. If the account ID that you provide does not match the actual owner of the source bucket, the request fails with the HTTP status code `403 Forbidden` (access denied).
 #'
 #' @keywords internal
 #'
 #' @rdname s3_copy_object
-s3_copy_object <- function(ACL = NULL, Bucket, CacheControl = NULL, ChecksumAlgorithm = NULL, ContentDisposition = NULL, ContentEncoding = NULL, ContentLanguage = NULL, ContentType = NULL, CopySource, CopySourceIfMatch = NULL, CopySourceIfModifiedSince = NULL, CopySourceIfNoneMatch = NULL, CopySourceIfUnmodifiedSince = NULL, Expires = NULL, GrantFullControl = NULL, GrantRead = NULL, GrantReadACP = NULL, GrantWriteACP = NULL, IfMatch = NULL, IfNoneMatch = NULL, Key, Metadata = NULL, MetadataDirective = NULL, TaggingDirective = NULL, ServerSideEncryption = NULL, StorageClass = NULL, WebsiteRedirectLocation = NULL, SSECustomerAlgorithm = NULL, SSECustomerKey = NULL, SSECustomerKeyMD5 = NULL, SSEKMSKeyId = NULL, SSEKMSEncryptionContext = NULL, BucketKeyEnabled = NULL, CopySourceSSECustomerAlgorithm = NULL, CopySourceSSECustomerKey = NULL, CopySourceSSECustomerKeyMD5 = NULL, RequestPayer = NULL, Tagging = NULL, ObjectLockMode = NULL, ObjectLockRetainUntilDate = NULL, ObjectLockLegalHoldStatus = NULL, ExpectedBucketOwner = NULL, ExpectedSourceBucketOwner = NULL) {
+s3_copy_object <- function(ACL = NULL, Bucket, CacheControl = NULL, ChecksumAlgorithm = NULL, ContentDisposition = NULL, ContentEncoding = NULL, ContentLanguage = NULL, ContentType = NULL, CopySource, CopySourceIfMatch = NULL, CopySourceIfModifiedSince = NULL, CopySourceIfNoneMatch = NULL, CopySourceIfUnmodifiedSince = NULL, Expires = NULL, GrantFullControl = NULL, GrantRead = NULL, GrantReadACP = NULL, GrantWriteACP = NULL, IfMatch = NULL, IfNoneMatch = NULL, Key, Metadata = NULL, MetadataDirective = NULL, TaggingDirective = NULL, AnnotationDirective = NULL, ServerSideEncryption = NULL, StorageClass = NULL, WebsiteRedirectLocation = NULL, SSECustomerAlgorithm = NULL, SSECustomerKey = NULL, SSECustomerKeyMD5 = NULL, SSEKMSKeyId = NULL, SSEKMSEncryptionContext = NULL, BucketKeyEnabled = NULL, CopySourceSSECustomerAlgorithm = NULL, CopySourceSSECustomerKey = NULL, CopySourceSSECustomerKeyMD5 = NULL, RequestPayer = NULL, Tagging = NULL, ObjectLockMode = NULL, ObjectLockRetainUntilDate = NULL, ObjectLockLegalHoldStatus = NULL, ObjectLockEventHold = NULL, ObjectLockEventHoldDurationDays = NULL, ObjectLockEventHoldDurationYears = NULL, ExpectedBucketOwner = NULL, ExpectedSourceBucketOwner = NULL) {
   op <- new_operation(
     name = "CopyObject",
     http_method = "PUT",
     http_path = "/{Bucket}/{Key+}",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
-  input <- .s3$copy_object_input(ACL = ACL, Bucket = Bucket, CacheControl = CacheControl, ChecksumAlgorithm = ChecksumAlgorithm, ContentDisposition = ContentDisposition, ContentEncoding = ContentEncoding, ContentLanguage = ContentLanguage, ContentType = ContentType, CopySource = CopySource, CopySourceIfMatch = CopySourceIfMatch, CopySourceIfModifiedSince = CopySourceIfModifiedSince, CopySourceIfNoneMatch = CopySourceIfNoneMatch, CopySourceIfUnmodifiedSince = CopySourceIfUnmodifiedSince, Expires = Expires, GrantFullControl = GrantFullControl, GrantRead = GrantRead, GrantReadACP = GrantReadACP, GrantWriteACP = GrantWriteACP, IfMatch = IfMatch, IfNoneMatch = IfNoneMatch, Key = Key, Metadata = Metadata, MetadataDirective = MetadataDirective, TaggingDirective = TaggingDirective, ServerSideEncryption = ServerSideEncryption, StorageClass = StorageClass, WebsiteRedirectLocation = WebsiteRedirectLocation, SSECustomerAlgorithm = SSECustomerAlgorithm, SSECustomerKey = SSECustomerKey, SSECustomerKeyMD5 = SSECustomerKeyMD5, SSEKMSKeyId = SSEKMSKeyId, SSEKMSEncryptionContext = SSEKMSEncryptionContext, BucketKeyEnabled = BucketKeyEnabled, CopySourceSSECustomerAlgorithm = CopySourceSSECustomerAlgorithm, CopySourceSSECustomerKey = CopySourceSSECustomerKey, CopySourceSSECustomerKeyMD5 = CopySourceSSECustomerKeyMD5, RequestPayer = RequestPayer, Tagging = Tagging, ObjectLockMode = ObjectLockMode, ObjectLockRetainUntilDate = ObjectLockRetainUntilDate, ObjectLockLegalHoldStatus = ObjectLockLegalHoldStatus, ExpectedBucketOwner = ExpectedBucketOwner, ExpectedSourceBucketOwner = ExpectedSourceBucketOwner)
+  input <- .s3$copy_object_input(ACL = ACL, Bucket = Bucket, CacheControl = CacheControl, ChecksumAlgorithm = ChecksumAlgorithm, ContentDisposition = ContentDisposition, ContentEncoding = ContentEncoding, ContentLanguage = ContentLanguage, ContentType = ContentType, CopySource = CopySource, CopySourceIfMatch = CopySourceIfMatch, CopySourceIfModifiedSince = CopySourceIfModifiedSince, CopySourceIfNoneMatch = CopySourceIfNoneMatch, CopySourceIfUnmodifiedSince = CopySourceIfUnmodifiedSince, Expires = Expires, GrantFullControl = GrantFullControl, GrantRead = GrantRead, GrantReadACP = GrantReadACP, GrantWriteACP = GrantWriteACP, IfMatch = IfMatch, IfNoneMatch = IfNoneMatch, Key = Key, Metadata = Metadata, MetadataDirective = MetadataDirective, TaggingDirective = TaggingDirective, AnnotationDirective = AnnotationDirective, ServerSideEncryption = ServerSideEncryption, StorageClass = StorageClass, WebsiteRedirectLocation = WebsiteRedirectLocation, SSECustomerAlgorithm = SSECustomerAlgorithm, SSECustomerKey = SSECustomerKey, SSECustomerKeyMD5 = SSECustomerKeyMD5, SSEKMSKeyId = SSEKMSKeyId, SSEKMSEncryptionContext = SSEKMSEncryptionContext, BucketKeyEnabled = BucketKeyEnabled, CopySourceSSECustomerAlgorithm = CopySourceSSECustomerAlgorithm, CopySourceSSECustomerKey = CopySourceSSECustomerKey, CopySourceSSECustomerKeyMD5 = CopySourceSSECustomerKeyMD5, RequestPayer = RequestPayer, Tagging = Tagging, ObjectLockMode = ObjectLockMode, ObjectLockRetainUntilDate = ObjectLockRetainUntilDate, ObjectLockLegalHoldStatus = ObjectLockLegalHoldStatus, ObjectLockEventHold = ObjectLockEventHold, ObjectLockEventHoldDurationDays = ObjectLockEventHoldDurationDays, ObjectLockEventHoldDurationYears = ObjectLockEventHoldDurationYears, ExpectedBucketOwner = ExpectedBucketOwner, ExpectedSourceBucketOwner = ExpectedSourceBucketOwner)
   output <- .s3$copy_object_output()
   config <- get_config()
   svc <- .s3$service(config, op)
@@ -480,7 +503,8 @@ s3_create_bucket <- function(ACL = NULL, Bucket, CreateBucketConfiguration = NUL
     http_path = "/{Bucket}",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$create_bucket_input(ACL = ACL, Bucket = Bucket, CreateBucketConfiguration = CreateBucketConfiguration, GrantFullControl = GrantFullControl, GrantRead = GrantRead, GrantReadACP = GrantReadACP, GrantWrite = GrantWrite, GrantWriteACP = GrantWriteACP, ObjectLockEnabledForBucket = ObjectLockEnabledForBucket, ObjectOwnership = ObjectOwnership, BucketNamespace = BucketNamespace)
   output <- .s3$create_bucket_output()
@@ -516,7 +540,8 @@ s3_create_bucket_metadata_configuration <- function(Bucket, ContentMD5 = NULL, C
     http_path = "/{Bucket}?metadataConfiguration",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = list(request_algorithm_member = "ChecksumAlgorithm", request_algorithm_header = "x-amz-sdk-checksum-algorithm", request_checksum_required = TRUE)
   )
   input <- .s3$create_bucket_metadata_configuration_input(Bucket = Bucket, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, MetadataConfiguration = MetadataConfiguration, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$create_bucket_metadata_configuration_output()
@@ -552,7 +577,8 @@ s3_create_bucket_metadata_table_configuration <- function(Bucket, ContentMD5 = N
     http_path = "/{Bucket}?metadataTable",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = list(request_algorithm_member = "ChecksumAlgorithm", request_algorithm_header = "x-amz-sdk-checksum-algorithm", request_checksum_required = TRUE)
   )
   input <- .s3$create_bucket_metadata_table_configuration_input(Bucket = Bucket, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, MetadataTableConfiguration = MetadataTableConfiguration, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$create_bucket_metadata_table_configuration_output()
@@ -808,6 +834,15 @@ s3_create_bucket_metadata_table_configuration <- function(Bucket, ContentMD5 = N
 #' @param ObjectLockLegalHoldStatus Specifies whether you want to apply a legal hold to the uploaded object.
 #' 
 #' This functionality is not supported for directory buckets.
+#' @param ObjectLockEventHold Specifies the event hold status to apply to the uploaded object. Set to `ON` to enable or `OFF` to disable.
+#' 
+#' This functionality is not supported for directory buckets.
+#' @param ObjectLockEventHoldDurationDays Specifies the event hold duration in days to apply to the uploaded object. You cannot specify a duration in both days and years.
+#' 
+#' This functionality is not supported for directory buckets.
+#' @param ObjectLockEventHoldDurationYears Specifies the event hold duration in years to apply to the uploaded object. You cannot specify a duration in both days and years.
+#' 
+#' This functionality is not supported for directory buckets.
 #' @param ExpectedBucketOwner The account ID of the expected bucket owner. If the account ID that you provide does not match the actual owner of the bucket, the request fails with the HTTP status code `403 Forbidden` (access denied).
 #' @param ChecksumAlgorithm Indicates the algorithm that you want Amazon S3 to use to create the checksum for the object. For more information, see [Checking object integrity](https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html) in the *Amazon S3 User Guide*.
 #' @param ChecksumType Indicates the checksum type that you want Amazon S3 to use to calculate the object’s checksum value. For more information, see [Checking object integrity in the Amazon S3 User Guide](https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html).
@@ -815,16 +850,17 @@ s3_create_bucket_metadata_table_configuration <- function(Bucket, ContentMD5 = N
 #' @keywords internal
 #'
 #' @rdname s3_create_multipart_upload
-s3_create_multipart_upload <- function(ACL = NULL, Bucket, CacheControl = NULL, ContentDisposition = NULL, ContentEncoding = NULL, ContentLanguage = NULL, ContentType = NULL, Expires = NULL, GrantFullControl = NULL, GrantRead = NULL, GrantReadACP = NULL, GrantWriteACP = NULL, Key, Metadata = NULL, ServerSideEncryption = NULL, StorageClass = NULL, WebsiteRedirectLocation = NULL, SSECustomerAlgorithm = NULL, SSECustomerKey = NULL, SSECustomerKeyMD5 = NULL, SSEKMSKeyId = NULL, SSEKMSEncryptionContext = NULL, BucketKeyEnabled = NULL, RequestPayer = NULL, Tagging = NULL, ObjectLockMode = NULL, ObjectLockRetainUntilDate = NULL, ObjectLockLegalHoldStatus = NULL, ExpectedBucketOwner = NULL, ChecksumAlgorithm = NULL, ChecksumType = NULL) {
+s3_create_multipart_upload <- function(ACL = NULL, Bucket, CacheControl = NULL, ContentDisposition = NULL, ContentEncoding = NULL, ContentLanguage = NULL, ContentType = NULL, Expires = NULL, GrantFullControl = NULL, GrantRead = NULL, GrantReadACP = NULL, GrantWriteACP = NULL, Key, Metadata = NULL, ServerSideEncryption = NULL, StorageClass = NULL, WebsiteRedirectLocation = NULL, SSECustomerAlgorithm = NULL, SSECustomerKey = NULL, SSECustomerKeyMD5 = NULL, SSEKMSKeyId = NULL, SSEKMSEncryptionContext = NULL, BucketKeyEnabled = NULL, RequestPayer = NULL, Tagging = NULL, ObjectLockMode = NULL, ObjectLockRetainUntilDate = NULL, ObjectLockLegalHoldStatus = NULL, ObjectLockEventHold = NULL, ObjectLockEventHoldDurationDays = NULL, ObjectLockEventHoldDurationYears = NULL, ExpectedBucketOwner = NULL, ChecksumAlgorithm = NULL, ChecksumType = NULL) {
   op <- new_operation(
     name = "CreateMultipartUpload",
     http_method = "POST",
     http_path = "/{Bucket}/{Key+}?uploads",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
-  input <- .s3$create_multipart_upload_input(ACL = ACL, Bucket = Bucket, CacheControl = CacheControl, ContentDisposition = ContentDisposition, ContentEncoding = ContentEncoding, ContentLanguage = ContentLanguage, ContentType = ContentType, Expires = Expires, GrantFullControl = GrantFullControl, GrantRead = GrantRead, GrantReadACP = GrantReadACP, GrantWriteACP = GrantWriteACP, Key = Key, Metadata = Metadata, ServerSideEncryption = ServerSideEncryption, StorageClass = StorageClass, WebsiteRedirectLocation = WebsiteRedirectLocation, SSECustomerAlgorithm = SSECustomerAlgorithm, SSECustomerKey = SSECustomerKey, SSECustomerKeyMD5 = SSECustomerKeyMD5, SSEKMSKeyId = SSEKMSKeyId, SSEKMSEncryptionContext = SSEKMSEncryptionContext, BucketKeyEnabled = BucketKeyEnabled, RequestPayer = RequestPayer, Tagging = Tagging, ObjectLockMode = ObjectLockMode, ObjectLockRetainUntilDate = ObjectLockRetainUntilDate, ObjectLockLegalHoldStatus = ObjectLockLegalHoldStatus, ExpectedBucketOwner = ExpectedBucketOwner, ChecksumAlgorithm = ChecksumAlgorithm, ChecksumType = ChecksumType)
+  input <- .s3$create_multipart_upload_input(ACL = ACL, Bucket = Bucket, CacheControl = CacheControl, ContentDisposition = ContentDisposition, ContentEncoding = ContentEncoding, ContentLanguage = ContentLanguage, ContentType = ContentType, Expires = Expires, GrantFullControl = GrantFullControl, GrantRead = GrantRead, GrantReadACP = GrantReadACP, GrantWriteACP = GrantWriteACP, Key = Key, Metadata = Metadata, ServerSideEncryption = ServerSideEncryption, StorageClass = StorageClass, WebsiteRedirectLocation = WebsiteRedirectLocation, SSECustomerAlgorithm = SSECustomerAlgorithm, SSECustomerKey = SSECustomerKey, SSECustomerKeyMD5 = SSECustomerKeyMD5, SSEKMSKeyId = SSEKMSKeyId, SSEKMSEncryptionContext = SSEKMSEncryptionContext, BucketKeyEnabled = BucketKeyEnabled, RequestPayer = RequestPayer, Tagging = Tagging, ObjectLockMode = ObjectLockMode, ObjectLockRetainUntilDate = ObjectLockRetainUntilDate, ObjectLockLegalHoldStatus = ObjectLockLegalHoldStatus, ObjectLockEventHold = ObjectLockEventHold, ObjectLockEventHoldDurationDays = ObjectLockEventHoldDurationDays, ObjectLockEventHoldDurationYears = ObjectLockEventHoldDurationYears, ExpectedBucketOwner = ExpectedBucketOwner, ChecksumAlgorithm = ChecksumAlgorithm, ChecksumType = ChecksumType)
   output <- .s3$create_multipart_upload_output()
   config <- get_config()
   svc <- .s3$service(config, op)
@@ -872,7 +908,8 @@ s3_create_session <- function(SessionMode = NULL, Bucket, ServerSideEncryption =
     http_path = "/{Bucket}?session",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$create_session_input(SessionMode = SessionMode, Bucket = Bucket, ServerSideEncryption = ServerSideEncryption, SSEKMSKeyId = SSEKMSKeyId, SSEKMSEncryptionContext = SSEKMSEncryptionContext, BucketKeyEnabled = BucketKeyEnabled)
   output <- .s3$create_session_output()
@@ -908,7 +945,8 @@ s3_delete_bucket <- function(Bucket, ExpectedBucketOwner = NULL) {
     http_path = "/{Bucket}",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$delete_bucket_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$delete_bucket_output()
@@ -941,7 +979,8 @@ s3_delete_bucket_analytics_configuration <- function(Bucket, Id, ExpectedBucketO
     http_path = "/{Bucket}?analytics",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$delete_bucket_analytics_configuration_input(Bucket = Bucket, Id = Id, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$delete_bucket_analytics_configuration_output()
@@ -973,7 +1012,8 @@ s3_delete_bucket_cors <- function(Bucket, ExpectedBucketOwner = NULL) {
     http_path = "/{Bucket}?cors",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$delete_bucket_cors_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$delete_bucket_cors_output()
@@ -1011,7 +1051,8 @@ s3_delete_bucket_encryption <- function(Bucket, ExpectedBucketOwner = NULL) {
     http_path = "/{Bucket}?encryption",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$delete_bucket_encryption_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$delete_bucket_encryption_output()
@@ -1044,7 +1085,8 @@ s3_delete_bucket_intelligent_tiering_configuration <- function(Bucket, Id, Expec
     http_path = "/{Bucket}?intelligent-tiering",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$delete_bucket_intelligent_tiering_configuration_input(Bucket = Bucket, Id = Id, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$delete_bucket_intelligent_tiering_configuration_output()
@@ -1082,7 +1124,8 @@ s3_delete_bucket_inventory_configuration <- function(Bucket, Id, ExpectedBucketO
     http_path = "/{Bucket}?inventory",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$delete_bucket_inventory_configuration_input(Bucket = Bucket, Id = Id, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$delete_bucket_inventory_configuration_output()
@@ -1116,7 +1159,8 @@ s3_delete_bucket_lifecycle <- function(Bucket, ExpectedBucketOwner = NULL) {
     http_path = "/{Bucket}?lifecycle",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$delete_bucket_lifecycle_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$delete_bucket_lifecycle_output()
@@ -1148,7 +1192,8 @@ s3_delete_bucket_metadata_configuration <- function(Bucket, ExpectedBucketOwner 
     http_path = "/{Bucket}?metadataConfiguration",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$delete_bucket_metadata_configuration_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$delete_bucket_metadata_configuration_output()
@@ -1181,7 +1226,8 @@ s3_delete_bucket_metadata_table_configuration <- function(Bucket, ExpectedBucket
     http_path = "/{Bucket}?metadataTable",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$delete_bucket_metadata_table_configuration_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$delete_bucket_metadata_table_configuration_output()
@@ -1219,7 +1265,8 @@ s3_delete_bucket_metrics_configuration <- function(Bucket, Id, ExpectedBucketOwn
     http_path = "/{Bucket}?metrics",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$delete_bucket_metrics_configuration_input(Bucket = Bucket, Id = Id, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$delete_bucket_metrics_configuration_output()
@@ -1251,7 +1298,8 @@ s3_delete_bucket_ownership_controls <- function(Bucket, ExpectedBucketOwner = NU
     http_path = "/{Bucket}?ownershipControls",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$delete_bucket_ownership_controls_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$delete_bucket_ownership_controls_output()
@@ -1287,7 +1335,8 @@ s3_delete_bucket_policy <- function(Bucket, ExpectedBucketOwner = NULL) {
     http_path = "/{Bucket}?policy",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$delete_bucket_policy_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$delete_bucket_policy_output()
@@ -1319,7 +1368,8 @@ s3_delete_bucket_replication <- function(Bucket, ExpectedBucketOwner = NULL) {
     http_path = "/{Bucket}?replication",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$delete_bucket_replication_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$delete_bucket_replication_output()
@@ -1351,7 +1401,8 @@ s3_delete_bucket_tagging <- function(Bucket, ExpectedBucketOwner = NULL) {
     http_path = "/{Bucket}?tagging",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$delete_bucket_tagging_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$delete_bucket_tagging_output()
@@ -1383,7 +1434,8 @@ s3_delete_bucket_website <- function(Bucket, ExpectedBucketOwner = NULL) {
     http_path = "/{Bucket}?website",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$delete_bucket_website_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$delete_bucket_website_output()
@@ -1429,7 +1481,7 @@ s3_delete_bucket_website <- function(Bucket, ExpectedBucketOwner = NULL) {
 #' 
 #' Expects the ETag value as a string. `If-Match` does accept a string value of an '*' (asterisk) character to denote a match of any ETag.
 #' 
-#' For more information about conditional requests, see [RFC 7232](https://datatracker.ietf.org/doc/html/rfc7232).
+#' For more information about conditional requests, see [RFC 7232](https://www.rfc-editor.org/info/rfc7232/).
 #' @param IfMatchLastModifiedTime If present, the object is deleted only if its modification times matches the provided `Timestamp`. If the `Timestamp` values do not match, the operation returns a `412 Precondition Failed` error. If the `Timestamp` matches or if the object doesn’t exist, the operation returns a `204 Success (No Content)` response.
 #' 
 #' This functionality is only supported for directory buckets.
@@ -1449,7 +1501,8 @@ s3_delete_object <- function(Bucket, Key, MFA = NULL, VersionId = NULL, RequestP
     http_path = "/{Bucket}/{Key+}",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$delete_object_input(Bucket = Bucket, Key = Key, MFA = MFA, VersionId = VersionId, RequestPayer = RequestPayer, BypassGovernanceRetention = BypassGovernanceRetention, ExpectedBucketOwner = ExpectedBucketOwner, IfMatch = IfMatch, IfMatchLastModifiedTime = IfMatchLastModifiedTime, IfMatchSize = IfMatchSize)
   output <- .s3$delete_object_output()
@@ -1460,6 +1513,48 @@ s3_delete_object <- function(Bucket, Key, MFA = NULL, VersionId = NULL, RequestP
   return(response)
 }
 .s3$operations$delete_object <- s3_delete_object
+
+#' Deletes a specific annotation from an Amazon S3 object
+#'
+#' @description
+#' Deletes a specific annotation from an Amazon S3 object. Use the `x-amz-object-if-match` header to perform a conditional delete that only succeeds if the object's ETag matches the provided value, preventing race conditions during concurrent updates.
+#'
+#' See [https://www.paws-r-sdk.com/docs/s3_delete_object_annotation/](https://www.paws-r-sdk.com/docs/s3_delete_object_annotation/) for full documentation.
+#'
+#' @param Bucket &#91;required&#93; The name of the bucket that contains the object.
+#' @param Key &#91;required&#93; The object key.
+#' @param AnnotationName &#91;required&#93; The name of the annotation to delete. Annotation names are UTF-8 encoded and cannot start with `aws` or `s3` (case-insensitive).
+#' 
+#' Length Constraints: Minimum length of 1. Maximum length of 512 bytes.
+#' @param VersionId The version ID of the object.
+#' @param RequestPayer Confirms that the requester knows that they will be charged for the request. Bucket owners need not specify this parameter in their requests. If either the source or destination S3 bucket has Requester Pays enabled, the requester will pay for the corresponding charges. For information about downloading objects from Requester Pays buckets, see [Downloading Objects in Requester Pays Buckets](https://docs.aws.amazon.com/AmazonS3/latest/userguide/ObjectsinRequesterPaysBuckets.html) in the *Amazon S3 User Guide*.
+#' 
+#' This functionality is not supported for directory buckets.
+#' @param ExpectedBucketOwner The account ID of the expected bucket owner.
+#' @param ObjectIfMatch If specified, the operation only succeeds if the object's ETag matches the provided value.
+#'
+#' @keywords internal
+#'
+#' @rdname s3_delete_object_annotation
+s3_delete_object_annotation <- function(Bucket, Key, AnnotationName, VersionId = NULL, RequestPayer = NULL, ExpectedBucketOwner = NULL, ObjectIfMatch = NULL) {
+  op <- new_operation(
+    name = "DeleteObjectAnnotation",
+    http_method = "DELETE",
+    http_path = "/{Bucket}/{Key+}?annotation",
+    host_prefix = "",
+    paginator = list(),
+    stream_api = FALSE,
+    http_checksum = NULL
+  )
+  input <- .s3$delete_object_annotation_input(Bucket = Bucket, Key = Key, AnnotationName = AnnotationName, VersionId = VersionId, RequestPayer = RequestPayer, ExpectedBucketOwner = ExpectedBucketOwner, ObjectIfMatch = ObjectIfMatch)
+  output <- .s3$delete_object_annotation_output()
+  config <- get_config()
+  svc <- .s3$service(config, op)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.s3$operations$delete_object_annotation <- s3_delete_object_annotation
 
 #' This operation is not supported for directory buckets
 #'
@@ -1487,7 +1582,8 @@ s3_delete_object_tagging <- function(Bucket, Key, VersionId = NULL, ExpectedBuck
     http_path = "/{Bucket}/{Key+}?tagging",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$delete_object_tagging_input(Bucket = Bucket, Key = Key, VersionId = VersionId, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$delete_object_tagging_output()
@@ -1569,7 +1665,8 @@ s3_delete_objects <- function(Bucket, Delete, MFA = NULL, RequestPayer = NULL, B
     http_path = "/{Bucket}?delete",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = list(request_algorithm_member = "ChecksumAlgorithm", request_algorithm_header = "x-amz-sdk-checksum-algorithm", request_checksum_required = TRUE)
   )
   input <- .s3$delete_objects_input(Bucket = Bucket, Delete = Delete, MFA = MFA, RequestPayer = RequestPayer, BypassGovernanceRetention = BypassGovernanceRetention, ExpectedBucketOwner = ExpectedBucketOwner, ChecksumAlgorithm = ChecksumAlgorithm)
   output <- .s3$delete_objects_output()
@@ -1601,7 +1698,8 @@ s3_delete_public_access_block <- function(Bucket, ExpectedBucketOwner = NULL) {
     http_path = "/{Bucket}?publicAccessBlock",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$delete_public_access_block_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$delete_public_access_block_output()
@@ -1634,7 +1732,8 @@ s3_get_bucket_abac <- function(Bucket, ExpectedBucketOwner = NULL) {
     http_path = "/{Bucket}?abac",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$get_bucket_abac_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_abac_output()
@@ -1669,7 +1768,8 @@ s3_get_bucket_accelerate_configuration <- function(Bucket, ExpectedBucketOwner =
     http_path = "/{Bucket}?accelerate",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$get_bucket_accelerate_configuration_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner, RequestPayer = RequestPayer)
   output <- .s3$get_bucket_accelerate_configuration_output()
@@ -1692,7 +1792,7 @@ s3_get_bucket_accelerate_configuration <- function(Bucket, ExpectedBucketOwner =
 #' 
 #' When you use this API operation with an access point, provide the alias of the access point in place of the bucket name.
 #' 
-#' When you use this API operation with an Object Lambda access point, provide the alias of the Object Lambda access point in place of the bucket name. If the Object Lambda access point alias in a request is not valid, the error code `InvalidAccessPointAliasError` is returned. For more information about `InvalidAccessPointAliasError`, see [List of Error Codes](https://docs.aws.amazon.com/AmazonS3/latest/API/ErrorResponses.html#ErrorCodeList).
+#' When you use this API operation with an Object Lambda access point, provide the alias of the Object Lambda access point in place of the bucket name. If the Object Lambda access point alias in a request is not valid, the error code `InvalidAccessPointAliasError` is returned. For more information about `InvalidAccessPointAliasError`, see [List of Error Codes](https://docs.aws.amazon.com/AmazonS3/latest/API/#ErrorCodeList).
 #' @param ExpectedBucketOwner The account ID of the expected bucket owner. If the account ID that you provide does not match the actual owner of the bucket, the request fails with the HTTP status code `403 Forbidden` (access denied).
 #'
 #' @keywords internal
@@ -1705,7 +1805,8 @@ s3_get_bucket_acl <- function(Bucket, ExpectedBucketOwner = NULL) {
     http_path = "/{Bucket}?acl",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$get_bucket_acl_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_acl_output()
@@ -1738,7 +1839,8 @@ s3_get_bucket_analytics_configuration <- function(Bucket, Id, ExpectedBucketOwne
     http_path = "/{Bucket}?analytics",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$get_bucket_analytics_configuration_input(Bucket = Bucket, Id = Id, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_analytics_configuration_output()
@@ -1761,7 +1863,7 @@ s3_get_bucket_analytics_configuration <- function(Bucket, Id, ExpectedBucketOwne
 #' 
 #' When you use this API operation with an access point, provide the alias of the access point in place of the bucket name.
 #' 
-#' When you use this API operation with an Object Lambda access point, provide the alias of the Object Lambda access point in place of the bucket name. If the Object Lambda access point alias in a request is not valid, the error code `InvalidAccessPointAliasError` is returned. For more information about `InvalidAccessPointAliasError`, see [List of Error Codes](https://docs.aws.amazon.com/AmazonS3/latest/API/ErrorResponses.html#ErrorCodeList).
+#' When you use this API operation with an Object Lambda access point, provide the alias of the Object Lambda access point in place of the bucket name. If the Object Lambda access point alias in a request is not valid, the error code `InvalidAccessPointAliasError` is returned. For more information about `InvalidAccessPointAliasError`, see [List of Error Codes](https://docs.aws.amazon.com/AmazonS3/latest/API/#ErrorCodeList).
 #' @param ExpectedBucketOwner The account ID of the expected bucket owner. If the account ID that you provide does not match the actual owner of the bucket, the request fails with the HTTP status code `403 Forbidden` (access denied).
 #'
 #' @keywords internal
@@ -1774,7 +1876,8 @@ s3_get_bucket_cors <- function(Bucket, ExpectedBucketOwner = NULL) {
     http_path = "/{Bucket}?cors",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$get_bucket_cors_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_cors_output()
@@ -1810,7 +1913,8 @@ s3_get_bucket_encryption <- function(Bucket, ExpectedBucketOwner = NULL) {
     http_path = "/{Bucket}?encryption",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$get_bucket_encryption_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_encryption_output()
@@ -1843,7 +1947,8 @@ s3_get_bucket_intelligent_tiering_configuration <- function(Bucket, Id, Expected
     http_path = "/{Bucket}?intelligent-tiering",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$get_bucket_intelligent_tiering_configuration_input(Bucket = Bucket, Id = Id, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_intelligent_tiering_configuration_output()
@@ -1881,7 +1986,8 @@ s3_get_bucket_inventory_configuration <- function(Bucket, Id, ExpectedBucketOwne
     http_path = "/{Bucket}?inventory",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$get_bucket_inventory_configuration_input(Bucket = Bucket, Id = Id, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_inventory_configuration_output()
@@ -1913,7 +2019,8 @@ s3_get_bucket_lifecycle <- function(Bucket, ExpectedBucketOwner = NULL) {
     http_path = "/{Bucket}?lifecycle",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$get_bucket_lifecycle_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_lifecycle_output()
@@ -1947,7 +2054,8 @@ s3_get_bucket_lifecycle_configuration <- function(Bucket, ExpectedBucketOwner = 
     http_path = "/{Bucket}?lifecycle",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$get_bucket_lifecycle_configuration_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_lifecycle_configuration_output()
@@ -1970,7 +2078,7 @@ s3_get_bucket_lifecycle_configuration <- function(Bucket, ExpectedBucketOwner = 
 #' 
 #' When you use this API operation with an access point, provide the alias of the access point in place of the bucket name.
 #' 
-#' When you use this API operation with an Object Lambda access point, provide the alias of the Object Lambda access point in place of the bucket name. If the Object Lambda access point alias in a request is not valid, the error code `InvalidAccessPointAliasError` is returned. For more information about `InvalidAccessPointAliasError`, see [List of Error Codes](https://docs.aws.amazon.com/AmazonS3/latest/API/ErrorResponses.html#ErrorCodeList).
+#' When you use this API operation with an Object Lambda access point, provide the alias of the Object Lambda access point in place of the bucket name. If the Object Lambda access point alias in a request is not valid, the error code `InvalidAccessPointAliasError` is returned. For more information about `InvalidAccessPointAliasError`, see [List of Error Codes](https://docs.aws.amazon.com/AmazonS3/latest/API/#ErrorCodeList).
 #' @param ExpectedBucketOwner The account ID of the expected bucket owner. If the account ID that you provide does not match the actual owner of the bucket, the request fails with the HTTP status code `403 Forbidden` (access denied).
 #'
 #' @keywords internal
@@ -1983,7 +2091,8 @@ s3_get_bucket_location <- function(Bucket, ExpectedBucketOwner = NULL) {
     http_path = "/{Bucket}?location",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$get_bucket_location_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_location_output()
@@ -2015,7 +2124,8 @@ s3_get_bucket_logging <- function(Bucket, ExpectedBucketOwner = NULL) {
     http_path = "/{Bucket}?logging",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$get_bucket_logging_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_logging_output()
@@ -2047,7 +2157,8 @@ s3_get_bucket_metadata_configuration <- function(Bucket, ExpectedBucketOwner = N
     http_path = "/{Bucket}?metadataConfiguration",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$get_bucket_metadata_configuration_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_metadata_configuration_output()
@@ -2080,7 +2191,8 @@ s3_get_bucket_metadata_table_configuration <- function(Bucket, ExpectedBucketOwn
     http_path = "/{Bucket}?metadataTable",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$get_bucket_metadata_table_configuration_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_metadata_table_configuration_output()
@@ -2118,7 +2230,8 @@ s3_get_bucket_metrics_configuration <- function(Bucket, Id, ExpectedBucketOwner 
     http_path = "/{Bucket}?metrics",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$get_bucket_metrics_configuration_input(Bucket = Bucket, Id = Id, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_metrics_configuration_output()
@@ -2141,7 +2254,7 @@ s3_get_bucket_metrics_configuration <- function(Bucket, Id, ExpectedBucketOwner 
 #' 
 #' When you use this API operation with an access point, provide the alias of the access point in place of the bucket name.
 #' 
-#' When you use this API operation with an Object Lambda access point, provide the alias of the Object Lambda access point in place of the bucket name. If the Object Lambda access point alias in a request is not valid, the error code `InvalidAccessPointAliasError` is returned. For more information about `InvalidAccessPointAliasError`, see [List of Error Codes](https://docs.aws.amazon.com/AmazonS3/latest/API/ErrorResponses.html#ErrorCodeList).
+#' When you use this API operation with an Object Lambda access point, provide the alias of the Object Lambda access point in place of the bucket name. If the Object Lambda access point alias in a request is not valid, the error code `InvalidAccessPointAliasError` is returned. For more information about `InvalidAccessPointAliasError`, see [List of Error Codes](https://docs.aws.amazon.com/AmazonS3/latest/API/#ErrorCodeList).
 #' @param ExpectedBucketOwner The account ID of the expected bucket owner. If the account ID that you provide does not match the actual owner of the bucket, the request fails with the HTTP status code `403 Forbidden` (access denied).
 #'
 #' @keywords internal
@@ -2154,7 +2267,8 @@ s3_get_bucket_notification <- function(Bucket, ExpectedBucketOwner = NULL) {
     http_path = "/{Bucket}?notification",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$get_bucket_notification_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_notification_output()
@@ -2177,7 +2291,7 @@ s3_get_bucket_notification <- function(Bucket, ExpectedBucketOwner = NULL) {
 #' 
 #' When you use this API operation with an access point, provide the alias of the access point in place of the bucket name.
 #' 
-#' When you use this API operation with an Object Lambda access point, provide the alias of the Object Lambda access point in place of the bucket name. If the Object Lambda access point alias in a request is not valid, the error code `InvalidAccessPointAliasError` is returned. For more information about `InvalidAccessPointAliasError`, see [List of Error Codes](https://docs.aws.amazon.com/AmazonS3/latest/API/ErrorResponses.html#ErrorCodeList).
+#' When you use this API operation with an Object Lambda access point, provide the alias of the Object Lambda access point in place of the bucket name. If the Object Lambda access point alias in a request is not valid, the error code `InvalidAccessPointAliasError` is returned. For more information about `InvalidAccessPointAliasError`, see [List of Error Codes](https://docs.aws.amazon.com/AmazonS3/latest/API/#ErrorCodeList).
 #' @param ExpectedBucketOwner The account ID of the expected bucket owner. If the account ID that you provide does not match the actual owner of the bucket, the request fails with the HTTP status code `403 Forbidden` (access denied).
 #'
 #' @keywords internal
@@ -2190,7 +2304,8 @@ s3_get_bucket_notification_configuration <- function(Bucket, ExpectedBucketOwner
     http_path = "/{Bucket}?notification",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$get_bucket_notification_configuration_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_notification_configuration_output()
@@ -2222,7 +2337,8 @@ s3_get_bucket_ownership_controls <- function(Bucket, ExpectedBucketOwner = NULL)
     http_path = "/{Bucket}?ownershipControls",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$get_bucket_ownership_controls_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_ownership_controls_output()
@@ -2247,7 +2363,7 @@ s3_get_bucket_ownership_controls <- function(Bucket, ExpectedBucketOwner = NULL)
 #' 
 #' **Access points** - When you use this API operation with an access point, provide the alias of the access point in place of the bucket name.
 #' 
-#' **Object Lambda access points** - When you use this API operation with an Object Lambda access point, provide the alias of the Object Lambda access point in place of the bucket name. If the Object Lambda access point alias in a request is not valid, the error code `InvalidAccessPointAliasError` is returned. For more information about `InvalidAccessPointAliasError`, see [List of Error Codes](https://docs.aws.amazon.com/AmazonS3/latest/API/ErrorResponses.html#ErrorCodeList).
+#' **Object Lambda access points** - When you use this API operation with an Object Lambda access point, provide the alias of the Object Lambda access point in place of the bucket name. If the Object Lambda access point alias in a request is not valid, the error code `InvalidAccessPointAliasError` is returned. For more information about `InvalidAccessPointAliasError`, see [List of Error Codes](https://docs.aws.amazon.com/AmazonS3/latest/API/#ErrorCodeList).
 #' 
 #' Object Lambda access points are not supported by directory buckets.
 #' @param ExpectedBucketOwner The account ID of the expected bucket owner. If the account ID that you provide does not match the actual owner of the bucket, the request fails with the HTTP status code `403 Forbidden` (access denied).
@@ -2264,7 +2380,8 @@ s3_get_bucket_policy <- function(Bucket, ExpectedBucketOwner = NULL) {
     http_path = "/{Bucket}?policy",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$get_bucket_policy_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_policy_output()
@@ -2296,7 +2413,8 @@ s3_get_bucket_policy_status <- function(Bucket, ExpectedBucketOwner = NULL) {
     http_path = "/{Bucket}?policyStatus",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$get_bucket_policy_status_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_policy_status_output()
@@ -2328,7 +2446,8 @@ s3_get_bucket_replication <- function(Bucket, ExpectedBucketOwner = NULL) {
     http_path = "/{Bucket}?replication",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$get_bucket_replication_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_replication_output()
@@ -2360,7 +2479,8 @@ s3_get_bucket_request_payment <- function(Bucket, ExpectedBucketOwner = NULL) {
     http_path = "/{Bucket}?requestPayment",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$get_bucket_request_payment_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_request_payment_output()
@@ -2392,7 +2512,8 @@ s3_get_bucket_tagging <- function(Bucket, ExpectedBucketOwner = NULL) {
     http_path = "/{Bucket}?tagging",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$get_bucket_tagging_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_tagging_output()
@@ -2424,7 +2545,8 @@ s3_get_bucket_versioning <- function(Bucket, ExpectedBucketOwner = NULL) {
     http_path = "/{Bucket}?versioning",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$get_bucket_versioning_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_versioning_output()
@@ -2456,7 +2578,8 @@ s3_get_bucket_website <- function(Bucket, ExpectedBucketOwner = NULL) {
     http_path = "/{Bucket}?website",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$get_bucket_website_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_bucket_website_output()
@@ -2490,24 +2613,24 @@ s3_get_bucket_website <- function(Bucket, ExpectedBucketOwner = NULL) {
 #' 
 #' If both of the `If-Match` and `If-Unmodified-Since` headers are present in the request as follows: `If-Match` condition evaluates to `true`, and; `If-Unmodified-Since` condition evaluates to `false`; then, S3 returns `200 OK` and the data requested.
 #' 
-#' For more information about conditional requests, see [RFC 7232](https://datatracker.ietf.org/doc/html/rfc7232).
+#' For more information about conditional requests, see [RFC 7232](https://www.rfc-editor.org/info/rfc7232/).
 #' @param IfModifiedSince Return the object only if it has been modified since the specified time; otherwise, return a `304 Not Modified` error.
 #' 
 #' If both of the `If-None-Match` and `If-Modified-Since` headers are present in the request as follows:` If-None-Match` condition evaluates to `false`, and; `If-Modified-Since` condition evaluates to `true`; then, S3 returns `304 Not Modified` status code.
 #' 
-#' For more information about conditional requests, see [RFC 7232](https://datatracker.ietf.org/doc/html/rfc7232).
+#' For more information about conditional requests, see [RFC 7232](https://www.rfc-editor.org/info/rfc7232/).
 #' @param IfNoneMatch Return the object only if its entity tag (ETag) is different from the one specified in this header; otherwise, return a `304 Not Modified` error.
 #' 
 #' If both of the `If-None-Match` and `If-Modified-Since` headers are present in the request as follows:` If-None-Match` condition evaluates to `false`, and; `If-Modified-Since` condition evaluates to `true`; then, S3 returns `304 Not Modified` HTTP status code.
 #' 
-#' For more information about conditional requests, see [RFC 7232](https://datatracker.ietf.org/doc/html/rfc7232).
+#' For more information about conditional requests, see [RFC 7232](https://www.rfc-editor.org/info/rfc7232/).
 #' @param IfUnmodifiedSince Return the object only if it has not been modified since the specified time; otherwise, return a `412 Precondition Failed` error.
 #' 
 #' If both of the `If-Match` and `If-Unmodified-Since` headers are present in the request as follows: `If-Match` condition evaluates to `true`, and; `If-Unmodified-Since` condition evaluates to `false`; then, S3 returns `200 OK` and the data requested.
 #' 
-#' For more information about conditional requests, see [RFC 7232](https://datatracker.ietf.org/doc/html/rfc7232).
+#' For more information about conditional requests, see [RFC 7232](https://www.rfc-editor.org/info/rfc7232/).
 #' @param Key &#91;required&#93; Key of the object to get.
-#' @param Range Downloads the specified byte range of an object. For more information about the HTTP Range header, see https://www.rfc-editor.org/rfc/rfc9110.html#name-range.
+#' @param Range Downloads the specified byte range of an object. For more information about the HTTP Range header, see <https://www.rfc-editor.org/rfc/rfc9110.html#name-range>.
 #' 
 #' Amazon S3 doesn't support retrieving multiple ranges of data per `GET` request.
 #' @param ResponseCacheControl Sets the `Cache-Control` header of the response.
@@ -2583,7 +2706,8 @@ s3_get_object <- function(Bucket, IfMatch = NULL, IfModifiedSince = NULL, IfNone
     http_path = "/{Bucket}/{Key+}",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = list(request_checksum_required = FALSE, request_validation_mode_member = "ChecksumMode", response_algorithms = c("crc64nvme", "crc32", "crc32c", "sha256", "sha1", "sha512", "md5", "xxhash64", "xxhash3", "xxhash128" ))
   )
   input <- .s3$get_object_input(Bucket = Bucket, IfMatch = IfMatch, IfModifiedSince = IfModifiedSince, IfNoneMatch = IfNoneMatch, IfUnmodifiedSince = IfUnmodifiedSince, Key = Key, Range = Range, ResponseCacheControl = ResponseCacheControl, ResponseContentDisposition = ResponseContentDisposition, ResponseContentEncoding = ResponseContentEncoding, ResponseContentLanguage = ResponseContentLanguage, ResponseContentType = ResponseContentType, ResponseExpires = ResponseExpires, VersionId = VersionId, SSECustomerAlgorithm = SSECustomerAlgorithm, SSECustomerKey = SSECustomerKey, SSECustomerKeyMD5 = SSECustomerKeyMD5, RequestPayer = RequestPayer, PartNumber = PartNumber, ExpectedBucketOwner = ExpectedBucketOwner, ChecksumMode = ChecksumMode)
   output <- .s3$get_object_output()
@@ -2624,7 +2748,8 @@ s3_get_object_acl <- function(Bucket, Key, VersionId = NULL, RequestPayer = NULL
     http_path = "/{Bucket}/{Key+}?acl",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$get_object_acl_input(Bucket = Bucket, Key = Key, VersionId = VersionId, RequestPayer = RequestPayer, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_object_acl_output()
@@ -2635,6 +2760,48 @@ s3_get_object_acl <- function(Bucket, Key, VersionId = NULL, RequestPayer = NULL
   return(response)
 }
 .s3$operations$get_object_acl <- s3_get_object_acl
+
+#' Retrieves an annotation from an Amazon S3 object
+#'
+#' @description
+#' Retrieves an annotation from an Amazon S3 object. To use this operation, you must have the `s3:GetObjectAnnotation` permission.
+#'
+#' See [https://www.paws-r-sdk.com/docs/s3_get_object_annotation/](https://www.paws-r-sdk.com/docs/s3_get_object_annotation/) for full documentation.
+#'
+#' @param Bucket &#91;required&#93; The name of the bucket that contains the object.
+#' @param Key &#91;required&#93; The object key.
+#' @param AnnotationName &#91;required&#93; The name of the annotation to retrieve.
+#' 
+#' Length Constraints: Minimum length of 1. Maximum length of 512 bytes.
+#' @param VersionId The version ID of the object.
+#' @param RequestPayer Confirms that the requester knows that they will be charged for the request. Bucket owners need not specify this parameter in their requests. If either the source or destination S3 bucket has Requester Pays enabled, the requester will pay for the corresponding charges. For information about downloading objects from Requester Pays buckets, see [Downloading Objects in Requester Pays Buckets](https://docs.aws.amazon.com/AmazonS3/latest/userguide/ObjectsinRequesterPaysBuckets.html) in the *Amazon S3 User Guide*.
+#' 
+#' This functionality is not supported for directory buckets.
+#' @param ExpectedBucketOwner The account ID of the expected bucket owner. If the bucket is owned by a different account, the request fails with an HTTP 403 (Access Denied) error.
+#' @param ChecksumMode Set to `ENABLED` to validate the checksum of the annotation payload on retrieval.
+#'
+#' @keywords internal
+#'
+#' @rdname s3_get_object_annotation
+s3_get_object_annotation <- function(Bucket, Key, AnnotationName, VersionId = NULL, RequestPayer = NULL, ExpectedBucketOwner = NULL, ChecksumMode = NULL) {
+  op <- new_operation(
+    name = "GetObjectAnnotation",
+    http_method = "GET",
+    http_path = "/{Bucket}/{Key+}?annotation",
+    host_prefix = "",
+    paginator = list(),
+    stream_api = FALSE,
+    http_checksum = list(request_checksum_required = FALSE, request_validation_mode_member = "ChecksumMode", response_algorithms = c("crc64nvme", "crc32", "crc32c", "sha256", "sha1", "sha512", "md5", "xxhash64", "xxhash3", "xxhash128" ))
+  )
+  input <- .s3$get_object_annotation_input(Bucket = Bucket, Key = Key, AnnotationName = AnnotationName, VersionId = VersionId, RequestPayer = RequestPayer, ExpectedBucketOwner = ExpectedBucketOwner, ChecksumMode = ChecksumMode)
+  output <- .s3$get_object_annotation_output()
+  config <- get_config()
+  svc <- .s3$service(config, op)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.s3$operations$get_object_annotation <- s3_get_object_annotation
 
 #' Retrieves all of the metadata from an object without returning the
 #' object itself
@@ -2684,7 +2851,8 @@ s3_get_object_attributes <- function(Bucket, Key, VersionId = NULL, MaxParts = N
     http_path = "/{Bucket}/{Key+}?attributes",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$get_object_attributes_input(Bucket = Bucket, Key = Key, VersionId = VersionId, MaxParts = MaxParts, PartNumberMarker = PartNumberMarker, SSECustomerAlgorithm = SSECustomerAlgorithm, SSECustomerKey = SSECustomerKey, SSECustomerKeyMD5 = SSECustomerKeyMD5, RequestPayer = RequestPayer, ExpectedBucketOwner = ExpectedBucketOwner, ObjectAttributes = ObjectAttributes)
   output <- .s3$get_object_attributes_output()
@@ -2723,7 +2891,8 @@ s3_get_object_legal_hold <- function(Bucket, Key, VersionId = NULL, RequestPayer
     http_path = "/{Bucket}/{Key+}?legal-hold",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$get_object_legal_hold_input(Bucket = Bucket, Key = Key, VersionId = VersionId, RequestPayer = RequestPayer, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_object_legal_hold_output()
@@ -2757,7 +2926,8 @@ s3_get_object_lock_configuration <- function(Bucket, ExpectedBucketOwner = NULL)
     http_path = "/{Bucket}?object-lock",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$get_object_lock_configuration_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_object_lock_configuration_output()
@@ -2796,7 +2966,8 @@ s3_get_object_retention <- function(Bucket, Key, VersionId = NULL, RequestPayer 
     http_path = "/{Bucket}/{Key+}?retention",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$get_object_retention_input(Bucket = Bucket, Key = Key, VersionId = VersionId, RequestPayer = RequestPayer, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_object_retention_output()
@@ -2837,7 +3008,8 @@ s3_get_object_tagging <- function(Bucket, Key, VersionId = NULL, ExpectedBucketO
     http_path = "/{Bucket}/{Key+}?tagging",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$get_object_tagging_input(Bucket = Bucket, Key = Key, VersionId = VersionId, ExpectedBucketOwner = ExpectedBucketOwner, RequestPayer = RequestPayer)
   output <- .s3$get_object_tagging_output()
@@ -2873,7 +3045,8 @@ s3_get_object_torrent <- function(Bucket, Key, RequestPayer = NULL, ExpectedBuck
     http_path = "/{Bucket}/{Key+}?torrent",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$get_object_torrent_input(Bucket = Bucket, Key = Key, RequestPayer = RequestPayer, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_object_torrent_output()
@@ -2905,7 +3078,8 @@ s3_get_public_access_block <- function(Bucket, ExpectedBucketOwner = NULL) {
     http_path = "/{Bucket}?publicAccessBlock",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$get_public_access_block_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$get_public_access_block_output()
@@ -2931,7 +3105,7 @@ s3_get_public_access_block <- function(Bucket, ExpectedBucketOwner = NULL) {
 #' 
 #' **Access points** - When you use this action with an access point for general purpose buckets, you must provide the alias of the access point in place of the bucket name or specify the access point ARN. When you use this action with an access point for directory buckets, you must provide the access point name in place of the bucket name. When using the access point ARN, you must direct requests to the access point hostname. The access point hostname takes the form *AccessPointName*-*AccountId*.s3-accesspoint.*Region*.amazonaws.com. When using this action with an access point through the Amazon Web Services SDKs, you provide the access point ARN in place of the bucket name. For more information about access point ARNs, see [Using access points](https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-access-points.html) in the *Amazon S3 User Guide*.
 #' 
-#' **Object Lambda access points** - When you use this API operation with an Object Lambda access point, provide the alias of the Object Lambda access point in place of the bucket name. If the Object Lambda access point alias in a request is not valid, the error code `InvalidAccessPointAliasError` is returned. For more information about `InvalidAccessPointAliasError`, see [List of Error Codes](https://docs.aws.amazon.com/AmazonS3/latest/API/ErrorResponses.html#ErrorCodeList).
+#' **Object Lambda access points** - When you use this API operation with an Object Lambda access point, provide the alias of the Object Lambda access point in place of the bucket name. If the Object Lambda access point alias in a request is not valid, the error code `InvalidAccessPointAliasError` is returned. For more information about `InvalidAccessPointAliasError`, see [List of Error Codes](https://docs.aws.amazon.com/AmazonS3/latest/API/#ErrorCodeList).
 #' 
 #' Object Lambda access points are not supported by directory buckets.
 #' 
@@ -2948,7 +3122,8 @@ s3_head_bucket <- function(Bucket, ExpectedBucketOwner = NULL) {
     http_path = "/{Bucket}",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$head_bucket_input(Bucket = Bucket, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$head_bucket_output()
@@ -2987,7 +3162,7 @@ s3_head_bucket <- function(Bucket, ExpectedBucketOwner = NULL) {
 #' 
 #' Then Amazon S3 returns `200 OK` and the data requested.
 #' 
-#' For more information about conditional requests, see [RFC 7232](https://datatracker.ietf.org/doc/html/rfc7232).
+#' For more information about conditional requests, see [RFC 7232](https://www.rfc-editor.org/info/rfc7232/).
 #' @param IfModifiedSince Return the object only if it has been modified since the specified time; otherwise, return a 304 (not modified) error.
 #' 
 #' If both of the `If-None-Match` and `If-Modified-Since` headers are present in the request as follows:
@@ -2998,7 +3173,7 @@ s3_head_bucket <- function(Bucket, ExpectedBucketOwner = NULL) {
 #' 
 #' Then Amazon S3 returns the `304 Not Modified` response code.
 #' 
-#' For more information about conditional requests, see [RFC 7232](https://datatracker.ietf.org/doc/html/rfc7232).
+#' For more information about conditional requests, see [RFC 7232](https://www.rfc-editor.org/info/rfc7232/).
 #' @param IfNoneMatch Return the object only if its entity tag (ETag) is different from the one specified; otherwise, return a 304 (not modified) error.
 #' 
 #' If both of the `If-None-Match` and `If-Modified-Since` headers are present in the request as follows:
@@ -3009,7 +3184,7 @@ s3_head_bucket <- function(Bucket, ExpectedBucketOwner = NULL) {
 #' 
 #' Then Amazon S3 returns the `304 Not Modified` response code.
 #' 
-#' For more information about conditional requests, see [RFC 7232](https://datatracker.ietf.org/doc/html/rfc7232).
+#' For more information about conditional requests, see [RFC 7232](https://www.rfc-editor.org/info/rfc7232/).
 #' @param IfUnmodifiedSince Return the object only if it has not been modified since the specified time; otherwise, return a 412 (precondition failed) error.
 #' 
 #' If both of the `If-Match` and `If-Unmodified-Since` headers are present in the request as follows:
@@ -3020,7 +3195,7 @@ s3_head_bucket <- function(Bucket, ExpectedBucketOwner = NULL) {
 #' 
 #' Then Amazon S3 returns `200 OK` and the data requested.
 #' 
-#' For more information about conditional requests, see [RFC 7232](https://datatracker.ietf.org/doc/html/rfc7232).
+#' For more information about conditional requests, see [RFC 7232](https://www.rfc-editor.org/info/rfc7232/).
 #' @param Key &#91;required&#93; The object key.
 #' @param Range HeadObject returns only the metadata for an object. If the Range is satisfiable, only the `ContentLength` is affected in the response. If the Range is not satisfiable, S3 returns a `416 - Requested Range Not Satisfiable` error.
 #' @param ResponseCacheControl Sets the `Cache-Control` header of the response.
@@ -3062,7 +3237,8 @@ s3_head_object <- function(Bucket, IfMatch = NULL, IfModifiedSince = NULL, IfNon
     http_path = "/{Bucket}/{Key+}",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$head_object_input(Bucket = Bucket, IfMatch = IfMatch, IfModifiedSince = IfModifiedSince, IfNoneMatch = IfNoneMatch, IfUnmodifiedSince = IfUnmodifiedSince, Key = Key, Range = Range, ResponseCacheControl = ResponseCacheControl, ResponseContentDisposition = ResponseContentDisposition, ResponseContentEncoding = ResponseContentEncoding, ResponseContentLanguage = ResponseContentLanguage, ResponseContentType = ResponseContentType, ResponseExpires = ResponseExpires, VersionId = VersionId, SSECustomerAlgorithm = SSECustomerAlgorithm, SSECustomerKey = SSECustomerKey, SSECustomerKeyMD5 = SSECustomerKeyMD5, RequestPayer = RequestPayer, PartNumber = PartNumber, ExpectedBucketOwner = ExpectedBucketOwner, ChecksumMode = ChecksumMode)
   output <- .s3$head_object_output()
@@ -3095,7 +3271,8 @@ s3_list_bucket_analytics_configurations <- function(Bucket, ContinuationToken = 
     http_path = "/{Bucket}?analytics",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$list_bucket_analytics_configurations_input(Bucket = Bucket, ContinuationToken = ContinuationToken, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$list_bucket_analytics_configurations_output()
@@ -3128,7 +3305,8 @@ s3_list_bucket_intelligent_tiering_configurations <- function(Bucket, Continuati
     http_path = "/{Bucket}?intelligent-tiering",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$list_bucket_intelligent_tiering_configurations_input(Bucket = Bucket, ContinuationToken = ContinuationToken, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$list_bucket_intelligent_tiering_configurations_output()
@@ -3165,7 +3343,8 @@ s3_list_bucket_inventory_configurations <- function(Bucket, ContinuationToken = 
     http_path = "/{Bucket}?inventory",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$list_bucket_inventory_configurations_input(Bucket = Bucket, ContinuationToken = ContinuationToken, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$list_bucket_inventory_configurations_output()
@@ -3202,7 +3381,8 @@ s3_list_bucket_metrics_configurations <- function(Bucket, ContinuationToken = NU
     http_path = "/{Bucket}?metrics",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$list_bucket_metrics_configurations_input(Bucket = Bucket, ContinuationToken = ContinuationToken, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$list_bucket_metrics_configurations_output()
@@ -3244,7 +3424,8 @@ s3_list_buckets <- function(MaxBuckets = NULL, ContinuationToken = NULL, Prefix 
     http_path = "/",
     host_prefix = "",
     paginator = list(input_token = "ContinuationToken", limit_key = "MaxBuckets", output_token = "ContinuationToken", result_key = "Buckets"),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$list_buckets_input(MaxBuckets = MaxBuckets, ContinuationToken = ContinuationToken, Prefix = Prefix, BucketRegion = BucketRegion)
   output <- .s3$list_buckets_output()
@@ -3277,7 +3458,8 @@ s3_list_directory_buckets <- function(ContinuationToken = NULL, MaxDirectoryBuck
     http_path = "/",
     host_prefix = "",
     paginator = list(input_token = "ContinuationToken", limit_key = "MaxDirectoryBuckets", output_token = "ContinuationToken", result_key = "Buckets"),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$list_directory_buckets_input(ContinuationToken = ContinuationToken, MaxDirectoryBuckets = MaxDirectoryBuckets)
   output <- .s3$list_directory_buckets_output()
@@ -3348,7 +3530,8 @@ s3_list_multipart_uploads <- function(Bucket, Delimiter = NULL, EncodingType = N
     http_path = "/{Bucket}?uploads",
     host_prefix = "",
     paginator = list(limit_key = "MaxUploads", more_results = "IsTruncated", output_token = c("NextKeyMarker", "NextUploadIdMarker"), input_token = list("KeyMarker", "UploadIdMarker"), result_key = list( "Uploads", "CommonPrefixes")),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$list_multipart_uploads_input(Bucket = Bucket, Delimiter = Delimiter, EncodingType = EncodingType, KeyMarker = KeyMarker, MaxUploads = MaxUploads, Prefix = Prefix, UploadIdMarker = UploadIdMarker, ExpectedBucketOwner = ExpectedBucketOwner, RequestPayer = RequestPayer)
   output <- .s3$list_multipart_uploads_output()
@@ -3359,6 +3542,47 @@ s3_list_multipart_uploads <- function(Bucket, Delimiter = NULL, EncodingType = N
   return(response)
 }
 .s3$operations$list_multipart_uploads <- s3_list_multipart_uploads
+
+#' Lists the annotations attached to an Amazon S3 object
+#'
+#' @description
+#' Lists the annotations attached to an Amazon S3 object. Results are paginated, with a maximum of 1,000 annotations per object. Use the `AnnotationPrefix` parameter to filter the results by name prefix.
+#'
+#' See [https://www.paws-r-sdk.com/docs/s3_list_object_annotations/](https://www.paws-r-sdk.com/docs/s3_list_object_annotations/) for full documentation.
+#'
+#' @param Bucket &#91;required&#93; The name of the bucket that contains the object.
+#' @param Key &#91;required&#93; The object key.
+#' @param VersionId The version ID of the object.
+#' @param MaxAnnotationResults The maximum number of annotations to return in the response. Maximum is 1,000.
+#' @param AnnotationPrefix Filter results to annotations whose name begins with the specified prefix.
+#' @param ContinuationToken Continuation token returned by a previous request to retrieve the next page.
+#' @param RequestPayer Confirms that the requester knows that they will be charged for the request. Bucket owners need not specify this parameter in their requests. If either the source or destination S3 bucket has Requester Pays enabled, the requester will pay for the corresponding charges. For information about downloading objects from Requester Pays buckets, see [Downloading Objects in Requester Pays Buckets](https://docs.aws.amazon.com/AmazonS3/latest/userguide/ObjectsinRequesterPaysBuckets.html) in the *Amazon S3 User Guide*.
+#' 
+#' This functionality is not supported for directory buckets.
+#' @param ExpectedBucketOwner The account ID of the expected bucket owner.
+#'
+#' @keywords internal
+#'
+#' @rdname s3_list_object_annotations
+s3_list_object_annotations <- function(Bucket, Key, VersionId = NULL, MaxAnnotationResults = NULL, AnnotationPrefix = NULL, ContinuationToken = NULL, RequestPayer = NULL, ExpectedBucketOwner = NULL) {
+  op <- new_operation(
+    name = "ListObjectAnnotations",
+    http_method = "GET",
+    http_path = "/{Bucket}/{Key+}?annotation",
+    host_prefix = "",
+    paginator = list(input_token = "ContinuationToken", limit_key = "MaxAnnotationResults", output_token = "NextContinuationToken", result_key = "Annotations"),
+    stream_api = FALSE,
+    http_checksum = NULL
+  )
+  input <- .s3$list_object_annotations_input(Bucket = Bucket, Key = Key, VersionId = VersionId, MaxAnnotationResults = MaxAnnotationResults, AnnotationPrefix = AnnotationPrefix, ContinuationToken = ContinuationToken, RequestPayer = RequestPayer, ExpectedBucketOwner = ExpectedBucketOwner)
+  output <- .s3$list_object_annotations_output()
+  config <- get_config()
+  svc <- .s3$service(config, op)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.s3$operations$list_object_annotations <- s3_list_object_annotations
 
 #' This operation is not supported for directory buckets
 #'
@@ -3394,7 +3618,8 @@ s3_list_object_versions <- function(Bucket, Delimiter = NULL, EncodingType = NUL
     http_path = "/{Bucket}?versions",
     host_prefix = "",
     paginator = list(more_results = "IsTruncated", limit_key = "MaxKeys", output_token = c("NextKeyMarker", "NextVersionIdMarker"), input_token = list("KeyMarker", "VersionIdMarker"), result_key = list("Versions", "DeleteMarkers", "CommonPrefixes")),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$list_object_versions_input(Bucket = Bucket, Delimiter = Delimiter, EncodingType = EncodingType, KeyMarker = KeyMarker, MaxKeys = MaxKeys, Prefix = Prefix, VersionIdMarker = VersionIdMarker, ExpectedBucketOwner = ExpectedBucketOwner, RequestPayer = RequestPayer, OptionalObjectAttributes = OptionalObjectAttributes)
   output <- .s3$list_object_versions_output()
@@ -3445,7 +3670,8 @@ s3_list_objects <- function(Bucket, Delimiter = NULL, EncodingType = NULL, Marke
     http_path = "/{Bucket}",
     host_prefix = "",
     paginator = list(more_results = "IsTruncated", limit_key = "MaxKeys", output_token = c("NextMarker", "Contents[-1].Key"), input_token = c("Marker", "Marker"), result_key = list( "Contents", "CommonPrefixes")),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$list_objects_input(Bucket = Bucket, Delimiter = Delimiter, EncodingType = EncodingType, Marker = Marker, MaxKeys = MaxKeys, Prefix = Prefix, RequestPayer = RequestPayer, ExpectedBucketOwner = ExpectedBucketOwner, OptionalObjectAttributes = OptionalObjectAttributes)
   output <- .s3$list_objects_output()
@@ -3511,7 +3737,8 @@ s3_list_objects_v2 <- function(Bucket, Delimiter = NULL, EncodingType = NULL, Ma
     http_path = "/{Bucket}?list-type=2",
     host_prefix = "",
     paginator = list(more_results = "IsTruncated", limit_key = "MaxKeys", output_token = "NextContinuationToken", input_token = "ContinuationToken", result_key = list("Contents", "CommonPrefixes")),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$list_objects_v2_input(Bucket = Bucket, Delimiter = Delimiter, EncodingType = EncodingType, MaxKeys = MaxKeys, Prefix = Prefix, ContinuationToken = ContinuationToken, FetchOwner = FetchOwner, StartAfter = StartAfter, RequestPayer = RequestPayer, ExpectedBucketOwner = ExpectedBucketOwner, OptionalObjectAttributes = OptionalObjectAttributes)
   output <- .s3$list_objects_v2_output()
@@ -3567,7 +3794,8 @@ s3_list_parts <- function(Bucket, Key, MaxParts = NULL, PartNumberMarker = NULL,
     http_path = "/{Bucket}/{Key+}",
     host_prefix = "",
     paginator = list(more_results = "IsTruncated", limit_key = "MaxParts", output_token = "NextPartNumberMarker", input_token = "PartNumberMarker", result_key = "Parts"),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$list_parts_input(Bucket = Bucket, Key = Key, MaxParts = MaxParts, PartNumberMarker = PartNumberMarker, UploadId = UploadId, RequestPayer = RequestPayer, ExpectedBucketOwner = ExpectedBucketOwner, SSECustomerAlgorithm = SSECustomerAlgorithm, SSECustomerKey = SSECustomerKey, SSECustomerKeyMD5 = SSECustomerKeyMD5)
   output <- .s3$list_parts_output()
@@ -3605,7 +3833,8 @@ s3_put_bucket_abac <- function(Bucket, ContentMD5 = NULL, ChecksumAlgorithm = NU
     http_path = "/{Bucket}?abac",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = list(request_algorithm_member = "ChecksumAlgorithm", request_algorithm_header = "x-amz-sdk-checksum-algorithm", request_checksum_required = FALSE)
   )
   input <- .s3$put_bucket_abac_input(Bucket = Bucket, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, ExpectedBucketOwner = ExpectedBucketOwner, AbacStatus = AbacStatus)
   output <- .s3$put_bucket_abac_output()
@@ -3641,7 +3870,8 @@ s3_put_bucket_accelerate_configuration <- function(Bucket, AccelerateConfigurati
     http_path = "/{Bucket}?accelerate",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = list(request_algorithm_member = "ChecksumAlgorithm", request_algorithm_header = "x-amz-sdk-checksum-algorithm", request_checksum_required = FALSE)
   )
   input <- .s3$put_bucket_accelerate_configuration_input(Bucket = Bucket, AccelerateConfiguration = AccelerateConfiguration, ExpectedBucketOwner = ExpectedBucketOwner, ChecksumAlgorithm = ChecksumAlgorithm)
   output <- .s3$put_bucket_accelerate_configuration_output()
@@ -3664,7 +3894,7 @@ s3_put_bucket_accelerate_configuration <- function(Bucket, AccelerateConfigurati
 #' @param ACL The canned ACL to apply to the bucket.
 #' @param AccessControlPolicy Contains the elements that set the ACL permissions for an object per grantee.
 #' @param Bucket &#91;required&#93; The bucket to which to apply the ACL.
-#' @param ContentMD5 The Base64 encoded 128-bit `MD5` digest of the data. This header must be used as a message integrity check to verify that the request body was not corrupted in transit. For more information, go to [RFC 1864.](https://www.ietf.org/rfc/rfc1864.txt)
+#' @param ContentMD5 The Base64 encoded 128-bit `MD5` digest of the data. This header must be used as a message integrity check to verify that the request body was not corrupted in transit. For more information, go to [RFC 1864.](https://www.rfc-editor.org/rfc/rfc1864.txt)
 #' 
 #' For requests made using the Amazon Web Services Command Line Interface (CLI) or Amazon Web Services SDKs, this field is calculated automatically.
 #' @param ChecksumAlgorithm Indicates the algorithm used to create the checksum for the request when you use the SDK. This header will not provide any additional functionality if you don't use the SDK. When you send this header, there must be a corresponding `x-amz-checksum` or `x-amz-trailer` header sent. Otherwise, Amazon S3 fails the request with the HTTP status code `400 Bad Request`. For more information, see [Checking object integrity](https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html) in the *Amazon S3 User Guide*.
@@ -3689,7 +3919,8 @@ s3_put_bucket_acl <- function(ACL = NULL, AccessControlPolicy = NULL, Bucket, Co
     http_path = "/{Bucket}?acl",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = list(request_algorithm_member = "ChecksumAlgorithm", request_algorithm_header = "x-amz-sdk-checksum-algorithm", request_checksum_required = TRUE)
   )
   input <- .s3$put_bucket_acl_input(ACL = ACL, AccessControlPolicy = AccessControlPolicy, Bucket = Bucket, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, GrantFullControl = GrantFullControl, GrantRead = GrantRead, GrantReadACP = GrantReadACP, GrantWrite = GrantWrite, GrantWriteACP = GrantWriteACP, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_bucket_acl_output()
@@ -3723,7 +3954,8 @@ s3_put_bucket_analytics_configuration <- function(Bucket, Id, AnalyticsConfigura
     http_path = "/{Bucket}?analytics",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$put_bucket_analytics_configuration_input(Bucket = Bucket, Id = Id, AnalyticsConfiguration = AnalyticsConfiguration, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_bucket_analytics_configuration_output()
@@ -3744,7 +3976,7 @@ s3_put_bucket_analytics_configuration <- function(Bucket, Id, AnalyticsConfigura
 #'
 #' @param Bucket &#91;required&#93; Specifies the bucket impacted by the `cors`configuration.
 #' @param CORSConfiguration &#91;required&#93; Describes the cross-origin access configuration for objects in an Amazon S3 bucket. For more information, see [Enabling Cross-Origin Resource Sharing](https://docs.aws.amazon.com/AmazonS3/latest/userguide/cors.html) in the *Amazon S3 User Guide*.
-#' @param ContentMD5 The Base64 encoded 128-bit `MD5` digest of the data. This header must be used as a message integrity check to verify that the request body was not corrupted in transit. For more information, go to [RFC 1864.](https://www.ietf.org/rfc/rfc1864.txt)
+#' @param ContentMD5 The Base64 encoded 128-bit `MD5` digest of the data. This header must be used as a message integrity check to verify that the request body was not corrupted in transit. For more information, go to [RFC 1864.](https://www.rfc-editor.org/rfc/rfc1864.txt)
 #' 
 #' For requests made using the Amazon Web Services Command Line Interface (CLI) or Amazon Web Services SDKs, this field is calculated automatically.
 #' @param ChecksumAlgorithm Indicates the algorithm used to create the checksum for the request when you use the SDK. This header will not provide any additional functionality if you don't use the SDK. When you send this header, there must be a corresponding `x-amz-checksum` or `x-amz-trailer` header sent. Otherwise, Amazon S3 fails the request with the HTTP status code `400 Bad Request`. For more information, see [Checking object integrity](https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html) in the *Amazon S3 User Guide*.
@@ -3762,7 +3994,8 @@ s3_put_bucket_cors <- function(Bucket, CORSConfiguration, ContentMD5 = NULL, Che
     http_path = "/{Bucket}?cors",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = list(request_algorithm_member = "ChecksumAlgorithm", request_algorithm_header = "x-amz-sdk-checksum-algorithm", request_checksum_required = TRUE)
   )
   input <- .s3$put_bucket_cors_input(Bucket = Bucket, CORSConfiguration = CORSConfiguration, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_bucket_cors_output()
@@ -3810,7 +4043,8 @@ s3_put_bucket_encryption <- function(Bucket, ContentMD5 = NULL, ChecksumAlgorith
     http_path = "/{Bucket}?encryption",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = list(request_algorithm_member = "ChecksumAlgorithm", request_algorithm_header = "x-amz-sdk-checksum-algorithm", request_checksum_required = TRUE)
   )
   input <- .s3$put_bucket_encryption_input(Bucket = Bucket, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, ServerSideEncryptionConfiguration = ServerSideEncryptionConfiguration, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_bucket_encryption_output()
@@ -3844,7 +4078,8 @@ s3_put_bucket_intelligent_tiering_configuration <- function(Bucket, Id, Expected
     http_path = "/{Bucket}?intelligent-tiering",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$put_bucket_intelligent_tiering_configuration_input(Bucket = Bucket, Id = Id, ExpectedBucketOwner = ExpectedBucketOwner, IntelligentTieringConfiguration = IntelligentTieringConfiguration)
   output <- .s3$put_bucket_intelligent_tiering_configuration_output()
@@ -3883,7 +4118,8 @@ s3_put_bucket_inventory_configuration <- function(Bucket, Id, InventoryConfigura
     http_path = "/{Bucket}?inventory",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$put_bucket_inventory_configuration_input(Bucket = Bucket, Id = Id, InventoryConfiguration = InventoryConfiguration, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_bucket_inventory_configuration_output()
@@ -3920,7 +4156,8 @@ s3_put_bucket_lifecycle <- function(Bucket, ContentMD5 = NULL, ChecksumAlgorithm
     http_path = "/{Bucket}?lifecycle",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = list(request_algorithm_member = "ChecksumAlgorithm", request_algorithm_header = "x-amz-sdk-checksum-algorithm", request_checksum_required = TRUE)
   )
   input <- .s3$put_bucket_lifecycle_input(Bucket = Bucket, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, LifecycleConfiguration = LifecycleConfiguration, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_bucket_lifecycle_output()
@@ -3968,7 +4205,8 @@ s3_put_bucket_lifecycle_configuration <- function(Bucket, ChecksumAlgorithm = NU
     http_path = "/{Bucket}?lifecycle",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = list(request_algorithm_member = "ChecksumAlgorithm", request_algorithm_header = "x-amz-sdk-checksum-algorithm", request_checksum_required = TRUE)
   )
   input <- .s3$put_bucket_lifecycle_configuration_input(Bucket = Bucket, ChecksumAlgorithm = ChecksumAlgorithm, LifecycleConfiguration = LifecycleConfiguration, ExpectedBucketOwner = ExpectedBucketOwner, TransitionDefaultMinimumObjectSize = TransitionDefaultMinimumObjectSize)
   output <- .s3$put_bucket_lifecycle_configuration_output()
@@ -4008,7 +4246,8 @@ s3_put_bucket_logging <- function(Bucket, BucketLoggingStatus, ContentMD5 = NULL
     http_path = "/{Bucket}?logging",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = list(request_algorithm_member = "ChecksumAlgorithm", request_algorithm_header = "x-amz-sdk-checksum-algorithm", request_checksum_required = TRUE)
   )
   input <- .s3$put_bucket_logging_input(Bucket = Bucket, BucketLoggingStatus = BucketLoggingStatus, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_bucket_logging_output()
@@ -4047,7 +4286,8 @@ s3_put_bucket_metrics_configuration <- function(Bucket, Id, MetricsConfiguration
     http_path = "/{Bucket}?metrics",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$put_bucket_metrics_configuration_input(Bucket = Bucket, Id = Id, MetricsConfiguration = MetricsConfiguration, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_bucket_metrics_configuration_output()
@@ -4086,7 +4326,8 @@ s3_put_bucket_notification <- function(Bucket, ContentMD5 = NULL, ChecksumAlgori
     http_path = "/{Bucket}?notification",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = list(request_algorithm_member = "ChecksumAlgorithm", request_algorithm_header = "x-amz-sdk-checksum-algorithm", request_checksum_required = TRUE)
   )
   input <- .s3$put_bucket_notification_input(Bucket = Bucket, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, NotificationConfiguration = NotificationConfiguration, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_bucket_notification_output()
@@ -4120,7 +4361,8 @@ s3_put_bucket_notification_configuration <- function(Bucket, NotificationConfigu
     http_path = "/{Bucket}?notification",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$put_bucket_notification_configuration_input(Bucket = Bucket, NotificationConfiguration = NotificationConfiguration, ExpectedBucketOwner = ExpectedBucketOwner, SkipDestinationValidation = SkipDestinationValidation)
   output <- .s3$put_bucket_notification_configuration_output()
@@ -4159,7 +4401,8 @@ s3_put_bucket_ownership_controls <- function(Bucket, ContentMD5 = NULL, Expected
     http_path = "/{Bucket}?ownershipControls",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = list(request_algorithm_member = "ChecksumAlgorithm", request_algorithm_header = "x-amz-sdk-checksum-algorithm", request_checksum_required = TRUE)
   )
   input <- .s3$put_bucket_ownership_controls_input(Bucket = Bucket, ContentMD5 = ContentMD5, ExpectedBucketOwner = ExpectedBucketOwner, OwnershipControls = OwnershipControls, ChecksumAlgorithm = ChecksumAlgorithm)
   output <- .s3$put_bucket_ownership_controls_output()
@@ -4235,7 +4478,8 @@ s3_put_bucket_policy <- function(Bucket, ContentMD5 = NULL, ChecksumAlgorithm = 
     http_path = "/{Bucket}?policy",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = list(request_algorithm_member = "ChecksumAlgorithm", request_algorithm_header = "x-amz-sdk-checksum-algorithm", request_checksum_required = TRUE)
   )
   input <- .s3$put_bucket_policy_input(Bucket = Bucket, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, ConfirmRemoveSelfBucketAccess = ConfirmRemoveSelfBucketAccess, Policy = Policy, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_bucket_policy_output()
@@ -4255,7 +4499,7 @@ s3_put_bucket_policy <- function(Bucket, ContentMD5 = NULL, ChecksumAlgorithm = 
 #' See [https://www.paws-r-sdk.com/docs/s3_put_bucket_replication/](https://www.paws-r-sdk.com/docs/s3_put_bucket_replication/) for full documentation.
 #'
 #' @param Bucket &#91;required&#93; The name of the bucket
-#' @param ContentMD5 The Base64 encoded 128-bit `MD5` digest of the data. You must use this header as a message integrity check to verify that the request body was not corrupted in transit. For more information, see [RFC 1864](https://www.ietf.org/rfc/rfc1864.txt).
+#' @param ContentMD5 The Base64 encoded 128-bit `MD5` digest of the data. You must use this header as a message integrity check to verify that the request body was not corrupted in transit. For more information, see [RFC 1864](https://www.rfc-editor.org/rfc/rfc1864.txt).
 #' 
 #' For requests made using the Amazon Web Services Command Line Interface (CLI) or Amazon Web Services SDKs, this field is calculated automatically.
 #' @param ChecksumAlgorithm Indicates the algorithm used to create the checksum for the request when you use the SDK. This header will not provide any additional functionality if you don't use the SDK. When you send this header, there must be a corresponding `x-amz-checksum` or `x-amz-trailer` header sent. Otherwise, Amazon S3 fails the request with the HTTP status code `400 Bad Request`. For more information, see [Checking object integrity](https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html) in the *Amazon S3 User Guide*.
@@ -4275,7 +4519,8 @@ s3_put_bucket_replication <- function(Bucket, ContentMD5 = NULL, ChecksumAlgorit
     http_path = "/{Bucket}?replication",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = list(request_algorithm_member = "ChecksumAlgorithm", request_algorithm_header = "x-amz-sdk-checksum-algorithm", request_checksum_required = TRUE)
   )
   input <- .s3$put_bucket_replication_input(Bucket = Bucket, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, ReplicationConfiguration = ReplicationConfiguration, Token = Token, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_bucket_replication_output()
@@ -4295,7 +4540,7 @@ s3_put_bucket_replication <- function(Bucket, ContentMD5 = NULL, ChecksumAlgorit
 #' See [https://www.paws-r-sdk.com/docs/s3_put_bucket_request_payment/](https://www.paws-r-sdk.com/docs/s3_put_bucket_request_payment/) for full documentation.
 #'
 #' @param Bucket &#91;required&#93; The bucket name.
-#' @param ContentMD5 The Base64 encoded 128-bit `MD5` digest of the data. You must use this header as a message integrity check to verify that the request body was not corrupted in transit. For more information, see [RFC 1864](https://www.ietf.org/rfc/rfc1864.txt).
+#' @param ContentMD5 The Base64 encoded 128-bit `MD5` digest of the data. You must use this header as a message integrity check to verify that the request body was not corrupted in transit. For more information, see [RFC 1864](https://www.rfc-editor.org/rfc/rfc1864.txt).
 #' 
 #' For requests made using the Amazon Web Services Command Line Interface (CLI) or Amazon Web Services SDKs, this field is calculated automatically.
 #' @param ChecksumAlgorithm Indicates the algorithm used to create the checksum for the request when you use the SDK. This header will not provide any additional functionality if you don't use the SDK. When you send this header, there must be a corresponding `x-amz-checksum` or `x-amz-trailer` header sent. Otherwise, Amazon S3 fails the request with the HTTP status code `400 Bad Request`. For more information, see [Checking object integrity](https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html) in the *Amazon S3 User Guide*.
@@ -4314,7 +4559,8 @@ s3_put_bucket_request_payment <- function(Bucket, ContentMD5 = NULL, ChecksumAlg
     http_path = "/{Bucket}?requestPayment",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = list(request_algorithm_member = "ChecksumAlgorithm", request_algorithm_header = "x-amz-sdk-checksum-algorithm", request_checksum_required = TRUE)
   )
   input <- .s3$put_bucket_request_payment_input(Bucket = Bucket, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, RequestPaymentConfiguration = RequestPaymentConfiguration, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_bucket_request_payment_output()
@@ -4334,7 +4580,7 @@ s3_put_bucket_request_payment <- function(Bucket, ContentMD5 = NULL, ChecksumAlg
 #' See [https://www.paws-r-sdk.com/docs/s3_put_bucket_tagging/](https://www.paws-r-sdk.com/docs/s3_put_bucket_tagging/) for full documentation.
 #'
 #' @param Bucket &#91;required&#93; The bucket name.
-#' @param ContentMD5 The Base64 encoded 128-bit `MD5` digest of the data. You must use this header as a message integrity check to verify that the request body was not corrupted in transit. For more information, see [RFC 1864](https://www.ietf.org/rfc/rfc1864.txt).
+#' @param ContentMD5 The Base64 encoded 128-bit `MD5` digest of the data. You must use this header as a message integrity check to verify that the request body was not corrupted in transit. For more information, see [RFC 1864](https://www.rfc-editor.org/rfc/rfc1864.txt).
 #' 
 #' For requests made using the Amazon Web Services Command Line Interface (CLI) or Amazon Web Services SDKs, this field is calculated automatically.
 #' @param ChecksumAlgorithm Indicates the algorithm used to create the checksum for the request when you use the SDK. This header will not provide any additional functionality if you don't use the SDK. When you send this header, there must be a corresponding `x-amz-checksum` or `x-amz-trailer` header sent. Otherwise, Amazon S3 fails the request with the HTTP status code `400 Bad Request`. For more information, see [Checking object integrity](https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html) in the *Amazon S3 User Guide*.
@@ -4353,7 +4599,8 @@ s3_put_bucket_tagging <- function(Bucket, ContentMD5 = NULL, ChecksumAlgorithm =
     http_path = "/{Bucket}?tagging",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = list(request_algorithm_member = "ChecksumAlgorithm", request_algorithm_header = "x-amz-sdk-checksum-algorithm", request_checksum_required = TRUE)
   )
   input <- .s3$put_bucket_tagging_input(Bucket = Bucket, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, Tagging = Tagging, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_bucket_tagging_output()
@@ -4373,7 +4620,7 @@ s3_put_bucket_tagging <- function(Bucket, ContentMD5 = NULL, ChecksumAlgorithm =
 #' See [https://www.paws-r-sdk.com/docs/s3_put_bucket_versioning/](https://www.paws-r-sdk.com/docs/s3_put_bucket_versioning/) for full documentation.
 #'
 #' @param Bucket &#91;required&#93; The bucket name.
-#' @param ContentMD5 \>The Base64 encoded 128-bit `MD5` digest of the data. You must use this header as a message integrity check to verify that the request body was not corrupted in transit. For more information, see [RFC 1864](https://www.ietf.org/rfc/rfc1864.txt).
+#' @param ContentMD5 \>The Base64 encoded 128-bit `MD5` digest of the data. You must use this header as a message integrity check to verify that the request body was not corrupted in transit. For more information, see [RFC 1864](https://www.rfc-editor.org/rfc/rfc1864.txt).
 #' 
 #' For requests made using the Amazon Web Services Command Line Interface (CLI) or Amazon Web Services SDKs, this field is calculated automatically.
 #' @param ChecksumAlgorithm Indicates the algorithm used to create the checksum for the request when you use the SDK. This header will not provide any additional functionality if you don't use the SDK. When you send this header, there must be a corresponding `x-amz-checksum` or `x-amz-trailer` header sent. Otherwise, Amazon S3 fails the request with the HTTP status code `400 Bad Request`. For more information, see [Checking object integrity](https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html) in the *Amazon S3 User Guide*.
@@ -4393,7 +4640,8 @@ s3_put_bucket_versioning <- function(Bucket, ContentMD5 = NULL, ChecksumAlgorith
     http_path = "/{Bucket}?versioning",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = list(request_algorithm_member = "ChecksumAlgorithm", request_algorithm_header = "x-amz-sdk-checksum-algorithm", request_checksum_required = TRUE)
   )
   input <- .s3$put_bucket_versioning_input(Bucket = Bucket, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, MFA = MFA, VersioningConfiguration = VersioningConfiguration, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_bucket_versioning_output()
@@ -4413,7 +4661,7 @@ s3_put_bucket_versioning <- function(Bucket, ContentMD5 = NULL, ChecksumAlgorith
 #' See [https://www.paws-r-sdk.com/docs/s3_put_bucket_website/](https://www.paws-r-sdk.com/docs/s3_put_bucket_website/) for full documentation.
 #'
 #' @param Bucket &#91;required&#93; The bucket name.
-#' @param ContentMD5 The Base64 encoded 128-bit `MD5` digest of the data. You must use this header as a message integrity check to verify that the request body was not corrupted in transit. For more information, see [RFC 1864](https://www.ietf.org/rfc/rfc1864.txt).
+#' @param ContentMD5 The Base64 encoded 128-bit `MD5` digest of the data. You must use this header as a message integrity check to verify that the request body was not corrupted in transit. For more information, see [RFC 1864](https://www.rfc-editor.org/rfc/rfc1864.txt).
 #' 
 #' For requests made using the Amazon Web Services Command Line Interface (CLI) or Amazon Web Services SDKs, this field is calculated automatically.
 #' @param ChecksumAlgorithm Indicates the algorithm used to create the checksum for the request when you use the SDK. This header will not provide any additional functionality if you don't use the SDK. When you send this header, there must be a corresponding `x-amz-checksum` or `x-amz-trailer` header sent. Otherwise, Amazon S3 fails the request with the HTTP status code `400 Bad Request`. For more information, see [Checking object integrity](https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html) in the *Amazon S3 User Guide*.
@@ -4432,7 +4680,8 @@ s3_put_bucket_website <- function(Bucket, ContentMD5 = NULL, ChecksumAlgorithm =
     http_path = "/{Bucket}?website",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = list(request_algorithm_member = "ChecksumAlgorithm", request_algorithm_header = "x-amz-sdk-checksum-algorithm", request_checksum_required = TRUE)
   )
   input <- .s3$put_bucket_website_input(Bucket = Bucket, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, WebsiteConfiguration = WebsiteConfiguration, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_bucket_website_output()
@@ -4472,16 +4721,16 @@ s3_put_bucket_website <- function(Bucket, ContentMD5 = NULL, ChecksumAlgorithm =
 #' 
 #' **S3 on Outposts** - When you use this action with S3 on Outposts, you must direct requests to the S3 on Outposts hostname. The S3 on Outposts hostname takes the form ` AccessPointName-AccountId.outpostID.s3-outposts.Region.amazonaws.com`. When you use this action with S3 on Outposts, the destination bucket must be the Outposts access point ARN or the access point alias. For more information about S3 on Outposts, see [What is S3 on Outposts?](https://docs.aws.amazon.com/AmazonS3/latest/s3-outposts/S3onOutposts.html) in the *Amazon S3 User Guide*.
 #' @param CacheControl Can be used to specify caching behavior along the request/reply chain. For more information, see [http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9](https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9).
-#' @param ContentDisposition Specifies presentational information for the object. For more information, see https://www.rfc-editor.org/rfc/rfc6266#section-4.
-#' @param ContentEncoding Specifies what content encodings have been applied to the object and thus what decoding mechanisms must be applied to obtain the media-type referenced by the Content-Type header field. For more information, see https://www.rfc-editor.org/rfc/rfc9110.html#field.content-encoding.
+#' @param ContentDisposition Specifies presentational information for the object. For more information, see [https://www.rfc-editor.org/rfc/rfc6266#section-4](https://www.rfc-editor.org/info/rfc6266/#section-4).
+#' @param ContentEncoding Specifies what content encodings have been applied to the object and thus what decoding mechanisms must be applied to obtain the media-type referenced by the Content-Type header field. For more information, see <https://www.rfc-editor.org/rfc/rfc9110.html#field.content-encoding>.
 #' @param ContentLanguage The language the content is in.
-#' @param ContentLength Size of the body in bytes. This parameter is useful when the size of the body cannot be determined automatically. For more information, see https://www.rfc-editor.org/rfc/rfc9110.html#name-content-length.
-#' @param ContentMD5 The Base64 encoded 128-bit `MD5` digest of the message (without the headers) according to RFC 1864. This header can be used as a message integrity check to verify that the data is the same data that was originally sent. Although it is optional, we recommend using the Content-MD5 mechanism as an end-to-end integrity check. For more information about REST request authentication, see [REST Authentication](https://docs.aws.amazon.com/AmazonS3/latest/API/RESTAuthentication.html).
+#' @param ContentLength Size of the body in bytes. This parameter is useful when the size of the body cannot be determined automatically. For more information, see <https://www.rfc-editor.org/rfc/rfc9110.html#name-content-length>.
+#' @param ContentMD5 The Base64 encoded 128-bit `MD5` digest of the message (without the headers) according to RFC 1864. This header can be used as a message integrity check to verify that the data is the same data that was originally sent. Although it is optional, we recommend using the Content-MD5 mechanism as an end-to-end integrity check. For more information about REST request authentication, see [REST Authentication](https://docs.aws.amazon.com/AmazonS3/latest/API/).
 #' 
 #' The `Content-MD5` or `x-amz-sdk-checksum-algorithm` header is required for any request to upload an object with a retention period configured using Amazon S3 Object Lock. For more information, see [Uploading objects to an Object Lock enabled bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock-managing.html#object-lock-put-object) in the *Amazon S3 User Guide*.
 #' 
 #' This functionality is not supported for directory buckets.
-#' @param ContentType A standard MIME type describing the format of the contents. For more information, see https://www.rfc-editor.org/rfc/rfc9110.html#name-content-type.
+#' @param ContentType A standard MIME type describing the format of the contents. For more information, see <https://www.rfc-editor.org/rfc/rfc9110.html#name-content-type>.
 #' @param ChecksumAlgorithm Indicates the algorithm used to create the checksum for the object when you use the SDK. This header will not provide any additional functionality if you don't use the SDK. When you send this header, there must be a corresponding `x-amz-checksum-algorithm ` or `x-amz-trailer` header sent. Otherwise, Amazon S3 fails the request with the HTTP status code `400 Bad Request`.
 #' 
 #' For the `x-amz-checksum-algorithm ` header, replace ` algorithm ` with the supported algorithm from the following list:
@@ -4523,21 +4772,21 @@ s3_put_bucket_website <- function(Bucket, ContentMD5 = NULL, ChecksumAlgorithm =
 #' @param ChecksumXXHASH64 This header can be used as a data integrity check to verify that the data received is the same data that was originally sent. This header specifies the Base64 encoded, 64-bit `XXHASH64` checksum of the object. For more information, see [Checking object integrity in the Amazon S3 User Guide](https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html).
 #' @param ChecksumXXHASH3 This header can be used as a data integrity check to verify that the data received is the same data that was originally sent. This header specifies the Base64 encoded, 64-bit `XXHASH3` checksum of the object. For more information, see [Checking object integrity in the Amazon S3 User Guide](https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html).
 #' @param ChecksumXXHASH128 This header can be used as a data integrity check to verify that the data received is the same data that was originally sent. This header specifies the Base64 encoded, 128-bit `XXHASH128` checksum of the object. For more information, see [Checking object integrity in the Amazon S3 User Guide](https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html).
-#' @param Expires The date and time at which the object is no longer cacheable. For more information, see https://www.rfc-editor.org/rfc/rfc7234#section-5.3.
+#' @param Expires The date and time at which the object is no longer cacheable. For more information, see [https://www.rfc-editor.org/rfc/rfc7234#section-5.3](https://www.rfc-editor.org/info/rfc7234/#section-5.3).
 #' @param IfMatch Uploads the object only if the ETag (entity tag) value provided during the WRITE operation matches the ETag of the object in S3. If the ETag values do not match, the operation returns a `412 Precondition Failed` error.
 #' 
 #' If a conflicting operation occurs during the upload S3 returns a `409 ConditionalRequestConflict` response. On a 409 failure you should fetch the object's ETag and retry the upload.
 #' 
 #' Expects the ETag value as a string.
 #' 
-#' For more information about conditional requests, see [RFC 7232](https://datatracker.ietf.org/doc/html/rfc7232), or [Conditional requests](https://docs.aws.amazon.com/AmazonS3/latest/userguide/conditional-requests.html) in the *Amazon S3 User Guide*.
+#' For more information about conditional requests, see [RFC 7232](https://www.rfc-editor.org/info/rfc7232/), or [Conditional requests](https://docs.aws.amazon.com/AmazonS3/latest/userguide/conditional-requests.html) in the *Amazon S3 User Guide*.
 #' @param IfNoneMatch Uploads the object only if the object key name does not already exist in the bucket specified. Otherwise, Amazon S3 returns a `412 Precondition Failed` error.
 #' 
 #' If a conflicting operation occurs during the upload S3 returns a `409 ConditionalRequestConflict` response. On a 409 failure you should retry the upload.
 #' 
 #' Expects the '*' (asterisk) character.
 #' 
-#' For more information about conditional requests, see [RFC 7232](https://datatracker.ietf.org/doc/html/rfc7232), or [Conditional requests](https://docs.aws.amazon.com/AmazonS3/latest/userguide/conditional-requests.html) in the *Amazon S3 User Guide*.
+#' For more information about conditional requests, see [RFC 7232](https://www.rfc-editor.org/info/rfc7232/), or [Conditional requests](https://docs.aws.amazon.com/AmazonS3/latest/userguide/conditional-requests.html) in the *Amazon S3 User Guide*.
 #' @param GrantFullControl Gives the grantee READ, READ_ACP, and WRITE_ACP permissions on the object.
 #' 
 #' -   This functionality is not supported for directory buckets.
@@ -4589,7 +4838,7 @@ s3_put_bucket_website <- function(Bucket, ContentMD5 = NULL, ChecksumAlgorithm =
 #' 
 #' `x-amz-website-redirect-location: http://www.example.com/`
 #' 
-#' For more information about website hosting in Amazon S3, see [Hosting Websites on Amazon S3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteHosting.html) and [How to Configure Website Page Redirects](https://docs.aws.amazon.com/AmazonS3/latest/userguide/how-to-page-redirect.html) in the *Amazon S3 User Guide*.
+#' For more information about website hosting in Amazon S3, see [Hosting Websites on Amazon S3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteHosting.html?sc_channel=sm&sc_campaign=Docs&sc_publisher=LINKEDIN&sc_country=Global&sc_geo=GLOBAL&sc_outcome=awareness&trk=Docs_LINKEDIN&sc_content=Docs&linkId=71842622) and [How to Configure Website Page Redirects](https://docs.aws.amazon.com/AmazonS3/latest/userguide/how-to-page-redirect.html) in the *Amazon S3 User Guide*.
 #' 
 #' This functionality is not supported for directory buckets.
 #' @param SSECustomerAlgorithm Specifies the algorithm to use when encrypting the object (for example, `AES256`).
@@ -4631,21 +4880,31 @@ s3_put_bucket_website <- function(Bucket, ContentMD5 = NULL, ChecksumAlgorithm =
 #' @param ObjectLockLegalHoldStatus Specifies whether a legal hold will be applied to this object. For more information about S3 Object Lock, see [Object Lock](https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html) in the *Amazon S3 User Guide*.
 #' 
 #' This functionality is not supported for directory buckets.
+#' @param ObjectLockEventHold Specifies the event hold status to apply to this object. Set to `ON` to enable or `OFF` to disable.
+#' 
+#' This functionality is not supported for directory buckets.
+#' @param ObjectLockEventHoldDurationDays Specifies the event hold duration in days to apply to this object. You cannot specify a duration in both days and years.
+#' 
+#' This functionality is not supported for directory buckets.
+#' @param ObjectLockEventHoldDurationYears Specifies the event hold duration in years to apply to this object. You cannot specify a duration in both days and years.
+#' 
+#' This functionality is not supported for directory buckets.
 #' @param ExpectedBucketOwner The account ID of the expected bucket owner. If the account ID that you provide does not match the actual owner of the bucket, the request fails with the HTTP status code `403 Forbidden` (access denied).
 #'
 #' @keywords internal
 #'
 #' @rdname s3_put_object
-s3_put_object <- function(ACL = NULL, Body = NULL, Bucket, CacheControl = NULL, ContentDisposition = NULL, ContentEncoding = NULL, ContentLanguage = NULL, ContentLength = NULL, ContentMD5 = NULL, ContentType = NULL, ChecksumAlgorithm = NULL, ChecksumCRC32 = NULL, ChecksumCRC32C = NULL, ChecksumCRC64NVME = NULL, ChecksumSHA1 = NULL, ChecksumSHA256 = NULL, ChecksumSHA512 = NULL, ChecksumMD5 = NULL, ChecksumXXHASH64 = NULL, ChecksumXXHASH3 = NULL, ChecksumXXHASH128 = NULL, Expires = NULL, IfMatch = NULL, IfNoneMatch = NULL, GrantFullControl = NULL, GrantRead = NULL, GrantReadACP = NULL, GrantWriteACP = NULL, Key, WriteOffsetBytes = NULL, Metadata = NULL, ServerSideEncryption = NULL, StorageClass = NULL, WebsiteRedirectLocation = NULL, SSECustomerAlgorithm = NULL, SSECustomerKey = NULL, SSECustomerKeyMD5 = NULL, SSEKMSKeyId = NULL, SSEKMSEncryptionContext = NULL, BucketKeyEnabled = NULL, RequestPayer = NULL, Tagging = NULL, ObjectLockMode = NULL, ObjectLockRetainUntilDate = NULL, ObjectLockLegalHoldStatus = NULL, ExpectedBucketOwner = NULL) {
+s3_put_object <- function(ACL = NULL, Body = NULL, Bucket, CacheControl = NULL, ContentDisposition = NULL, ContentEncoding = NULL, ContentLanguage = NULL, ContentLength = NULL, ContentMD5 = NULL, ContentType = NULL, ChecksumAlgorithm = NULL, ChecksumCRC32 = NULL, ChecksumCRC32C = NULL, ChecksumCRC64NVME = NULL, ChecksumSHA1 = NULL, ChecksumSHA256 = NULL, ChecksumSHA512 = NULL, ChecksumMD5 = NULL, ChecksumXXHASH64 = NULL, ChecksumXXHASH3 = NULL, ChecksumXXHASH128 = NULL, Expires = NULL, IfMatch = NULL, IfNoneMatch = NULL, GrantFullControl = NULL, GrantRead = NULL, GrantReadACP = NULL, GrantWriteACP = NULL, Key, WriteOffsetBytes = NULL, Metadata = NULL, ServerSideEncryption = NULL, StorageClass = NULL, WebsiteRedirectLocation = NULL, SSECustomerAlgorithm = NULL, SSECustomerKey = NULL, SSECustomerKeyMD5 = NULL, SSEKMSKeyId = NULL, SSEKMSEncryptionContext = NULL, BucketKeyEnabled = NULL, RequestPayer = NULL, Tagging = NULL, ObjectLockMode = NULL, ObjectLockRetainUntilDate = NULL, ObjectLockLegalHoldStatus = NULL, ObjectLockEventHold = NULL, ObjectLockEventHoldDurationDays = NULL, ObjectLockEventHoldDurationYears = NULL, ExpectedBucketOwner = NULL) {
   op <- new_operation(
     name = "PutObject",
     http_method = "PUT",
     http_path = "/{Bucket}/{Key+}",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = list(request_algorithm_member = "ChecksumAlgorithm", request_algorithm_header = "x-amz-sdk-checksum-algorithm", request_checksum_required = FALSE)
   )
-  input <- .s3$put_object_input(ACL = ACL, Body = Body, Bucket = Bucket, CacheControl = CacheControl, ContentDisposition = ContentDisposition, ContentEncoding = ContentEncoding, ContentLanguage = ContentLanguage, ContentLength = ContentLength, ContentMD5 = ContentMD5, ContentType = ContentType, ChecksumAlgorithm = ChecksumAlgorithm, ChecksumCRC32 = ChecksumCRC32, ChecksumCRC32C = ChecksumCRC32C, ChecksumCRC64NVME = ChecksumCRC64NVME, ChecksumSHA1 = ChecksumSHA1, ChecksumSHA256 = ChecksumSHA256, ChecksumSHA512 = ChecksumSHA512, ChecksumMD5 = ChecksumMD5, ChecksumXXHASH64 = ChecksumXXHASH64, ChecksumXXHASH3 = ChecksumXXHASH3, ChecksumXXHASH128 = ChecksumXXHASH128, Expires = Expires, IfMatch = IfMatch, IfNoneMatch = IfNoneMatch, GrantFullControl = GrantFullControl, GrantRead = GrantRead, GrantReadACP = GrantReadACP, GrantWriteACP = GrantWriteACP, Key = Key, WriteOffsetBytes = WriteOffsetBytes, Metadata = Metadata, ServerSideEncryption = ServerSideEncryption, StorageClass = StorageClass, WebsiteRedirectLocation = WebsiteRedirectLocation, SSECustomerAlgorithm = SSECustomerAlgorithm, SSECustomerKey = SSECustomerKey, SSECustomerKeyMD5 = SSECustomerKeyMD5, SSEKMSKeyId = SSEKMSKeyId, SSEKMSEncryptionContext = SSEKMSEncryptionContext, BucketKeyEnabled = BucketKeyEnabled, RequestPayer = RequestPayer, Tagging = Tagging, ObjectLockMode = ObjectLockMode, ObjectLockRetainUntilDate = ObjectLockRetainUntilDate, ObjectLockLegalHoldStatus = ObjectLockLegalHoldStatus, ExpectedBucketOwner = ExpectedBucketOwner)
+  input <- .s3$put_object_input(ACL = ACL, Body = Body, Bucket = Bucket, CacheControl = CacheControl, ContentDisposition = ContentDisposition, ContentEncoding = ContentEncoding, ContentLanguage = ContentLanguage, ContentLength = ContentLength, ContentMD5 = ContentMD5, ContentType = ContentType, ChecksumAlgorithm = ChecksumAlgorithm, ChecksumCRC32 = ChecksumCRC32, ChecksumCRC32C = ChecksumCRC32C, ChecksumCRC64NVME = ChecksumCRC64NVME, ChecksumSHA1 = ChecksumSHA1, ChecksumSHA256 = ChecksumSHA256, ChecksumSHA512 = ChecksumSHA512, ChecksumMD5 = ChecksumMD5, ChecksumXXHASH64 = ChecksumXXHASH64, ChecksumXXHASH3 = ChecksumXXHASH3, ChecksumXXHASH128 = ChecksumXXHASH128, Expires = Expires, IfMatch = IfMatch, IfNoneMatch = IfNoneMatch, GrantFullControl = GrantFullControl, GrantRead = GrantRead, GrantReadACP = GrantReadACP, GrantWriteACP = GrantWriteACP, Key = Key, WriteOffsetBytes = WriteOffsetBytes, Metadata = Metadata, ServerSideEncryption = ServerSideEncryption, StorageClass = StorageClass, WebsiteRedirectLocation = WebsiteRedirectLocation, SSECustomerAlgorithm = SSECustomerAlgorithm, SSECustomerKey = SSECustomerKey, SSECustomerKeyMD5 = SSECustomerKeyMD5, SSEKMSKeyId = SSEKMSKeyId, SSEKMSEncryptionContext = SSEKMSEncryptionContext, BucketKeyEnabled = BucketKeyEnabled, RequestPayer = RequestPayer, Tagging = Tagging, ObjectLockMode = ObjectLockMode, ObjectLockRetainUntilDate = ObjectLockRetainUntilDate, ObjectLockLegalHoldStatus = ObjectLockLegalHoldStatus, ObjectLockEventHold = ObjectLockEventHold, ObjectLockEventHoldDurationDays = ObjectLockEventHoldDurationDays, ObjectLockEventHoldDurationYears = ObjectLockEventHoldDurationYears, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_object_output()
   config <- get_config()
   svc <- .s3$service(config, op)
@@ -4670,7 +4929,7 @@ s3_put_object <- function(ACL = NULL, Body = NULL, Bucket, CacheControl = NULL, 
 #' **Access points** - When you use this action with an access point for general purpose buckets, you must provide the alias of the access point in place of the bucket name or specify the access point ARN. When you use this action with an access point for directory buckets, you must provide the access point name in place of the bucket name. When using the access point ARN, you must direct requests to the access point hostname. The access point hostname takes the form *AccessPointName*-*AccountId*.s3-accesspoint.*Region*.amazonaws.com. When using this action with an access point through the Amazon Web Services SDKs, you provide the access point ARN in place of the bucket name. For more information about access point ARNs, see [Using access points](https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-access-points.html) in the *Amazon S3 User Guide*.
 #' 
 #' **S3 on Outposts** - When you use this action with S3 on Outposts, you must direct requests to the S3 on Outposts hostname. The S3 on Outposts hostname takes the form ` AccessPointName-AccountId.outpostID.s3-outposts.Region.amazonaws.com`. When you use this action with S3 on Outposts, the destination bucket must be the Outposts access point ARN or the access point alias. For more information about S3 on Outposts, see [What is S3 on Outposts?](https://docs.aws.amazon.com/AmazonS3/latest/s3-outposts/S3onOutposts.html) in the *Amazon S3 User Guide*.
-#' @param ContentMD5 The Base64 encoded 128-bit `MD5` digest of the data. This header must be used as a message integrity check to verify that the request body was not corrupted in transit. For more information, go to [RFC 1864.\>](https://www.ietf.org/rfc/rfc1864.txt)
+#' @param ContentMD5 The Base64 encoded 128-bit `MD5` digest of the data. This header must be used as a message integrity check to verify that the request body was not corrupted in transit. For more information, go to [RFC 1864.\>](https://www.rfc-editor.org/rfc/rfc1864.txt)
 #' 
 #' For requests made using the Amazon Web Services Command Line Interface (CLI) or Amazon Web Services SDKs, this field is calculated automatically.
 #' @param ChecksumAlgorithm Indicates the algorithm used to create the checksum for the object when you use the SDK. This header will not provide any additional functionality if you don't use the SDK. When you send this header, there must be a corresponding `x-amz-checksum` or `x-amz-trailer` header sent. Otherwise, Amazon S3 fails the request with the HTTP status code `400 Bad Request`. For more information, see [Checking object integrity](https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html) in the *Amazon S3 User Guide*.
@@ -4710,7 +4969,8 @@ s3_put_object_acl <- function(ACL = NULL, AccessControlPolicy = NULL, Bucket, Co
     http_path = "/{Bucket}/{Key+}?acl",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = list(request_algorithm_member = "ChecksumAlgorithm", request_algorithm_header = "x-amz-sdk-checksum-algorithm", request_checksum_required = TRUE)
   )
   input <- .s3$put_object_acl_input(ACL = ACL, AccessControlPolicy = AccessControlPolicy, Bucket = Bucket, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, GrantFullControl = GrantFullControl, GrantRead = GrantRead, GrantReadACP = GrantReadACP, GrantWrite = GrantWrite, GrantWriteACP = GrantWriteACP, Key = Key, RequestPayer = RequestPayer, VersionId = VersionId, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_object_acl_output()
@@ -4721,6 +4981,61 @@ s3_put_object_acl <- function(ACL = NULL, AccessControlPolicy = NULL, Bucket, Co
   return(response)
 }
 .s3$operations$put_object_acl <- s3_put_object_acl
+
+#' Attaches an annotation to an Amazon S3 object
+#'
+#' @description
+#' Attaches an annotation to an Amazon S3 object. An annotation is a named payload of 1 byte to 1 MiB that you can associate with a specific object or object version. Each object can have up to 1,000 annotations.
+#'
+#' See [https://www.paws-r-sdk.com/docs/s3_put_object_annotation/](https://www.paws-r-sdk.com/docs/s3_put_object_annotation/) for full documentation.
+#'
+#' @param Bucket &#91;required&#93; The name of the bucket that contains the object.
+#' @param Key &#91;required&#93; The object key.
+#' @param VersionId The version ID of the object to attach the annotation to.
+#' @param AnnotationName &#91;required&#93; The name of the annotation.
+#' 
+#' Length Constraints: Minimum length of 1. Maximum length of 512 bytes.
+#' @param AnnotationPayload &#91;required&#93; The annotation payload. Must be between 1 byte and 1 MiB in size, and must be valid UTF-8 encoded text. If the payload contains invalid UTF-8 bytes, the request fails with HTTP 415 (Unsupported Media Type). To store binary data, encode the payload using Base64 before uploading.
+#' @param ObjectIfMatch If specified, the operation only succeeds if the object's ETag matches the provided value.
+#' @param ChecksumAlgorithm The checksum algorithm to use. Supported values: `CRC32`, `CRC32C`, `CRC64NVME`, `SHA1`, `SHA256`, `SHA512`, `MD5`, `XXHASH64`, `XXHASH3`, `XXHASH128`.
+#' @param ChecksumCRC32 Base64-encoded CRC32 checksum of the annotation payload.
+#' @param ChecksumCRC32C Base64-encoded CRC32C checksum of the annotation payload.
+#' @param ChecksumCRC64NVME Base64-encoded CRC64NVME checksum of the annotation payload.
+#' @param ChecksumSHA1 Base64-encoded SHA1 checksum of the annotation payload.
+#' @param ChecksumSHA256 Base64-encoded SHA256 checksum of the annotation payload.
+#' @param ChecksumSHA512 Base64-encoded SHA512 checksum of the annotation payload.
+#' @param ChecksumMD5 Base64-encoded MD5 checksum of the annotation payload.
+#' @param ChecksumXXHASH64 Base64-encoded XXHASH64 checksum of the annotation payload.
+#' @param ChecksumXXHASH3 Base64-encoded XXHASH3 checksum of the annotation payload.
+#' @param ChecksumXXHASH128 Base64-encoded XXHASH128 checksum of the annotation payload.
+#' @param ContentMD5 Base64-encoded MD5 digest of the message.
+#' @param RequestPayer Confirms that the requester knows that they will be charged for the request. Bucket owners need not specify this parameter in their requests. If either the source or destination S3 bucket has Requester Pays enabled, the requester will pay for the corresponding charges. For information about downloading objects from Requester Pays buckets, see [Downloading Objects in Requester Pays Buckets](https://docs.aws.amazon.com/AmazonS3/latest/userguide/ObjectsinRequesterPaysBuckets.html) in the *Amazon S3 User Guide*.
+#' 
+#' This functionality is not supported for directory buckets.
+#' @param ExpectedBucketOwner The account ID of the expected bucket owner. If the bucket is owned by a different account, the request fails with an HTTP 403 (Access Denied) error.
+#'
+#' @keywords internal
+#'
+#' @rdname s3_put_object_annotation
+s3_put_object_annotation <- function(Bucket, Key, VersionId = NULL, AnnotationName, AnnotationPayload, ObjectIfMatch = NULL, ChecksumAlgorithm = NULL, ChecksumCRC32 = NULL, ChecksumCRC32C = NULL, ChecksumCRC64NVME = NULL, ChecksumSHA1 = NULL, ChecksumSHA256 = NULL, ChecksumSHA512 = NULL, ChecksumMD5 = NULL, ChecksumXXHASH64 = NULL, ChecksumXXHASH3 = NULL, ChecksumXXHASH128 = NULL, ContentMD5 = NULL, RequestPayer = NULL, ExpectedBucketOwner = NULL) {
+  op <- new_operation(
+    name = "PutObjectAnnotation",
+    http_method = "PUT",
+    http_path = "/{Bucket}/{Key+}?annotation",
+    host_prefix = "",
+    paginator = list(),
+    stream_api = FALSE,
+    http_checksum = list(request_algorithm_member = "ChecksumAlgorithm", request_algorithm_header = "x-amz-sdk-checksum-algorithm", request_checksum_required = FALSE)
+  )
+  input <- .s3$put_object_annotation_input(Bucket = Bucket, Key = Key, VersionId = VersionId, AnnotationName = AnnotationName, AnnotationPayload = AnnotationPayload, ObjectIfMatch = ObjectIfMatch, ChecksumAlgorithm = ChecksumAlgorithm, ChecksumCRC32 = ChecksumCRC32, ChecksumCRC32C = ChecksumCRC32C, ChecksumCRC64NVME = ChecksumCRC64NVME, ChecksumSHA1 = ChecksumSHA1, ChecksumSHA256 = ChecksumSHA256, ChecksumSHA512 = ChecksumSHA512, ChecksumMD5 = ChecksumMD5, ChecksumXXHASH64 = ChecksumXXHASH64, ChecksumXXHASH3 = ChecksumXXHASH3, ChecksumXXHASH128 = ChecksumXXHASH128, ContentMD5 = ContentMD5, RequestPayer = RequestPayer, ExpectedBucketOwner = ExpectedBucketOwner)
+  output <- .s3$put_object_annotation_output()
+  config <- get_config()
+  svc <- .s3$service(config, op)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.s3$operations$put_object_annotation <- s3_put_object_annotation
 
 #' This operation is not supported for directory buckets
 #'
@@ -4756,7 +5071,8 @@ s3_put_object_legal_hold <- function(Bucket, Key, LegalHold = NULL, RequestPayer
     http_path = "/{Bucket}/{Key+}?legal-hold",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = list(request_algorithm_member = "ChecksumAlgorithm", request_algorithm_header = "x-amz-sdk-checksum-algorithm", request_checksum_required = TRUE)
   )
   input <- .s3$put_object_legal_hold_input(Bucket = Bucket, Key = Key, LegalHold = LegalHold, RequestPayer = RequestPayer, VersionId = VersionId, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_object_legal_hold_output()
@@ -4799,7 +5115,8 @@ s3_put_object_lock_configuration <- function(Bucket, ObjectLockConfiguration = N
     http_path = "/{Bucket}?object-lock",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = list(request_algorithm_member = "ChecksumAlgorithm", request_algorithm_header = "x-amz-sdk-checksum-algorithm", request_checksum_required = TRUE)
   )
   input <- .s3$put_object_lock_configuration_input(Bucket = Bucket, ObjectLockConfiguration = ObjectLockConfiguration, RequestPayer = RequestPayer, Token = Token, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_object_lock_configuration_output()
@@ -4846,7 +5163,8 @@ s3_put_object_retention <- function(Bucket, Key, Retention = NULL, RequestPayer 
     http_path = "/{Bucket}/{Key+}?retention",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = list(request_algorithm_member = "ChecksumAlgorithm", request_algorithm_header = "x-amz-sdk-checksum-algorithm", request_checksum_required = TRUE)
   )
   input <- .s3$put_object_retention_input(Bucket = Bucket, Key = Key, Retention = Retention, RequestPayer = RequestPayer, VersionId = VersionId, BypassGovernanceRetention = BypassGovernanceRetention, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_object_retention_output()
@@ -4892,7 +5210,8 @@ s3_put_object_tagging <- function(Bucket, Key, VersionId = NULL, ContentMD5 = NU
     http_path = "/{Bucket}/{Key+}?tagging",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = list(request_algorithm_member = "ChecksumAlgorithm", request_algorithm_header = "x-amz-sdk-checksum-algorithm", request_checksum_required = TRUE)
   )
   input <- .s3$put_object_tagging_input(Bucket = Bucket, Key = Key, VersionId = VersionId, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, Tagging = Tagging, ExpectedBucketOwner = ExpectedBucketOwner, RequestPayer = RequestPayer)
   output <- .s3$put_object_tagging_output()
@@ -4918,7 +5237,7 @@ s3_put_object_tagging <- function(Bucket, Key, VersionId = NULL, ContentMD5 = NU
 #' @param ChecksumAlgorithm Indicates the algorithm used to create the checksum for the object when you use the SDK. This header will not provide any additional functionality if you don't use the SDK. When you send this header, there must be a corresponding `x-amz-checksum` or `x-amz-trailer` header sent. Otherwise, Amazon S3 fails the request with the HTTP status code `400 Bad Request`. For more information, see [Checking object integrity](https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html) in the *Amazon S3 User Guide*.
 #' 
 #' If you provide an individual checksum, Amazon S3 ignores any provided `ChecksumAlgorithm` parameter.
-#' @param PublicAccessBlockConfiguration &#91;required&#93; The `PublicAccessBlock` configuration that you want to apply to this Amazon S3 bucket. You can enable the configuration options in any combination. For more information about when Amazon S3 considers a bucket or object public, see [The Meaning of "Public"](https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html#access-control-block-public-access-policy-status) in the *Amazon S3 User Guide*.
+#' @param PublicAccessBlockConfiguration &#91;required&#93; The `PublicAccessBlock` configuration that you want to apply to this Amazon S3 bucket. You can enable the configuration options in any combination. For more information about when Amazon S3 considers a bucket or object public, see [The Meaning of "Public"](https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html?refid=5a5e1287-c028-4184-8719-3a5a862834a2#access-control-block-public-access-policy-status) in the *Amazon S3 User Guide*.
 #' @param ExpectedBucketOwner The account ID of the expected bucket owner. If the account ID that you provide does not match the actual owner of the bucket, the request fails with the HTTP status code `403 Forbidden` (access denied).
 #'
 #' @keywords internal
@@ -4931,7 +5250,8 @@ s3_put_public_access_block <- function(Bucket, ContentMD5 = NULL, ChecksumAlgori
     http_path = "/{Bucket}?publicAccessBlock",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = list(request_algorithm_member = "ChecksumAlgorithm", request_algorithm_header = "x-amz-sdk-checksum-algorithm", request_checksum_required = TRUE)
   )
   input <- .s3$put_public_access_block_input(Bucket = Bucket, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, PublicAccessBlockConfiguration = PublicAccessBlockConfiguration, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$put_public_access_block_output()
@@ -4982,7 +5302,8 @@ s3_rename_object <- function(Bucket, Key, RenameSource, DestinationIfMatch = NUL
     http_path = "/{Bucket}/{Key+}?renameObject",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$rename_object_input(Bucket = Bucket, Key = Key, RenameSource = RenameSource, DestinationIfMatch = DestinationIfMatch, DestinationIfNoneMatch = DestinationIfNoneMatch, DestinationIfModifiedSince = DestinationIfModifiedSince, DestinationIfUnmodifiedSince = DestinationIfUnmodifiedSince, SourceIfMatch = SourceIfMatch, SourceIfNoneMatch = SourceIfNoneMatch, SourceIfModifiedSince = SourceIfModifiedSince, SourceIfUnmodifiedSince = SourceIfUnmodifiedSince, ClientToken = ClientToken)
   output <- .s3$rename_object_output()
@@ -5027,7 +5348,8 @@ s3_restore_object <- function(Bucket, Key, VersionId = NULL, RestoreRequest = NU
     http_path = "/{Bucket}/{Key+}?restore",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = list(request_algorithm_member = "ChecksumAlgorithm", request_algorithm_header = "x-amz-sdk-checksum-algorithm", request_checksum_required = FALSE)
   )
   input <- .s3$restore_object_input(Bucket = Bucket, Key = Key, VersionId = VersionId, RestoreRequest = RestoreRequest, RequestPayer = RequestPayer, ChecksumAlgorithm = ChecksumAlgorithm, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$restore_object_output()
@@ -5077,7 +5399,8 @@ s3_select_object_content <- function(Bucket, Key, SSECustomerAlgorithm = NULL, S
     http_path = "/{Bucket}/{Key+}?select&select-type=2",
     host_prefix = "",
     paginator = list(),
-    stream_api = TRUE
+    stream_api = TRUE,
+    http_checksum = NULL
   )
   input <- .s3$select_object_content_input(Bucket = Bucket, Key = Key, SSECustomerAlgorithm = SSECustomerAlgorithm, SSECustomerKey = SSECustomerKey, SSECustomerKeyMD5 = SSECustomerKeyMD5, Expression = Expression, ExpressionType = ExpressionType, RequestProgress = RequestProgress, InputSerialization = InputSerialization, OutputSerialization = OutputSerialization, ScanRange = ScanRange, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$select_object_content_output()
@@ -5088,6 +5411,43 @@ s3_select_object_content <- function(Bucket, Key, SSECustomerAlgorithm = NULL, S
   return(response)
 }
 .s3$operations$select_object_content <- s3_select_object_content
+
+#' Updates the annotation table configuration for an Amazon S3 bucket's
+#' metadata configuration
+#'
+#' @description
+#' Updates the annotation table configuration for an Amazon S3 bucket's metadata configuration. Use this operation to enable or disable the annotation table, or to update its associated IAM role.
+#'
+#' See [https://www.paws-r-sdk.com/docs/s3_update_bucket_metadata_annotation_table_configuration/](https://www.paws-r-sdk.com/docs/s3_update_bucket_metadata_annotation_table_configuration/) for full documentation.
+#'
+#' @param Bucket &#91;required&#93; The name of the bucket whose annotation table configuration to update.
+#' @param ContentMD5 Base64-encoded MD5 digest of the message body.
+#' @param ChecksumAlgorithm Checksum algorithm for the request payload.
+#' @param AnnotationTableConfiguration &#91;required&#93; The annotation table configuration updates to apply.
+#' @param ExpectedBucketOwner The account ID of the expected bucket owner.
+#'
+#' @keywords internal
+#'
+#' @rdname s3_update_bucket_metadata_annotation_table_configuration
+s3_update_bucket_metadata_annotation_table_configuration <- function(Bucket, ContentMD5 = NULL, ChecksumAlgorithm = NULL, AnnotationTableConfiguration, ExpectedBucketOwner = NULL) {
+  op <- new_operation(
+    name = "UpdateBucketMetadataAnnotationTableConfiguration",
+    http_method = "PUT",
+    http_path = "/{Bucket}?metadataAnnotationTable",
+    host_prefix = "",
+    paginator = list(),
+    stream_api = FALSE,
+    http_checksum = list(request_algorithm_member = "ChecksumAlgorithm", request_algorithm_header = "x-amz-sdk-checksum-algorithm", request_checksum_required = TRUE)
+  )
+  input <- .s3$update_bucket_metadata_annotation_table_configuration_input(Bucket = Bucket, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, AnnotationTableConfiguration = AnnotationTableConfiguration, ExpectedBucketOwner = ExpectedBucketOwner)
+  output <- .s3$update_bucket_metadata_annotation_table_configuration_output()
+  config <- get_config()
+  svc <- .s3$service(config, op)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.s3$operations$update_bucket_metadata_annotation_table_configuration <- s3_update_bucket_metadata_annotation_table_configuration
 
 #' Enables or disables a live inventory table for an S3 Metadata
 #' configuration on a general purpose bucket
@@ -5113,7 +5473,8 @@ s3_update_bucket_metadata_inventory_table_configuration <- function(Bucket, Cont
     http_path = "/{Bucket}?metadataInventoryTable",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = list(request_algorithm_member = "ChecksumAlgorithm", request_algorithm_header = "x-amz-sdk-checksum-algorithm", request_checksum_required = TRUE)
   )
   input <- .s3$update_bucket_metadata_inventory_table_configuration_input(Bucket = Bucket, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, InventoryTableConfiguration = InventoryTableConfiguration, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$update_bucket_metadata_inventory_table_configuration_output()
@@ -5149,7 +5510,8 @@ s3_update_bucket_metadata_journal_table_configuration <- function(Bucket, Conten
     http_path = "/{Bucket}?metadataJournalTable",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = list(request_algorithm_member = "ChecksumAlgorithm", request_algorithm_header = "x-amz-sdk-checksum-algorithm", request_checksum_required = TRUE)
   )
   input <- .s3$update_bucket_metadata_journal_table_configuration_input(Bucket = Bucket, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, JournalTableConfiguration = JournalTableConfiguration, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$update_bucket_metadata_journal_table_configuration_output()
@@ -5196,7 +5558,8 @@ s3_update_object_encryption <- function(Bucket, Key, VersionId = NULL, ObjectEnc
     http_path = "/{Bucket}/{Key+}?encryption",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = list(request_algorithm_member = "ChecksumAlgorithm", request_algorithm_header = "x-amz-sdk-checksum-algorithm", request_checksum_required = TRUE)
   )
   input <- .s3$update_object_encryption_input(Bucket = Bucket, Key = Key, VersionId = VersionId, ObjectEncryption = ObjectEncryption, RequestPayer = RequestPayer, ExpectedBucketOwner = ExpectedBucketOwner, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm)
   output <- .s3$update_object_encryption_output()
@@ -5271,7 +5634,8 @@ s3_upload_part <- function(Body = NULL, Bucket, ContentLength = NULL, ContentMD5
     http_path = "/{Bucket}/{Key+}",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = list(request_algorithm_member = "ChecksumAlgorithm", request_algorithm_header = "x-amz-sdk-checksum-algorithm", request_checksum_required = FALSE)
   )
   input <- .s3$upload_part_input(Body = Body, Bucket = Bucket, ContentLength = ContentLength, ContentMD5 = ContentMD5, ChecksumAlgorithm = ChecksumAlgorithm, ChecksumCRC32 = ChecksumCRC32, ChecksumCRC32C = ChecksumCRC32C, ChecksumCRC64NVME = ChecksumCRC64NVME, ChecksumSHA1 = ChecksumSHA1, ChecksumSHA256 = ChecksumSHA256, ChecksumSHA512 = ChecksumSHA512, ChecksumMD5 = ChecksumMD5, ChecksumXXHASH64 = ChecksumXXHASH64, ChecksumXXHASH3 = ChecksumXXHASH3, ChecksumXXHASH128 = ChecksumXXHASH128, Key = Key, PartNumber = PartNumber, UploadId = UploadId, SSECustomerAlgorithm = SSECustomerAlgorithm, SSECustomerKey = SSECustomerKey, SSECustomerKeyMD5 = SSECustomerKeyMD5, RequestPayer = RequestPayer, ExpectedBucketOwner = ExpectedBucketOwner)
   output <- .s3$upload_part_output()
@@ -5392,7 +5756,8 @@ s3_upload_part_copy <- function(Bucket, CopySource, CopySourceIfMatch = NULL, Co
     http_path = "/{Bucket}/{Key+}",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$upload_part_copy_input(Bucket = Bucket, CopySource = CopySource, CopySourceIfMatch = CopySourceIfMatch, CopySourceIfModifiedSince = CopySourceIfModifiedSince, CopySourceIfNoneMatch = CopySourceIfNoneMatch, CopySourceIfUnmodifiedSince = CopySourceIfUnmodifiedSince, CopySourceRange = CopySourceRange, Key = Key, PartNumber = PartNumber, UploadId = UploadId, SSECustomerAlgorithm = SSECustomerAlgorithm, SSECustomerKey = SSECustomerKey, SSECustomerKeyMD5 = SSECustomerKeyMD5, CopySourceSSECustomerAlgorithm = CopySourceSSECustomerAlgorithm, CopySourceSSECustomerKey = CopySourceSSECustomerKey, CopySourceSSECustomerKeyMD5 = CopySourceSSECustomerKeyMD5, RequestPayer = RequestPayer, ExpectedBucketOwner = ExpectedBucketOwner, ExpectedSourceBucketOwner = ExpectedSourceBucketOwner)
   output <- .s3$upload_part_copy_output()
@@ -5510,7 +5875,8 @@ s3_write_get_object_response <- function(RequestRoute, RequestToken, Body = NULL
     http_path = "/WriteGetObjectResponse",
     host_prefix = "{RequestRoute}.",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .s3$write_get_object_response_input(RequestRoute = RequestRoute, RequestToken = RequestToken, Body = Body, StatusCode = StatusCode, ErrorCode = ErrorCode, ErrorMessage = ErrorMessage, AcceptRanges = AcceptRanges, CacheControl = CacheControl, ContentDisposition = ContentDisposition, ContentEncoding = ContentEncoding, ContentLanguage = ContentLanguage, ContentLength = ContentLength, ContentRange = ContentRange, ContentType = ContentType, ChecksumCRC32 = ChecksumCRC32, ChecksumCRC32C = ChecksumCRC32C, ChecksumCRC64NVME = ChecksumCRC64NVME, ChecksumSHA1 = ChecksumSHA1, ChecksumSHA256 = ChecksumSHA256, ChecksumSHA512 = ChecksumSHA512, ChecksumMD5 = ChecksumMD5, ChecksumXXHASH64 = ChecksumXXHASH64, ChecksumXXHASH3 = ChecksumXXHASH3, ChecksumXXHASH128 = ChecksumXXHASH128, DeleteMarker = DeleteMarker, ETag = ETag, Expires = Expires, Expiration = Expiration, LastModified = LastModified, MissingMeta = MissingMeta, Metadata = Metadata, ObjectLockMode = ObjectLockMode, ObjectLockLegalHoldStatus = ObjectLockLegalHoldStatus, ObjectLockRetainUntilDate = ObjectLockRetainUntilDate, PartsCount = PartsCount, ReplicationStatus = ReplicationStatus, RequestCharged = RequestCharged, Restore = Restore, ServerSideEncryption = ServerSideEncryption, SSECustomerAlgorithm = SSECustomerAlgorithm, SSEKMSKeyId = SSEKMSKeyId, SSECustomerKeyMD5 = SSECustomerKeyMD5, StorageClass = StorageClass, TagCount = TagCount, VersionId = VersionId, BucketKeyEnabled = BucketKeyEnabled)
   output <- .s3$write_get_object_response_output()

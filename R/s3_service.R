@@ -4,7 +4,22 @@ NULL
 
 #' Amazon Simple Storage Service
 #'
+#' @description
+#' For information about using the Amazon S3 API—including authentication, signing requests, code examples, and error handling—see the [Amazon S3 Developer Guide](https://docs.aws.amazon.com/AmazonS3/latest/developerguide/Welcome.html).
 #' 
+#' Welcome to the *Amazon S3 API Reference*. This guide explains the Amazon Simple Storage Service (Amazon S3) application programming interface (API).
+#' 
+#' Welcome to the *Amazon S3 API Reference*. This guide explains the Amazon Simple Storage Service (Amazon S3) application programming interface (API).
+#' 
+#' You can use any toolkit that supports HTTP to use the REST API. You can even use a browser to fetch objects, as long as they are anonymously readable.
+#' 
+#' The REST API uses the standard HTTP headers and status codes, so that standard browsers and toolkits work as expected. In some areas, we have added functionality to HTTP (for example, we added headers to support access control). In these cases, we have done our best to add the new functionality in a way that matched the style of standard HTTP usage.
+#' 
+#' The current version of the Amazon S3 API is `2006-03-01`.
+#' 
+#' Amazon S3 supports the REST API.
+#' 
+#' Support for SOAP over HTTP is deprecated, but it is still available over HTTPS. However, new Amazon S3 features will not be supported for SOAP. We recommend that you use either this REST API or the Amazon Web Services SDKs.
 #'
 #' @param
 #' config
@@ -25,6 +40,7 @@ NULL
 #' \item{\strong{timeout}: The time in seconds till a timeout exception is thrown when attempting to make a connection. The default is 60 seconds.}
 #' \item{\strong{s3_force_path_style}: Set this to `true` to force the request to use path-style addressing, i.e. `http://s3.amazonaws.com/BUCKET/KEY`.}
 #' \item{\strong{sts_regional_endpoint}: Set sts regional endpoint resolver to regional or legacy \url{https://docs.aws.amazon.com/sdkref/latest/guide/feature-sts-regionalized-endpoints.html}}
+#' \item{\strong{use_dual_stack}: Set this to `true` to use the dualstack (IPv4 and IPv6) endpoint for a service, where available, falling back to the regular endpoint when it isn't. Defaults to the `AWS_USE_DUALSTACK_ENDPOINT` environment variable when unset.}
 #' }
 #' @param
 #' credentials
@@ -63,7 +79,8 @@ NULL
 #'     close_connection = "logical",
 #'     timeout = "numeric",
 #'     s3_force_path_style = "logical",
-#'     sts_regional_endpoint = "string"
+#'     sts_regional_endpoint = "string",
+#'     use_dual_stack = "logical"
 #'   ),
 #'   credentials = list(
 #'     creds = list(
@@ -116,10 +133,12 @@ NULL
 #'  \link[=s3_delete_bucket_tagging]{delete_bucket_tagging} \tab This operation is not supported for directory buckets\cr
 #'  \link[=s3_delete_bucket_website]{delete_bucket_website} \tab This operation is not supported for directory buckets\cr
 #'  \link[=s3_delete_object]{delete_object} \tab Removes an object from a bucket\cr
+#'  \link[=s3_delete_object_annotation]{delete_object_annotation} \tab Deletes a specific annotation from an Amazon S3 object\cr
 #'  \link[=s3_delete_objects]{delete_objects} \tab This operation enables you to delete multiple objects from a bucket using a single HTTP request\cr
 #'  \link[=s3_delete_object_tagging]{delete_object_tagging} \tab This operation is not supported for directory buckets\cr
 #'  \link[=s3_delete_public_access_block]{delete_public_access_block} \tab This operation is not supported for directory buckets\cr
 #'  \link[=s3_download_file]{download_file} \tab Download a file from S3 and store it at a specified file location\cr
+#'  \link[=s3_generate_presigned_post]{generate_presigned_post} \tab @title Generate the url and form fields used for a presigned s3 post\cr
 #'  \link[=s3_generate_presigned_url]{generate_presigned_url} \tab @title Generate a presigned url given a client, its method, and arguments\cr
 #'  \link[=s3_get_bucket_abac]{get_bucket_abac} \tab Returns the attribute-based access control (ABAC) property of the general purpose bucket\cr
 #'  \link[=s3_get_bucket_accelerate_configuration]{get_bucket_accelerate_configuration} \tab This operation is not supported for directory buckets\cr
@@ -148,6 +167,7 @@ NULL
 #'  \link[=s3_get_bucket_website]{get_bucket_website} \tab This operation is not supported for directory buckets\cr
 #'  \link[=s3_get_object]{get_object} \tab Retrieves an object from Amazon S3\cr
 #'  \link[=s3_get_object_acl]{get_object_acl} \tab This operation is not supported for directory buckets\cr
+#'  \link[=s3_get_object_annotation]{get_object_annotation} \tab Retrieves an annotation from an Amazon S3 object\cr
 #'  \link[=s3_get_object_attributes]{get_object_attributes} \tab Retrieves all of the metadata from an object without returning the object itself\cr
 #'  \link[=s3_get_object_legal_hold]{get_object_legal_hold} \tab This operation is not supported for directory buckets\cr
 #'  \link[=s3_get_object_lock_configuration]{get_object_lock_configuration} \tab This operation is not supported for directory buckets\cr
@@ -164,6 +184,7 @@ NULL
 #'  \link[=s3_list_buckets]{list_buckets} \tab This operation is not supported for directory buckets\cr
 #'  \link[=s3_list_directory_buckets]{list_directory_buckets} \tab Returns a list of all Amazon S3 directory buckets owned by the authenticated sender of the request\cr
 #'  \link[=s3_list_multipart_uploads]{list_multipart_uploads} \tab This operation lists in-progress multipart uploads in a bucket\cr
+#'  \link[=s3_list_object_annotations]{list_object_annotations} \tab Lists the annotations attached to an Amazon S3 object\cr
 #'  \link[=s3_list_objects]{list_objects} \tab This operation is not supported for directory buckets\cr
 #'  \link[=s3_list_objects_v2]{list_objects_v2} \tab Returns some or all (up to 1,000) of the objects in a bucket with each request\cr
 #'  \link[=s3_list_object_versions]{list_object_versions} \tab This operation is not supported for directory buckets\cr
@@ -191,6 +212,7 @@ NULL
 #'  \link[=s3_put_bucket_website]{put_bucket_website} \tab This operation is not supported for directory buckets\cr
 #'  \link[=s3_put_object]{put_object} \tab End of support notice: As of October 1, 2025, Amazon S3 has discontinued support for Email Grantee Access Control Lists (ACLs)\cr
 #'  \link[=s3_put_object_acl]{put_object_acl} \tab End of support notice: As of October 1, 2025, Amazon S3 has discontinued support for Email Grantee Access Control Lists (ACLs)\cr
+#'  \link[=s3_put_object_annotation]{put_object_annotation} \tab Attaches an annotation to an Amazon S3 object\cr
 #'  \link[=s3_put_object_legal_hold]{put_object_legal_hold} \tab This operation is not supported for directory buckets\cr
 #'  \link[=s3_put_object_lock_configuration]{put_object_lock_configuration} \tab This operation is not supported for directory buckets\cr
 #'  \link[=s3_put_object_retention]{put_object_retention} \tab This operation is not supported for directory buckets\cr
@@ -199,6 +221,7 @@ NULL
 #'  \link[=s3_rename_object]{rename_object} \tab Renames an existing object in a directory bucket that uses the S3 Express One Zone storage class\cr
 #'  \link[=s3_restore_object]{restore_object} \tab This operation is not supported for directory buckets\cr
 #'  \link[=s3_select_object_content]{select_object_content} \tab This operation is not supported for directory buckets\cr
+#'  \link[=s3_update_bucket_metadata_annotation_table_configuration]{update_bucket_metadata_annotation_table_configuration} \tab Updates the annotation table configuration for an Amazon S3 bucket's metadata configuration\cr
 #'  \link[=s3_update_bucket_metadata_inventory_table_configuration]{update_bucket_metadata_inventory_table_configuration} \tab Enables or disables a live inventory table for an S3 Metadata configuration on a general purpose bucket\cr
 #'  \link[=s3_update_bucket_metadata_journal_table_configuration]{update_bucket_metadata_journal_table_configuration} \tab Enables or disables journal table record expiration for an S3 Metadata configuration on a general purpose bucket\cr
 #'  \link[=s3_update_object_encryption]{update_object_encryption} \tab This operation is not supported for directory buckets or Amazon S3 on Outposts buckets\cr
@@ -236,7 +259,7 @@ s3 <- function(config = list(), credentials = list(), endpoint = NULL, region = 
 
 .s3$metadata <- list(
   service_name = "s3",
-  endpoints = list("aws-global" = list(endpoint = "s3.amazonaws.com", global = TRUE, signing_region = "us-east-1"), "us-east-1" = list(endpoint = "s3.amazonaws.com", global = TRUE), "^(us|eu|ap|sa|ca|me|af|il|mx)\\-\\w+\\-\\d+$" = list(endpoint = "s3.{region}.amazonaws.com", global = FALSE), "^cn\\-\\w+\\-\\d+$" = list(endpoint = "s3.{region}.amazonaws.com.cn", global = FALSE), "^us\\-gov\\-\\w+\\-\\d+$" = list(endpoint = "s3.{region}.amazonaws.com", global = FALSE), "^us\\-iso\\-\\w+\\-\\d+$" = list(endpoint = "s3.{region}.c2s.ic.gov", global = FALSE), "^us\\-isob\\-\\w+\\-\\d+$" = list(endpoint = "s3.{region}.sc2s.sgov.gov", global = FALSE), "^eu\\-isoe\\-\\w+\\-\\d+$" = list(endpoint = "s3.{region}.cloud.adc-e.uk", global = FALSE), "^us\\-isof\\-\\w+\\-\\d+$" = list(endpoint = "s3.{region}.csp.hci.ic.gov", global = FALSE), "^eusc\\-(de)\\-\\w+\\-\\d+$" = list(endpoint = "s3.{region}.amazonaws.eu", global = FALSE)),
+  endpoints = list("aws-global" = list(endpoint = "s3.amazonaws.com", global = TRUE, signing_region = "us-east-1"), "us-east-1" = list(endpoint = "s3.amazonaws.com", global = TRUE), "^(us|eu|ap|sa|ca|me|af|il|mx)\\-\\w+\\-\\d+$" = list(endpoint = "s3.{region}.amazonaws.com", global = FALSE, dualstack_endpoint = "s3.dualstack.{region}.amazonaws.com"), "^cn\\-\\w+\\-\\d+$" = list(endpoint = "s3.{region}.amazonaws.com.cn", global = FALSE, dualstack_endpoint = "s3.dualstack.{region}.amazonaws.com.cn"), "^us\\-gov\\-\\w+\\-\\d+$" = list(endpoint = "s3.{region}.amazonaws.com", global = FALSE, dualstack_endpoint = "s3.dualstack.{region}.amazonaws.com"), "^us\\-iso\\-\\w+\\-\\d+$" = list(endpoint = "s3.{region}.c2s.ic.gov", global = FALSE), "^us\\-isob\\-\\w+\\-\\d+$" = list(endpoint = "s3.{region}.sc2s.sgov.gov", global = FALSE), "^eu\\-isoe\\-\\w+\\-\\d+$" = list(endpoint = "s3.{region}.cloud.adc-e.uk", global = FALSE), "^us\\-isof\\-\\w+\\-\\d+$" = list(endpoint = "s3.{region}.csp.hci.ic.gov", global = FALSE), "^eusc\\-(de)\\-\\w+\\-\\d+$" = list(endpoint = "s3.{region}.amazonaws.eu", global = FALSE)),
   service_id = "S3",
   api_version = "2006-03-01",
   signing_name = "s3",

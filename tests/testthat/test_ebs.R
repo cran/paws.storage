@@ -1,3 +1,3 @@
-svc <- paws::ebs()
+svc <- paws.storage::ebs()
 
 

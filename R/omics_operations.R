@@ -24,7 +24,8 @@ omics_abort_multipart_read_set_upload <- function(sequenceStoreId, uploadId) {
     http_path = "/sequencestore/{sequenceStoreId}/upload/{uploadId}/abort",
     host_prefix = "control-storage-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$abort_multipart_read_set_upload_input(sequenceStoreId = sequenceStoreId, uploadId = uploadId)
   output <- .omics$abort_multipart_read_set_upload_output()
@@ -55,7 +56,8 @@ omics_accept_share <- function(shareId) {
     http_path = "/share/{shareId}",
     host_prefix = "analytics-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$accept_share_input(shareId = shareId)
   output <- .omics$accept_share_output()
@@ -87,7 +89,8 @@ omics_batch_delete_read_set <- function(ids, sequenceStoreId) {
     http_path = "/sequencestore/{sequenceStoreId}/readset/batch/delete",
     host_prefix = "control-storage-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$batch_delete_read_set_input(ids = ids, sequenceStoreId = sequenceStoreId)
   output <- .omics$batch_delete_read_set_output()
@@ -119,7 +122,8 @@ omics_cancel_annotation_import_job <- function(jobId) {
     http_path = "/import/annotation/{jobId}",
     host_prefix = "analytics-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$cancel_annotation_import_job_input(jobId = jobId)
   output <- .omics$cancel_annotation_import_job_output()
@@ -151,7 +155,8 @@ omics_cancel_run <- function(id) {
     http_path = "/run/{id}/cancel",
     host_prefix = "workflows-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$cancel_run_input(id = id)
   output <- .omics$cancel_run_output()
@@ -182,7 +187,8 @@ omics_cancel_run_batch <- function(batchId) {
     http_path = "/runBatch/cancel",
     host_prefix = "workflows-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$cancel_run_batch_input(batchId = batchId)
   output <- .omics$cancel_run_batch_output()
@@ -214,7 +220,8 @@ omics_cancel_variant_import_job <- function(jobId) {
     http_path = "/import/variant/{jobId}",
     host_prefix = "analytics-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$cancel_variant_import_job_input(jobId = jobId)
   output <- .omics$cancel_variant_import_job_output()
@@ -249,7 +256,8 @@ omics_complete_multipart_read_set_upload <- function(sequenceStoreId, uploadId, 
     http_path = "/sequencestore/{sequenceStoreId}/upload/{uploadId}/complete",
     host_prefix = "storage-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$complete_multipart_read_set_upload_input(sequenceStoreId = sequenceStoreId, uploadId = uploadId, parts = parts)
   output <- .omics$complete_multipart_read_set_upload_output()
@@ -288,7 +296,8 @@ omics_create_annotation_store <- function(reference = NULL, name = NULL, descrip
     http_path = "/annotationStore",
     host_prefix = "analytics-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$create_annotation_store_input(reference = reference, name = name, description = description, tags = tags, versionName = versionName, sseConfig = sseConfig, storeFormat = storeFormat, storeOptions = storeOptions)
   output <- .omics$create_annotation_store_output()
@@ -323,7 +332,8 @@ omics_create_annotation_store_version <- function(name, versionName, description
     http_path = "/annotationStore/{name}/version",
     host_prefix = "analytics-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$create_annotation_store_version_input(name = name, versionName = versionName, description = description, versionOptions = versionOptions, tags = tags)
   output <- .omics$create_annotation_store_version_output()
@@ -358,7 +368,8 @@ omics_create_configuration <- function(name, description = NULL, runConfiguratio
     http_path = "/configuration",
     host_prefix = "workflows-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$create_configuration_input(name = name, description = description, runConfigurations = runConfigurations, tags = tags, requestId = requestId)
   output <- .omics$create_configuration_output()
@@ -399,7 +410,8 @@ omics_create_multipart_read_set_upload <- function(sequenceStoreId, clientToken 
     http_path = "/sequencestore/{sequenceStoreId}/upload",
     host_prefix = "control-storage-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$create_multipart_read_set_upload_input(sequenceStoreId = sequenceStoreId, clientToken = clientToken, sourceFileType = sourceFileType, subjectId = subjectId, sampleId = sampleId, generatedFrom = generatedFrom, referenceArn = referenceArn, name = name, description = description, tags = tags)
   output <- .omics$create_multipart_read_set_upload_output()
@@ -434,7 +446,8 @@ omics_create_reference_store <- function(name, description = NULL, sseConfig = N
     http_path = "/referencestore",
     host_prefix = "control-storage-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$create_reference_store_input(name = name, description = description, sseConfig = sseConfig, tags = tags, clientToken = clientToken)
   output <- .omics$create_reference_store_output()
@@ -480,7 +493,8 @@ omics_create_run_cache <- function(cacheBehavior = NULL, cacheS3Location, descri
     http_path = "/runCache",
     host_prefix = "workflows-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$create_run_cache_input(cacheBehavior = cacheBehavior, cacheS3Location = cacheS3Location, description = description, name = name, requestId = requestId, tags = tags, cacheBucketOwnerId = cacheBucketOwnerId)
   output <- .omics$create_run_cache_output()
@@ -518,7 +532,8 @@ omics_create_run_group <- function(name = NULL, maxCpus = NULL, maxRuns = NULL, 
     http_path = "/runGroup",
     host_prefix = "workflows-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$create_run_group_input(name = name, maxCpus = maxCpus, maxRuns = maxRuns, maxDuration = maxDuration, tags = tags, requestId = requestId, maxGpus = maxGpus)
   output <- .omics$create_run_group_output()
@@ -557,7 +572,8 @@ omics_create_sequence_store <- function(name, description = NULL, sseConfig = NU
     http_path = "/sequencestore",
     host_prefix = "control-storage-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$create_sequence_store_input(name = name, description = description, sseConfig = sseConfig, tags = tags, clientToken = clientToken, fallbackLocation = fallbackLocation, eTagAlgorithmFamily = eTagAlgorithmFamily, propagatedSetLevelTags = propagatedSetLevelTags, s3AccessConfig = s3AccessConfig)
   output <- .omics$create_sequence_store_output()
@@ -572,7 +588,7 @@ omics_create_sequence_store <- function(name, description = NULL, sseConfig = NU
 #' Creates a cross-account shared resource
 #'
 #' @description
-#' Creates a cross-account shared resource. The resource owner makes an offer to share the resource with the principal subscriber (an AWS user with a different account than the resource owner).
+#' Creates a cross-account shared resource. The resource owner makes an offer to share the resource with the principal subscriber (an Amazon Web Services user with a different account than the resource owner).
 #'
 #' See [https://www.paws-r-sdk.com/docs/omics_create_share/](https://www.paws-r-sdk.com/docs/omics_create_share/) for full documentation.
 #'
@@ -590,7 +606,8 @@ omics_create_share <- function(resourceArn, principalSubscriber, shareName = NUL
     http_path = "/share",
     host_prefix = "analytics-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$create_share_input(resourceArn = resourceArn, principalSubscriber = principalSubscriber, shareName = shareName)
   output <- .omics$create_share_output()
@@ -626,7 +643,8 @@ omics_create_variant_store <- function(reference, name = NULL, description = NUL
     http_path = "/variantStore",
     host_prefix = "analytics-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$create_variant_store_input(reference = reference, name = name, description = description, tags = tags, sseConfig = sseConfig)
   output <- .omics$create_variant_store_output()
@@ -684,7 +702,8 @@ omics_create_workflow <- function(name = NULL, description = NULL, engine = NULL
     http_path = "/workflow",
     host_prefix = "workflows-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$create_workflow_input(name = name, description = description, engine = engine, definitionZip = definitionZip, definitionUri = definitionUri, main = main, parameterTemplate = parameterTemplate, storageCapacity = storageCapacity, tags = tags, requestId = requestId, accelerators = accelerators, storageType = storageType, containerRegistryMap = containerRegistryMap, containerRegistryMapUri = containerRegistryMapUri, readmeMarkdown = readmeMarkdown, parameterTemplatePath = parameterTemplatePath, readmePath = readmePath, definitionRepository = definitionRepository, workflowBucketOwnerId = workflowBucketOwnerId, readmeUri = readmeUri)
   output <- .omics$create_workflow_output()
@@ -744,7 +763,8 @@ omics_create_workflow_version <- function(workflowId, versionName, definitionZip
     http_path = "/workflow/{workflowId}/version",
     host_prefix = "workflows-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$create_workflow_version_input(workflowId = workflowId, versionName = versionName, definitionZip = definitionZip, definitionUri = definitionUri, accelerators = accelerators, description = description, engine = engine, main = main, parameterTemplate = parameterTemplate, requestId = requestId, storageType = storageType, storageCapacity = storageCapacity, tags = tags, workflowBucketOwnerId = workflowBucketOwnerId, containerRegistryMap = containerRegistryMap, containerRegistryMapUri = containerRegistryMapUri, readmeMarkdown = readmeMarkdown, parameterTemplatePath = parameterTemplatePath, readmePath = readmePath, definitionRepository = definitionRepository, readmeUri = readmeUri)
   output <- .omics$create_workflow_version_output()
@@ -777,7 +797,8 @@ omics_delete_annotation_store <- function(name, force = NULL) {
     http_path = "/annotationStore/{name}",
     host_prefix = "analytics-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$delete_annotation_store_input(name = name, force = force)
   output <- .omics$delete_annotation_store_output()
@@ -810,7 +831,8 @@ omics_delete_annotation_store_versions <- function(name, versions, force = NULL)
     http_path = "/annotationStore/{name}/versions/delete",
     host_prefix = "analytics-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$delete_annotation_store_versions_input(name = name, versions = versions, force = force)
   output <- .omics$delete_annotation_store_versions_output()
@@ -841,7 +863,8 @@ omics_delete_batch <- function(batchId) {
     http_path = "/runBatch/{batchId}",
     host_prefix = "workflows-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$delete_batch_input(batchId = batchId)
   output <- .omics$delete_batch_output()
@@ -872,7 +895,8 @@ omics_delete_configuration <- function(name) {
     http_path = "/configuration/{name}",
     host_prefix = "workflows-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$delete_configuration_input(name = name)
   output <- .omics$delete_configuration_output()
@@ -905,7 +929,8 @@ omics_delete_reference <- function(id, referenceStoreId) {
     http_path = "/referencestore/{referenceStoreId}/reference/{id}",
     host_prefix = "control-storage-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$delete_reference_input(id = id, referenceStoreId = referenceStoreId)
   output <- .omics$delete_reference_output()
@@ -937,7 +962,8 @@ omics_delete_reference_store <- function(id) {
     http_path = "/referencestore/{id}",
     host_prefix = "control-storage-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$delete_reference_store_input(id = id)
   output <- .omics$delete_reference_store_output()
@@ -969,7 +995,8 @@ omics_delete_run <- function(id) {
     http_path = "/run/{id}",
     host_prefix = "workflows-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$delete_run_input(id = id)
   output <- .omics$delete_run_output()
@@ -1000,7 +1027,8 @@ omics_delete_run_batch <- function(batchId) {
     http_path = "/runBatch/delete",
     host_prefix = "workflows-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$delete_run_batch_input(batchId = batchId)
   output <- .omics$delete_run_batch_output()
@@ -1032,7 +1060,8 @@ omics_delete_run_cache <- function(id) {
     http_path = "/runCache/{id}",
     host_prefix = "workflows-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$delete_run_cache_input(id = id)
   output <- .omics$delete_run_cache_output()
@@ -1064,7 +1093,8 @@ omics_delete_run_group <- function(id) {
     http_path = "/runGroup/{id}",
     host_prefix = "workflows-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$delete_run_group_input(id = id)
   output <- .omics$delete_run_group_output()
@@ -1095,7 +1125,8 @@ omics_delete_s3_access_policy <- function(s3AccessPointArn) {
     http_path = "/s3accesspolicy/{s3AccessPointArn}",
     host_prefix = "control-storage-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$delete_s3_access_policy_input(s3AccessPointArn = s3AccessPointArn)
   output <- .omics$delete_s3_access_policy_output()
@@ -1127,7 +1158,8 @@ omics_delete_sequence_store <- function(id) {
     http_path = "/sequencestore/{id}",
     host_prefix = "control-storage-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$delete_sequence_store_input(id = id)
   output <- .omics$delete_sequence_store_output()
@@ -1158,7 +1190,8 @@ omics_delete_share <- function(shareId) {
     http_path = "/share/{shareId}",
     host_prefix = "analytics-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$delete_share_input(shareId = shareId)
   output <- .omics$delete_share_output()
@@ -1191,7 +1224,8 @@ omics_delete_variant_store <- function(name, force = NULL) {
     http_path = "/variantStore/{name}",
     host_prefix = "analytics-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$delete_variant_store_input(name = name, force = force)
   output <- .omics$delete_variant_store_output()
@@ -1222,7 +1256,8 @@ omics_delete_workflow <- function(id) {
     http_path = "/workflow/{id}",
     host_prefix = "workflows-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$delete_workflow_input(id = id)
   output <- .omics$delete_workflow_output()
@@ -1254,7 +1289,8 @@ omics_delete_workflow_version <- function(workflowId, versionName) {
     http_path = "/workflow/{workflowId}/version/{versionName}",
     host_prefix = "workflows-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$delete_workflow_version_input(workflowId = workflowId, versionName = versionName)
   output <- .omics$delete_workflow_version_output()
@@ -1286,7 +1322,8 @@ omics_get_annotation_import_job <- function(jobId) {
     http_path = "/import/annotation/{jobId}",
     host_prefix = "analytics-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$get_annotation_import_job_input(jobId = jobId)
   output <- .omics$get_annotation_import_job_output()
@@ -1318,7 +1355,8 @@ omics_get_annotation_store <- function(name) {
     http_path = "/annotationStore/{name}",
     host_prefix = "analytics-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$get_annotation_store_input(name = name)
   output <- .omics$get_annotation_store_output()
@@ -1350,7 +1388,8 @@ omics_get_annotation_store_version <- function(name, versionName) {
     http_path = "/annotationStore/{name}/version/{versionName}",
     host_prefix = "analytics-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$get_annotation_store_version_input(name = name, versionName = versionName)
   output <- .omics$get_annotation_store_version_output()
@@ -1382,7 +1421,8 @@ omics_get_batch <- function(batchId) {
     http_path = "/runBatch/{batchId}",
     host_prefix = "workflows-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$get_batch_input(batchId = batchId)
   output <- .omics$get_batch_output()
@@ -1413,7 +1453,8 @@ omics_get_configuration <- function(name) {
     http_path = "/configuration/{name}",
     host_prefix = "workflows-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$get_configuration_input(name = name)
   output <- .omics$get_configuration_output()
@@ -1448,7 +1489,8 @@ omics_get_read_set <- function(id, sequenceStoreId, file = NULL, partNumber) {
     http_path = "/sequencestore/{sequenceStoreId}/readset/{id}",
     host_prefix = "storage-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$get_read_set_input(id = id, sequenceStoreId = sequenceStoreId, file = file, partNumber = partNumber)
   output <- .omics$get_read_set_output()
@@ -1481,7 +1523,8 @@ omics_get_read_set_activation_job <- function(id, sequenceStoreId) {
     http_path = "/sequencestore/{sequenceStoreId}/activationjob/{id}",
     host_prefix = "control-storage-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$get_read_set_activation_job_input(id = id, sequenceStoreId = sequenceStoreId)
   output <- .omics$get_read_set_activation_job_output()
@@ -1514,7 +1557,8 @@ omics_get_read_set_export_job <- function(sequenceStoreId, id) {
     http_path = "/sequencestore/{sequenceStoreId}/exportjob/{id}",
     host_prefix = "control-storage-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$get_read_set_export_job_input(sequenceStoreId = sequenceStoreId, id = id)
   output <- .omics$get_read_set_export_job_output()
@@ -1547,7 +1591,8 @@ omics_get_read_set_import_job <- function(id, sequenceStoreId) {
     http_path = "/sequencestore/{sequenceStoreId}/importjob/{id}",
     host_prefix = "control-storage-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$get_read_set_import_job_input(id = id, sequenceStoreId = sequenceStoreId)
   output <- .omics$get_read_set_import_job_output()
@@ -1580,7 +1625,8 @@ omics_get_read_set_metadata <- function(id, sequenceStoreId) {
     http_path = "/sequencestore/{sequenceStoreId}/readset/{id}/metadata",
     host_prefix = "control-storage-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$get_read_set_metadata_input(id = id, sequenceStoreId = sequenceStoreId)
   output <- .omics$get_read_set_metadata_output()
@@ -1616,7 +1662,8 @@ omics_get_reference <- function(id, referenceStoreId, range = NULL, partNumber, 
     http_path = "/referencestore/{referenceStoreId}/reference/{id}",
     host_prefix = "storage-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$get_reference_input(id = id, referenceStoreId = referenceStoreId, range = range, partNumber = partNumber, file = file)
   output <- .omics$get_reference_output()
@@ -1648,7 +1695,8 @@ omics_get_reference_import_job <- function(id, referenceStoreId) {
     http_path = "/referencestore/{referenceStoreId}/importjob/{id}",
     host_prefix = "control-storage-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$get_reference_import_job_input(id = id, referenceStoreId = referenceStoreId)
   output <- .omics$get_reference_import_job_output()
@@ -1680,7 +1728,8 @@ omics_get_reference_metadata <- function(id, referenceStoreId) {
     http_path = "/referencestore/{referenceStoreId}/reference/{id}/metadata",
     host_prefix = "control-storage-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$get_reference_metadata_input(id = id, referenceStoreId = referenceStoreId)
   output <- .omics$get_reference_metadata_output()
@@ -1711,7 +1760,8 @@ omics_get_reference_store <- function(id) {
     http_path = "/referencestore/{id}",
     host_prefix = "control-storage-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$get_reference_store_input(id = id)
   output <- .omics$get_reference_store_output()
@@ -1743,7 +1793,8 @@ omics_get_run <- function(id, export = NULL) {
     http_path = "/run/{id}",
     host_prefix = "workflows-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$get_run_input(id = id, export = export)
   output <- .omics$get_run_output()
@@ -1775,7 +1826,8 @@ omics_get_run_cache <- function(id) {
     http_path = "/runCache/{id}",
     host_prefix = "workflows-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$get_run_cache_input(id = id)
   output <- .omics$get_run_cache_output()
@@ -1806,7 +1858,8 @@ omics_get_run_group <- function(id) {
     http_path = "/runGroup/{id}",
     host_prefix = "workflows-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$get_run_group_input(id = id)
   output <- .omics$get_run_group_output()
@@ -1838,7 +1891,8 @@ omics_get_run_task <- function(id, taskId) {
     http_path = "/run/{id}/task/{taskId}",
     host_prefix = "workflows-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$get_run_task_input(id = id, taskId = taskId)
   output <- .omics$get_run_task_output()
@@ -1869,7 +1923,8 @@ omics_get_s3_access_policy <- function(s3AccessPointArn) {
     http_path = "/s3accesspolicy/{s3AccessPointArn}",
     host_prefix = "control-storage-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$get_s3_access_policy_input(s3AccessPointArn = s3AccessPointArn)
   output <- .omics$get_s3_access_policy_output()
@@ -1901,7 +1956,8 @@ omics_get_sequence_store <- function(id) {
     http_path = "/sequencestore/{id}",
     host_prefix = "control-storage-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$get_sequence_store_input(id = id)
   output <- .omics$get_sequence_store_output()
@@ -1932,7 +1988,8 @@ omics_get_share <- function(shareId) {
     http_path = "/share/{shareId}",
     host_prefix = "analytics-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$get_share_input(shareId = shareId)
   output <- .omics$get_share_output()
@@ -1964,7 +2021,8 @@ omics_get_variant_import_job <- function(jobId) {
     http_path = "/import/variant/{jobId}",
     host_prefix = "analytics-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$get_variant_import_job_input(jobId = jobId)
   output <- .omics$get_variant_import_job_output()
@@ -1996,7 +2054,8 @@ omics_get_variant_store <- function(name) {
     http_path = "/variantStore/{name}",
     host_prefix = "analytics-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$get_variant_store_input(name = name)
   output <- .omics$get_variant_store_output()
@@ -2030,7 +2089,8 @@ omics_get_workflow <- function(id, type = NULL, export = NULL, workflowOwnerId =
     http_path = "/workflow/{id}",
     host_prefix = "workflows-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$get_workflow_input(id = id, type = type, export = export, workflowOwnerId = workflowOwnerId)
   output <- .omics$get_workflow_output()
@@ -2065,7 +2125,8 @@ omics_get_workflow_version <- function(workflowId, versionName, type = NULL, exp
     http_path = "/workflow/{workflowId}/version/{versionName}",
     host_prefix = "workflows-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$get_workflow_version_input(workflowId = workflowId, versionName = versionName, type = type, export = export, workflowOwnerId = workflowOwnerId)
   output <- .omics$get_workflow_version_output()
@@ -2100,7 +2161,8 @@ omics_list_annotation_import_jobs <- function(maxResults = NULL, ids = NULL, nex
     http_path = "/import/annotations",
     host_prefix = "analytics-",
     paginator = list(input_token = "nextToken", output_token = "nextToken", limit_key = "maxResults", result_key = "annotationImportJobs"),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$list_annotation_import_jobs_input(maxResults = maxResults, ids = ids, nextToken = nextToken, filter = filter)
   output <- .omics$list_annotation_import_jobs_output()
@@ -2134,7 +2196,8 @@ omics_list_annotation_store_versions <- function(name, maxResults = NULL, nextTo
     http_path = "/annotationStore/{name}/versions",
     host_prefix = "analytics-",
     paginator = list(input_token = "nextToken", output_token = "nextToken", limit_key = "maxResults", result_key = "annotationStoreVersions"),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$list_annotation_store_versions_input(name = name, maxResults = maxResults, nextToken = nextToken, filter = filter)
   output <- .omics$list_annotation_store_versions_output()
@@ -2169,7 +2232,8 @@ omics_list_annotation_stores <- function(ids = NULL, maxResults = NULL, nextToke
     http_path = "/annotationStores",
     host_prefix = "analytics-",
     paginator = list(input_token = "nextToken", output_token = "nextToken", limit_key = "maxResults", result_key = "annotationStores"),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$list_annotation_stores_input(ids = ids, maxResults = maxResults, nextToken = nextToken, filter = filter)
   output <- .omics$list_annotation_stores_output()
@@ -2205,7 +2269,8 @@ omics_list_batch <- function(maxItems = NULL, startingToken = NULL, status = NUL
     http_path = "/runBatch",
     host_prefix = "workflows-",
     paginator = list(input_token = "startingToken", output_token = "nextToken", limit_key = "maxItems", result_key = "items"),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$list_batch_input(maxItems = maxItems, startingToken = startingToken, status = status, name = name, runGroupId = runGroupId)
   output <- .omics$list_batch_output()
@@ -2237,7 +2302,8 @@ omics_list_configurations <- function(maxResults = NULL, startingToken = NULL) {
     http_path = "/configuration",
     host_prefix = "workflows-",
     paginator = list(input_token = "startingToken", output_token = "nextToken", limit_key = "maxResults", result_key = "items"),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$list_configurations_input(maxResults = maxResults, startingToken = startingToken)
   output <- .omics$list_configurations_output()
@@ -2271,7 +2337,8 @@ omics_list_multipart_read_set_uploads <- function(sequenceStoreId, maxResults = 
     http_path = "/sequencestore/{sequenceStoreId}/uploads",
     host_prefix = "control-storage-",
     paginator = list(input_token = "nextToken", output_token = "nextToken", limit_key = "maxResults", result_key = "uploads"),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$list_multipart_read_set_uploads_input(sequenceStoreId = sequenceStoreId, maxResults = maxResults, nextToken = nextToken)
   output <- .omics$list_multipart_read_set_uploads_output()
@@ -2306,7 +2373,8 @@ omics_list_read_set_activation_jobs <- function(sequenceStoreId, maxResults = NU
     http_path = "/sequencestore/{sequenceStoreId}/activationjobs",
     host_prefix = "control-storage-",
     paginator = list(input_token = "nextToken", output_token = "nextToken", limit_key = "maxResults", result_key = "activationJobs"),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$list_read_set_activation_jobs_input(sequenceStoreId = sequenceStoreId, maxResults = maxResults, nextToken = nextToken, filter = filter)
   output <- .omics$list_read_set_activation_jobs_output()
@@ -2340,7 +2408,8 @@ omics_list_read_set_export_jobs <- function(sequenceStoreId, maxResults = NULL, 
     http_path = "/sequencestore/{sequenceStoreId}/exportjobs",
     host_prefix = "control-storage-",
     paginator = list(input_token = "nextToken", output_token = "nextToken", limit_key = "maxResults", result_key = "exportJobs"),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$list_read_set_export_jobs_input(sequenceStoreId = sequenceStoreId, maxResults = maxResults, nextToken = nextToken, filter = filter)
   output <- .omics$list_read_set_export_jobs_output()
@@ -2375,7 +2444,8 @@ omics_list_read_set_import_jobs <- function(maxResults = NULL, nextToken = NULL,
     http_path = "/sequencestore/{sequenceStoreId}/importjobs",
     host_prefix = "control-storage-",
     paginator = list(input_token = "nextToken", output_token = "nextToken", limit_key = "maxResults", result_key = "importJobs"),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$list_read_set_import_jobs_input(maxResults = maxResults, nextToken = nextToken, sequenceStoreId = sequenceStoreId, filter = filter)
   output <- .omics$list_read_set_import_jobs_output()
@@ -2412,7 +2482,8 @@ omics_list_read_set_upload_parts <- function(sequenceStoreId, uploadId, partSour
     http_path = "/sequencestore/{sequenceStoreId}/upload/{uploadId}/parts",
     host_prefix = "control-storage-",
     paginator = list(input_token = "nextToken", output_token = "nextToken", limit_key = "maxResults", result_key = "parts"),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$list_read_set_upload_parts_input(sequenceStoreId = sequenceStoreId, uploadId = uploadId, partSource = partSource, maxResults = maxResults, nextToken = nextToken, filter = filter)
   output <- .omics$list_read_set_upload_parts_output()
@@ -2447,7 +2518,8 @@ omics_list_read_sets <- function(sequenceStoreId, maxResults = NULL, nextToken =
     http_path = "/sequencestore/{sequenceStoreId}/readsets",
     host_prefix = "control-storage-",
     paginator = list(input_token = "nextToken", output_token = "nextToken", limit_key = "maxResults", result_key = "readSets"),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$list_read_sets_input(sequenceStoreId = sequenceStoreId, maxResults = maxResults, nextToken = nextToken, filter = filter)
   output <- .omics$list_read_sets_output()
@@ -2482,7 +2554,8 @@ omics_list_reference_import_jobs <- function(maxResults = NULL, nextToken = NULL
     http_path = "/referencestore/{referenceStoreId}/importjobs",
     host_prefix = "control-storage-",
     paginator = list(input_token = "nextToken", output_token = "nextToken", limit_key = "maxResults", result_key = "importJobs"),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$list_reference_import_jobs_input(maxResults = maxResults, nextToken = nextToken, referenceStoreId = referenceStoreId, filter = filter)
   output <- .omics$list_reference_import_jobs_output()
@@ -2516,7 +2589,8 @@ omics_list_reference_stores <- function(maxResults = NULL, nextToken = NULL, fil
     http_path = "/referencestores",
     host_prefix = "control-storage-",
     paginator = list(input_token = "nextToken", output_token = "nextToken", limit_key = "maxResults", result_key = "referenceStores"),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$list_reference_stores_input(maxResults = maxResults, nextToken = nextToken, filter = filter)
   output <- .omics$list_reference_stores_output()
@@ -2551,7 +2625,8 @@ omics_list_references <- function(referenceStoreId, maxResults = NULL, nextToken
     http_path = "/referencestore/{referenceStoreId}/references",
     host_prefix = "control-storage-",
     paginator = list(input_token = "nextToken", output_token = "nextToken", limit_key = "maxResults", result_key = "references"),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$list_references_input(referenceStoreId = referenceStoreId, maxResults = maxResults, nextToken = nextToken, filter = filter)
   output <- .omics$list_references_output()
@@ -2583,7 +2658,8 @@ omics_list_run_caches <- function(maxResults = NULL, startingToken = NULL) {
     http_path = "/runCache",
     host_prefix = "workflows-",
     paginator = list(input_token = "startingToken", output_token = "nextToken", limit_key = "maxResults", result_key = "items"),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$list_run_caches_input(maxResults = maxResults, startingToken = startingToken)
   output <- .omics$list_run_caches_output()
@@ -2617,7 +2693,8 @@ omics_list_run_groups <- function(name = NULL, startingToken = NULL, maxResults 
     http_path = "/runGroup",
     host_prefix = "workflows-",
     paginator = list(input_token = "startingToken", output_token = "nextToken", limit_key = "maxResults", result_key = "items"),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$list_run_groups_input(name = name, startingToken = startingToken, maxResults = maxResults)
   output <- .omics$list_run_groups_output()
@@ -2652,7 +2729,8 @@ omics_list_run_tasks <- function(id, status = NULL, startingToken = NULL, maxRes
     http_path = "/run/{id}/task",
     host_prefix = "workflows-",
     paginator = list(input_token = "startingToken", output_token = "nextToken", limit_key = "maxResults", result_key = "items"),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$list_run_tasks_input(id = id, status = status, startingToken = startingToken, maxResults = maxResults)
   output <- .omics$list_run_tasks_output()
@@ -2688,7 +2766,8 @@ omics_list_runs <- function(name = NULL, runGroupId = NULL, batchId = NULL, star
     http_path = "/run",
     host_prefix = "workflows-",
     paginator = list(input_token = "startingToken", output_token = "nextToken", limit_key = "maxResults", result_key = "items"),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$list_runs_input(name = name, runGroupId = runGroupId, batchId = batchId, startingToken = startingToken, maxResults = maxResults, status = status)
   output <- .omics$list_runs_output()
@@ -2725,7 +2804,8 @@ omics_list_runs_in_batch <- function(batchId, maxItems = NULL, startingToken = N
     http_path = "/runBatch/{batchId}/run",
     host_prefix = "workflows-",
     paginator = list(input_token = "startingToken", output_token = "nextToken", limit_key = "maxItems", result_key = "runs"),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$list_runs_in_batch_input(batchId = batchId, maxItems = maxItems, startingToken = startingToken, submissionStatus = submissionStatus, runSettingId = runSettingId, runId = runId)
   output <- .omics$list_runs_in_batch_output()
@@ -2759,7 +2839,8 @@ omics_list_sequence_stores <- function(maxResults = NULL, nextToken = NULL, filt
     http_path = "/sequencestores",
     host_prefix = "control-storage-",
     paginator = list(input_token = "nextToken", output_token = "nextToken", limit_key = "maxResults", result_key = "sequenceStores"),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$list_sequence_stores_input(maxResults = maxResults, nextToken = nextToken, filter = filter)
   output <- .omics$list_sequence_stores_output()
@@ -2793,7 +2874,8 @@ omics_list_shares <- function(resourceOwner, filter = NULL, nextToken = NULL, ma
     http_path = "/shares",
     host_prefix = "analytics-",
     paginator = list(input_token = "nextToken", output_token = "nextToken", limit_key = "maxResults", result_key = "shares"),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$list_shares_input(resourceOwner = resourceOwner, filter = filter, nextToken = nextToken, maxResults = maxResults)
   output <- .omics$list_shares_output()
@@ -2824,7 +2906,8 @@ omics_list_tags_for_resource <- function(resourceArn) {
     http_path = "/tags/{resourceArn}",
     host_prefix = "tags-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$list_tags_for_resource_input(resourceArn = resourceArn)
   output <- .omics$list_tags_for_resource_output()
@@ -2859,7 +2942,8 @@ omics_list_variant_import_jobs <- function(maxResults = NULL, ids = NULL, nextTo
     http_path = "/import/variants",
     host_prefix = "analytics-",
     paginator = list(input_token = "nextToken", output_token = "nextToken", limit_key = "maxResults", result_key = "variantImportJobs"),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$list_variant_import_jobs_input(maxResults = maxResults, ids = ids, nextToken = nextToken, filter = filter)
   output <- .omics$list_variant_import_jobs_output()
@@ -2894,7 +2978,8 @@ omics_list_variant_stores <- function(maxResults = NULL, ids = NULL, nextToken =
     http_path = "/variantStores",
     host_prefix = "analytics-",
     paginator = list(input_token = "nextToken", output_token = "nextToken", limit_key = "maxResults", result_key = "variantStores"),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$list_variant_stores_input(maxResults = maxResults, ids = ids, nextToken = nextToken, filter = filter)
   output <- .omics$list_variant_stores_output()
@@ -2929,7 +3014,8 @@ omics_list_workflow_versions <- function(workflowId, type = NULL, workflowOwnerI
     http_path = "/workflow/{workflowId}/version",
     host_prefix = "workflows-",
     paginator = list(input_token = "startingToken", output_token = "nextToken", limit_key = "maxResults", result_key = "items"),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$list_workflow_versions_input(workflowId = workflowId, type = type, workflowOwnerId = workflowOwnerId, startingToken = startingToken, maxResults = maxResults)
   output <- .omics$list_workflow_versions_output()
@@ -2963,7 +3049,8 @@ omics_list_workflows <- function(type = NULL, name = NULL, startingToken = NULL,
     http_path = "/workflow",
     host_prefix = "workflows-",
     paginator = list(input_token = "startingToken", output_token = "nextToken", limit_key = "maxResults", result_key = "items"),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$list_workflows_input(type = type, name = name, startingToken = startingToken, maxResults = maxResults)
   output <- .omics$list_workflows_output()
@@ -2995,7 +3082,8 @@ omics_put_s3_access_policy <- function(s3AccessPointArn, s3AccessPolicy) {
     http_path = "/s3accesspolicy/{s3AccessPointArn}",
     host_prefix = "control-storage-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$put_s3_access_policy_input(s3AccessPointArn = s3AccessPointArn, s3AccessPolicy = s3AccessPolicy)
   output <- .omics$put_s3_access_policy_output()
@@ -3033,7 +3121,8 @@ omics_start_annotation_import_job <- function(destinationName, roleArn, items, v
     http_path = "/import/annotation",
     host_prefix = "analytics-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$start_annotation_import_job_input(destinationName = destinationName, roleArn = roleArn, items = items, versionName = versionName, formatOptions = formatOptions, runLeftNormalization = runLeftNormalization, annotationFields = annotationFields)
   output <- .omics$start_annotation_import_job_output()
@@ -3049,7 +3138,7 @@ omics_start_annotation_import_job <- function(destinationName, roleArn, items, v
 #' formatted output
 #'
 #' @description
-#' Activates an archived read set and returns its metadata in a JSON formatted output. AWS HealthOmics automatically archives unused read sets after 30 days. To monitor the status of your read set activation job, use the [`get_read_set_activation_job`][omics_get_read_set_activation_job] operation.
+#' Activates an archived read set and returns its metadata in a JSON formatted output. Amazon Web Services HealthOmics automatically archives unused read sets after 30 days. To monitor the status of your read set activation job, use the [`get_read_set_activation_job`][omics_get_read_set_activation_job] operation.
 #'
 #' See [https://www.paws-r-sdk.com/docs/omics_start_read_set_activation_job/](https://www.paws-r-sdk.com/docs/omics_start_read_set_activation_job/) for full documentation.
 #'
@@ -3067,7 +3156,8 @@ omics_start_read_set_activation_job <- function(sequenceStoreId, clientToken = N
     http_path = "/sequencestore/{sequenceStoreId}/activationjob",
     host_prefix = "control-storage-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$start_read_set_activation_job_input(sequenceStoreId = sequenceStoreId, clientToken = clientToken, sources = sources)
   output <- .omics$start_read_set_activation_job_output()
@@ -3102,7 +3192,8 @@ omics_start_read_set_export_job <- function(sequenceStoreId, destination, roleAr
     http_path = "/sequencestore/{sequenceStoreId}/exportjob",
     host_prefix = "control-storage-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$start_read_set_export_job_input(sequenceStoreId = sequenceStoreId, destination = destination, roleArn = roleArn, clientToken = clientToken, sources = sources)
   output <- .omics$start_read_set_export_job_output()
@@ -3136,7 +3227,8 @@ omics_start_read_set_import_job <- function(sequenceStoreId, roleArn, clientToke
     http_path = "/sequencestore/{sequenceStoreId}/importjob",
     host_prefix = "control-storage-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$start_read_set_import_job_input(sequenceStoreId = sequenceStoreId, roleArn = roleArn, clientToken = clientToken, sources = sources)
   output <- .omics$start_read_set_import_job_output()
@@ -3171,7 +3263,8 @@ omics_start_reference_import_job <- function(referenceStoreId, roleArn, clientTo
     http_path = "/referencestore/{referenceStoreId}/importjob",
     host_prefix = "control-storage-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$start_reference_import_job_input(referenceStoreId = referenceStoreId, roleArn = roleArn, clientToken = clientToken, sources = sources)
   output <- .omics$start_reference_import_job_output()
@@ -3194,7 +3287,7 @@ omics_start_reference_import_job <- function(referenceStoreId, roleArn, clientTo
 #' @param workflowId The run's workflow ID. The `workflowId` is not the UUID.
 #' @param workflowType The run's workflow type. The `workflowType` must be specified if you are running a `READY2RUN` workflow. If you are running a `PRIVATE` workflow (default), you do not need to include the workflow type.
 #' @param runId The ID of a run to duplicate.
-#' @param roleArn &#91;required&#93; A service role for the run. The `roleArn` requires access to Amazon Web Services HealthOmics, S3, Cloudwatch logs, and EC2. An example `roleArn` is `arn:aws:iam::123456789012:role/omics-service-role-serviceRole-W8O1XMPL7QZ`. In this example, the AWS account ID is `123456789012` and the role name is `omics-service-role-serviceRole-W8O1XMPL7QZ`.
+#' @param roleArn &#91;required&#93; A service role for the run. The `roleArn` requires access to Amazon Web Services HealthOmics, S3, Cloudwatch logs, and EC2. An example `roleArn` is `arn:aws:iam::123456789012:role/omics-service-role-serviceRole-W8O1XMPL7QZ`. In this example, the Amazon Web Services account ID is `123456789012` and the role name is `omics-service-role-serviceRole-W8O1XMPL7QZ`.
 #' @param name A name for the run. This is recommended to view and organize runs in the Amazon Web Services HealthOmics console and CloudWatch logs.
 #' @param cacheId Identifier of the cache associated with this run. If you don't specify a cache ID, no task outputs are cached for this run.
 #' @param cacheBehavior The cache behavior for the run. You specify this value if you want to override the default behavior for the cache. You had set the default value when you created the cache. For more information, see [Run cache behavior](https://docs.aws.amazon.com/omics/latest/dev/how-run-cache.html#run-cache-behavior) in the *Amazon Web Services HealthOmics User Guide*.
@@ -3215,21 +3308,25 @@ omics_start_reference_import_job <- function(referenceStoreId, roleArn, clientTo
 #' @param workflowOwnerId The 12-digit account ID of the workflow owner that is used for running a shared workflow. The workflow owner ID can be retrieved using the [`get_share`][omics_get_share] API operation. If you are the workflow owner, you do not need to include this ID.
 #' @param workflowVersionName The name of the workflow version. Use workflow versions to track and organize changes to the workflow. If your workflow has multiple versions, the run uses the default version unless you specify a version name. To learn more, see [Workflow versioning](https://docs.aws.amazon.com/omics/latest/dev/workflow-versions.html) in the *Amazon Web Services HealthOmics User Guide*.
 #' @param networkingMode Optional configuration for run networking behavior. If not specified, this will default to RESTRICTED.
+#' @param scratchStorageMode Optional configuration for enabling scratch ephemeral storage mounted at /tmp. If not specified, this will default to SHARED. This configuration is applicable only for CPU tasks. For tasks using GPUs, scratch storage is always LOCAL.
 #' @param configurationName Optional configuration name to use for the workflow run.
+#' @param sessionPolicy Optional inline policy json for scoping down permissions via a session policy on the IAM role provided in the roleArn parameter.
+#' @param engineSettings Engine-specific settings for the workflow run. Use this field to specify configuration options that are specific to the workflow engine (for example, Nextflow profiles).
 #'
 #' @keywords internal
 #'
 #' @rdname omics_start_run
-omics_start_run <- function(workflowId = NULL, workflowType = NULL, runId = NULL, roleArn, name = NULL, cacheId = NULL, cacheBehavior = NULL, runGroupId = NULL, priority = NULL, parameters = NULL, storageCapacity = NULL, outputUri, logLevel = NULL, tags = NULL, requestId, retentionMode = NULL, storageType = NULL, workflowOwnerId = NULL, workflowVersionName = NULL, networkingMode = NULL, configurationName = NULL) {
+omics_start_run <- function(workflowId = NULL, workflowType = NULL, runId = NULL, roleArn, name = NULL, cacheId = NULL, cacheBehavior = NULL, runGroupId = NULL, priority = NULL, parameters = NULL, storageCapacity = NULL, outputUri, logLevel = NULL, tags = NULL, requestId, retentionMode = NULL, storageType = NULL, workflowOwnerId = NULL, workflowVersionName = NULL, networkingMode = NULL, scratchStorageMode = NULL, configurationName = NULL, sessionPolicy = NULL, engineSettings = NULL) {
   op <- new_operation(
     name = "StartRun",
     http_method = "POST",
     http_path = "/run",
     host_prefix = "workflows-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
-  input <- .omics$start_run_input(workflowId = workflowId, workflowType = workflowType, runId = runId, roleArn = roleArn, name = name, cacheId = cacheId, cacheBehavior = cacheBehavior, runGroupId = runGroupId, priority = priority, parameters = parameters, storageCapacity = storageCapacity, outputUri = outputUri, logLevel = logLevel, tags = tags, requestId = requestId, retentionMode = retentionMode, storageType = storageType, workflowOwnerId = workflowOwnerId, workflowVersionName = workflowVersionName, networkingMode = networkingMode, configurationName = configurationName)
+  input <- .omics$start_run_input(workflowId = workflowId, workflowType = workflowType, runId = runId, roleArn = roleArn, name = name, cacheId = cacheId, cacheBehavior = cacheBehavior, runGroupId = runGroupId, priority = priority, parameters = parameters, storageCapacity = storageCapacity, outputUri = outputUri, logLevel = logLevel, tags = tags, requestId = requestId, retentionMode = retentionMode, storageType = storageType, workflowOwnerId = workflowOwnerId, workflowVersionName = workflowVersionName, networkingMode = networkingMode, scratchStorageMode = scratchStorageMode, configurationName = configurationName, sessionPolicy = sessionPolicy, engineSettings = engineSettings)
   output <- .omics$start_run_output()
   config <- get_config()
   svc <- .omics$service(config, op)
@@ -3248,7 +3345,7 @@ omics_start_run <- function(workflowId = NULL, workflowType = NULL, runId = NULL
 #'
 #' @param batchName An optional user-friendly name for the run batch.
 #' @param requestId &#91;required&#93; A client token used to deduplicate retry requests and prevent duplicate batches from being created.
-#' @param tags AWS tags to associate with the batch resource. These tags are not inherited by individual runs. To tag individual runs, use `defaultRunSetting.runTags`.
+#' @param tags Amazon Web Services tags to associate with the batch resource. These tags are not inherited by individual runs. To tag individual runs, use `defaultRunSetting.runTags`.
 #' @param defaultRunSetting &#91;required&#93; Shared configuration applied to all runs in the batch. See `DefaultRunSetting`.
 #' @param batchRunSettings &#91;required&#93; The individual run configurations. Specify exactly one of `inlineSettings` or `s3UriSettings`. See `BatchRunSettings`.
 #'
@@ -3262,7 +3359,8 @@ omics_start_run_batch <- function(batchName = NULL, requestId, tags = NULL, defa
     http_path = "/runBatch",
     host_prefix = "workflows-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$start_run_batch_input(batchName = batchName, requestId = requestId, tags = tags, defaultRunSetting = defaultRunSetting, batchRunSettings = batchRunSettings)
   output <- .omics$start_run_batch_output()
@@ -3298,7 +3396,8 @@ omics_start_variant_import_job <- function(destinationName, roleArn, items, runL
     http_path = "/import/variant",
     host_prefix = "analytics-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$start_variant_import_job_input(destinationName = destinationName, roleArn = roleArn, items = items, runLeftNormalization = runLeftNormalization, annotationFields = annotationFields)
   output <- .omics$start_variant_import_job_output()
@@ -3330,7 +3429,8 @@ omics_tag_resource <- function(resourceArn, tags) {
     http_path = "/tags/{resourceArn}",
     host_prefix = "tags-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$tag_resource_input(resourceArn = resourceArn, tags = tags)
   output <- .omics$tag_resource_output()
@@ -3362,7 +3462,8 @@ omics_untag_resource <- function(resourceArn, tagKeys) {
     http_path = "/tags/{resourceArn}",
     host_prefix = "tags-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$untag_resource_input(resourceArn = resourceArn, tagKeys = tagKeys)
   output <- .omics$untag_resource_output()
@@ -3395,7 +3496,8 @@ omics_update_annotation_store <- function(name, description = NULL) {
     http_path = "/annotationStore/{name}",
     host_prefix = "analytics-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$update_annotation_store_input(name = name, description = description)
   output <- .omics$update_annotation_store_output()
@@ -3428,7 +3530,8 @@ omics_update_annotation_store_version <- function(name, versionName, description
     http_path = "/annotationStore/{name}/version/{versionName}",
     host_prefix = "analytics-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$update_annotation_store_version_input(name = name, versionName = versionName, description = description)
   output <- .omics$update_annotation_store_version_output()
@@ -3463,7 +3566,8 @@ omics_update_run_cache <- function(cacheBehavior = NULL, description = NULL, id,
     http_path = "/runCache/{id}",
     host_prefix = "workflows-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$update_run_cache_input(cacheBehavior = cacheBehavior, description = description, id = id, name = name)
   output <- .omics$update_run_cache_output()
@@ -3500,7 +3604,8 @@ omics_update_run_group <- function(id, name = NULL, maxCpus = NULL, maxRuns = NU
     http_path = "/runGroup/{id}",
     host_prefix = "workflows-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$update_run_group_input(id = id, name = name, maxCpus = maxCpus, maxRuns = maxRuns, maxDuration = maxDuration, maxGpus = maxGpus)
   output <- .omics$update_run_group_output()
@@ -3537,7 +3642,8 @@ omics_update_sequence_store <- function(id, name = NULL, description = NULL, cli
     http_path = "/sequencestore/{id}",
     host_prefix = "control-storage-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$update_sequence_store_input(id = id, name = name, description = description, clientToken = clientToken, fallbackLocation = fallbackLocation, propagatedSetLevelTags = propagatedSetLevelTags, s3AccessConfig = s3AccessConfig)
   output <- .omics$update_sequence_store_output()
@@ -3570,7 +3676,8 @@ omics_update_variant_store <- function(name, description = NULL) {
     http_path = "/variantStore/{name}",
     host_prefix = "analytics-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$update_variant_store_input(name = name, description = description)
   output <- .omics$update_variant_store_output()
@@ -3606,7 +3713,8 @@ omics_update_workflow <- function(id, name = NULL, description = NULL, storageTy
     http_path = "/workflow/{id}",
     host_prefix = "workflows-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$update_workflow_input(id = id, name = name, description = description, storageType = storageType, storageCapacity = storageCapacity, readmeMarkdown = readmeMarkdown)
   output <- .omics$update_workflow_output()
@@ -3642,7 +3750,8 @@ omics_update_workflow_version <- function(workflowId, versionName, description =
     http_path = "/workflow/{workflowId}/version/{versionName}",
     host_prefix = "workflows-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$update_workflow_version_input(workflowId = workflowId, versionName = versionName, description = description, storageType = storageType, storageCapacity = storageCapacity, readmeMarkdown = readmeMarkdown)
   output <- .omics$update_workflow_version_output()
@@ -3677,7 +3786,8 @@ omics_upload_read_set_part <- function(sequenceStoreId, uploadId, partSource, pa
     http_path = "/sequencestore/{sequenceStoreId}/upload/{uploadId}/part",
     host_prefix = "storage-",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .omics$upload_read_set_part_input(sequenceStoreId = sequenceStoreId, uploadId = uploadId, partSource = partSource, partNumber = partNumber, payload = payload)
   output <- .omics$upload_read_set_part_output()

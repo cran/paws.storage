@@ -29,7 +29,8 @@ ebs_complete_snapshot <- function(SnapshotId, ChangedBlocksCount, Checksum = NUL
     http_path = "/snapshots/completion/{snapshotId}",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .ebs$complete_snapshot_input(SnapshotId = SnapshotId, ChangedBlocksCount = ChangedBlocksCount, Checksum = Checksum, ChecksumAlgorithm = ChecksumAlgorithm, ChecksumAggregationMethod = ChecksumAggregationMethod)
   output <- .ebs$complete_snapshot_output()
@@ -64,7 +65,8 @@ ebs_get_snapshot_block <- function(SnapshotId, BlockIndex, BlockToken) {
     http_path = "/snapshots/{snapshotId}/blocks/{blockIndex}",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .ebs$get_snapshot_block_input(SnapshotId = SnapshotId, BlockIndex = BlockIndex, BlockToken = BlockToken)
   output <- .ebs$get_snapshot_block_output()
@@ -114,7 +116,8 @@ ebs_list_changed_blocks <- function(FirstSnapshotId = NULL, SecondSnapshotId, Ne
     http_path = "/snapshots/{secondSnapshotId}/changedblocks",
     host_prefix = "",
     paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults"),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .ebs$list_changed_blocks_input(FirstSnapshotId = FirstSnapshotId, SecondSnapshotId = SecondSnapshotId, NextToken = NextToken, MaxResults = MaxResults, StartingBlockIndex = StartingBlockIndex)
   output <- .ebs$list_changed_blocks_output()
@@ -157,7 +160,8 @@ ebs_list_snapshot_blocks <- function(SnapshotId, NextToken = NULL, MaxResults = 
     http_path = "/snapshots/{snapshotId}/blocks",
     host_prefix = "",
     paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults"),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .ebs$list_snapshot_blocks_input(SnapshotId = SnapshotId, NextToken = NextToken, MaxResults = MaxResults, StartingBlockIndex = StartingBlockIndex)
   output <- .ebs$list_snapshot_blocks_output()
@@ -200,7 +204,8 @@ ebs_put_snapshot_block <- function(SnapshotId, BlockIndex, BlockData, DataLength
     http_path = "/snapshots/{snapshotId}/blocks/{blockIndex}",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .ebs$put_snapshot_block_input(SnapshotId = SnapshotId, BlockIndex = BlockIndex, BlockData = BlockData, DataLength = DataLength, Progress = Progress, Checksum = Checksum, ChecksumAlgorithm = ChecksumAlgorithm)
   output <- .ebs$put_snapshot_block_output()
@@ -224,7 +229,7 @@ ebs_put_snapshot_block <- function(SnapshotId, BlockIndex, BlockData, DataLength
 #' 
 #' You can't specify **ParentSnapshotId** and **Encrypted** in the same request. If you specify both parameters, the request fails with `ValidationException`.
 #' 
-#' The encryption status of the snapshot depends on the values that you specify for **Encrypted**, **KmsKeyArn**, and **ParentSnapshotId**, and whether your Amazon Web Services account is enabled for [encryption by default](https://docs.aws.amazon.com/ebs/latest/userguide/ebs-encryption.html?refid=faq_card#encryption-by-default). For more information, see [Using encryption](https://docs.aws.amazon.com/ebs/latest/userguide/ebsapis-using-encryption.html) in the *Amazon Elastic Compute Cloud User Guide*.
+#' The encryption status of the snapshot depends on the values that you specify for **Encrypted**, **KmsKeyArn**, and **ParentSnapshotId**, and whether your Amazon Web Services account is enabled for [encryption by default](https://docs.aws.amazon.com/ebs/latest/userguide/ebs-encryption.html#encryption-by-default). For more information, see [Using encryption](https://docs.aws.amazon.com/ebs/latest/userguide/ebsapis-using-encryption.html) in the *Amazon Elastic Compute Cloud User Guide*.
 #' 
 #' If you specify an encrypted parent snapshot, you must have permission to use the KMS key that was used to encrypt the parent snapshot. For more information, see [Permissions to use Key Management Service keys](https://docs.aws.amazon.com/ebs/latest/userguide/ebsapi-permissions.html#ebsapi-kms-permissions) in the *Amazon Elastic Compute Cloud User Guide*.
 #' @param Tags The tags to apply to the snapshot.
@@ -238,12 +243,12 @@ ebs_put_snapshot_block <- function(SnapshotId, BlockIndex, BlockData, DataLength
 #' 
 #' You can't specify **Encrypted** and **ParentSnapshotId** in the same request. If you specify both parameters, the request fails with `ValidationException`.
 #' 
-#' The encryption status of the snapshot depends on the values that you specify for **Encrypted**, **KmsKeyArn**, and **ParentSnapshotId**, and whether your Amazon Web Services account is enabled for [encryption by default](https://docs.aws.amazon.com/ebs/latest/userguide/ebs-encryption.html?refid=faq_card#encryption-by-default). For more information, see [Using encryption](https://docs.aws.amazon.com/ebs/latest/userguide/ebsapis-using-encryption.html) in the *Amazon Elastic Compute Cloud User Guide*.
+#' The encryption status of the snapshot depends on the values that you specify for **Encrypted**, **KmsKeyArn**, and **ParentSnapshotId**, and whether your Amazon Web Services account is enabled for [encryption by default](https://docs.aws.amazon.com/ebs/latest/userguide/ebs-encryption.html#encryption-by-default). For more information, see [Using encryption](https://docs.aws.amazon.com/ebs/latest/userguide/ebsapis-using-encryption.html) in the *Amazon Elastic Compute Cloud User Guide*.
 #' 
 #' To create an encrypted snapshot, you must have permission to use the KMS key. For more information, see [Permissions to use Key Management Service keys](https://docs.aws.amazon.com/ebs/latest/userguide/ebsapi-permissions.html#ebsapi-kms-permissions) in the *Amazon Elastic Compute Cloud User Guide*.
 #' @param KmsKeyArn The Amazon Resource Name (ARN) of the Key Management Service (KMS) key to be used to encrypt the snapshot.
 #' 
-#' The encryption status of the snapshot depends on the values that you specify for **Encrypted**, **KmsKeyArn**, and **ParentSnapshotId**, and whether your Amazon Web Services account is enabled for [encryption by default](https://docs.aws.amazon.com/ebs/latest/userguide/ebs-encryption.html?refid=faq_card#encryption-by-default). For more information, see [Using encryption](https://docs.aws.amazon.com/ebs/latest/userguide/ebsapis-using-encryption.html) in the *Amazon Elastic Compute Cloud User Guide*.
+#' The encryption status of the snapshot depends on the values that you specify for **Encrypted**, **KmsKeyArn**, and **ParentSnapshotId**, and whether your Amazon Web Services account is enabled for [encryption by default](https://docs.aws.amazon.com/ebs/latest/userguide/ebs-encryption.html#encryption-by-default). For more information, see [Using encryption](https://docs.aws.amazon.com/ebs/latest/userguide/ebsapis-using-encryption.html) in the *Amazon Elastic Compute Cloud User Guide*.
 #' 
 #' To create an encrypted snapshot, you must have permission to use the KMS key. For more information, see [Permissions to use Key Management Service keys](https://docs.aws.amazon.com/ebs/latest/userguide/ebsapi-permissions.html#ebsapi-kms-permissions) in the *Amazon Elastic Compute Cloud User Guide*.
 #' @param Timeout The amount of time (in minutes) after which the snapshot is automatically cancelled if:
@@ -264,7 +269,8 @@ ebs_start_snapshot <- function(VolumeSize, ParentSnapshotId = NULL, Tags = NULL,
     http_path = "/snapshots",
     host_prefix = "",
     paginator = list(),
-    stream_api = FALSE
+    stream_api = FALSE,
+    http_checksum = NULL
   )
   input <- .ebs$start_snapshot_input(VolumeSize = VolumeSize, ParentSnapshotId = ParentSnapshotId, Tags = Tags, Description = Description, ClientToken = ClientToken, Encrypted = Encrypted, KmsKeyArn = KmsKeyArn, Timeout = Timeout)
   output <- .ebs$start_snapshot_output()

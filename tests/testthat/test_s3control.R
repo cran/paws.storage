@@ -1,3 +1,3 @@
-svc <- paws::s3control()
+svc <- paws.storage::s3control()
 
 

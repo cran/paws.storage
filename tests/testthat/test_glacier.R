@@ -1,3 +1,3 @@
-svc <- paws::glacier()
+svc <- paws.storage::glacier()
 
 
